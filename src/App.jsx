@@ -5,7 +5,7 @@ import ProductoDetalle from "./Pages/ProductoDetalle";
 //import Reserva from "./Pages/Reserva";
 //<Route path="/reserva" element={<Reserva />} />
 import AdminPanel from "./Pages/AdminPanel";
-import Header from "./Components/Header";
+import Header from "./Components/Header/Header";
 import Footer from "./Components/Footer";
 
 const App = () => {
