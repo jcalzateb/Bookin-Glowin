@@ -3,6 +3,8 @@ import {
   ContenedorFormulario,
   CampoInput,
   BotonAccion,
+  BotonAgregar,
+  BotonEliminar,
   ContenedorImagenes,
   ImagenMiniatura,
 } from "./FormularioGestion.styled";
@@ -46,8 +48,8 @@ const FormularioGestion = () => {
         </ImagenMiniatura>
       </ContenedorImagenes>
 
-      <BotonAccion agregar>Agregar</BotonAccion>
-      <BotonAccion eliminar>Eliminar</BotonAccion>
+      <BotonAgregar>Agregar</BotonAgregar>
+      <BotonEliminar>Eliminar</BotonEliminar>
     </ContenedorFormulario>
   );
 };

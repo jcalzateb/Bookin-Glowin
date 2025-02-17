@@ -1,44 +1,73 @@
-import React from "react";
-import { Tabla, BotonAccion } from "./TablaProductos.styled";
+import React, { useState } from "react";
+import {
+  ContenedorTabla,
+  Tabla,
+  Encabezado,
+  FilaEncabezado,
+  CeldaEncabezado,
+  CuerpoTabla,
+  Fila,
+  Celda,
+  IconosAccion,
+} from "./TablaProductos.styled";
+import { Edit, Delete, Star } from "@mui/icons-material";
 
-const productos = [
-  { id: 1, nombre: "Corte", categoria: "Cabello", precio: "$5000", duracion: "30 min", profesional: "Ana", turnos: "Mañana" },
-  { id: 2, nombre: "Manicure", categoria: "Uñas", precio: "$8000", duracion: "45 min", profesional: "Luis", turnos: "Tarde" },
+const productosEjemplo = [
+  { id: 1, nombre: "Corte de Cabello", categoria: "Cabello", precio: "$10.000", duracion: "30 min", profesional: "Andrea", turnos: "4" },
+  { id: 2, nombre: "Peinado", categoria: "Cabello", precio: "$15.000", duracion: "45 min", profesional: "Laura", turnos: "3" },
+  { id: 3, nombre: "Uñas", categoria: "Manicura", precio: "$20.000", duracion: "60 min", profesional: "María", turnos: "5" },
 ];
 
 const TablaProductos = () => {
+  const [productos, setProductos] = useState(productosEjemplo);
+
+  const handleEliminar = (id) => {
+    setProductos(productos.filter((producto) => producto.id !== id));
+  };
+
   return (
-    <Tabla>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Producto</th>
-          <th>Categoría</th>
-          <th>Precio</th>
-          <th>Duración</th>
-          <th>Profesional</th>
-          <th>Turnos</th>
-          <th>Acción</th>
-        </tr>
-      </thead>
-      <tbody>
-        {productos.map((producto) => (
-          <tr key={producto.id}>
-            <td>{producto.id}</td>
-            <td>{producto.nombre}</td>
-            <td>{producto.categoria}</td>
-            <td>{producto.precio}</td>
-            <td>{producto.duracion}</td>
-            <td>{producto.profesional}</td>
-            <td>{producto.turnos}</td>
-            <td>
-              <BotonAccion editar>✏️</BotonAccion>
-              <BotonAccion eliminar>❌</BotonAccion>
-            </td>
-          </tr>
-        ))}
-      </tbody>
-    </Tabla>
+    <ContenedorTabla>
+      <Tabla>
+        <Encabezado>
+          <FilaEncabezado>
+            <CeldaEncabezado>ID</CeldaEncabezado>
+            <CeldaEncabezado>Producto</CeldaEncabezado>
+            <CeldaEncabezado>Categoría</CeldaEncabezado>
+            <CeldaEncabezado>Precio</CeldaEncabezado>
+            <CeldaEncabezado>Duración</CeldaEncabezado>
+            <CeldaEncabezado>Profesional</CeldaEncabezado>
+            <CeldaEncabezado>Turnos</CeldaEncabezado>
+            <CeldaEncabezado>Acción</CeldaEncabezado>
+          </FilaEncabezado>
+        </Encabezado>
+        <CuerpoTabla>
+          {productos.map((producto) => (
+            <Fila key={producto.id}>
+              <Celda>{producto.id}</Celda>
+              <Celda>{producto.nombre}</Celda>
+              <Celda>{producto.categoria}</Celda>
+              <Celda>{producto.precio}</Celda>
+              <Celda>{producto.duracion}</Celda>
+              <Celda>{producto.profesional}</Celda>
+              <Celda>{producto.turnos}</Celda>
+              <Celda>
+                <IconosAccion>
+                  <button>
+                    <Edit />
+                  </button>
+                  <button onClick={() => handleEliminar(producto.id)}>
+                    <Delete />
+                  </button>
+                  <button>
+                    <Star />
+                  </button>
+                </IconosAccion>
+              </Celda>
+            </Fila>
+          ))}
+        </CuerpoTabla>
+      </Tabla>
+    </ContenedorTabla>
   );
 };
 

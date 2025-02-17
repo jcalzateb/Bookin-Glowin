@@ -50,3 +50,33 @@ export const ImagenMiniatura = styled.div`
     border-radius: 5px;
   }
 `;
+
+export const BotonAgregar = styled.button`
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #28a745;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #218838;
+  }
+`;
+
+export const BotonEliminar = styled.button`
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  background-color: #dc3545;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+
+  &:hover {
+    background-color: #c82333;
+  }
+`;
