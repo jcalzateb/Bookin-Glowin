@@ -1,5 +1,5 @@
 import React from "react";
-import Categorias from "../Components/Categorias"
+import Categorias from "../Components/Categorias/Categorias"
 
 const Inicio = () => {
   return (
