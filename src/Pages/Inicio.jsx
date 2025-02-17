@@ -1,6 +1,6 @@
 import React from "react";
 
-import Buscador from "../Components/Buscador";
+import Buscador from "../Components/Buscador/Buscador";
 
 const Inicio = () => {
   return (
