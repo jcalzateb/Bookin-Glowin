@@ -1,8 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Inicio from "./Pages/Inicio";
-import ProductoDetalle from "./Pages/ProductoDetalle";
-import Reserva from "./Pages/Reserva";
+import ProductoDetalle from "./Pages/ProductoDetalle/ProductoDetalle";
 import AdminPanel from "./Pages/AdminPanel";
 import Header from "./Components/Header";
 import Footer from "./Components/Footer";
@@ -14,7 +13,6 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Inicio />} />
         <Route path="/producto/:id" element={<ProductoDetalle />} />
-        <Route path="/reserva" element={<Reserva />} />
         <Route path="/admin" element={<AdminPanel />} />
       </Routes>
       <Footer />
