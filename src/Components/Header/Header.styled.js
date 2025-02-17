@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { AppBar, Toolbar, Button, IconButton } from "@mui/material";
+import { AppBar, Toolbar, Button, IconButton, Drawer, List } from "@mui/material";
 
 // Contenedor del Header
 export const ContenedorHeader = styled(AppBar)`
@@ -57,4 +57,44 @@ export const BotonNav = styled(Button)`
   &:active {
     background-color: ${({ theme }) => theme.palette.botones.presionado};
   }
+`;
+
+export const ContenedorLogo = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+export const ContenedorNav = styled.div`
+  display: flex;
+  gap: 24px;
+
+  span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #000;
+  }
+
+  @media (max-width: 1133px) {
+    display: none; /* Oculta los labels en Tablet y Móvil */
+  }
+`;
+export const DrawerMenu = styled(Drawer)`
+  .MuiPaper-root {
+    width: 250px;
+  }
+`;
+export const ListaMenu = styled(List)`
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+
+  a {
+    text-decoration: none;
+    color: black;
+    font-size: 18px;
+    padding: 10px 0;
+  }
+`;
+export const LogoImg = styled.img`
+  height: 40px;
 `;
