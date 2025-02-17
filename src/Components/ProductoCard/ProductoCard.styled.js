@@ -52,7 +52,7 @@ export const FondoOscuro = styled(Box)`
   visibility: visible;
 `;
 
-// Contenedor del hover
+// Contenedor hover
 export const ContenidoExpandido = styled(Box)`
   position: absolute;
   bottom: 0;
@@ -69,7 +69,7 @@ export const ContenidoExpandido = styled(Box)`
   transition: opacity 0.3s ease-in-out;
 `;
 
-// Estilos del nombre y precio mejorar
+// Estilos del nombre y precio con tamaño más grande
 export const NombreProducto = styled(Box)`
   font-size: 22px;
   font-weight: bold;

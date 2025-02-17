@@ -1,11 +1,17 @@
 import React from "react";
 import { Typography } from "@mui/material";
-import { TarjetaProducto, FondoOscuro, ContenidoExpandido, NombreProducto, PrecioProducto, BotonVerMas } from "./ProductoCard.styled";
+import { 
+  TarjetaProducto, 
+  FondoOscuro, 
+  ContenidoExpandido, 
+  NombreProducto, 
+  PrecioProducto, 
+  BotonVerMas 
+} from "./ProductoCard.styled";
 
 const ProductoCard = ({ producto }) => {
   return (
     <TarjetaProducto>
-      {/* Imagen */}
       <img src={producto.imagen} alt={producto.nombre} />
 
       {/* Fondo oscuro con título (desaparece en hover) */}
@@ -13,7 +19,7 @@ const ProductoCard = ({ producto }) => {
         <NombreProducto>{producto.nombre}</NombreProducto>
       </FondoOscuro>
 
-      {/* Contenido expandido al hacer hover */}
+      {/* Contenido hover */}
       <ContenidoExpandido className="contenido">
         <NombreProducto>{producto.nombre}</NombreProducto>
         <Typography variant="body2">{producto.descripcion}</Typography>
@@ -25,3 +31,4 @@ const ProductoCard = ({ producto }) => {
 };
 
 export default ProductoCard;
+
