@@ -4,7 +4,7 @@ import Inicio from "./Pages/Inicio";
 import ProductoDetalle from "./Pages/ProductoDetalle";
 import AdminPanel from "./Pages/AdminPanel";
 import Header from "./Components/Header";
-import Footer from "./Components/Footer";
+import Footer from "./Components/Footer/Footer";
 
 const App = () => {
   return (
