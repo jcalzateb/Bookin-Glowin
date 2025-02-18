@@ -25,9 +25,10 @@ const Header = () => {
   return (
     <ContenedorHeader position="static">
       <BarraNavegacion>
+
         <ContenedorLogo>
           <LogoImg src={Logo} alt="Glowin Logo" />
-          <Lema>B R I L L A C O N E S T I L O</Lema>
+          <Lema>B R I L L A - C O N - E S T I L O</Lema>
         </ContenedorLogo>
 
         <ContenedorBotones>

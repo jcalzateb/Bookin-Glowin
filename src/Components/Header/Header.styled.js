@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Button, IconButton, Drawer, List, ListItem } from "@mui/material";
+import { AppBar, Toolbar, Button, IconButton, Drawer, List } from "@mui/material";
 import { styled } from "@mui/system";
 
 // Contenedor principal del Header
@@ -9,7 +9,7 @@ export const ContenedorHeader = styled(AppBar)({
   padding: "0 20px",
 });
 
-// Contenedor de la barra de navegación
+// Barra de navegación
 export const BarraNavegacion = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
@@ -34,16 +34,15 @@ export const LogoImg = styled("img")({
 // Lema
 export const Lema = styled("span")({
   fontSize: "1.2rem",
-  letterSpacing: "1.5px",
-  fontWeight: 300,
-  marginLeft: 20,
+  letterSpacing: "2px",
+  fontWeight: 100,
+  marginLeft: 30,
   color: "#9747FF",
   fontFamily: "roboto",
   "@media (max-width: 960px)": {
     display: "none",
   },
 });
-
 
 // Contenedor de los botones
 export const ContenedorBotones = styled("div")({
@@ -55,7 +54,7 @@ export const ContenedorBotones = styled("div")({
 });
 
 // Botones de navegación
-export const BotonNav = styled(Button)(({ theme, variante }) => ({
+export const BotonNav = styled(Button)(({ variante }) => ({
   textTransform: "none",
   fontSize: "0.9rem",
   fontWeight: 500,
@@ -102,21 +101,11 @@ export const ListaMenu = styled(List)({
   flexDirection: "column",
   gap: 15,
   padding: "20px",
-});
-
-// Elementos de la lista del menú hamburguesa
-export const ItemMenu = styled(ListItem)({
-  padding: "10px 15px",
-  textAlign: "center",
-  borderRadius: "8px",
-  transition: "background-color 0.3s ease, color 0.3s ease",
   "& a": {
     textDecoration: "none",
     color: "#333",
     fontSize: "1rem",
     fontWeight: 500,
-    display: "block",
-    width: "100%",
     transition: "color 0.3s ease",
     "&:hover": {
       backgroundColor: "#f3e5f5",
@@ -124,4 +113,3 @@ export const ItemMenu = styled(ListItem)({
     },
   },
 });
-
