@@ -6,12 +6,12 @@ import {
   BarraNavegacion,
   ContenedorLogo,
   LogoImg,
-  ContenedorNav,
   ContenedorBotones,
   BotonNav,
   BotonMenu,
   DrawerMenu,
   ListaMenu,
+  Lema,
 } from "./Header.styled";
 import Logo from "../../assets/Logo.png";
 
@@ -25,16 +25,10 @@ const Header = () => {
   return (
     <ContenedorHeader position="static">
       <BarraNavegacion>
-
         <ContenedorLogo>
           <LogoImg src={Logo} alt="Glowin Logo" />
+          <Lema>B R I L L A C O N E S T I L O</Lema>
         </ContenedorLogo>
-
-        <ContenedorNav>
-          <span>label</span>
-          <span>label</span>
-          <span>label</span>
-        </ContenedorNav>
 
         <ContenedorBotones>
           <BotonNav component={Link} to="/iniciar-sesion" variante="bordeado">

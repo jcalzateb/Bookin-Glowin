@@ -1,100 +1,127 @@
-import styled from "styled-components";
-import { AppBar, Toolbar, Button, IconButton, Drawer, List } from "@mui/material";
+import { AppBar, Toolbar, Button, IconButton, Drawer, List, ListItem } from "@mui/material";
+import { styled } from "@mui/system";
 
-// Contenedor del Header
-export const ContenedorHeader = styled(AppBar)`
-  background: linear-gradient(to right, #000, #1c1c1e);
-  position: static;
-  border-bottom: 2px solid #000;
-`;
+// Contenedor principal del Header
+export const ContenedorHeader = styled(AppBar)({
+  backgroundColor: "#fff",
+  boxShadow: "none",
+  borderBottom: "1px solid #ddd",
+  padding: "0 20px",
+});
 
-// Barra de navegacion
-export const BarraNavegacion = styled(Toolbar)`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 20px;
-`;
+// Contenedor de la barra de navegación
+export const BarraNavegacion = styled(Toolbar)({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  width: "100%",
+});
 
-// Contenedor del logo
-export const Logo = styled.img`
-  height: 50px;
-  cursor: pointer;
-`;
+// Contenedor del Logo
+export const ContenedorLogo = styled("div")({
+  display: "flex",
+  alignItems: "center",
+});
+
+// Imagen del Logo
+export const LogoImg = styled("img")({
+  height: 50,
+  "@media (max-width: 600px)": {
+    height: 40,
+  },
+});
+
+// Lema
+export const Lema = styled("span")({
+  fontSize: "1.2rem",
+  letterSpacing: "1.5px",
+  fontWeight: 300,
+  marginLeft: 20,
+  color: "#9747FF",
+  fontFamily: "roboto",
+  "@media (max-width: 960px)": {
+    display: "none",
+  },
+});
+
 
 // Contenedor de los botones
-export const ContenedorBotones = styled.div`
-  display: flex;
-  gap: 10px;
+export const ContenedorBotones = styled("div")({
+  display: "flex",
+  gap: 10,
+  "@media (max-width: 600px)": {
+    display: "none",
+  },
+});
 
-  @media (max-width: 744px) {
-    display: none; /* Ocultar en tablet y móvil */
-  }
-`;
+// Botones de navegación
+export const BotonNav = styled(Button)(({ theme, variante }) => ({
+  textTransform: "none",
+  fontSize: "0.9rem",
+  fontWeight: 500,
+  padding: "6px 16px",
+  borderRadius: "8px",
+  transition: "all 0.3s ease",
+  ...(variante === "bordeado" && {
+    border: "2px solid #673ab7",
+    color: "#673ab7",
+    "&:hover": {
+      backgroundColor: "#f3e5f5",
+    },
+  }),
+  ...(variante === "solido" && {
+    backgroundColor: "#673ab7",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#452782",
+    },
+  }),
+}));
 
-// Botón de menú hamburguesa
-export const BotonMenu = styled(IconButton)`
-  display: none;
+// Botón del menú hamburguesa
+export const BotonMenu = styled(IconButton)({
+  display: "none",
+  "@media (max-width: 600px)": {
+    display: "flex",
+    color: "#333",
+  },
+});
 
-  @media (max-width: 428px) {
-    display: flex;
-  }
-`;
+// Drawer para el menú hamburguesa
+export const DrawerMenu = styled(Drawer)({
+  "& .MuiDrawer-paper": {
+    width: 250,
+    padding: "20px",
+    backgroundColor: "#fff",
+  },
+});
 
-// Botones de inicio de sesión y registro
-export const BotonNav = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.botones.activo};
-  color: #fff;
-  font-weight: bold;
-  text-transform: none;
-  border-radius: 8px;
-  padding: 8px 16px;
+// Lista dentro del menú hamburguesa
+export const ListaMenu = styled(List)({
+  display: "flex",
+  flexDirection: "column",
+  gap: 15,
+  padding: "20px",
+});
 
-  &:hover {
-    background-color: ${({ theme }) => theme.palette.botones.hovered};
-  }
+// Elementos de la lista del menú hamburguesa
+export const ItemMenu = styled(ListItem)({
+  padding: "10px 15px",
+  textAlign: "center",
+  borderRadius: "8px",
+  transition: "background-color 0.3s ease, color 0.3s ease",
+  "& a": {
+    textDecoration: "none",
+    color: "#333",
+    fontSize: "1rem",
+    fontWeight: 500,
+    display: "block",
+    width: "100%",
+    transition: "color 0.3s ease",
+    "&:hover": {
+      backgroundColor: "#f3e5f5",
+      color: "#673ab7",
+    },
+  },
+});
 
-  &:active {
-    background-color: ${({ theme }) => theme.palette.botones.presionado};
-  }
-`;
-
-export const ContenedorLogo = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-export const ContenedorNav = styled.div`
-  display: flex;
-  gap: 24px;
-
-  span {
-    font-size: 16px;
-    font-weight: 500;
-    color: #000;
-  }
-
-  @media (max-width: 1133px) {
-    display: none; /* Oculta los labels en Tablet y Móvil */
-  }
-`;
-export const DrawerMenu = styled(Drawer)`
-  .MuiPaper-root {
-    width: 250px;
-  }
-`;
-export const ListaMenu = styled(List)`
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-
-  a {
-    text-decoration: none;
-    color: black;
-    font-size: 18px;
-    padding: 10px 0;
-  }
-`;
-export const LogoImg = styled.img`
-  height: 40px;
-`;
