@@ -14,16 +14,18 @@ import {
   ContenedorReserva,
   BotonReservar,
   BotonRetroceso,
+  TituloProducto,
+  TituloDescripcion,
+  PrecioProducto,
 } from "./ProductoDetalle.styled";
-import CarruselImagenes from "./CarruselImagenes/CarruselImagenes"; // Nueva ruta de importación
-
+import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 
 const ProductoDetalle = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [modalAbierto, setModalAbierto] = useState(false);
 
-  // Datos provisionales hasta conectar con backend
+  // Datos provisionales
   const productosData = [
     {
       id: "1",
@@ -33,15 +35,14 @@ const ProductoDetalle = () => {
       precio: "20.000",
       imagenes: [
         "https://picsum.photos/600/400?random=1",
-        "https://picsum.photos/150/150?random=2",
-        "https://picsum.photos/150/150?random=3",
-        "https://picsum.photos/150/150?random=4",
-        "https://picsum.photos/150/150?random=5",
+        "https://picsum.photos/300/200?random=2",
+        "https://picsum.photos/300/200?random=3",
+        "https://picsum.photos/300/200?random=4",
+        "https://picsum.photos/300/200?random=5",
       ],
     },
   ];
 
-  // Buscar el producto por ID
   const producto = productosData.find((item) => item.id === id);
 
   if (!producto) {
@@ -55,17 +56,14 @@ const ProductoDetalle = () => {
   return (
     <ContenedorDetalle>
       <EncabezadoDetalle>
-        <Typography variant="h3" fontWeight="bold">
-          {producto.nombre}
-        </Typography>
-        <BotonRetroceso onClick={() => navigate(-1)}> {/* Botón de retroceder restaurado */}
+        <TituloProducto>{producto.nombre}</TituloProducto>
+        <BotonRetroceso onClick={() => navigate("/")}>
           <ArrowBackIcon />
         </BotonRetroceso>
       </EncabezadoDetalle>
 
       <BloqueImagenes>
         <ImagenPrincipal style={{ backgroundImage: `url(${producto.imagenes[0]})` }} />
-
         <MiniaturasImagenes>
           {producto.imagenes.slice(1).map((img, index) => (
             <img key={index} src={img} alt={`Miniatura ${index}`} />
@@ -78,18 +76,12 @@ const ProductoDetalle = () => {
 
       <ContenedorInfo>
         <DescripcionProducto>
-          <Typography variant="h5" fontWeight="bold">
-            Descripción del Servicio
-          </Typography>
-          <Typography variant="body1" sx={{ marginTop: "10px" }}>
-            {producto.descripcion}
-          </Typography>
+          <TituloDescripcion>Descripción del Servicio</TituloDescripcion>
+          <Typography variant="body1">{producto.descripcion}</Typography>
         </DescripcionProducto>
 
         <ContenedorReserva>
-          <Typography variant="h4" color="primary" fontWeight="bold">
-            ${producto.precio} COP
-          </Typography>
+          <PrecioProducto>${producto.precio} COP</PrecioProducto>
           <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
           <Typography variant="body2">Disponibilidad: Lunes - Viernes</Typography>
           <BotonReservar>Reservar</BotonReservar>

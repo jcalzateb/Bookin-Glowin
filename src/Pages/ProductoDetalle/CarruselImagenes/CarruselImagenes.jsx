@@ -1,25 +1,44 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dialog } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Carousel } from "react-responsive-carousel";
+import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { ContenidoModal, BotonCerrar, ImagenCarrusel } from "./CarruselImagenes.styled";
+import {
+  ContenidoModal,
+  BotonCerrar,
+  ImagenCarrusel,
+  BotonNavegacion,
+} from "./CarruselImagenes.styled";
 
 const CarruselImagenes = ({ imagenes, abierto, cerrar }) => {
+  const [indiceActual, setIndiceActual] = useState(0);
+
+  const handleNext = () => {
+    setIndiceActual((prevIndex) => (prevIndex + 1) % imagenes.length);
+  };
+
+  const handlePrev = () => {
+    setIndiceActual((prevIndex) => (prevIndex - 1 + imagenes.length) % imagenes.length);
+  };
+
   return (
-    <Dialog open={abierto} onClose={cerrar} maxWidth="md" fullWidth>
+    <Dialog open={abierto} onClose={cerrar} maxWidth="lg" fullWidth>
       <ContenidoModal>
-        <BotonCerrar onClick={cerrar}>
+
+        <BotonCerrar onClick={cerrar} aria-label="Cerrar carrusel">
           <CloseIcon />
         </BotonCerrar>
 
-        <Carousel showThumbs={false} showStatus={false} infiniteLoop autoPlay swipeable emulateTouch>
-          {imagenes.map((img, index) => (
-            <div key={index}>
-              <ImagenCarrusel src={img} alt={`Imagen ${index + 1}`} />
-            </div>
-          ))}
-        </Carousel>
+        <BotonNavegacion onClick={handlePrev} posicion="izquierda" aria-label="Imagen anterior">
+          <ArrowBackIosIcon />
+        </BotonNavegacion>
+
+        <ImagenCarrusel src={imagenes[indiceActual]} alt={`Imagen ${indiceActual + 1}`} />
+
+        <BotonNavegacion onClick={handleNext} posicion="derecha" aria-label="Imagen siguiente">
+          <ArrowForwardIosIcon />
+        </BotonNavegacion>
       </ContenidoModal>
     </Dialog>
   );
