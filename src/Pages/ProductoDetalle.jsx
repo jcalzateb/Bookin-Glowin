@@ -8,4 +8,4 @@ const ProductoDetalle = () => {
   );
 };
 
-export default ProductoDetalle;
+export default ProductoDetalle; // Asegúrate de que esta línea está presente
