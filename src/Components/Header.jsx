@@ -12,4 +12,8 @@ const Header = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Header;
+=======
+export default Header;
+>>>>>>> funcionalidad/productos

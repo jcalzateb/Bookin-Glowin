@@ -8,4 +8,8 @@ const Footer = () => {
   );
 };
 
+<<<<<<< HEAD
 export default Footer; // Asegúrate de que esta línea está presente
+=======
+export default Footer;
+>>>>>>> funcionalidad/productos
