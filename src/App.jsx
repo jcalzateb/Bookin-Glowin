@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Inicio from "./Pages/Inicio";
-import ProductoDetalle from "./Pages/ProductoDetalle";
+import ProductoDetalle from "./Pages/ProductoDetalle/ProductoDetalle";
 import AdminPanel from "./Pages/AdminPanel";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";

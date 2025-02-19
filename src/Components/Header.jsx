@@ -13,7 +13,11 @@ const Header = () => {
 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 export default Header;
 =======
 export default Header;
 >>>>>>> funcionalidad/productos
+=======
+export default Header;
+>>>>>>> funcionalidad/detalle-producto
