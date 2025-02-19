@@ -1,17 +1,15 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import ListadoProductos from "../Components/ListadoProductos";
+import ProductoDestacado from "../Components/ProductoDestacado/ProductoDestacado";
+import ListaProductos  from "../Components/ListaProductos/ListaProductos"
 
 const Inicio = () => {
   return (
     <Box sx={{ padding: "40px 20px", textAlign: "center" }}>
-      {/* Título Principal */}
-      <Typography variant="h2" sx={{ fontWeight: "bold", marginBottom: "20px" }}>
-        Bienvenido a Glowin
-      </Typography>
 
-      {/* Sección de Listado de Productos */}
-      <ListadoProductos />
+      <ProductoDestacado />
+      <ListaProductos />
+
     </Box>
   );
 };

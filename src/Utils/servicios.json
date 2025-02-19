@@ -1,0 +1,289 @@
+[
+    {
+      "id": 1,
+      "nombre": "Corte de Cabello",
+      "descripcion": "Corte profesional para mujeres, hombres y niños, adaptado a las últimas tendencias.",
+      "categoria": "Cabello",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=1",
+        "https://picsum.photos/600/400?random=2",
+        "https://picsum.photos/600/400?random=3",
+        "https://picsum.photos/600/400?random=4"
+      ],
+      "precio": "20000"
+    },
+    {
+      "id": 2,
+      "nombre": "Coloración y Tintes",
+      "descripcion": "Tintes, mechas, balayage e iluminaciones para transformar tu estilo.",
+      "categoria": "Cabello",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=5",
+        "https://picsum.photos/600/400?random=6",
+        "https://picsum.photos/600/400?random=7",
+        "https://picsum.photos/600/400?random=8"
+      ],
+      "precio": "45000"
+    },
+    {
+      "id": 3,
+      "nombre": "Esmaltado Semipermanente",
+      "descripcion": "Uñas impecables y con mayor duración gracias a nuestra técnica de esmaltado.",
+      "categoria": "Uñas",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=9",
+        "https://picsum.photos/600/400?random=10",
+        "https://picsum.photos/600/400?random=11",
+        "https://picsum.photos/600/400?random=12"
+      ],
+      "precio": "30000"
+    },
+    {
+      "id": 4,
+      "nombre": "Uñas Esculpidas en Acrílico",
+      "descripcion": "Uñas acrílicas esculpidas para una apariencia elegante y sofisticada.",
+      "categoria": "Uñas",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=13",
+        "https://picsum.photos/600/400?random=14",
+        "https://picsum.photos/600/400?random=15",
+        "https://picsum.photos/600/400?random=16"
+      ],
+      "precio": "50000"
+    },
+    {
+      "id": 5,
+      "nombre": "Lifting y Rizado de Pestañas",
+      "descripcion": "Dale curvatura y realce a tus pestañas naturales sin necesidad de extensiones.",
+      "categoria": "Pestañas",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=17",
+        "https://picsum.photos/600/400?random=18",
+        "https://picsum.photos/600/400?random=19",
+        "https://picsum.photos/600/400?random=20"
+      ],
+      "precio": "35000"
+    },
+    {
+      "id": 6,
+      "nombre": "Extensiones de Pestañas Volumen",
+      "descripcion": "Extensiones personalizadas para un efecto más denso y voluminoso.",
+      "categoria": "Pestañas",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=21",
+        "https://picsum.photos/600/400?random=22",
+        "https://picsum.photos/600/400?random=23",
+        "https://picsum.photos/600/400?random=24"
+      ],
+      "precio": "60000"
+    },
+    {
+      "id": 7,
+      "nombre": "Perfilado y Depilación de Cejas",
+      "descripcion": "Definimos y embellecemos tus cejas según la forma de tu rostro.",
+      "categoria": "Cejas",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=25",
+        "https://picsum.photos/600/400?random=26",
+        "https://picsum.photos/600/400?random=27",
+        "https://picsum.photos/600/400?random=28"
+      ],
+      "precio": "20000"
+    },
+    {
+      "id": 8,
+      "nombre": "Microblading de Cejas",
+      "descripcion": "Dale un diseño semipermanente a tus cejas con trazos hiperrealistas.",
+      "categoria": "Cejas",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=29",
+        "https://picsum.photos/600/400?random=30",
+        "https://picsum.photos/600/400?random=31",
+        "https://picsum.photos/600/400?random=32"
+      ],
+      "precio": "70000"
+    },
+    {
+      "id": 9,
+      "nombre": "Limpieza Facial Profunda",
+      "descripcion": "Elimina impurezas y renueva tu piel con nuestra limpieza facial.",
+      "categoria": "Facial & Maquillaje",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=33",
+        "https://picsum.photos/600/400?random=34",
+        "https://picsum.photos/600/400?random=35",
+        "https://picsum.photos/600/400?random=36"
+      ],
+      "precio": "50000"
+    },
+    {
+      "id": 10,
+      "nombre": "Masaje Relajante",
+      "descripcion": "Relájate con un masaje terapéutico para aliviar el estrés y la tensión.",
+      "categoria": "Cuidado Corporal & Depilación",
+      "imagenes": [
+        "https://picsum.photos/600/400?random=37",
+        "https://picsum.photos/600/400?random=38",
+        "https://picsum.photos/600/400?random=39",
+        "https://picsum.photos/600/400?random=40"
+      ],
+      "precio": "60000"
+    },
+    {
+        "id": 11,
+        "nombre": "Corte de Cabello Mujer",
+        "descripcion": "Renueva tu look con un corte profesional diseñado según la forma de tu rostro y estilo personal. Incluye lavado y secado.",
+        "categoria": "Cabello",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=111",
+          "https://picsum.photos/600/400?random=112",
+          "https://picsum.photos/600/400?random=113",
+          "https://picsum.photos/600/400?random=114"
+        ]
+      },
+      {
+        "id": 12,
+        "nombre": "Coloración y Mechas",
+        "descripcion": "Realza tu cabello con una coloración personalizada. Técnicas como balayage, iluminaciones o mechas para un look moderno.",
+        "categoria": "Cabello",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=115",
+          "https://picsum.photos/600/400?random=116",
+          "https://picsum.photos/600/400?random=117",
+          "https://picsum.photos/600/400?random=118"
+        ]
+      },
+      {
+        "id": 13,
+        "nombre": "Alisado con Keratina",
+        "descripcion": "Disfruta de un cabello liso y sin frizz con nuestro tratamiento de keratina. Nutre y fortalece tu cabello dejándolo brillante.",
+        "categoria": "Cabello",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=119",
+          "https://picsum.photos/600/400?random=120",
+          "https://picsum.photos/600/400?random=121",
+          "https://picsum.photos/600/400?random=122"
+        ]
+      },
+      {
+        "id": 14,
+        "nombre": "Peinado Profesional",
+        "descripcion": "Desde ondas suaves hasta recogidos elaborados, creamos el peinado perfecto para cualquier ocasión especial.",
+        "categoria": "Cabello",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=123",
+          "https://picsum.photos/600/400?random=124",
+          "https://picsum.photos/600/400?random=125",
+          "https://picsum.photos/600/400?random=126"
+        ]
+      },
+      {
+        "id": 15,
+        "nombre": "Extensiones de Cabello",
+        "descripcion": "Aumenta el volumen y largo de tu cabello con extensiones 100% naturales. Diferentes métodos como clip-in, cosidas o micro ring.",
+        "categoria": "Cabello",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=127",
+          "https://picsum.photos/600/400?random=128",
+          "https://picsum.photos/600/400?random=129",
+          "https://picsum.photos/600/400?random=130"
+        ]
+      },
+      {
+        "id": 16,
+        "nombre": "Uñas Acrílicas",
+        "descripcion": "Dale a tus manos un aspecto elegante con uñas acrílicas personalizadas. Diferentes largos y diseños disponibles.",
+        "categoria": "Uñas",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=131",
+          "https://picsum.photos/600/400?random=132",
+          "https://picsum.photos/600/400?random=133",
+          "https://picsum.photos/600/400?random=134"
+        ]
+      },
+      {
+        "id": 17,
+        "nombre": "Manicure y Pedicure Spa",
+        "descripcion": "Relájate con nuestro servicio de manicure y pedicure spa. Hidratación, exfoliación y esmaltado para un acabado perfecto.",
+        "categoria": "Uñas",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=135",
+          "https://picsum.photos/600/400?random=136",
+          "https://picsum.photos/600/400?random=137",
+          "https://picsum.photos/600/400?random=138"
+        ]
+      },
+      {
+        "id": 18,
+        "nombre": "Lifting de Pestañas",
+        "descripcion": "Dale a tus pestañas un aspecto más largo y curvado con nuestro lifting de pestañas. Resultados naturales y duraderos.",
+        "categoria": "Pestañas",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=139",
+          "https://picsum.photos/600/400?random=140",
+          "https://picsum.photos/600/400?random=141",
+          "https://picsum.photos/600/400?random=142"
+        ]
+      },
+      {
+        "id": 19,
+        "nombre": "Extensiones de Pestañas Volumen",
+        "descripcion": "Obtén una mirada impactante con nuestras extensiones de pestañas. Técnicas de volumen y mega volumen disponibles.",
+        "categoria": "Pestañas",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=143",
+          "https://picsum.photos/600/400?random=144",
+          "https://picsum.photos/600/400?random=145",
+          "https://picsum.photos/600/400?random=146"
+        ]
+      },
+      {
+        "id": 20,
+        "nombre": "Perfilado de Cejas",
+        "descripcion": "Define y estructura tus cejas con nuestro servicio de perfilado profesional. Logra un marco perfecto para tu rostro.",
+        "categoria": "Cejas",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=147",
+          "https://picsum.photos/600/400?random=148",
+          "https://picsum.photos/600/400?random=149",
+          "https://picsum.photos/600/400?random=150"
+        ]
+      },
+      {
+        "id": 21,
+        "nombre": "Maquillaje Profesional",
+        "descripcion": "Maquillaje social, para novias o eventos especiales. Utilizamos productos de alta calidad para un acabado impecable y duradero.",
+        "categoria": "Facial & Maquillaje",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=151",
+          "https://picsum.photos/600/400?random=152",
+          "https://picsum.photos/600/400?random=153",
+          "https://picsum.photos/600/400?random=154"
+        ]
+      },
+      {
+        "id": 22,
+        "nombre": "Masaje Relajante",
+        "descripcion": "Relaja tu cuerpo y mente con un masaje terapéutico de presión suave a media. Ideal para liberar tensiones y mejorar la circulación.",
+        "categoria": "Cuidado Corporal & Depilación",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=155",
+          "https://picsum.photos/600/400?random=156",
+          "https://picsum.photos/600/400?random=157",
+          "https://picsum.photos/600/400?random=158"
+        ]
+      },
+      {
+        "id": 23,
+        "nombre": "Corte Masculino + Barba",
+        "descripcion": "Corte de cabello y perfilado de barba con técnicas modernas. Servicio ideal para hombres que buscan un look impecable.",
+        "categoria": "Glowin Men",
+        "imagenes": [
+          "https://picsum.photos/600/400?random=159",
+          "https://picsum.photos/600/400?random=160",
+          "https://picsum.photos/600/400?random=161",
+          "https://picsum.photos/600/400?random=162"
+        ]
+      }
+  ]
+  
