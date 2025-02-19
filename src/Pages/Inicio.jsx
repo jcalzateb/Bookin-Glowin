@@ -1,9 +1,10 @@
 import React from "react";
+import Categorias from "../Components/Categorias/Categorias";
 
 const Inicio = () => {
   return (
     <div>
-      <h1>Página de Inicio</h1>
+      <Categorias />
     </div>
   );
 };
