@@ -111,7 +111,7 @@ export const ContenedorPaginacion = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin: 10px 0 30px 0;
   gap: 8px;
   flex-wrap: wrap;
   @media (max-width: 600px) {
@@ -123,21 +123,22 @@ export const ContenedorPaginacion = styled(Box)`
 export const BotonPagina = styled(Button)`
   min-width: 35px;
   height: 35px;
-  background: ${({ activo }) => (activo ? "#9747FF" : "transparent")} !important;
+  background: ${({ activo }) =>
+    activo ? "#9747FF" : "transparent"} !important;
   color: ${({ activo }) => (activo ? "white" : "#9747FF")} !important;
-  border: 1px solid #9747FF !important;
+  border: 1px solid #9747ff !important;
   border-radius: 8px;
   font-size: 14px;
   text-transform: none;
 
   &:hover {
-    background: #530EAE !important;
+    background: #530eae !important;
     color: white !important;
   }
 
   &:disabled {
-    background: #E0E0E0 !important;
-    color: #A0A0A0 !important;
+    background: #e0e0e0 !important;
+    color: #a0a0a0 !important;
     border: none !important;
   }
 

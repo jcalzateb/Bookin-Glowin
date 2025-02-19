@@ -8,6 +8,7 @@ export const ContenedorFooter = styled(Box)`
   text-align: center;
   padding: 20px;
   border-top: 2px solid #000;
+  margin-top: 10px;
 `;
 
 // Texto del Footer

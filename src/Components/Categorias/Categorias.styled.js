@@ -17,7 +17,7 @@ export const ListaCategorias = styled(Box)`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 50px;
   max-width: 900px;
   width: 100%;
 `;
@@ -37,8 +37,8 @@ export const CategoriaItem = styled.div`
   }
 
   img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     object-fit: cover;
     background-color: #f5f5f5;

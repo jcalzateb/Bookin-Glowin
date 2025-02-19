@@ -1,7 +1,11 @@
 import React from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { ContenedorCategorias, ListaCategorias, CategoriaItem } from "./Categorias.styled";
+import {
+  ContenedorCategorias,
+  ListaCategorias,
+  CategoriaItem,
+} from "./Categorias.styled";
 
 import unasImg from "../../assets/categorias/unas.png";
 import pestanasImg from "../../assets/categorias/pestanas.png";
@@ -18,21 +22,31 @@ const Categorias = () => {
     { nombre: "Pestañas", img: pestanasImg, ruta: "/categoria/pestanas" },
     { nombre: "Cabello", img: cabelloImg, ruta: "/categoria/cabello" },
     { nombre: "Cejas", img: cejasImg, ruta: "/categoria/cejas" },
-    { nombre: "Facial", img: facialImg, ruta: "/categoria/facial" },
-    { nombre: "Combos", img: combosImg, ruta: "/categoria/combos" },
+    { nombre: "Cuidado", img: facialImg, ruta: "/categoria/facial" },
+    { nombre: "Glowin Men", img: combosImg, ruta: "/categoria/combos" },
   ];
 
   return (
     <ContenedorCategorias>
       {/* Título */}
-      <Typography variant="h2" sx={{ fontWeight: "bold", textTransform: "uppercase" }}>
+      <Typography
+        variant="h2"
+        sx={{
+          fontWeight: "italic",
+          marginBottom: "20px",
+          textTransform: "uppercase",
+        }}
+      >
         Categorías
       </Typography>
 
       {/* Lista de Categorías */}
       <ListaCategorias>
         {categorias.map((categoria) => (
-          <CategoriaItem key={categoria.nombre} onClick={() => navigate(categoria.ruta)}>
+          <CategoriaItem
+            key={categoria.nombre}
+            onClick={() => navigate(categoria.ruta)}
+          >
             <img src={categoria.img} alt={categoria.nombre} />
             <span>{categoria.nombre}</span>
           </CategoriaItem>
