@@ -9,13 +9,13 @@ export const ContenedorDestacados = styled.div`
   padding: 20px;
   flex-wrap: wrap;
 
-  @media (max-width: 960px) { 
+  @media (max-width: 960px) {
     gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
   }
 
-  @media (max-width: 600px) { 
+  @media (max-width: 600px) {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,23 +52,22 @@ export const TarjetaDestacada = styled(Box)`
     opacity: 0;
   }
 
-  @media (max-width: 960px) { 
+  @media (max-width: 960px) {
     width: 180px;
     height: 180px;
   }
 
-  @media (max-width: 600px) { 
+  @media (max-width: 600px) {
     width: 220px;
     height: 220px;
   }
 `;
 
-// 🔹 **Corrección del título** → Siempre visible con tamaño fijo
 export const TituloDestacado = styled(Box)`
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 34%; /* 🔹 Altura fija */
+  height: 34%;
   background: rgba(0, 0, 0, 0.6);
   text-align: center;
   color: white;
@@ -115,7 +114,7 @@ export const ContenidoHover = styled(Box)`
 // **Botón "Ver Más" corregido**
 export const BotonVerMas = styled(Button)`
   background: transparent !important;
-  color: #9747FF !important;
+  color: #9747ff !important;
   font-weight: 500;
   text-transform: none;
   font-size: 14px;
@@ -124,11 +123,11 @@ export const BotonVerMas = styled(Button)`
   transition: color 0.3s ease-in-out;
 
   &:hover {
-    color: #530EAE !important;
+    color: #530eae !important;
   }
 
   &:active {
-    color: #2D0363 !important;
+    color: #2d0363 !important;
   }
 `;
 

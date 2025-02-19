@@ -84,11 +84,11 @@ export const TituloProducto = styled.h3`
 export const DescripcionProducto = styled.p`
   font-size: 14px;
   color: #666;
-  max-height: 60px; /* Limita el tamaño */
+  max-height: 60px;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2; /* Muestra solo 2 líneas */
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   margin-bottom: 10px;
 `;

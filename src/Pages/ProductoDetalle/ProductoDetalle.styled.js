@@ -5,7 +5,7 @@ import { Box, Button, IconButton } from "@mui/material";
 export const ContenedorDetalle = styled(Box)`
   display: flex;
   flex-direction: column;
-  padding: 20px 50px;
+  padding: 80px 50px 20px 50px;
   max-width: 1200px;
   margin: auto;
   background-color: ${({ theme }) => theme.palette.primario.main};
@@ -19,7 +19,7 @@ export const EncabezadoDetalle = styled(Box)`
   align-items: center;
   width: 100%;
   margin-bottom: 15px;
-  
+
   @media (max-width: 600px) {
     font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
   }
@@ -117,7 +117,7 @@ export const BotonVerMas = styled(Button)`
   z-index: 3;
   font-weight: bold;
   color: ${({ theme }) => theme.palette.detalle.main} !important;
-  background:transparent;
+  background: transparent;
   border-radius: 8px;
   padding: 6px 12px;
   font-family: ${({ theme }) => theme.typography.button.fontFamily};
@@ -163,7 +163,7 @@ export const DescripcionProducto = styled(Box)`
   padding: 20px;
   font-family: ${({ theme }) => theme.typography.h3.fontFamily};
   font-weight: bold;
-    font-size: calc(${({ theme }) => theme.typography.h3.fontSize} * 1.3);
+  font-size: calc(${({ theme }) => theme.typography.h3.fontSize} * 1.3);
   font-style: normal;
 
   @media (max-width: 600px) {
@@ -217,15 +217,18 @@ export const BotonReservar = styled(Button)`
   background-color: ${({ theme }) => theme.palette.botones.activo} !important;
 
   &:hover {
-    background-color: ${({ theme }) => theme.palette.botones.hovered} !important;
+    background-color: ${({ theme }) =>
+      theme.palette.botones.hovered} !important;
   }
 
   &:active {
-    background-color: ${({ theme }) => theme.palette.botones.presionado} !important;
+    background-color: ${({ theme }) =>
+      theme.palette.botones.presionado} !important;
   }
 
   &:disabled {
-    background-color: ${({ theme }) => theme.palette.botones.inactivo} !important;
+    background-color: ${({ theme }) =>
+      theme.palette.botones.inactivo} !important;
   }
 
   @media (max-width: 600px) {

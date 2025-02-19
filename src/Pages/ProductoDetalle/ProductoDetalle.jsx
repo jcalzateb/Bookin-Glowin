@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import servicios from "../../Utils/servicios.json";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
@@ -21,11 +21,14 @@ import {
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 
-const ProductoDetalle = () => {
+const ProductoDetalle = ({ setMostrarHeader }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [modalAbierto, setModalAbierto] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const producto = servicios.find((item) => item.id === parseInt(id, 10));
 
@@ -37,6 +40,16 @@ const ProductoDetalle = () => {
     );
   }
 
+  const abrirCarrusel = () => {
+    setModalAbierto(true);
+    setMostrarHeader(false); // Oculta el Header
+  };
+
+  const cerrarCarrusel = () => {
+    setModalAbierto(false);
+    setMostrarHeader(true); // Muestra el Header nuevamente
+  };
+
   return (
     <ContenedorDetalle>
       <EncabezadoDetalle>
@@ -47,16 +60,22 @@ const ProductoDetalle = () => {
       </EncabezadoDetalle>
 
       <BloqueImagenes>
-        <ImagenPrincipal style={{ backgroundImage: `url(${producto.imagenes[0]})` }} />
+        <ImagenPrincipal
+          style={{ backgroundImage: `url(${producto.imagenes[0]})` }}
+        />
         <MiniaturasImagenes>
           {producto.imagenes.slice(1).map((img, index) => (
             <img key={index} src={img} alt={`Miniatura ${index}`} />
           ))}
-          <BotonVerMas onClick={() => setModalAbierto(true)}>Ver Más</BotonVerMas>
+          <BotonVerMas onClick={abrirCarrusel}>Ver Más</BotonVerMas>
         </MiniaturasImagenes>
       </BloqueImagenes>
 
-      <CarruselImagenes imagenes={producto.imagenes} abierto={modalAbierto} cerrar={() => setModalAbierto(false)} />
+      <CarruselImagenes
+        imagenes={producto.imagenes}
+        abierto={modalAbierto}
+        cerrar={cerrarCarrusel}
+      />
 
       <ContenedorInfo>
         <DescripcionProducto>
@@ -67,7 +86,9 @@ const ProductoDetalle = () => {
         <ContenedorReserva>
           <PrecioProducto>${producto.precio} COP</PrecioProducto>
           <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
-          <Typography variant="body2">Disponibilidad: Lunes - Viernes</Typography>
+          <Typography variant="body2">
+            Disponibilidad: Lunes - Viernes
+          </Typography>
           <BotonReservar>Reservar</BotonReservar>
         </ContenedorReserva>
       </ContenedorInfo>

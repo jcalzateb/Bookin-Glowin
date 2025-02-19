@@ -30,7 +30,7 @@ export const BotonCerrar = styled(IconButton)`
   }
 
   @media (max-width: 600px) {
-    left: 30px; 
+    left: 30px;
     width: 40px;
     height: 40px;
   }
@@ -52,8 +52,7 @@ export const ImagenCarrusel = styled.img`
     width: 90%;
     max-width: 95%;
     max-height: 70vh;
-
-    }
+  }
 `;
 
 export const BotonNavegacion = styled(IconButton)`
@@ -70,17 +69,11 @@ export const BotonNavegacion = styled(IconButton)`
   }
 
   ${({ posicion }) =>
-    posicion === "izquierda"
-      ? `left: 50px;`
-      : `right: 50px;`
-    }
+    posicion === "izquierda" ? `left: 50px;` : `right: 50px;`}
 
   @media (max-width: 600px) {
     ${({ posicion }) =>
-      posicion === "izquierda"
-        ? `left: 10px;`
-        : `right: 30px;`
-    }
+      posicion === "izquierda" ? `left: 10px;` : `right: 30px;`}
     width: 40px;
     height: 40px;
   }

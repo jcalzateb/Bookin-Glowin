@@ -1,12 +1,23 @@
-import { AppBar, Toolbar, Button, IconButton, Drawer, List } from "@mui/material";
+import {
+  AppBar,
+  Toolbar,
+  Button,
+  IconButton,
+  Drawer,
+  List,
+} from "@mui/material";
 import { styled } from "@mui/system";
 
 // Contenedor principal del Header
 export const ContenedorHeader = styled(AppBar)({
+  position: "fixed",
   backgroundColor: "#fff",
   boxShadow: "none",
   borderBottom: "1px solid #ddd",
   padding: "0 20px",
+  top: "0",
+  width: "100%",
+  zIndex: "100000",
 });
 
 // Barra de navegación
@@ -26,6 +37,7 @@ export const ContenedorLogo = styled("div")({
 // Imagen del Logo
 export const LogoImg = styled("img")({
   height: 50,
+  cursor: "pointer",
   "@media (max-width: 600px)": {
     height: 40,
   },

@@ -22,8 +22,8 @@ const Categorias = () => {
     { nombre: "Pestañas", img: pestanasImg, ruta: "/categoria/pestanas" },
     { nombre: "Cabello", img: cabelloImg, ruta: "/categoria/cabello" },
     { nombre: "Cejas", img: cejasImg, ruta: "/categoria/cejas" },
-    { nombre: "Cuidado", img: facialImg, ruta: "/categoria/facial" },
-    { nombre: "Glowin Men", img: combosImg, ruta: "/categoria/combos" },
+    { nombre: "Cuidados", img: facialImg, ruta: "/categoria/facial" },
+    { nombre: "Hombres", img: combosImg, ruta: "/categoria/combos" },
   ];
 
   return (
@@ -48,7 +48,15 @@ const Categorias = () => {
             onClick={() => navigate(categoria.ruta)}
           >
             <img src={categoria.img} alt={categoria.nombre} />
-            <span>{categoria.nombre}</span>
+            <Typography
+              variant="h5"
+              sx={{
+                marginTop: "5px",
+                padding: "10px",
+              }}
+            >
+              {categoria.nombre}
+            </Typography>
           </CategoriaItem>
         ))}
       </ListaCategorias>

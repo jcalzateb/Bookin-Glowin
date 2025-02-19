@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
 import {
   ContenedorHeader,
   BarraNavegacion,
@@ -16,6 +17,7 @@ import {
 import Logo from "../../assets/Logo.png";
 
 const Header = () => {
+  const navigate = useNavigate();
   const [menuAbierto, setMenuAbierto] = useState(false);
 
   const toggleMenu = (estado) => () => {
@@ -25,8 +27,7 @@ const Header = () => {
   return (
     <ContenedorHeader position="static">
       <BarraNavegacion>
-
-        <ContenedorLogo>
+        <ContenedorLogo onClick={() => navigate("/")}>
           <LogoImg src={Logo} alt="Glowin Logo" />
           <Lema>B R I L L A - C O N - E S T I L O</Lema>
         </ContenedorLogo>
@@ -44,7 +45,11 @@ const Header = () => {
           <MenuIcon />
         </BotonMenu>
 
-        <DrawerMenu anchor="right" open={menuAbierto} onClose={toggleMenu(false)}>
+        <DrawerMenu
+          anchor="right"
+          open={menuAbierto}
+          onClose={toggleMenu(false)}
+        >
           <ListaMenu>
             <Link to="/iniciar-sesion">Iniciar Sesión</Link>
             <Link to="/crear-cuenta">Crear Cuenta</Link>
