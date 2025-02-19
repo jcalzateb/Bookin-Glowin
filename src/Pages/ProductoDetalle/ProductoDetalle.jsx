@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import servicios from "../../Utils/servicios.json";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -25,25 +26,8 @@ const ProductoDetalle = () => {
   const navigate = useNavigate();
   const [modalAbierto, setModalAbierto] = useState(false);
 
-  // Datos provisionales
-  const productosData = [
-    {
-      id: "1",
-      nombre: "Corte de Cabello",
-      descripcion:
-        "Corte profesional con estilo moderno. Incluye lavado y secado. Ideal para renovar tu look con un toque fresco y elegante.",
-      precio: "20.000",
-      imagenes: [
-        "https://picsum.photos/600/400?random=1",
-        "https://picsum.photos/300/200?random=2",
-        "https://picsum.photos/300/200?random=3",
-        "https://picsum.photos/300/200?random=4",
-        "https://picsum.photos/300/200?random=5",
-      ],
-    },
-  ];
 
-  const producto = productosData.find((item) => item.id === id);
+  const producto = servicios.find((item) => item.id === parseInt(id, 10));
 
   if (!producto) {
     return (
