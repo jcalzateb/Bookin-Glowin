@@ -19,6 +19,7 @@ const FormularioGestion = ({ agregarServicio }) => {
     precio: "",
     duracion: "",
     descripcion: "",
+    imagenes: [],
   });
 
   // Estado para los errores de validación
@@ -28,6 +29,15 @@ const FormularioGestion = ({ agregarServicio }) => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormulario({ ...formulario, [name]: value });
+  };
+  // Función para manejar la subida de imágenes
+  const handleImagenes = (e) => {
+    const archivos = Array.from(e.target.files);
+    const urlsImagenes = archivos.map((archivo) =>
+      URL.createObjectURL(archivo)
+    );
+
+    setFormulario({ ...formulario, imagenes: urlsImagenes });
   };
 
   // Función para validar el formulario antes de agregar
@@ -87,6 +97,7 @@ const FormularioGestion = ({ agregarServicio }) => {
         precio: "",
         duracion: "",
         descripcion: "",
+        imagenes: [],
       });
 
       setErrores({});
@@ -146,6 +157,17 @@ const FormularioGestion = ({ agregarServicio }) => {
         <p style={{ color: "red" }}>{errores.descripcion}</p>
       )}
 
+      <Etiqueta>Subir Imágenes </Etiqueta>
+      <input type="file" multiple accept="image/*" onChange={handleImagenes} />
+
+      <ContenedorImagenes>
+        {formulario.imagenes.map((img, index) => (
+          <CajaImagen key={index}>
+            <img src={img} alt={`Imagen ${index + 1}`} />
+          </CajaImagen>
+        ))}
+      </ContenedorImagenes>
+
       <ContenedorBotones>
         <BotonAccion color="#28a745" onClick={handleSubmit}>
           Agregar Servicio
@@ -159,6 +181,7 @@ const FormularioGestion = ({ agregarServicio }) => {
               precio: "",
               duracion: "",
               descripcion: "",
+              imagenes: [],
             })
           }
         >

@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import serviciosData from "../../Utils/servicios.json";
+import { useMediaQuery } from "react-responsive";
+
 import {
   ContenedorAdmin,
   MenuSuperior,
   BotonMenu,
   Contenido,
+  MensajeNoDisponible,
 } from "./AdminPanel.styled";
 import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 import FormularioGestion from "./FormularioGestion";
@@ -58,6 +61,14 @@ const AdminPanel = () => {
       },
     });
   };
+
+  const esPantallaPequena = useMediaQuery({ maxWidth: 760 });
+
+  if (esPantallaPequena) {
+    return (
+      <MensajeNoDisponible>❌ Admin Panel no disponible.</MensajeNoDisponible>
+    );
+  }
 
   return (
     <ContenedorAdmin>

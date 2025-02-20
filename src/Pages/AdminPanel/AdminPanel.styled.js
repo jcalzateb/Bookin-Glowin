@@ -45,3 +45,17 @@ export const Contenido = styled.div`
   background-color: #333;
   border-radius: 15px;
 `;
+
+export const MensajeNoDisponible = styled.h1`
+  text-align: center;
+  color: white;
+  margin-top: 50px;
+  font-size: 22px;
+  font-weight: bold;
+  padding: 20px;
+  background-color: black;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  margin: 50px auto;
+`;
