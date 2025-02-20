@@ -11,7 +11,6 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DeleteIcon from "@mui/icons-material/Delete";
 
 const MensajeModal = ({ abierto, tipo, mensaje, onConfirmar, onCancelar }) => {
-  // 🔹 Selección del ícono y color según el tipo de mensaje
   const iconos = {
     error: <ErrorIcon style={{ color: "red", fontSize: 40 }} />,
     confirmacion: <CheckCircleIcon style={{ color: "green", fontSize: 40 }} />,

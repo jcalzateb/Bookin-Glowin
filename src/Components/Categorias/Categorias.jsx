@@ -28,7 +28,6 @@ const Categorias = () => {
 
   return (
     <ContenedorCategorias>
-      {/* Título */}
       <Typography
         variant="h2"
         sx={{
@@ -40,7 +39,6 @@ const Categorias = () => {
         Categorías
       </Typography>
 
-      {/* Lista de Categorías */}
       <ListaCategorias>
         {categorias.map((categoria) => (
           <CategoriaItem

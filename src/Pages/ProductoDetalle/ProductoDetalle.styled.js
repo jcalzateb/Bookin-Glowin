@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Box, Button, IconButton } from "@mui/material";
 
-// Contenedor principal
 export const ContenedorDetalle = styled(Box)`
   display: flex;
   flex-direction: column;
@@ -12,7 +11,6 @@ export const ContenedorDetalle = styled(Box)`
   color: ${({ theme }) => theme.palette.secundario.main};
 `;
 
-// Encabezado con título y botón de retroceso
 export const EncabezadoDetalle = styled(Box)`
   display: flex;
   justify-content: space-between;
@@ -25,7 +23,6 @@ export const EncabezadoDetalle = styled(Box)`
   }
 `;
 
-// Estilo del título principal del producto
 export const TituloProducto = styled.h1`
   font-family: ${({ theme }) => theme.typography.h1.fontFamily};
   font-weight: 900;
@@ -48,7 +45,6 @@ export const BotonRetroceso = styled(IconButton)`
   }
 `;
 
-// Contenedor del bloque de imágenes
 export const BloqueImagenes = styled(Box)`
   display: grid;
   grid-template-columns: 2fr 1fr;
@@ -80,7 +76,6 @@ export const ImagenPrincipal = styled(Box)`
   }
 `;
 
-// Miniaturas de imágenes
 export const MiniaturasImagenes = styled(Box)`
   position: relative !important;
   display: grid;
@@ -109,7 +104,6 @@ export const MiniaturasImagenes = styled(Box)`
   }
 `;
 
-// Botón "Ver Más"
 export const BotonVerMas = styled(Button)`
   position: absolute !important;
   bottom: 5px;
@@ -132,7 +126,6 @@ export const BotonVerMas = styled(Button)`
   }
 `;
 
-// Contenedor de la segunda sección (descripción y reserva)
 export const ContenedorInfo = styled(Box)`
   display: flex;
   gap: 20px;
@@ -144,7 +137,6 @@ export const ContenedorInfo = styled(Box)`
   }
 `;
 
-// Título de la descripción
 export const TituloDescripcion = styled.h2`
   font-family: ${({ theme }) => theme.typography.h2.fontFamily};
   font-weight: 900;
@@ -157,7 +149,6 @@ export const TituloDescripcion = styled.h2`
   }
 `;
 
-// Descripción del producto sin fondo
 export const DescripcionProducto = styled(Box)`
   flex: 2;
   padding: 20px;
@@ -172,7 +163,6 @@ export const DescripcionProducto = styled(Box)`
   }
 `;
 
-// Contenedor de reserva mejor distribuido
 export const ContenedorReserva = styled(Box)`
   flex: 1;
   padding: 12px;
@@ -192,7 +182,6 @@ export const ContenedorReserva = styled(Box)`
   }
 `;
 
-// Estilo del precio del producto
 export const PrecioProducto = styled.p`
   font-family: ${({ theme }) => theme.typography.h2.fontFamily};
   font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.1);

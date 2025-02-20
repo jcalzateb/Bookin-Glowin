@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// Contenedor principal
 export const ContenedorAdmin = styled.div`
   display: flex;
   background-color: #444;
@@ -9,7 +8,6 @@ export const ContenedorAdmin = styled.div`
   padding: 80px 50px 30px 50px;
 `;
 
-// Menú superior
 export const MenuSuperior = styled.div`
   position: fixed;
   top: 0;
@@ -22,7 +20,6 @@ export const MenuSuperior = styled.div`
   margin-bottom: 5px;
 `;
 
-// Botones del menú superior
 export const BotonMenu = styled.button`
   flex: 1;
   padding: 15px;
@@ -41,7 +38,6 @@ export const BotonMenu = styled.button`
   }
 `;
 
-// Contenedor del contenido dinámico
 export const Contenido = styled.div`
   width: 100%;
   margin-top: 80px;

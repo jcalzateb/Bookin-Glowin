@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Box, Typography } from "@mui/material";
 
-// Contenedor principal del Footer
 export const ContenedorFooter = styled(Box)`
   background: linear-gradient(to right, #000, #1c1c1e);
   color: #ffffff;
@@ -16,7 +15,6 @@ export const ContenedorFooter = styled(Box)`
   bottom: 0;
 `;
 
-// Texto del Footer
 export const TextoFooter = styled(Typography)`
   font-size: 14px;
   font-weight: 400;

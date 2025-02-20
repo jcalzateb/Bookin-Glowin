@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Box } from "@mui/material";
 
-// Contenedor principal
 export const ContenedorCategorias = styled(Box)`
   background-color: #1c1c1e;
   display: flex;
@@ -18,7 +17,6 @@ export const ContenedorCategorias = styled(Box)`
   }
 `;
 
-// Contenedor de la lista de categorías
 export const ListaCategorias = styled(Box)`
   display: flex;
   justify-content: center;

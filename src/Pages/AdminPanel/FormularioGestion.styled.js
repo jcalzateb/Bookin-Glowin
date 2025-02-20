@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// Contenedor del formulario
 export const ContenedorFormulario = styled.div`
   display: flex;
   flex-direction: column;
@@ -12,7 +11,6 @@ export const ContenedorFormulario = styled.div`
   box-sizing: border-box;
 `;
 
-// Campos de entrada (inputs)
 export const CampoInput = styled.input`
   padding: 14px;
   border-radius: 5px;
@@ -28,7 +26,6 @@ export const CampoInput = styled.input`
   }
 `;
 
-// Área de texto (descripción)
 export const AreaTexto = styled.textarea`
   padding: 14px;
   border-radius: 5px;
@@ -46,7 +43,6 @@ export const AreaTexto = styled.textarea`
   }
 `;
 
-// Contenedor de imágenes
 export const ContenedorImagenes = styled.div`
   display: flex;
   flex-direction: column;
@@ -60,7 +56,6 @@ export const ContenedorImagenes = styled.div`
   box-sizing: border-box;
 `;
 
-// Contenedor de las miniaturas de imágenes
 export const ContenedorMiniaturas = styled.div`
   display: flex;
   gap: 10px;
@@ -70,7 +65,6 @@ export const ContenedorMiniaturas = styled.div`
   max-width: 600px;
 `;
 
-// Caja para cada imagen
 export const CajaImagen = styled.div`
   width: 175px;
   height: 100px;
@@ -89,13 +83,11 @@ export const CajaImagen = styled.div`
   }
 `;
 
-// Icono dentro de las cajas vacías
 export const IconoImagen = styled.div`
   color: white;
   opacity: 0.5;
 `;
 
-// Botón de agregar
 export const BotonAgregar = styled.button`
   padding: 14px;
   border: none;

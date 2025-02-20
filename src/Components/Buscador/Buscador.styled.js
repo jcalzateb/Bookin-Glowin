@@ -1,7 +1,6 @@
 import styled from "styled-components";
-import { Button, TextField  } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 
-// Contenedor principal
 export const ContenedorBuscador = styled.div`
   position: relative;
   width: 100%;
@@ -21,7 +20,6 @@ export const ContenedorBuscador = styled.div`
   }
 `;
 
-// Imagen de fondo
 export const FondoBanner = styled.img`
   width: 100%;
   height: 100%;
@@ -32,7 +30,7 @@ export const FondoBanner = styled.img`
   z-index: -1;
 `;
 
-// Contenedor del contenido (isologo + barra de búsqueda + botón)
+// Contenedor (isologo + barra de búsqueda + botón)
 export const ContenedorContenido = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,7 +52,6 @@ export const ContenedorContenido = styled.div`
   }
 `;
 
-// Imagen del isologo
 export const Isologo = styled.img`
   width: 100%;
   max-width: 500px;
@@ -69,7 +66,6 @@ export const Isologo = styled.img`
   }
 `;
 
-// Contenedor de la barra de búsqueda
 export const BarraBusqueda = styled.div`
   display: flex;
   width: 100%;
@@ -92,7 +88,8 @@ export const CampoBusqueda = styled(TextField)`
       border-color: ${({ theme }) => theme.palette.botones.activo} !important;
 
       &:hover fieldset {
-        border-color: ${({ theme }) => theme.palette.botones.hovered} !important;
+        border-color: ${({ theme }) =>
+          theme.palette.botones.hovered} !important;
       }
 
       &.Mui-focused fieldset {
@@ -116,8 +113,8 @@ export const CampoBusqueda = styled(TextField)`
 
 export const BotonLimpiar = styled(Button)`
   && {
-    background-color:rgba(136, 136, 136, 0) !important; 
-    color:rgb(129, 129, 129) !important;
+    background-color: rgba(136, 136, 136, 0) !important;
+    color: rgb(129, 129, 129) !important;
     border-radius: 50%;
     width: 48px;
     height: 48px;
@@ -127,11 +124,11 @@ export const BotonLimpiar = styled(Button)`
     justify-content: center;
 
     &:hover {
-      color:rgb(255, 255, 255) !important;
-      color:rgba(111, 111, 111, 0.58) !important;
+      color: rgb(255, 255, 255) !important;
+      color: rgba(111, 111, 111, 0.58) !important;
     }
     &:active {
-      background-color:rgba(116, 116, 116, 0.88) !important; 
+      background-color: rgba(116, 116, 116, 0.88) !important;
     }
   }
 `;
@@ -148,15 +145,18 @@ export const BotonBuscar = styled(Button)`
     font-size: 16px;
 
     &:hover {
-      background-color: ${({ theme }) => theme.palette.botones.hovered} !important;
+      background-color: ${({ theme }) =>
+        theme.palette.botones.hovered} !important;
     }
 
     &:active {
-      background-color: ${({ theme }) => theme.palette.botones.presionado} !important;
+      background-color: ${({ theme }) =>
+        theme.palette.botones.presionado} !important;
     }
 
     &:disabled {
-      background-color: ${({ theme }) => theme.palette.botones.inactivo} !important;
+      background-color: ${({ theme }) =>
+        theme.palette.botones.inactivo} !important;
     }
   }
 

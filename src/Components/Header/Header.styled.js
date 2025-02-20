@@ -8,7 +8,6 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/system";
 
-// Contenedor principal del Header
 export const ContenedorHeader = styled(AppBar)({
   position: "fixed",
   backgroundColor: "#fff",
@@ -20,7 +19,6 @@ export const ContenedorHeader = styled(AppBar)({
   zIndex: "100000",
 });
 
-// Barra de navegación
 export const BarraNavegacion = styled(Toolbar)({
   display: "flex",
   justifyContent: "space-between",
@@ -28,7 +26,6 @@ export const BarraNavegacion = styled(Toolbar)({
   width: "100%",
 });
 
-// Contenedor del Logo
 export const ContenedorLogo = styled("div")({
   display: "flex",
   alignItems: "center",
@@ -43,7 +40,6 @@ export const LogoImg = styled("img")({
   },
 });
 
-// Lema
 export const Lema = styled("span")({
   fontSize: "1.2rem",
   letterSpacing: "2px",
@@ -56,7 +52,6 @@ export const Lema = styled("span")({
   },
 });
 
-// Contenedor de los botones
 export const ContenedorBotones = styled("div")({
   display: "flex",
   gap: 10,
@@ -65,7 +60,6 @@ export const ContenedorBotones = styled("div")({
   },
 });
 
-// Botones de navegación
 export const BotonNav = styled(Button)(({ variante }) => ({
   textTransform: "none",
   fontSize: "0.9rem",
@@ -89,7 +83,6 @@ export const BotonNav = styled(Button)(({ variante }) => ({
   }),
 }));
 
-// Botón del menú hamburguesa
 export const BotonMenu = styled(IconButton)({
   display: "none",
   "@media (max-width: 600px)": {
@@ -98,7 +91,7 @@ export const BotonMenu = styled(IconButton)({
   },
 });
 
-// Drawer para el menú hamburguesa
+//  menú hamburguesa
 export const DrawerMenu = styled(Drawer)({
   "& .MuiDrawer-paper": {
     width: 250,
@@ -107,7 +100,6 @@ export const DrawerMenu = styled(Drawer)({
   },
 });
 
-// Lista dentro del menú hamburguesa
 export const ListaMenu = styled(List)({
   display: "flex",
   flexDirection: "column",

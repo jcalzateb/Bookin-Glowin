@@ -16,7 +16,7 @@ const tema = createTheme({
     fontFamily: "Poppins, Lora, Inter, sans-serif",
     button: {
       fontFamily: "Inter, sans-serif",
-      fontWeight: 600, // Semi Bold
+      fontWeight: 600,
       fontSize: "16px",
     },
     h1: {

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Box, Button } from "@mui/material";
 
-// Contenedor del carrusel
 export const ContenedorDestacados = styled.div`
   display: flex;
   justify-content: center;
@@ -24,7 +23,6 @@ export const ContenedorDestacados = styled.div`
   }
 `;
 
-// Tarjetas de productos destacados
 export const TarjetaDestacada = styled(Box)`
   width: 200px;
   height: 200px;
@@ -80,7 +78,6 @@ export const TituloDestacado = styled(Box)`
   z-index: 10;
 `;
 
-// Contenedor de la estrella
 export const EstrellaDestacada = styled(Box)`
   position: absolute;
   top: 8px;
@@ -90,7 +87,6 @@ export const EstrellaDestacada = styled(Box)`
   font-size: 24px;
 `;
 
-// Contenedor del hover
 export const ContenidoHover = styled(Box)`
   position: absolute;
   top: 0;
@@ -111,7 +107,6 @@ export const ContenidoHover = styled(Box)`
   z-index: 20;
 `;
 
-// **Botón "Ver Más" corregido**
 export const BotonVerMas = styled(Button)`
   background: transparent !important;
   color: #9747ff !important;
@@ -131,7 +126,6 @@ export const BotonVerMas = styled(Button)`
   }
 `;
 
-// Controles del carrusel
 export const ControlesCarrusel = styled(Box)`
   display: flex;
   justify-content: center;
@@ -139,14 +133,12 @@ export const ControlesCarrusel = styled(Box)`
   margin: 5px 0 20px 0;
 `;
 
-// Indicadores del carrusel
 export const Indicadores = styled(Box)`
   display: flex;
   gap: 6px;
   margin: 0 10px;
 `;
 
-// Puntos indicadores
 export const Indicador = styled(Box)`
   width: 10px;
   height: 10px;

@@ -1,7 +1,6 @@
 import styled from "styled-components";
 import { Box, Button } from "@mui/material";
 
-// Contenedor general de la lista de productos
 export const ContenedorLista = styled(Box)`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -19,7 +18,6 @@ export const ContenedorLista = styled(Box)`
   }
 `;
 
-// Tarjeta de cada producto
 export const TarjetaProducto = styled(Box)`
   display: flex;
   background: white;
@@ -40,7 +38,6 @@ export const TarjetaProducto = styled(Box)`
   }
 `;
 
-// Imagen del producto, ocupa el 40%
 export const ImagenProducto = styled.img`
   width: 40%;
   height: 180px;
@@ -57,7 +54,6 @@ export const ImagenProducto = styled.img`
   }
 `;
 
-// Contenido del producto, ocupa el 60%
 export const ContenidoProducto = styled(Box)`
   width: 60%;
   height: 180px;
@@ -78,7 +74,6 @@ export const ContenidoProducto = styled(Box)`
   }
 `;
 
-// Título del producto
 export const TituloProducto = styled.h3`
   font-size: 18px;
   font-weight: bold;
@@ -89,7 +84,6 @@ export const TituloProducto = styled.h3`
   text-overflow: ellipsis;
 `;
 
-// Descripción del producto
 export const DescripcionProducto = styled.p`
   font-size: 14px;
   color: #666;
@@ -115,7 +109,6 @@ export const BotonVerMas = styled(Button)`
   }
 `;
 
-// Contenedor de paginación
 export const ContenedorPaginacion = styled(Box)`
   display: flex;
   justify-content: center;
@@ -133,7 +126,6 @@ export const ContenedorPaginacion = styled(Box)`
   }
 `;
 
-// Botones de paginación
 export const BotonPagina = styled(Button)`
   min-width: 35px;
   height: 35px;
