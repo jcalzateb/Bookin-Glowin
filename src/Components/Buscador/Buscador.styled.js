@@ -39,7 +39,7 @@ export const ContenedorContenido = styled.div`
   max-width: 600px;
   background: rgba(255, 255, 255, 0.8);
   padding: 40px;
-  border-radius: 10px;
+  border-radius: 0 0 10px 10px;
   backdrop-filter: blur(5px);
 
   @media (max-width: 960px) {
