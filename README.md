@@ -32,5 +32,5 @@ npm install
 *Iniciar el servidor de desarrollo:*
 npm run dev
 
-###🛠️ Estado del Proyecto
-###🚧 En Desarrollo 🚧
+### 🛠️ Estado del Proyecto
+### 🚧 En Desarrollo 🚧
