@@ -11,7 +11,8 @@
       "https://picsum.photos/600/400?random=4",
       "https://picsum.photos/600/400?random=5"
     ],
-    "precio": "20000"
+    "precio": "20000",
+    "duracion": 1
   },
   {
     "id": 2,
@@ -25,7 +26,8 @@
       "https://picsum.photos/600/400?random=9",
       "https://picsum.photos/600/400?random=10"
     ],
-    "precio": "45000"
+    "precio": "45000",
+    "duracion": 3
   },
   {
     "id": 3,
@@ -39,7 +41,8 @@
       "https://picsum.photos/600/400?random=14",
       "https://picsum.photos/600/400?random=15"
     ],
-    "precio": "30000"
+    "precio": "30000",
+    "duracion": 2
   },
   {
     "id": 4,
@@ -53,7 +56,8 @@
       "https://picsum.photos/600/400?random=19",
       "https://picsum.photos/600/400?random=20"
     ],
-    "precio": "50000"
+    "precio": "50000",
+    "duracion": 1
   },
   {
     "id": 5,
@@ -67,7 +71,8 @@
       "https://picsum.photos/600/400?random=24",
       "https://picsum.photos/600/400?random=25"
     ],
-    "precio": "35000"
+    "precio": "35000",
+    "duracion": 1
   },
   {
     "id": 6,
@@ -81,7 +86,8 @@
       "https://picsum.photos/600/400?random=29",
       "https://picsum.photos/600/400?random=30"
     ],
-    "precio": "60000"
+    "precio": "60000",
+    "duracion": 1
   },
   {
     "id": 7,
@@ -95,7 +101,8 @@
       "https://picsum.photos/600/400?random=34",
       "https://picsum.photos/600/400?random=35"
     ],
-    "precio": "20000"
+    "precio": "20000",
+    "duracion": 1
   },
   {
     "id": 8,
@@ -109,7 +116,8 @@
       "https://picsum.photos/600/400?random=39",
       "https://picsum.photos/600/400?random=40"
     ],
-    "precio": "70000"
+    "precio": "70000",
+    "duracion": 1
   },
   {
     "id": 9,
@@ -123,7 +131,8 @@
       "https://picsum.photos/600/400?random=44",
       "https://picsum.photos/600/400?random=45"
     ],
-    "precio": "50000"
+    "precio": "50000",
+    "duracion": 1
   },
   {
     "id": 10,
@@ -137,7 +146,8 @@
       "https://picsum.photos/600/400?random=49",
       "https://picsum.photos/600/400?random=50"
     ],
-    "precio": "60000"
+    "precio": "60000",
+    "duracion": 1
   },
   {
     "id": 11,
@@ -151,7 +161,8 @@
       "https://picsum.photos/600/400?random=54",
       "https://picsum.photos/600/400?random=55"
     ],
-    "precio": "25000"
+    "precio": "25000",
+    "duracion": 1
   },
   {
     "id": 12,
@@ -165,7 +176,8 @@
       "https://picsum.photos/600/400?random=59",
       "https://picsum.photos/600/400?random=60"
     ],
-    "precio": "35000"
+    "precio": "35000",
+    "duracion": 2
   },
   {
     "id": 13,
@@ -179,7 +191,8 @@
       "https://picsum.photos/600/400?random=64",
       "https://picsum.photos/600/400?random=65"
     ],
-    "precio": "75000"
+    "precio": "75000",
+    "duracion": 2
   },
   {
     "id": 14,
@@ -193,7 +206,8 @@
       "https://picsum.photos/600/400?random=69",
       "https://picsum.photos/600/400?random=70"
     ],
-    "precio": "40000"
+    "precio": "40000",
+    "duracion": 1
   },
   {
     "id": 15,
@@ -207,7 +221,8 @@
       "https://picsum.photos/600/400?random=74",
       "https://picsum.photos/600/400?random=75"
     ],
-    "precio": "80000"
+    "precio": "80000",
+    "duracion": 3
   },
   {
     "id": 16,
@@ -221,7 +236,8 @@
       "https://picsum.photos/600/400?random=79",
       "https://picsum.photos/600/400?random=80"
     ],
-    "precio": "50000"
+    "precio": "50000",
+    "duracion": 2
   },
   {
     "id": 17,
@@ -235,7 +251,8 @@
       "https://picsum.photos/600/400?random=84",
       "https://picsum.photos/600/400?random=85"
     ],
-    "precio": "40000"
+    "precio": "40000",
+    "duracion": 1
   },
   {
     "id": 18,
@@ -249,7 +266,8 @@
       "https://picsum.photos/600/400?random=89",
       "https://picsum.photos/600/400?random=90"
     ],
-    "precio": "90000"
+    "precio": "90000",
+    "duracion": 3
   },
   {
     "id": 19,
@@ -261,7 +279,9 @@
       "https://picsum.photos/600/400?random=144",
       "https://picsum.photos/600/400?random=145",
       "https://picsum.photos/600/400?random=146"
-    ]
+    ],
+    "precio": "50000",
+    "duracion": 1
   },
   {
     "id": 20,
@@ -273,7 +293,9 @@
       "https://picsum.photos/600/400?random=148",
       "https://picsum.photos/600/400?random=149",
       "https://picsum.photos/600/400?random=150"
-    ]
+    ],
+    "precio": "60000",
+    "duracion": 1
   },
   {
     "id": 21,
@@ -285,7 +307,9 @@
       "https://picsum.photos/600/400?random=152",
       "https://picsum.photos/600/400?random=153",
       "https://picsum.photos/600/400?random=154"
-    ]
+    ],
+    "precio": "95000",
+    "duracion": 4
   },
   {
     "id": 22,
@@ -297,7 +321,9 @@
       "https://picsum.photos/600/400?random=156",
       "https://picsum.photos/600/400?random=157",
       "https://picsum.photos/600/400?random=158"
-    ]
+    ],
+    "precio": "80000",
+    "duracion": 1
   },
   {
     "id": 23,
@@ -309,6 +335,8 @@
       "https://picsum.photos/600/400?random=160",
       "https://picsum.photos/600/400?random=161",
       "https://picsum.photos/600/400?random=162"
-    ]
+    ],
+    "precio": "70000",
+    "duracion": 1
   }
 ]

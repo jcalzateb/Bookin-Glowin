@@ -102,7 +102,7 @@ export const BotonMenu = styled(IconButton)({
 export const DrawerMenu = styled(Drawer)({
   "& .MuiDrawer-paper": {
     width: 250,
-    padding: "20px",
+    padding: "80px 20px",
     backgroundColor: "#fff",
   },
 });

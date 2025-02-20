@@ -61,7 +61,7 @@ const ProductosDestacados = () => {
       <h2
         style={{
           textAlign: "center",
-          marginBottom: "20px",
+          margin: "30px 0 10px 0",
           fontStyle: "italic",
         }}
       >
@@ -73,7 +73,7 @@ const ProductosDestacados = () => {
             <EstrellaDestacada className="estrella">
               <StarIcon />
             </EstrellaDestacada>
-            <TituloDestacado className="titulo">
+            <TituloDestacado variant="h6" className="titulo">
               {producto.nombre}
             </TituloDestacado>
             <ContenidoHover className="hover">
@@ -96,7 +96,7 @@ const ProductosDestacados = () => {
           }).map((_, index) => (
             <Indicador
               key={index}
-              activo={index === indiceActual}
+              $activo={index === indiceActual}
               onClick={() => setIndiceActual(index)}
             />
           ))}

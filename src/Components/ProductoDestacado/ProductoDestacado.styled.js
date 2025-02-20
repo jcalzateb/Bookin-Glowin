@@ -136,7 +136,7 @@ export const ControlesCarrusel = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 20px;
+  margin: 5px 0 20px 0;
 `;
 
 // Indicadores del carrusel
@@ -151,7 +151,7 @@ export const Indicador = styled(Box)`
   width: 10px;
   height: 10px;
   border-radius: 50%;
-  background: ${({ activo }) => (activo ? "#9747FF" : "#C4C4C4")};
+  background: ${({ $activo }) => ($activo ? "#9747FF" : "#C4C4C4")};
   cursor: pointer;
   transition: background 0.3s;
 `;

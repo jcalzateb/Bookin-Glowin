@@ -3,13 +3,19 @@ import { Box } from "@mui/material";
 
 // Contenedor principal
 export const ContenedorCategorias = styled(Box)`
+  background-color: #1c1c1e;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 20px;
-  width: 100%;
-  padding: 40px 20px;
+  gap: 10px;
+  padding: 20px;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  color: white;
+
+  @media (min-width: 760px) and (max-width: 1000px) {
+    padding: 40px 120px;
+  }
 `;
 
 // Contenedor de la lista de categorías
@@ -31,6 +37,7 @@ export const CategoriaItem = styled.div`
   width: 100px;
   cursor: pointer;
   transition: transform 0.2s;
+  color: white;
 
   &:hover {
     transform: scale(1.1);
@@ -41,11 +48,6 @@ export const CategoriaItem = styled.div`
     height: 100px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: #f5f5f5;
-  }
-
-  span {
-    margin-top: 8px;
-    font-weight: bold;
+    background-color: rgb(0, 0, 0);
   }
 `;

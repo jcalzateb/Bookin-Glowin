@@ -2,54 +2,113 @@ import React, { useState } from "react";
 import {
   ContenedorFormulario,
   CampoInput,
-  BotonAccion,
-  BotonAgregar,
-  BotonEliminar,
+  AreaTexto,
   ContenedorImagenes,
-  ImagenMiniatura,
+  CajaImagen,
+  BotonAgregar,
 } from "./FormularioGestion.styled";
 
-const FormularioGestion = () => {
-  const [imagenPrincipal, setImagenPrincipal] = useState(null);
-  const [miniaturas, setMiniaturas] = useState([]);
+const FormularioGestion = ({ agregarServicio }) => {
+  const [nuevoServicio, setNuevoServicio] = useState({
+    nombre: "",
+    categoria: "",
+    precio: "",
+    duracion: "",
+    descripcion: "",
+    imagenes: [],
+  });
 
-  const handleImagenPrincipal = (e) => {
-    const file = e.target.files[0];
-    setImagenPrincipal(URL.createObjectURL(file));
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setNuevoServicio((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleMiniaturas = (e) => {
-    const files = Array.from(e.target.files);
-    const urls = files.map((file) => URL.createObjectURL(file));
-    setMiniaturas(urls);
+  const handleImagenes = () => {
+    const imagenesFalsas = Array(4).fill(
+      "https://picsum.photos/200?random=" + Math.random()
+    );
+    setNuevoServicio({ ...nuevoServicio, imagenes: imagenesFalsas });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (
+      !nuevoServicio.nombre ||
+      !nuevoServicio.categoria ||
+      !nuevoServicio.precio ||
+      !nuevoServicio.duracion ||
+      !nuevoServicio.descripcion
+    ) {
+      alert("Todos los campos son obligatorios");
+      return;
+    }
+
+    agregarServicio(nuevoServicio);
+
+    setNuevoServicio({
+      nombre: "",
+      categoria: "",
+      precio: "",
+      duracion: "",
+      descripcion: "",
+      imagenes: [],
+    });
   };
 
   return (
-    <ContenedorFormulario>
-      <CampoInput type="text" placeholder="Título" />
-      <CampoInput type="text" placeholder="Categoría" />
-      <CampoInput type="number" placeholder="Precio" />
-      <CampoInput type="text" placeholder="Duración" />
-      <CampoInput type="text" placeholder="Turnos" />
-      <CampoInput type="text" placeholder="Profesional" />
-      <textarea placeholder="Descripción"></textarea>
+    <ContenedorFormulario onSubmit={handleSubmit}>
+      <CampoInput
+        type="text"
+        name="nombre"
+        value={nuevoServicio.nombre}
+        onChange={handleChange}
+        placeholder="Servicio"
+      />
+      <CampoInput
+        type="text"
+        name="categoria"
+        value={nuevoServicio.categoria}
+        onChange={handleChange}
+        placeholder="Categoría"
+      />
+      <CampoInput
+        type="number"
+        name="precio"
+        value={nuevoServicio.precio}
+        onChange={handleChange}
+        placeholder="Precio"
+      />
+      <CampoInput
+        type="number"
+        name="duracion"
+        value={nuevoServicio.duracion}
+        onChange={handleChange}
+        placeholder="duracion"
+      />
+      <AreaTexto
+        name="descripcion"
+        value={nuevoServicio.descripcion}
+        onChange={handleChange}
+        placeholder="Descripción"
+      />
 
       <ContenedorImagenes>
-        <h4>Subir Imagen Principal</h4>
-        <input type="file" accept="image/*" onChange={handleImagenPrincipal} />
-        {imagenPrincipal && <img src={imagenPrincipal} alt="Principal" width="100" />}
-        
-        <h4>Subir 4 Miniaturas</h4>
-        <input type="file" accept="image/*" multiple onChange={handleMiniaturas} />
-        <ImagenMiniatura>
-          {miniaturas.map((img, index) => (
-            <img key={index} src={img} alt={`Miniatura ${index}`} />
+        <p>Añadir imágenes</p>
+        <div style={{ display: "flex", gap: "10px" }}>
+          {nuevoServicio.imagenes.map((img, index) => (
+            <CajaImagen key={index}>
+              <img src={img} alt="Miniatura" />
+            </CajaImagen>
           ))}
-        </ImagenMiniatura>
+          {nuevoServicio.imagenes.length < 4 && (
+            <CajaImagen onClick={handleImagenes}>
+              <span>+</span>
+            </CajaImagen>
+          )}
+        </div>
       </ContenedorImagenes>
 
-      <BotonAgregar>Agregar</BotonAgregar>
-      <BotonEliminar>Eliminar</BotonEliminar>
+      <BotonAgregar type="submit">Agregar</BotonAgregar>
     </ContenedorFormulario>
   );
 };

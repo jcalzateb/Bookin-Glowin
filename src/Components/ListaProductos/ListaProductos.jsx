@@ -17,12 +17,23 @@ const ListaProductos = () => {
   const productosPorPagina = 10;
   const navigate = useNavigate();
 
+  const [productosAleatorios, setProductosAleatorios] = useState([]);
+  const mezclarProductos = (array) => {
+    return [...array].sort(() => Math.random() - 0.5);
+  };
+  useEffect(() => {
+    setProductosAleatorios(mezclarProductos(servicios));
+  }, []);
+
   // Calcular número total de páginas basado en la cantidad de servicios
-  const totalPaginas = Math.ceil(servicios.length / productosPorPagina);
+  const totalPaginas = Math.ceil(
+    productosAleatorios.length / productosPorPagina
+  );
 
   // Calcular servicios de la página actual
   const indiceInicial = (paginaActual - 1) * productosPorPagina;
-  const serviciosActuales = servicios.slice(
+
+  const serviciosActuales = productosAleatorios.slice(
     indiceInicial,
     indiceInicial + productosPorPagina
   );
@@ -30,6 +41,10 @@ const ListaProductos = () => {
   // Cambiar página
   const cambiarPagina = (nuevaPagina) => {
     setPaginaActual(nuevaPagina);
+    window.scrollTo({
+      top: document.getElementById("lista-productos").offsetTop - 20, // Ajuste opcional
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -37,55 +52,62 @@ const ListaProductos = () => {
       <h2
         style={{
           textAlign: "center",
-          marginBottom: "20px",
+          margin: "30px 0 20px 0",
           fontStyle: "italic",
         }}
       >
         SERVICIOS
       </h2>
 
-      <ContenedorLista>
-        {serviciosActuales.map((servicio) => (
-          <TarjetaProducto key={servicio.id}>
-            <ImagenProducto src={servicio.imagenes[0]} alt={servicio.nombre} />
-            <ContenidoProducto>
-              <TituloProducto>{servicio.nombre}</TituloProducto>
-              <DescripcionProducto variant="body2">
-                {servicio.descripcion}
-              </DescripcionProducto>
-              <BotonVerMas onClick={() => navigate(`/producto/${servicio.id}`)}>
-                VER MÁS
-              </BotonVerMas>
-            </ContenidoProducto>
-          </TarjetaProducto>
-        ))}
-      </ContenedorLista>
+      <div id="lista-productos">
+        <ContenedorLista>
+          {serviciosActuales.map((servicio) => (
+            <TarjetaProducto key={servicio.id}>
+              <ImagenProducto
+                src={servicio.imagenes[0]}
+                alt={servicio.nombre}
+              />
+              <ContenidoProducto>
+                <TituloProducto>{servicio.nombre}</TituloProducto>
+                <DescripcionProducto variant="body2">
+                  {servicio.descripcion}
+                </DescripcionProducto>
+                <BotonVerMas
+                  onClick={() => navigate(`/producto/${servicio.id}`)}
+                >
+                  VER MÁS
+                </BotonVerMas>
+              </ContenidoProducto>
+            </TarjetaProducto>
+          ))}
+        </ContenedorLista>
 
-      <ContenedorPaginacion>
-        <BotonPagina
-          onClick={() => cambiarPagina(paginaActual - 1)}
-          disabled={paginaActual === 1}
-        >
-          {"<"}
-        </BotonPagina>
-
-        {Array.from({ length: totalPaginas }).map((_, index) => (
+        <ContenedorPaginacion>
           <BotonPagina
-            key={index}
-            onClick={() => cambiarPagina(index + 1)}
-            activo={paginaActual === index + 1}
+            onClick={() => cambiarPagina(paginaActual - 1)}
+            disabled={paginaActual === 1}
           >
-            {index + 1}
+            {"<"}
           </BotonPagina>
-        ))}
 
-        <BotonPagina
-          onClick={() => cambiarPagina(paginaActual + 1)}
-          disabled={paginaActual === totalPaginas}
-        >
-          {">"}
-        </BotonPagina>
-      </ContenedorPaginacion>
+          {Array.from({ length: totalPaginas }).map((_, index) => (
+            <BotonPagina
+              key={index}
+              onClick={() => cambiarPagina(index + 1)}
+              $activo={paginaActual === index + 1}
+            >
+              {index + 1}
+            </BotonPagina>
+          ))}
+
+          <BotonPagina
+            onClick={() => cambiarPagina(paginaActual + 1)}
+            disabled={paginaActual === totalPaginas}
+          >
+            {">"}
+          </BotonPagina>
+        </ContenedorPaginacion>
+      </div>
     </>
   );
 };

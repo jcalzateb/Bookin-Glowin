@@ -6,13 +6,9 @@ export const ContenedorLista = styled(Box)`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
-  padding: 20px 100px;
+  padding: 20px;
   max-width: 1200px;
   margin: auto;
-
-  @media (max-width: 1030px) {
-    padding: 20px;
-  }
 
   @media (max-width: 760px) {
     grid-template-columns: 1fr;
@@ -35,6 +31,9 @@ export const TarjetaProducto = styled(Box)`
   &:hover {
     transform: scale(1.02);
   }
+  @media (max-width: 820px) {
+    flex-direction: column;
+  }
 
   @media (max-width: 600px) {
     flex-direction: column;
@@ -46,6 +45,11 @@ export const ImagenProducto = styled.img`
   width: 40%;
   height: 180px;
   object-fit: cover;
+
+  @media (max-width: 820px) {
+    width: 100%;
+    height: 200px;
+  }
 
   @media (max-width: 600px) {
     width: 100%;
@@ -62,6 +66,11 @@ export const ContenidoProducto = styled(Box)`
   justify-content: center;
   padding: 15px 30px;
   text-align: left;
+
+  @media (max-width: 820px) {
+    width: 100%;
+    height: auto;
+  }
 
   @media (max-width: 600px) {
     width: 100%;
@@ -114,6 +123,11 @@ export const ContenedorPaginacion = styled(Box)`
   margin: 10px 0 30px 0;
   gap: 8px;
   flex-wrap: wrap;
+
+  @media (max-width: 820px) {
+    gap: 4px;
+  }
+
   @media (max-width: 600px) {
     gap: 4px;
   }
@@ -123,9 +137,9 @@ export const ContenedorPaginacion = styled(Box)`
 export const BotonPagina = styled(Button)`
   min-width: 35px;
   height: 35px;
-  background: ${({ activo }) =>
-    activo ? "#9747FF" : "transparent"} !important;
-  color: ${({ activo }) => (activo ? "white" : "#9747FF")} !important;
+  background: ${({ $activo }) =>
+    $activo ? "#9747FF" : "transparent"} !important;
+  color: ${({ $activo }) => ($activo ? "white" : "#9747FF")} !important;
   border: 1px solid #9747ff !important;
   border-radius: 8px;
   font-size: 14px;
@@ -140,6 +154,12 @@ export const BotonPagina = styled(Button)`
     background: #e0e0e0 !important;
     color: #a0a0a0 !important;
     border: none !important;
+  }
+
+  @media (max-width: 820px) {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
   }
 
   @media (max-width: 600px) {

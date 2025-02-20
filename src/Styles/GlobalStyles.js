@@ -11,6 +11,21 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${({ theme }) => theme.palette.primario.main};
     color: ${({ theme }) => theme.palette.secundario.main};
     font-family: "Poppins", sans-serif;
+    height: 100%;
+  }
+
+  html {
+    height: 100%;
+  }
+
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1;
   }
 
   h1 {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ContenedorTabla,
   Tabla,
@@ -12,50 +12,36 @@ import {
 } from "./TablaProductos.styled";
 import { Edit, Delete, Star } from "@mui/icons-material";
 
-const productosEjemplo = [
-  { id: 1, nombre: "Corte de Cabello", categoria: "Cabello", precio: "$10.000", duracion: "30 min", profesional: "Andrea", turnos: "4" },
-  { id: 2, nombre: "Peinado", categoria: "Cabello", precio: "$15.000", duracion: "45 min", profesional: "Laura", turnos: "3" },
-  { id: 3, nombre: "Uñas", categoria: "Manicura", precio: "$20.000", duracion: "60 min", profesional: "María", turnos: "5" },
-];
-
-const TablaProductos = () => {
-  const [productos, setProductos] = useState(productosEjemplo);
-
-  const handleEliminar = (id) => {
-    setProductos(productos.filter((producto) => producto.id !== id));
-  };
-
+const TablaProductos = ({ servicios, eliminarServicio }) => {
   return (
     <ContenedorTabla>
       <Tabla>
         <Encabezado>
           <FilaEncabezado>
             <CeldaEncabezado>ID</CeldaEncabezado>
-            <CeldaEncabezado>Producto</CeldaEncabezado>
+            <CeldaEncabezado>Servicio</CeldaEncabezado>
             <CeldaEncabezado>Categoría</CeldaEncabezado>
             <CeldaEncabezado>Precio</CeldaEncabezado>
             <CeldaEncabezado>Duración</CeldaEncabezado>
-            <CeldaEncabezado>Profesional</CeldaEncabezado>
-            <CeldaEncabezado>Turnos</CeldaEncabezado>
+            <CeldaEncabezado>Descripción</CeldaEncabezado>
             <CeldaEncabezado>Acción</CeldaEncabezado>
           </FilaEncabezado>
         </Encabezado>
         <CuerpoTabla>
-          {productos.map((producto) => (
-            <Fila key={producto.id}>
-              <Celda>{producto.id}</Celda>
-              <Celda>{producto.nombre}</Celda>
-              <Celda>{producto.categoria}</Celda>
-              <Celda>{producto.precio}</Celda>
-              <Celda>{producto.duracion}</Celda>
-              <Celda>{producto.profesional}</Celda>
-              <Celda>{producto.turnos}</Celda>
+          {servicios.map((servicio) => (
+            <Fila key={servicio.id}>
+              <Celda>{servicio.id}</Celda>
+              <Celda>{servicio.nombre}</Celda>
+              <Celda>{servicio.categoria}</Celda>
+              <Celda>${servicio.precio}</Celda>
+              <Celda>{servicio.duracion}</Celda>
+              <Celda>{servicio.descripcion.substring(0, 50)}...</Celda>
               <Celda>
                 <IconosAccion>
                   <button>
                     <Edit />
                   </button>
-                  <button onClick={() => handleEliminar(producto.id)}>
+                  <button onClick={() => eliminarServicio(servicio.id)}>
                     <Delete />
                   </button>
                   <button>
