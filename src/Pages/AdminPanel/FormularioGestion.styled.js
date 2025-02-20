@@ -1,73 +1,85 @@
 import styled from "styled-components";
 
+// Contenedor principal del formulario
 export const ContenedorFormulario = styled.div`
   display: flex;
   flex-direction: column;
   gap: 15px;
-  padding: 30px;
+  padding: 25px;
   background-color: #444;
   border-radius: 10px;
   width: 100%;
-  box-sizing: border-box;
+  max-width: 900px;
+  min-width: 600px;
+  margin: auto;
 `;
 
+// Etiquetas para los campos
+export const Etiqueta = styled.label`
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 5px;
+`;
+
+// Campos de entrada (inputs y textarea)
 export const CampoInput = styled.input`
-  padding: 14px;
+  padding: 12px;
   border-radius: 5px;
   border: 1px solid white;
   background: transparent;
   color: white;
   font-size: 16px;
   width: 100%;
-  box-sizing: border-box;
 
   &::placeholder {
     color: #ccc;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #9747ff;
   }
 `;
 
 export const AreaTexto = styled.textarea`
-  padding: 14px;
+  padding: 12px;
   border-radius: 5px;
   border: 1px solid white;
   background: transparent;
   color: white;
   font-size: 16px;
   width: 100%;
-  height: 120px;
+  height: 100px;
   resize: none;
-  box-sizing: border-box;
 
   &::placeholder {
     color: #ccc;
   }
+
+  &:focus {
+    outline: none;
+    border-color: #9747ff;
+  }
 `;
 
+// Contenedor de las imágenes
 export const ContenedorImagenes = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   padding: 15px;
   border: 2px dashed white;
   border-radius: 10px;
   align-items: center;
   text-align: center;
-  width: 100%;
-  box-sizing: border-box;
+  background: rgba(255, 255, 255, 0.1);
 `;
 
-export const ContenedorMiniaturas = styled.div`
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
-  max-width: 600px;
-`;
-
+// Caja de imágenes (para miniaturas y principal)
 export const CajaImagen = styled.div`
-  width: 175px;
-  height: 100px;
+  width: 80px;
+  height: 80px;
   border: 2px dashed white;
   border-radius: 8px;
   display: flex;
@@ -83,16 +95,12 @@ export const CajaImagen = styled.div`
   }
 `;
 
-export const IconoImagen = styled.div`
-  color: white;
-  opacity: 0.5;
-`;
-
-export const BotonAgregar = styled.button`
-  padding: 14px;
+// Botones de acción
+export const BotonAccion = styled.button`
+  padding: 12px;
   border: none;
   border-radius: 5px;
-  background-color: #28a745;
+  background-color: ${({ color }) => color || "#28a745"};
   color: #fff;
   cursor: pointer;
   font-size: 18px;
@@ -102,6 +110,19 @@ export const BotonAgregar = styled.button`
   transition: 0.3s;
 
   &:hover {
-    background-color: #218838;
+    opacity: 0.8;
+  }
+`;
+
+// Contenedor de botones en fila
+export const ContenedorBotones = styled.div`
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  width: 100%;
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 8px;
   }
 `;

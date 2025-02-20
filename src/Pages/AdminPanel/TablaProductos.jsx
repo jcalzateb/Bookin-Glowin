@@ -12,7 +12,11 @@ import {
 } from "./TablaProductos.styled";
 import { Edit, Delete, Star } from "@mui/icons-material";
 
-const TablaProductos = ({ servicios, eliminarServicio }) => {
+const TablaProductos = ({
+  servicios,
+  eliminarServicio,
+  seleccionarServicio,
+}) => {
   return (
     <ContenedorTabla>
       <Tabla>
@@ -39,7 +43,7 @@ const TablaProductos = ({ servicios, eliminarServicio }) => {
               <Celda>
                 <IconosAccion>
                   <button>
-                    <Edit />
+                    <Edit onClick={() => seleccionarServicio(servicio)} />
                   </button>
                   <button onClick={() => eliminarServicio(servicio.id)}>
                     <Delete />
