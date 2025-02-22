@@ -32,7 +32,7 @@ export const CategoriaItem = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 100px;
+  width: 250px;
   cursor: pointer;
   transition: transform 0.2s;
   color: white;
