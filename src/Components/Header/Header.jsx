@@ -33,10 +33,10 @@ const Header = () => {
         </ContenedorLogo>
 
         <ContenedorBotones>
-          <BotonNav component={Link} to="/iniciar-sesion" variante="bordeado">
+          <BotonNav component={Link} to="/ingresar" variante="bordeado">
             Iniciar sesión
           </BotonNav>
-          <BotonNav component={Link} to="/crear-cuenta" variante="solido">
+          <BotonNav component={Link} to="/registrar" variante="solido">
             Crear cuenta
           </BotonNav>
         </ContenedorBotones>

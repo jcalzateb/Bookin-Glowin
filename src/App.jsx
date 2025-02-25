@@ -5,6 +5,8 @@ import ProductoDetalle from "./Pages/ProductoDetalle/ProductoDetalle";
 import AdminPanel from "./Pages/AdminPanel/AdminPanel";
 import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
+import Registro from "./Pages/Registro/Registro";
+import Login from "./Pages/Login/Login";
 
 const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);
@@ -19,6 +21,8 @@ const App = () => {
           element={<ProductoDetalle setMostrarHeader={setMostrarHeader} />}
         />
         <Route path="/admin" element={<AdminPanel />} />
+        <Route path="/registrar" element={<Registro />} />
+        <Route path="/ingresar" element={<Login />} />
       </Routes>
       <Footer />
     </Router>
