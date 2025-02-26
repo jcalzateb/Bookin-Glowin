@@ -11,9 +11,15 @@ import {
   BotonVerMas,
   ContenedorPaginacion,
   BotonPagina,
+  ContenedorFiltro,
+  BotonEliminarFiltro,
+  TextoFiltro,
 } from "./ListaProductos.styled";
 
-const ListaProductos = ({ categoriaSeleccionada }) => {
+const ListaProductos = ({
+  categoriaSeleccionada,
+  setCategoriaSeleccionada,
+}) => {
   const [paginaActual, setPaginaActual] = useState(1);
   const productosPorPagina = 10;
   const navigate = useNavigate();
@@ -36,6 +42,10 @@ const ListaProductos = ({ categoriaSeleccionada }) => {
       )
     : productosAleatorios;
 
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [categoriaSeleccionada]);
+
   //Calcular número total de páginas
   const totalPaginas = Math.ceil(
     productosFiltrados.length / productosPorPagina
@@ -52,9 +62,14 @@ const ListaProductos = ({ categoriaSeleccionada }) => {
   const cambiarPagina = (nuevaPagina) => {
     setPaginaActual(nuevaPagina);
     window.scrollTo({
-      top: document.getElementById("lista-productos").offsetTop - 20, // Ajuste opcional
+      top: document.getElementById("lista-productos").offsetTop - 20,
       behavior: "smooth",
     });
+  };
+
+  const limpiarFiltro = () => {
+    setCategoriaSeleccionada(null);
+    setPaginaActual(1);
   };
 
   return (
@@ -63,12 +78,32 @@ const ListaProductos = ({ categoriaSeleccionada }) => {
         <h2
           style={{
             textAlign: "center",
-            margin: "30px 0 20px 0",
+            margin: "30px 0 5px 0",
             fontStyle: "italic",
           }}
         >
           SERVICIOS
         </h2>
+
+        <ContenedorFiltro>
+          <TextoFiltro>
+            Numeros de servicios: {productosFiltrados.length}
+            {""}
+          </TextoFiltro>
+
+          {categoriaSeleccionada && (
+            <TextoFiltro>
+              {"en la categoria de "}
+              {categoriaSeleccionada}
+            </TextoFiltro>
+          )}
+
+          {categoriaSeleccionada && (
+            <BotonEliminarFiltro onClick={limpiarFiltro}>
+              Limpiar
+            </BotonEliminarFiltro>
+          )}
+        </ContenedorFiltro>
 
         <ContenedorLista>
           {serviciosActuales.map((servicio) => (

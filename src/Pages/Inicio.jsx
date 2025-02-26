@@ -28,7 +28,10 @@ const Inicio = () => {
       <Buscador />
       <Categorias setCategoriaSeleccionada={handleCategoriaSeleccionada} />
       <ProductoDestacado />
-      <ListaProductos categoriaSeleccionada={categoriaSeleccionada} />
+      <ListaProductos
+        categoriaSeleccionada={categoriaSeleccionada}
+        setCategoriaSeleccionada={setCategoriaSeleccionada}
+      />
     </div>
   );
 };
