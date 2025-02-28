@@ -1,6 +1,5 @@
 import styled from "styled-components";
 
-// Contenedor principal del formulario
 export const ContenedorFormulario = styled.div`
   display: flex;
   flex-direction: column;
@@ -14,7 +13,6 @@ export const ContenedorFormulario = styled.div`
   margin: auto;
 `;
 
-// Etiquetas para los campos
 export const Etiqueta = styled.label`
   font-size: 16px;
   font-weight: bold;
@@ -22,7 +20,6 @@ export const Etiqueta = styled.label`
   margin-bottom: 5px;
 `;
 
-// Campos de entrada (inputs y textarea)
 export const CampoInput = styled.input`
   padding: 12px;
   border-radius: 5px;
@@ -63,6 +60,26 @@ export const AreaTexto = styled.textarea`
   }
 `;
 
+export const CampoSelect = styled.select`
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid white;
+  background: transparent;
+  color: white;
+  font-size: 16px;
+  width: 100%;
+  cursor: pointer;
+
+  option {
+    background: #444;
+    color: white;
+  }
+
+  &::placeholder {
+    color: #ccc;
+  }
+`;
+
 // Contenedor de las imágenes
 export const ContenedorImagenes = styled.div`
   display: flex;
@@ -76,7 +93,7 @@ export const ContenedorImagenes = styled.div`
   background: rgba(255, 255, 255, 0.1);
 `;
 
-// Caja de imágenes (para miniaturas y principal)
+// Caja de imágenes
 export const CajaImagen = styled.div`
   width: 80px;
   height: 80px;

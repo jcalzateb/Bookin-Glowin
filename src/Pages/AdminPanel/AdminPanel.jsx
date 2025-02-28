@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import serviciosData from "../../Utils/servicios.json";
+import categoriasData from "../../Utils/categorias.json";
 import { useMediaQuery } from "react-responsive";
 
 import {
@@ -12,10 +13,12 @@ import {
 import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 import FormularioGestion from "./FormularioGestion";
 import TablaProductos from "./TablaProductos";
+import GestionCategorias from "./GestionCategorias";
 
 const AdminPanel = () => {
   const [vistaActual, setVistaActual] = useState("agregar");
   const [servicios, setServicios] = useState(serviciosData);
+  const [categorias, setCategorias] = useState(categoriasData);
 
   const [mensaje, setMensaje] = useState({
     abierto: false,
@@ -23,6 +26,7 @@ const AdminPanel = () => {
     texto: "",
     callback: null,
   });
+
   const servicioExiste = (nombre) => servicios.some((s) => s.nombre === nombre);
 
   const agregarServicio = (nuevoServicio) => {
@@ -62,6 +66,35 @@ const AdminPanel = () => {
     });
   };
 
+  const agregarCategoria = (nuevaCategoria) => {
+    const existe = categorias.some(
+      (cat) => cat.nombre.toLowerCase() === nuevaCategoria.nombre.toLowerCase()
+    );
+
+    if (existe) {
+      setMensaje({
+        abierto: true,
+        tipo: "error",
+        texto: "Esta categoría ya existe.",
+        callback: () => setMensaje({ ...mensaje, abierto: false }),
+      });
+      return;
+    }
+
+    setMensaje({
+      abierto: true,
+      tipo: "confirmacion",
+      texto: "¿Desea guardar la nueva categoría?",
+      callback: () => {
+        setCategorias([
+          ...categorias,
+          { id: categorias.length + 1, ...nuevaCategoria },
+        ]);
+        setMensaje({ ...mensaje, abierto: false });
+      },
+    });
+  };
+
   const esPantallaPequena = useMediaQuery({ maxWidth: 760 });
 
   if (esPantallaPequena) {
@@ -74,27 +107,37 @@ const AdminPanel = () => {
     <ContenedorAdmin>
       <MenuSuperior>
         <BotonMenu
-          $activo={vistaActual === "agregar"}
-          onClick={() => setVistaActual("agregar")}
+          $activo={vistaActual === "agregarServicio"}
+          onClick={() => setVistaActual("agregarServicio")}
         >
           Agregar Servicio
         </BotonMenu>
         <BotonMenu
-          $activo={vistaActual === "listar"}
-          onClick={() => setVistaActual("listar")}
+          $activo={vistaActual === "listarServicios"}
+          onClick={() => setVistaActual("listarServicios")}
         >
           Lista de Servicios
+        </BotonMenu>
+        <BotonMenu
+          $activo={vistaActual === "agregarCategoria"}
+          onClick={() => setVistaActual("agregarCategoria")}
+        >
+          Categoría
         </BotonMenu>
       </MenuSuperior>
 
       <Contenido>
-        {vistaActual === "agregar" ? (
+        {vistaActual === "agregarServicio" && (
           <FormularioGestion agregarServicio={agregarServicio} />
-        ) : (
+        )}
+        {vistaActual === "listarServicios" && (
           <TablaProductos
             servicios={servicios}
             eliminarServicio={eliminarServicio}
           />
+        )}
+        {vistaActual === "agregarCategoria" && (
+          <GestionCategorias agregarCategoria={agregarCategoria} />
         )}
       </Contenido>
 

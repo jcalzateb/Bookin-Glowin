@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import servicios from "../../Utils/servicios.json";
+import categoriasData from "../../Utils/categorias.json";
 import {
   ContenedorFormulario,
   Etiqueta,
@@ -9,6 +10,7 @@ import {
   CajaImagen,
   BotonAccion,
   ContenedorBotones,
+  CampoSelect,
 } from "./FormularioGestion.styled";
 
 const FormularioGestion = ({ agregarServicio }) => {
@@ -18,6 +20,7 @@ const FormularioGestion = ({ agregarServicio }) => {
     categoria: "",
     precio: "",
     duracion: "",
+    cantidadSecciones: "",
     descripcion: "",
     imagenes: [],
   });
@@ -60,6 +63,13 @@ const FormularioGestion = ({ agregarServicio }) => {
       erroresTemp.duracion = "Debe ser un número";
     }
 
+    if (
+      formulario.cantidadSecciones &&
+      isNaN(Number(formulario.cantidadSecciones))
+    ) {
+      erroresTemp.cantidadSecciones = "Debe ser un número";
+    }
+
     // Validar que el nombre del servicio no se repita
     const servicioExistente = servicios.find(
       (servicio) =>
@@ -82,9 +92,8 @@ const FormularioGestion = ({ agregarServicio }) => {
     if (validarFormulario()) {
       // Crear nuevo servicio
       const nuevoServicio = {
-        id: servicios.length + 1, // Generar ID
+        id: servicios.length + 1,
         ...formulario,
-        imagenes: [], // Se agregarán después en otra funcionalidad
       };
 
       // Agregar servicio a la lista (simulado por ahora)
@@ -96,6 +105,7 @@ const FormularioGestion = ({ agregarServicio }) => {
         categoria: "",
         precio: "",
         duracion: "",
+        cantidadSecciones: "",
         descripcion: "",
         imagenes: [],
       });
@@ -117,13 +127,18 @@ const FormularioGestion = ({ agregarServicio }) => {
       {errores.nombre && <p style={{ color: "red" }}>{errores.nombre}</p>}
 
       <Etiqueta>Categoría</Etiqueta>
-      <CampoInput
-        type="text"
+      <CampoSelect
         name="categoria"
         value={formulario.categoria}
         onChange={handleChange}
-        placeholder="Ej. Cabello, Uñas, Pestañas..."
-      />
+      >
+        <option value="">Seleccionar Categoría</option>
+        {categoriasData.map((categoria) => (
+          <option key={categoria.id} value={categoria.nombre}>
+            {categoria.nombre}
+          </option>
+        ))}
+      </CampoSelect>
       {errores.categoria && <p style={{ color: "red" }}>{errores.categoria}</p>}
 
       <Etiqueta>Precio</Etiqueta>
@@ -180,6 +195,7 @@ const FormularioGestion = ({ agregarServicio }) => {
               categoria: "",
               precio: "",
               duracion: "",
+              cantidadSecciones: "",
               descripcion: "",
               imagenes: [],
             })

@@ -38,11 +38,10 @@ const ListaProductos = () => {
     indiceInicial + productosPorPagina
   );
 
-  // Cambiar página
   const cambiarPagina = (nuevaPagina) => {
     setPaginaActual(nuevaPagina);
     window.scrollTo({
-      top: document.getElementById("lista-productos").offsetTop - 20, // Ajuste opcional
+      top: document.getElementById("lista-productos").offsetTop - 20,
       behavior: "smooth",
     });
   };
