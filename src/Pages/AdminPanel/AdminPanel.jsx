@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import serviciosData from "../../Utils/servicios.json";
 import categoriasData from "../../Utils/categorias.json";
+import usuariosData from "../../Utils/usuarios.json";
 import { useMediaQuery } from "react-responsive";
 
 import {
@@ -14,12 +15,13 @@ import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 import FormularioGestion from "./FormularioGestion";
 import TablaProductos from "./TablaProductos";
 import GestionCategorias from "./GestionCategorias";
+import TablaUsuarios from "./TablaUsuarios";
 
 const AdminPanel = () => {
   const [vistaActual, setVistaActual] = useState("agregar");
   const [servicios, setServicios] = useState(serviciosData);
   const [categorias, setCategorias] = useState(categoriasData);
-
+  const [usuarios, setUsuarios] = useState(usuariosData);
   const [mensaje, setMensaje] = useState({
     abierto: false,
     tipo: "",
@@ -95,6 +97,37 @@ const AdminPanel = () => {
     });
   };
 
+  const cambiarRolUsuario = (id, nuevoRol) => {
+    setUsuarios(
+      usuarios.map((usuario) =>
+        usuario.id === id ? { ...usuario, rol: nuevoRol } : usuario
+      )
+    );
+  };
+
+  const eliminarUsuario = (id) => {
+    const usuario = usuarios.find((user) => user.id === id);
+    if (usuario.rol === "admin") {
+      setMensaje({
+        abierto: true,
+        tipo: "error",
+        texto: "No se puede eliminar al administrador principal.",
+        callback: () => setMensaje({ ...mensaje, abierto: false }),
+      });
+      return;
+    }
+
+    setMensaje({
+      abierto: true,
+      tipo: "eliminar",
+      texto: "¿Desea eliminar este usuario?",
+      callback: () => {
+        setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+        setMensaje({ ...mensaje, abierto: false });
+      },
+    });
+  };
+
   const esPantallaPequena = useMediaQuery({ maxWidth: 760 });
 
   if (esPantallaPequena) {
@@ -124,6 +157,12 @@ const AdminPanel = () => {
         >
           Categoría
         </BotonMenu>
+        <BotonMenu
+          $activo={vistaActual === "usuarios"}
+          onClick={() => setVistaActual("usuarios")}
+        >
+          Usuarios
+        </BotonMenu>
       </MenuSuperior>
 
       <Contenido>
@@ -138,6 +177,13 @@ const AdminPanel = () => {
         )}
         {vistaActual === "agregarCategoria" && (
           <GestionCategorias agregarCategoria={agregarCategoria} />
+        )}
+        {vistaActual === "usuarios" && (
+          <TablaUsuarios
+            usuarios={usuarios}
+            cambiarRol={cambiarRolUsuario}
+            eliminarUsuario={eliminarUsuario}
+          />
         )}
       </Contenido>
 
