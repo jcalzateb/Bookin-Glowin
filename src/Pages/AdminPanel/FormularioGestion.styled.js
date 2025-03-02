@@ -1,9 +1,11 @@
 import styled from "styled-components";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import ErrorIcon from "@mui/icons-material/Error";
 
 export const ContenedorFormulario = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 5px;
   padding: 25px;
   background-color: #444;
   border-radius: 10px;
@@ -13,36 +15,73 @@ export const ContenedorFormulario = styled.div`
   margin: auto;
 `;
 
+export const TituloFormulario = styled.h2`
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+`;
+
+export const ContenedorCaracteristicas = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 10px 15px;
+  background: transparent;
+  border-radius: 8px;
+  border: 1px dashed gray;
+  margin: 10px 0;
+`;
+
+export const TituloCaracteristicas = styled.h3`
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  text-align: left;
+`;
+
+export const CampoContenedor = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: flex-start;
+  margin-bottom: 10px;
+`;
+
 export const Etiqueta = styled.label`
   font-size: 16px;
   font-weight: bold;
   color: white;
-  margin-bottom: 5px;
 `;
 
 export const CampoInput = styled.input`
-  padding: 12px;
-  border-radius: 5px;
-  border: 1px solid white;
-  background: transparent;
-  color: white;
-  font-size: 16px;
   width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  color: white;
+  font-style: normal;
+  border: 1.5px solid
+    ${({ estado }) =>
+      estado === "error" ? "red" : estado === "success" ? "green" : "gray"};
+  border-radius: 5px;
+  background: transparent;
+  outline: none;
+  transition: 0.3s;
+  padding-right: 40px;
 
   &::placeholder {
-    color: #ccc;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #9747ff;
+    color: ${({ estado }) =>
+      estado === "error" ? "red" : estado === "success" ? "green" : "gray"};
   }
 `;
 
 export const AreaTexto = styled.textarea`
   padding: 12px;
   border-radius: 5px;
-  border: 1px solid white;
+  border: 1px solid gray;
   background: transparent;
   color: white;
   font-size: 16px;
@@ -56,14 +95,13 @@ export const AreaTexto = styled.textarea`
 
   &:focus {
     outline: none;
-    border-color: #9747ff;
   }
 `;
 
 export const CampoSelect = styled.select`
   padding: 10px;
   border-radius: 5px;
-  border: 1px solid white;
+  border: 1px solid gray;
   background: transparent;
   color: white;
   font-size: 16px;
@@ -127,7 +165,13 @@ export const BotonAccion = styled.button`
   transition: 0.3s;
 
   &:hover {
-    opacity: 0.8;
+    background-color: ${({ color }) =>
+      color === "#28a745"
+        ? "#218838"
+        : color === "#dc3545"
+        ? "#c82333"
+        : "#0056b3"};
+    opacity: 0.8 !important;
   }
 `;
 
@@ -142,4 +186,34 @@ export const ContenedorBotones = styled.div`
     flex-direction: column;
     gap: 8px;
   }
+`;
+
+export const MensajeError = styled.span`
+  font-size: 12px;
+  color: red;
+  margin-top: 0px;
+  position: absolute;
+  bottom: -18px;
+`;
+
+// Ícono dentro del input (error o éxito)
+export const IconoEstado = styled.span`
+  position: absolute;
+  right: 10px;
+  top: 68%;
+  transform: translateY(-50%);
+  color: ${({ estado }) => (estado === "error" ? "red" : "green")};
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+`;
+
+// Componente para Icono de Error
+export const IconoError = styled(ErrorIcon)`
+  color: red;
+`;
+
+// Componente para Icono de Éxito
+export const IconoSuccess = styled(CheckCircleIcon)`
+  color: green;
 `;
