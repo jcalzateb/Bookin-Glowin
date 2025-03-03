@@ -5,6 +5,13 @@ export const ContenedorTabla = styled.div`
   overflow-x: auto;
 `;
 
+export const TituloSeccion = styled.h2`
+  text-align: center;
+  font-size: 30px;
+  color: white;
+  margin-bottom: 15px;
+`;
+
 export const Tabla = styled.table`
   width: 100%;
   border-collapse: collapse;
@@ -19,10 +26,11 @@ export const Encabezado = styled.thead`
   background-color: #9747ff;
   color: #fff;
   font-weight: bold;
+  text-align: center;
 `;
 
 export const FilaEncabezado = styled.tr`
-  text-align: left;
+  text-align: center;
 `;
 
 export const CeldaEncabezado = styled.th`
@@ -30,24 +38,28 @@ export const CeldaEncabezado = styled.th`
   border-bottom: 2px solid #ddd;
 `;
 
-export const CuerpoTabla = styled.tbody``;
+export const CuerpoTabla = styled.tbody`
+  background: #444;
+  color: white;
+  text-align: center;
+`;
 
 export const Fila = styled.tr`
   &:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: #555;
   }
 `;
 
 export const Celda = styled.td`
   padding: 10px;
-  border-bottom: 1px solid #ddd;
+  border-bottom: 1px solid #666;
 `;
 
 export const IconosAccion = styled.div`
   display: flex;
   gap: 10px;
   justify-content: center;
-  background-color:rgba(151, 71, 255, 0.16);
+  background-color: rgba(151, 71, 255, 0.16);
   border-radius: 10px;
 
   button {
@@ -57,7 +69,7 @@ export const IconosAccion = styled.div`
     font-size: 18px;
 
     &:hover {
-      color:rgb(151, 71, 255);
+      color: rgb(151, 71, 255);
     }
   }
 `;

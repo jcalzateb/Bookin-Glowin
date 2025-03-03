@@ -16,7 +16,6 @@ import {
 const TablaUsuarios = () => {
   const [usuarios, setUsuarios] = useState(usuariosData);
 
-  // Función para cambiar el rol de un usuario
   const cambiarRol = (id, nuevoRol) => {
     setUsuarios(
       usuarios.map((usuario) =>
@@ -25,7 +24,6 @@ const TablaUsuarios = () => {
     );
   };
 
-  // Función para eliminar un usuario
   const eliminarUsuario = (id) => {
     setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
   };

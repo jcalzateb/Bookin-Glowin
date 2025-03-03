@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import servicios from "../../Utils/servicios.json";
 import categoriasData from "../../Utils/categorias.json";
 import {
@@ -21,23 +21,41 @@ import {
   IconoSuccess,
 } from "./FormularioGestion.styled";
 
-const FormularioGestion = ({ agregarServicio }) => {
-  // Estado para los valores del formulario
+const FormularioGestion = ({
+  agregarServicio,
+  servicioSeleccionado,
+  cancelarEdicion,
+}) => {
   const [formulario, setFormulario] = useState({
     nombre: "",
     categoria: "",
     precio: "",
     duracion: "",
-    cantidadSecciones: "",
+    secciones: "",
     descripcion: "",
     imagenes: [],
   });
 
-  // Estado para los errores de validación
   const [errores, setErrores] = useState({});
   const [validacion, setValidacion] = useState({});
 
-  // Función para manejar cambios en los inputs
+  useEffect(() => {
+    if (servicioSeleccionado) {
+      setFormulario({
+        nombre: servicioSeleccionado.nombre || "",
+        categoria: servicioSeleccionado.categoria || "",
+        precio: servicioSeleccionado.precio || "",
+        duracion: servicioSeleccionado.duracion || "",
+        secciones: servicioSeleccionado.secciones || "",
+        descripcion: servicioSeleccionado.descripcion || "",
+        imagenes: servicioSeleccionado.imagenes || [],
+      });
+    } else {
+      limpiarFormulario();
+      console.log("No se recibió ningún servicio para editar.");
+    }
+  }, [servicioSeleccionado]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -47,7 +65,6 @@ const FormularioGestion = ({ agregarServicio }) => {
     validarCampo(name, value);
   };
 
-  // Función para manejar la subida de imágenes
   const handleImagenes = (e) => {
     const archivos = Array.from(e.target.files);
     const urlsImagenes = archivos.map((archivo) =>
@@ -57,26 +74,22 @@ const FormularioGestion = ({ agregarServicio }) => {
     setFormulario({ ...formulario, imagenes: urlsImagenes });
   };
 
-  // Validar campo individualmente
   const validarCampo = (name, value) => {
     let mensajeError = "";
-    let estadoValidacion = "success"; // Estado por defecto
+    let estadoValidacion = "success";
 
-    // Validación general de campo vacío
     if (!value.trim()) {
       mensajeError = "Este campo es obligatorio";
       estadoValidacion = "error";
     }
 
-    // Validaciones específicas para números
-    if (["precio", "duracion", "cantidadSecciones"].includes(name)) {
+    if (["precio", "duracion", "secciones"].includes(name)) {
       if (isNaN(value)) {
         mensajeError = "Debe ser un número";
         estadoValidacion = "error";
       }
     }
 
-    // Validación del nombre para evitar duplicados
     if (name === "nombre") {
       const servicioExistente = servicios.find(
         (servicio) =>
@@ -88,12 +101,11 @@ const FormularioGestion = ({ agregarServicio }) => {
       }
     }
 
-    // Actualizar estados de error y validación
     setErrores((prev) => ({ ...prev, [name]: mensajeError }));
     setValidacion((prev) => ({ ...prev, [name]: estadoValidacion }));
   };
 
-  // Función para validar el formulario antes de agregar
+  // validar el formulario antes de agregar
   const validarFormulario = () => {
     let erroresTemp = {};
 
@@ -108,33 +120,31 @@ const FormularioGestion = ({ agregarServicio }) => {
     return Object.keys(erroresTemp).length === 0;
   };
 
-  // Función para manejar el envío del formulario
+  // manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
 
     if (validarFormulario()) {
-      // Crear nuevo servicio
-      const nuevoServicio = {
-        id: servicios.length + 1,
-        ...formulario,
-      };
+      agregarServicio(formulario);
+      limpiarFormulario();
+    }
+  };
 
-      // Agregar servicio a la lista (simulado por ahora)
-      agregarServicio(nuevoServicio);
+  const limpiarFormulario = () => {
+    setFormulario({
+      nombre: "",
+      categoria: "",
+      precio: "",
+      duracion: "",
+      secciones: "",
+      descripcion: "",
+      imagenes: [],
+    });
+    setErrores({});
+    setValidacion({});
 
-      // Resetear formulario
-      setFormulario({
-        nombre: "",
-        categoria: "",
-        precio: "",
-        duracion: "",
-        cantidadSecciones: "",
-        descripcion: "",
-        imagenes: [],
-      });
-
-      setErrores({});
-      setValidacion({});
+    if (servicioSeleccionado) {
+      cancelarEdicion();
     }
   };
 
@@ -183,6 +193,7 @@ const FormularioGestion = ({ agregarServicio }) => {
             <MensajeError>{errores.categoria}</MensajeError>
           )}
         </CampoContenedor>
+
         <CampoContenedor>
           <Etiqueta>Precio</Etiqueta>
           <CampoInput
@@ -233,39 +244,40 @@ const FormularioGestion = ({ agregarServicio }) => {
           <Etiqueta>Cantidad de Secciones</Etiqueta>
           <CampoInput
             type="text"
-            name="cantidadSecciones"
-            value={formulario.cantidadSecciones}
+            name="secciones"
+            value={formulario.secciones}
             onChange={handleChange}
             placeholder="Ej. 5"
-            estado={validacion.cantidadSecciones}
+            estado={validacion.secciones}
           />
-          {errores.cantidadSecciones && (
-            <MensajeError>{errores.cantidadSecciones}</MensajeError>
+          {errores.secciones && (
+            <MensajeError>{errores.secciones}</MensajeError>
           )}
-          {validacion.cantidadSecciones === "error" && (
+          {validacion.secciones === "error" && (
             <IconoEstado>
               <IconoError />
             </IconoEstado>
           )}
-          {validacion.cantidadSecciones === "success" && (
+          {validacion.secciones === "success" && (
             <IconoEstado>
               <IconoSuccess />
             </IconoEstado>
           )}
         </CampoContenedor>
       </ContenedorCaracteristicas>
-
-      <Etiqueta>Descripción</Etiqueta>
-      <AreaTexto
-        name="descripcion"
-        value={formulario.descripcion}
-        onChange={handleChange}
-        placeholder="Breve descripción del servicio..."
-        estado={validacion.duracion}
-      />
-      {errores.descripcion && (
-        <p style={{ color: "red" }}>{errores.descripcion}</p>
-      )}
+      <CampoContenedor>
+        <Etiqueta>Descripción</Etiqueta>
+        <AreaTexto
+          name="descripcion"
+          value={formulario.descripcion}
+          onChange={handleChange}
+          placeholder="Breve descripción del servicio..."
+          estado={validacion.duracion}
+        />
+        {errores.descripcion && (
+          <MensajeError>{errores.descripcion}</MensajeError>
+        )}
+      </CampoContenedor>
 
       <Etiqueta>Subir Imágenes </Etiqueta>
       <input type="file" multiple accept="image/*" onChange={handleImagenes} />
@@ -280,23 +292,10 @@ const FormularioGestion = ({ agregarServicio }) => {
 
       <ContenedorBotones>
         <BotonAccion color="#28a745" onClick={handleSubmit}>
-          Agregar Servicio
+          {servicioSeleccionado ? "Actualizar Servicio" : "Agregar Servicio"}
         </BotonAccion>
-        <BotonAccion
-          color="#dc3545"
-          onClick={() =>
-            setFormulario({
-              nombre: "",
-              categoria: "",
-              precio: "",
-              duracion: "",
-              cantidadSecciones: "",
-              descripcion: "",
-              imagenes: [],
-            })
-          }
-        >
-          Limpiar Formulario
+        <BotonAccion color="#dc3545" onClick={limpiarFormulario}>
+          {servicioSeleccionado ? "Cancelar Edición" : "Limpiar Formulario"}
         </BotonAccion>
       </ContenedorBotones>
     </ContenedorFormulario>

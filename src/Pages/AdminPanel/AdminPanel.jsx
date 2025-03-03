@@ -20,6 +20,7 @@ import TablaUsuarios from "./TablaUsuarios";
 const AdminPanel = () => {
   const [vistaActual, setVistaActual] = useState("agregar");
   const [servicios, setServicios] = useState(serviciosData);
+  const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
   const [categorias, setCategorias] = useState(categoriasData);
   const [usuarios, setUsuarios] = useState(usuariosData);
   const [mensaje, setMensaje] = useState({
@@ -29,10 +30,20 @@ const AdminPanel = () => {
     callback: null,
   });
 
+  const seleccionarServicio = (servicio) => {
+    setServicioSeleccionado(servicio);
+    setVistaActual("agregarServicio");
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const cancelarEdicion = () => {
+    setServicioSeleccionado(null);
+  };
+
   const servicioExiste = (nombre) => servicios.some((s) => s.nombre === nombre);
 
   const agregarServicio = (nuevoServicio) => {
-    if (servicioExiste(nuevoServicio.nombre)) {
+    if (servicioExiste(nuevoServicio.nombre) && !servicioSeleccionado) {
       setMensaje({
         abierto: true,
         tipo: "error",
@@ -45,17 +56,29 @@ const AdminPanel = () => {
     setMensaje({
       abierto: true,
       tipo: "confirmacion",
-      texto: "¿Desea guardar el producto?",
+      texto: servicioSeleccionado
+        ? "¿Desea actualizar el servicio?"
+        : "¿Desea guardar el servicio?",
       callback: () => {
-        setServicios([
-          ...servicios,
-          { id: servicios.length + 1, ...nuevoServicio },
-        ]);
+        if (servicioSeleccionado) {
+          setServicios(
+            servicios.map((servicio) =>
+              servicio.id === servicioSeleccionado.id
+                ? { ...nuevoServicio, id: servicioSeleccionado.id }
+                : servicio
+            )
+          );
+        } else {
+          setServicios([
+            ...servicios,
+            { id: servicios.length + 1, ...nuevoServicio },
+          ]);
+        }
+        setServicioSeleccionado(null);
         setMensaje({ ...mensaje, abierto: false });
       },
     });
   };
-
   const eliminarServicio = (id) => {
     setMensaje({
       abierto: true,
@@ -132,7 +155,7 @@ const AdminPanel = () => {
 
   if (esPantallaPequena) {
     return (
-      <MensajeNoDisponible>❌ Admin Panel no disponible.</MensajeNoDisponible>
+      <MensajeNoDisponible> No disponible para mobile.</MensajeNoDisponible>
     );
   }
 
@@ -167,12 +190,17 @@ const AdminPanel = () => {
 
       <Contenido>
         {vistaActual === "agregarServicio" && (
-          <FormularioGestion agregarServicio={agregarServicio} />
+          <FormularioGestion
+            agregarServicio={agregarServicio}
+            servicioSeleccionado={servicioSeleccionado}
+            cancelarEdicion={cancelarEdicion}
+          />
         )}
         {vistaActual === "listarServicios" && (
           <TablaProductos
             servicios={servicios}
             eliminarServicio={eliminarServicio}
+            seleccionarServicio={seleccionarServicio}
           />
         )}
         {vistaActual === "agregarCategoria" && (

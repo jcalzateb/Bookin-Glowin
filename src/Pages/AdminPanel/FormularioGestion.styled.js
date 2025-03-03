@@ -17,11 +17,9 @@ export const ContenedorFormulario = styled.div`
 
 export const TituloFormulario = styled.h2`
   color: white;
-  font-size: 22px;
-  font-weight: bold;
+  font-size: 28px;
   text-align: center;
   margin-bottom: 20px;
-  text-transform: uppercase;
 `;
 
 export const ContenedorCaracteristicas = styled.div`
@@ -118,7 +116,6 @@ export const CampoSelect = styled.select`
   }
 `;
 
-// Contenedor de las imágenes
 export const ContenedorImagenes = styled.div`
   display: flex;
   flex-direction: column;
@@ -131,7 +128,6 @@ export const ContenedorImagenes = styled.div`
   background: rgba(255, 255, 255, 0.1);
 `;
 
-// Caja de imágenes
 export const CajaImagen = styled.div`
   width: 80px;
   height: 80px;
@@ -150,7 +146,6 @@ export const CajaImagen = styled.div`
   }
 `;
 
-// Botones de acción
 export const BotonAccion = styled.button`
   padding: 12px;
   border: none;
@@ -175,7 +170,6 @@ export const BotonAccion = styled.button`
   }
 `;
 
-// Contenedor de botones en fila
 export const ContenedorBotones = styled.div`
   display: flex;
   gap: 10px;
@@ -196,7 +190,6 @@ export const MensajeError = styled.span`
   bottom: -18px;
 `;
 
-// Ícono dentro del input (error o éxito)
 export const IconoEstado = styled.span`
   position: absolute;
   right: 10px;
@@ -208,12 +201,10 @@ export const IconoEstado = styled.span`
   align-items: center;
 `;
 
-// Componente para Icono de Error
 export const IconoError = styled(ErrorIcon)`
   color: red;
 `;
 
-// Componente para Icono de Éxito
 export const IconoSuccess = styled(CheckCircleIcon)`
   color: green;
 `;
