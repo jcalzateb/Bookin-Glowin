@@ -18,6 +18,7 @@ build_image:
     - docker push $DOCKER_IMAGE:latest
   only:
     - main
+    - merge_requests
 
 deploy_frontend:
   stage: deploy
@@ -31,3 +32,4 @@ deploy_frontend:
     - docker run -d --name frontend -p 3000:80 $DOCKER_IMAGE:latest
   only:
     - main
+    - merge_requests
