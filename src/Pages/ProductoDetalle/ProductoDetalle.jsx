@@ -6,6 +6,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
+import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -102,6 +103,14 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       <ContenedorCaracteristicas>
         <TituloDescripcion>Características del Servicio</TituloDescripcion>
         <ListaCaracteristicas>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <CategoryIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Categoría: {producto.categoria}
+            </Typography>
+          </CaracteristicaItem>
           <CaracteristicaItem>
             <IconoCaracteristica>
               <AccessTimeIcon />

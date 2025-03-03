@@ -228,7 +228,7 @@ export const BotonReservar = styled(Button)`
 export const ContenedorCaracteristicas = styled(Box)`
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
+  gap: 5px;
   justify-content: flex-start;
   margin-top: 10px;
   padding: 10px;
@@ -241,6 +241,7 @@ export const ListaCaracteristicas = styled(Box)`
   gap: 5px;
   justify-content: center;
   flex-wrap: wrap;
+  width: 100%;
 `;
 
 export const CaracteristicaItem = styled(Box)`
@@ -248,6 +249,11 @@ export const CaracteristicaItem = styled(Box)`
   align-items: center;
   gap: 5px;
   padding: 8px 12px;
+  width: 40%;
+
+  @media (max-width: 500px) {
+    width: 85%;
+  }
 `;
 
 export const IconoCaracteristica = styled(Box)`
@@ -255,6 +261,8 @@ export const IconoCaracteristica = styled(Box)`
   align-items: center;
   justify-content: center;
   background: transparent;
+  width: 35px;
+  height: 35px;
 
   svg {
     font-size: 24px;
