@@ -29,6 +29,7 @@ export const BarraNavegacion = styled(Toolbar)({
 export const ContenedorLogo = styled("div")({
   display: "flex",
   alignItems: "center",
+  cursor: "pointer",
 });
 
 // Imagen del Logo
@@ -115,5 +116,44 @@ export const ListaMenu = styled(List)({
       backgroundColor: "#f3e5f5",
       color: "#673ab7",
     },
+  },
+});
+export const ContenedorUsuario = styled("div")({
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+  cursor: "pointer",
+});
+
+export const AvatarUsuario = styled("div")({
+  backgroundColor: "#452782",
+  color: "#fff",
+  width: 40,
+  height: 40,
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "50%",
+  fontWeight: "bold",
+  fontSize: "1rem",
+});
+
+export const MenuUsuario = styled("div")({
+  position: "absolute",
+  top: "50px",
+  right: "0",
+  backgroundColor: "#1a1a1a",
+  color: "white",
+  borderRadius: "10px",
+  padding: "15px",
+  width: "220px",
+  boxShadow: "0px 4px 10px rgba(0,0,0,0.2)",
+});
+
+export const ItemMenuUsuario = styled("div")({
+  padding: "10px",
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "#333",
   },
 });

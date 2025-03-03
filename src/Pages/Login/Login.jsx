@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import usuarios from "../../Utils/usuarios.json";
 import {
   ContenedorFormulario,
   CampoInput,
@@ -6,9 +7,10 @@ import {
   MensajeError,
   Enlace,
 } from "./Login.styled";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setUsuarioAutenticado }) => {
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     email: "",
     contraseña: "",
@@ -45,7 +47,29 @@ const Login = () => {
   // Manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert("Inicio de sesión exitoso (simulación)");
+
+    const usuarioEncontrado = usuarios.find(
+      (usuario) => usuario.email === formulario.email
+    );
+
+    if (!usuarioEncontrado) {
+      setErrores({ general: "Correo no registrado" });
+      return;
+    }
+
+    // Guardar en localStorage para simular sesión iniciada
+    localStorage.setItem(
+      "usuario",
+      JSON.stringify({
+        id: usuarioEncontrado.id,
+        nombre: usuarioEncontrado.nombre,
+        email: usuarioEncontrado.email,
+        rol: usuarioEncontrado.rol,
+      })
+    );
+
+    setUsuarioAutenticado(usuarioEncontrado);
+    navigate("/"); // Redirigir a la página principal
   };
 
   return (
@@ -67,6 +91,7 @@ const Login = () => {
         placeholder="Contraseña"
         value={formulario.contraseña}
         onChange={handleChange}
+        autoComplete="current-password"
       />
       {errores.contraseña && <MensajeError>{errores.contraseña}</MensajeError>}
 
