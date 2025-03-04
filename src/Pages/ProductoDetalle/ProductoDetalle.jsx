@@ -3,6 +3,10 @@ import servicios from "../../Utils/servicios.json";
 import { useParams, useNavigate } from "react-router-dom";
 import { Typography } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import ContentCutIcon from "@mui/icons-material/ContentCut";
+import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -18,6 +22,10 @@ import {
   TituloProducto,
   TituloDescripcion,
   PrecioProducto,
+  ContenedorCaracteristicas,
+  ListaCaracteristicas,
+  CaracteristicaItem,
+  IconoCaracteristica,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 
@@ -42,12 +50,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
 
   const abrirCarrusel = () => {
     setModalAbierto(true);
-    setMostrarHeader(false); // Oculta el Header
+    setMostrarHeader(false);
   };
 
   const cerrarCarrusel = () => {
     setModalAbierto(false);
-    setMostrarHeader(true); // Muestra el Header nuevamente
+    setMostrarHeader(true);
   };
 
   return (
@@ -84,7 +92,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         </DescripcionProducto>
 
         <ContenedorReserva>
-          <PrecioProducto>${producto.precio} COP</PrecioProducto>
+          <PrecioProducto>${producto.precio} USD</PrecioProducto>
           <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
           <Typography variant="body2">
             Disponibilidad: Lunes - Viernes
@@ -92,6 +100,43 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           <BotonReservar>Reservar</BotonReservar>
         </ContenedorReserva>
       </ContenedorInfo>
+      <ContenedorCaracteristicas>
+        <TituloDescripcion>Características del Servicio</TituloDescripcion>
+        <ListaCaracteristicas>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <CategoryIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Categoría: {producto.categoria}
+            </Typography>
+          </CaracteristicaItem>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <AccessTimeIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Duración: {producto.duracion} min
+            </Typography>
+          </CaracteristicaItem>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <AttachMoneyIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Precio: ${producto.precio} USD
+            </Typography>
+          </CaracteristicaItem>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <ContentCutIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Secciones: {producto.secciones}
+            </Typography>
+          </CaracteristicaItem>
+        </ListaCaracteristicas>
+      </ContenedorCaracteristicas>
     </ContenedorDetalle>
   );
 };

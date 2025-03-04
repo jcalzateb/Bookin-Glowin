@@ -225,3 +225,47 @@ export const BotonReservar = styled(Button)`
     font-size: 14px;
   }
 `;
+export const ContenedorCaracteristicas = styled(Box)`
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: flex-start;
+  margin-top: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.1);
+`;
+
+export const ListaCaracteristicas = styled(Box)`
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+`;
+
+export const CaracteristicaItem = styled(Box)`
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 12px;
+  width: 40%;
+
+  @media (max-width: 500px) {
+    width: 85%;
+  }
+`;
+
+export const IconoCaracteristica = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  width: 35px;
+  height: 35px;
+
+  svg {
+    font-size: 24px;
+    color: #6c63ff;
+  }
+`;
