@@ -14,11 +14,11 @@ import cejasImg from "../../assets/categorias/cejas.png";
 import facialImg from "../../assets/categorias/facial.png";
 import combosImg from "../../assets/categorias/combos.png";
 
-const Categorias = () => {
+const Categorias = ({ setCategoriaSeleccionada }) => {
   const navigate = useNavigate();
 
   const categorias = [
-    { nombre: "Uñitas", img: unasImg, ruta: "/categoria/unas" },
+    { nombre: "Uñas", img: unasImg, ruta: "/categoria/unas" },
     { nombre: "Pestañas", img: pestanasImg, ruta: "/categoria/pestanas" },
     { nombre: "Cabello", img: cabelloImg, ruta: "/categoria/cabello" },
     { nombre: "Cejas", img: cejasImg, ruta: "/categoria/cejas" },
@@ -43,7 +43,7 @@ const Categorias = () => {
         {categorias.map((categoria) => (
           <CategoriaItem
             key={categoria.nombre}
-            onClick={() => navigate(categoria.ruta)}
+            onClick={() => setCategoriaSeleccionada(categoria.nombre)}
           >
             <img src={categoria.img} alt={categoria.nombre} />
             <Typography

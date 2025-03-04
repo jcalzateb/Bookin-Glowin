@@ -11,55 +11,100 @@ import {
   BotonVerMas,
   ContenedorPaginacion,
   BotonPagina,
+  ContenedorFiltro,
+  BotonEliminarFiltro,
+  TextoFiltro,
 } from "./ListaProductos.styled";
-const ListaProductos = () => {
+
+const ListaProductos = ({
+  categoriaSeleccionada,
+  setCategoriaSeleccionada,
+}) => {
   const [paginaActual, setPaginaActual] = useState(1);
   const productosPorPagina = 10;
   const navigate = useNavigate();
 
   const [productosAleatorios, setProductosAleatorios] = useState([]);
+
+  //Mezcla aleatoria de productos
   const mezclarProductos = (array) => {
     return [...array].sort(() => Math.random() - 0.5);
   };
+
   useEffect(() => {
     setProductosAleatorios(mezclarProductos(servicios));
   }, []);
 
-  // Calcular número total de páginas basado en la cantidad de servicios
+  //Filtrar productos según la categoría
+  const productosFiltrados = categoriaSeleccionada
+    ? productosAleatorios.filter(
+        (producto) => producto.categoria === categoriaSeleccionada
+      )
+    : productosAleatorios;
+
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [categoriaSeleccionada]);
+
+  //Calcular número total de páginas
   const totalPaginas = Math.ceil(
-    productosAleatorios.length / productosPorPagina
+    productosFiltrados.length / productosPorPagina
   );
 
-  // Calcular servicios de la página actual
+  //Calcular los productos
   const indiceInicial = (paginaActual - 1) * productosPorPagina;
-
-  const serviciosActuales = productosAleatorios.slice(
+  const serviciosActuales = productosFiltrados.slice(
     indiceInicial,
     indiceInicial + productosPorPagina
   );
 
-  // Cambiar página
+  //Cambiar página y desplazar la vista
   const cambiarPagina = (nuevaPagina) => {
     setPaginaActual(nuevaPagina);
     window.scrollTo({
-      top: document.getElementById("lista-productos").offsetTop - 20, // Ajuste opcional
+      top: document.getElementById("lista-productos").offsetTop - 20,
       behavior: "smooth",
     });
   };
 
+  const limpiarFiltro = () => {
+    setCategoriaSeleccionada(null);
+    setPaginaActual(1);
+  };
+
   return (
     <>
-      <h2
-        style={{
-          textAlign: "center",
-          margin: "30px 0 20px 0",
-          fontStyle: "italic",
-        }}
-      >
-        SERVICIOS
-      </h2>
-
       <div id="lista-productos">
+        <h2
+          style={{
+            textAlign: "center",
+            margin: "30px 0 5px 0",
+            fontStyle: "italic",
+          }}
+        >
+          SERVICIOS
+        </h2>
+
+        <ContenedorFiltro>
+          <TextoFiltro>
+            Numeros de servicios: {productosFiltrados.length}
+            {""}
+          </TextoFiltro>
+
+          {categoriaSeleccionada && (
+            <TextoFiltro>
+              {"en la categoria de "}
+              {categoriaSeleccionada}
+            </TextoFiltro>
+          )}
+
+          {categoriaSeleccionada && (
+            <BotonEliminarFiltro onClick={limpiarFiltro}>
+              Limpiar
+            </BotonEliminarFiltro>
+          )}
+        </ContenedorFiltro>
+
         <ContenedorLista>
           {serviciosActuales.map((servicio) => (
             <TarjetaProducto key={servicio.id}>
@@ -82,31 +127,33 @@ const ListaProductos = () => {
           ))}
         </ContenedorLista>
 
-        <ContenedorPaginacion>
-          <BotonPagina
-            onClick={() => cambiarPagina(paginaActual - 1)}
-            disabled={paginaActual === 1}
-          >
-            {"<"}
-          </BotonPagina>
-
-          {Array.from({ length: totalPaginas }).map((_, index) => (
+        {totalPaginas > 1 && (
+          <ContenedorPaginacion>
             <BotonPagina
-              key={index}
-              onClick={() => cambiarPagina(index + 1)}
-              $activo={paginaActual === index + 1}
+              onClick={() => cambiarPagina(paginaActual - 1)}
+              disabled={paginaActual === 1}
             >
-              {index + 1}
+              {"<"}
             </BotonPagina>
-          ))}
 
-          <BotonPagina
-            onClick={() => cambiarPagina(paginaActual + 1)}
-            disabled={paginaActual === totalPaginas}
-          >
-            {">"}
-          </BotonPagina>
-        </ContenedorPaginacion>
+            {Array.from({ length: totalPaginas }).map((_, index) => (
+              <BotonPagina
+                key={index}
+                onClick={() => cambiarPagina(index + 1)}
+                $activo={paginaActual === index + 1}
+              >
+                {index + 1}
+              </BotonPagina>
+            ))}
+
+            <BotonPagina
+              onClick={() => cambiarPagina(paginaActual + 1)}
+              disabled={paginaActual === totalPaginas}
+            >
+              {">"}
+            </BotonPagina>
+          </ContenedorPaginacion>
+        )}
       </div>
     </>
   );
