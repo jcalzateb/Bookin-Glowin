@@ -58,7 +58,6 @@ const ListaProductos = ({
     indiceInicial + productosPorPagina
   );
 
-  //Cambiar página y desplazar la vista
   const cambiarPagina = (nuevaPagina) => {
     setPaginaActual(nuevaPagina);
     window.scrollTo({

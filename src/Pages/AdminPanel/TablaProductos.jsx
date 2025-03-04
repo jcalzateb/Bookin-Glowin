@@ -9,6 +9,7 @@ import {
   Fila,
   Celda,
   IconosAccion,
+  TituloSeccion,
 } from "./TablaProductos.styled";
 import { Edit, Delete, Star } from "@mui/icons-material";
 
@@ -19,6 +20,7 @@ const TablaProductos = ({
 }) => {
   return (
     <ContenedorTabla>
+      <TituloSeccion>Servicios Registrados</TituloSeccion>
       <Tabla>
         <Encabezado>
           <FilaEncabezado>
@@ -27,6 +29,7 @@ const TablaProductos = ({
             <CeldaEncabezado>Categoría</CeldaEncabezado>
             <CeldaEncabezado>Precio</CeldaEncabezado>
             <CeldaEncabezado>Duración</CeldaEncabezado>
+            <CeldaEncabezado>Secciones</CeldaEncabezado>
             <CeldaEncabezado>Descripción</CeldaEncabezado>
             <CeldaEncabezado>Acción</CeldaEncabezado>
           </FilaEncabezado>
@@ -39,6 +42,7 @@ const TablaProductos = ({
               <Celda>{servicio.categoria}</Celda>
               <Celda>${servicio.precio}</Celda>
               <Celda>{servicio.duracion}</Celda>
+              <Celda>{servicio.secciones}</Celda>
               <Celda>{servicio.descripcion.substring(0, 50)}...</Celda>
               <Celda>
                 <IconosAccion>
