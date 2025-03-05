@@ -1,5 +1,10 @@
-import React, { useState } from "react";
-import categoriasData from "../../Utils/categorias.json";
+import React, { useState, useEffect } from "react";
+import {
+  obtenerCategorias,
+  agregarCategoria,
+  editarCategoria,
+  eliminarCategoria,
+} from "../../Services/categoriasService";
 import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 import {
   ContenedorGestionCategorias,
@@ -16,12 +21,12 @@ import {
 } from "./GestionCategorias.styled";
 
 const GestionCategorias = () => {
-  const [categorias, setCategorias] = useState(categoriasData);
+  const [categorias, setCategorias] = useState([]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
   const [nuevaCategoria, setNuevaCategoria] = useState({
     nombre: "",
-    imagen: "",
+    urlImagen: "",
   });
-  const [categoriaEditando, setCategoriaEditando] = useState(null);
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState({
     abierto: false,
@@ -30,61 +35,62 @@ const GestionCategorias = () => {
     callback: null,
   });
 
-  // Manejar cambios en el formulario
+  useEffect(() => {
+    cargarCategorias();
+  }, []);
+
+  const cargarCategorias = async () => {
+    try {
+      const data = await obtenerCategorias();
+      setCategorias(data);
+    } catch (error) {
+      setError("Error al cargar categorías");
+    }
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNuevaCategoria({ ...nuevaCategoria, [name]: value });
   };
 
-  // agregar categoría
-  const handleAgregarCategoria = () => {
-    if (!nuevaCategoria.nombre.trim() || !nuevaCategoria.imagen.trim()) {
+  const handleGuardarCategoria = () => {
+    if (!nuevaCategoria.nombre.trim() || !nuevaCategoria.urlImagen.trim()) {
       setError("Todos los campos son obligatorios");
-      return;
-    }
-
-    const existe = categorias.some(
-      (cat) => cat.nombre.toLowerCase() === nuevaCategoria.nombre.toLowerCase()
-    );
-
-    if (existe && !categoriaEditando) {
-      setError("Esta categoría ya existe");
       return;
     }
 
     setMensaje({
       abierto: true,
       tipo: "confirmacion",
-      texto: categoriaEditando
+      texto: categoriaSeleccionada
         ? "¿Desea actualizar la categoría?"
         : "¿Desea guardar la nueva categoría?",
-      callback: () => {
-        if (categoriaEditando) {
-          setCategorias(
-            categorias.map((cat) =>
-              cat.id === categoriaEditando.id
-                ? { ...cat, ...nuevaCategoria }
-                : cat
-            )
-          );
-          setCategoriaEditando(null);
-        } else {
-          setCategorias([
-            ...categorias,
-            { id: categorias.length + 1, ...nuevaCategoria },
-          ]);
+      callback: async () => {
+        try {
+          if (categoriaSeleccionada) {
+            await editarCategoria(categoriaSeleccionada.id, nuevaCategoria);
+          } else {
+            await agregarCategoria(nuevaCategoria);
+          }
+          cargarCategorias();
+          setNuevaCategoria({ nombre: "", urlImagen: "" });
+          setCategoriaSeleccionada(null);
+          setError("");
+        } catch (error) {
+          setError("Error al guardar la categoría");
+        } finally {
+          setMensaje({ ...mensaje, abierto: false });
         }
-
-        setNuevaCategoria({ nombre: "", imagen: "" });
-        setError("");
-        setMensaje({ ...mensaje, abierto: false });
       },
     });
   };
 
-  const handleEditarCategoria = (categoria) => {
-    setNuevaCategoria({ nombre: categoria.nombre, imagen: categoria.imagen });
-    setCategoriaEditando(categoria);
+  const handleSeleccionarCategoria = (categoria) => {
+    setCategoriaSeleccionada(categoria);
+    setNuevaCategoria({
+      nombre: categoria.nombre,
+      urlImagen: categoria.urlImagen,
+    });
     window.scrollTo({
       top: document.getElementById("formulario-categorias").offsetTop - 120,
       behavior: "smooth",
@@ -92,8 +98,8 @@ const GestionCategorias = () => {
   };
 
   const handleCancelarEdicion = () => {
-    setCategoriaEditando(null);
-    setNuevaCategoria({ nombre: "", imagen: "" });
+    setCategoriaSeleccionada(null);
+    setNuevaCategoria({ nombre: "", urlImagen: "" });
     setError("");
   };
 
@@ -102,9 +108,15 @@ const GestionCategorias = () => {
       abierto: true,
       tipo: "eliminar",
       texto: "¿Desea eliminar la categoría?",
-      callback: () => {
-        setCategorias(categorias.filter((cat) => cat.id !== id));
-        setMensaje({ ...mensaje, abierto: false });
+      callback: async () => {
+        try {
+          await eliminarCategoria(id);
+          cargarCategorias();
+        } catch (error) {
+          setError("Error al eliminar la categoría");
+        } finally {
+          setMensaje({ ...mensaje, abierto: false });
+        }
       },
     });
   };
@@ -113,7 +125,9 @@ const GestionCategorias = () => {
     <ContenedorGestionCategorias>
       <SeccionRegistro id="formulario-categorias">
         <h2>
-          {categoriaEditando ? "Editar Categoría" : "Agregar Nueva Categoría"}
+          {categoriaSeleccionada
+            ? "Editar Categoría"
+            : "Agregar Nueva Categoría"}
         </h2>
         <CampoInput
           type="text"
@@ -124,17 +138,19 @@ const GestionCategorias = () => {
         />
         <CampoInput
           type="text"
-          name="imagen"
+          name="urlImagen"
           placeholder="URL de la imagen"
-          value={nuevaCategoria.imagen}
+          value={nuevaCategoria.urlImagen}
           onChange={handleChange}
         />
         {error && <p style={{ color: "red" }}>{error}</p>}
         <ContenedorBotones>
-          <BotonAccion onClick={handleAgregarCategoria}>
-            {categoriaEditando ? "Actualizar Categoría" : "Agregar Categoría"}
+          <BotonAccion onClick={handleGuardarCategoria}>
+            {categoriaSeleccionada
+              ? "Actualizar Categoría"
+              : "Agregar Categoría"}
           </BotonAccion>
-          {categoriaEditando && (
+          {categoriaSeleccionada && (
             <BotonAccion color="#6c757d" onClick={handleCancelarEdicion}>
               Cancelar
             </BotonAccion>
@@ -147,9 +163,14 @@ const GestionCategorias = () => {
         <ListaCategorias>
           {categorias.map((categoria) => (
             <CategoriaItem key={categoria.id}>
-              <ImagenCategoria src={categoria.imagen} alt={categoria.nombre} />
+              <ImagenCategoria
+                src={categoria.urlImagen}
+                alt={categoria.nombre}
+              />
               <span>{categoria.nombre}</span>
-              <BotonEditar onClick={() => handleEditarCategoria(categoria)}>
+              <BotonEditar
+                onClick={() => handleSeleccionarCategoria(categoria)}
+              >
                 Editar
               </BotonEditar>
               <BotonEliminar
