@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Typography } from "@mui/material";
 import { Dialog } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
@@ -19,24 +20,37 @@ const CarruselImagenes = ({ imagenes, abierto, cerrar }) => {
   };
 
   const handlePrev = () => {
-    setIndiceActual((prevIndex) => (prevIndex - 1 + imagenes.length) % imagenes.length);
+    setIndiceActual(
+      (prevIndex) => (prevIndex - 1 + imagenes.length) % imagenes.length
+    );
   };
 
   return (
     <Dialog open={abierto} onClose={cerrar} maxWidth="lg" fullWidth>
       <ContenidoModal>
-
         <BotonCerrar onClick={cerrar} aria-label="Cerrar carrusel">
           <CloseIcon />
         </BotonCerrar>
-
-        <BotonNavegacion onClick={handlePrev} posicion="izquierda" aria-label="Imagen anterior">
+        <BotonNavegacion
+          onClick={handlePrev}
+          posicion="izquierda"
+          aria-label="Imagen anterior"
+        >
           <ArrowBackIosIcon />
         </BotonNavegacion>
-
-        <ImagenCarrusel src={imagenes[indiceActual]} alt={`Imagen ${indiceActual + 1}`} />
-
-        <BotonNavegacion onClick={handleNext} posicion="derecha" aria-label="Imagen siguiente">
+        {imagenes?.length > 0 ? (
+          <ImagenCarrusel
+            src={imagenes[indiceActual] || ""}
+            alt={`Imagen ${indiceActual + 1}`}
+          />
+        ) : (
+          <Typography variant="body2">No hay imágenes disponibles</Typography>
+        )}
+        <BotonNavegacion
+          onClick={handleNext}
+          posicion="derecha"
+          aria-label="Imagen siguiente"
+        >
           <ArrowForwardIosIcon />
         </BotonNavegacion>
       </ContenidoModal>

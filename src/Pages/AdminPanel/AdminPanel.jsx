@@ -1,7 +1,10 @@
-import React, { useState } from "react";
-import serviciosData from "../../Utils/servicios.json";
-import categoriasData from "../../Utils/categorias.json";
-import usuariosData from "../../Utils/usuarios.json";
+import React, { useState, useEffect } from "react";
+import {
+  obtenerServicios,
+  eliminarServicio,
+} from "../../Services/serviciosService";
+import { obtenerCategorias } from "../../Services/categoriasService";
+import { obtenerUsuarios } from "../../Services/usuariosService";
 import { useMediaQuery } from "react-responsive";
 
 import {
@@ -18,17 +21,50 @@ import GestionCategorias from "./GestionCategorias";
 import TablaUsuarios from "./TablaUsuarios";
 
 const AdminPanel = () => {
-  const [vistaActual, setVistaActual] = useState("agregar");
-  const [servicios, setServicios] = useState(serviciosData);
+  const [vistaActual, setVistaActual] = useState("agregarServicio");
+  const [servicios, setServicios] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [usuarios, setUsuarios] = useState([]);
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
-  const [categorias, setCategorias] = useState(categoriasData);
-  const [usuarios, setUsuarios] = useState(usuariosData);
   const [mensaje, setMensaje] = useState({
     abierto: false,
     tipo: "",
     texto: "",
     callback: null,
   });
+
+  useEffect(() => {
+    actualizarLista();
+    cargarCategorias();
+    cargarUsuarios();
+  }, []);
+
+  const actualizarLista = async () => {
+    try {
+      const data = await obtenerServicios();
+      setServicios(data);
+    } catch (error) {
+      console.error("Error al obtener los servicios:", error);
+    }
+  };
+
+  const cargarCategorias = async () => {
+    try {
+      const data = await obtenerCategorias();
+      setCategorias(data);
+    } catch (error) {
+      console.error("Error al obtener las categorías:", error);
+    }
+  };
+
+  const cargarUsuarios = async () => {
+    try {
+      const data = await obtenerUsuarios();
+      setUsuarios(data);
+    } catch (error) {
+      console.error("Error al obtener los usuarios:", error);
+    }
+  };
 
   const seleccionarServicio = (servicio) => {
     setServicioSeleccionado(servicio);
@@ -40,6 +76,63 @@ const AdminPanel = () => {
     setServicioSeleccionado(null);
   };
 
+  const handleEliminarServicio = (id) => {
+    setMensaje({
+      abierto: true,
+      tipo: "eliminar",
+      texto: "¿Desea eliminar este servicio?",
+      callback: async () => {
+        const resultado = await eliminarServicio(id);
+        if (resultado) {
+          actualizarLista();
+        } else {
+          console.error("Error al eliminar el servicio.");
+        }
+        setMensaje({ ...mensaje, abierto: false });
+      },
+    });
+  };
+
+  const cambiarRolUsuario = (id, nuevoRol) => {
+    setUsuarios(
+      usuarios.map((usuario) =>
+        usuario.id === id ? { ...usuario, rol: nuevoRol } : usuario
+      )
+    );
+  };
+
+  const eliminarUsuario = (id) => {
+    const usuario = usuarios.find((user) => user.id === id);
+    if (usuario.rol === "admin") {
+      setMensaje({
+        abierto: true,
+        tipo: "error",
+        texto: "No se puede eliminar al administrador principal.",
+        callback: () => setMensaje({ ...mensaje, abierto: false }),
+      });
+      return;
+    }
+
+    setMensaje({
+      abierto: true,
+      tipo: "eliminar",
+      texto: "¿Desea eliminar este usuario?",
+      callback: () => {
+        setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+        setMensaje({ ...mensaje, abierto: false });
+      },
+    });
+  };
+
+  const esPantallaPequena = useMediaQuery({ maxWidth: 760 });
+
+  if (esPantallaPequena) {
+    return (
+      <MensajeNoDisponible> No disponible para mobile.</MensajeNoDisponible>
+    );
+  }
+
+  /* 
   const servicioExiste = (nombre) => servicios.some((s) => s.nombre === nombre);
 
   const agregarServicio = (nuevoServicio) => {
@@ -149,15 +242,7 @@ const AdminPanel = () => {
         setMensaje({ ...mensaje, abierto: false });
       },
     });
-  };
-
-  const esPantallaPequena = useMediaQuery({ maxWidth: 760 });
-
-  if (esPantallaPequena) {
-    return (
-      <MensajeNoDisponible> No disponible para mobile.</MensajeNoDisponible>
-    );
-  }
+  }; */
 
   return (
     <ContenedorAdmin>
@@ -191,21 +276,19 @@ const AdminPanel = () => {
       <Contenido>
         {vistaActual === "agregarServicio" && (
           <FormularioGestion
-            agregarServicio={agregarServicio}
             servicioSeleccionado={servicioSeleccionado}
+            actualizarLista={actualizarLista}
             cancelarEdicion={cancelarEdicion}
           />
         )}
         {vistaActual === "listarServicios" && (
           <TablaProductos
             servicios={servicios}
-            eliminarServicio={eliminarServicio}
+            eliminarServicio={handleEliminarServicio}
             seleccionarServicio={seleccionarServicio}
           />
         )}
-        {vistaActual === "agregarCategoria" && (
-          <GestionCategorias agregarCategoria={agregarCategoria} />
-        )}
+        {vistaActual === "agregarCategoria" && <GestionCategorias />}
         {vistaActual === "usuarios" && (
           <TablaUsuarios
             usuarios={usuarios}

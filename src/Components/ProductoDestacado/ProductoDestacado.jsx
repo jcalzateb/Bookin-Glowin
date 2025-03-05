@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
-import servicios from "../../Utils/servicios.json";
+import { obtenerServicios } from "../../Services/serviciosService";
 import { useNavigate } from "react-router-dom";
 import {
   ContenedorDestacados,
@@ -16,11 +16,20 @@ import {
 } from "./ProductoDestacado.styled";
 
 const ProductosDestacados = () => {
+  const [productos, setProductos] = useState([]);
   const [productosVisibles, setProductosVisibles] = useState([]);
   const [indiceActual, setIndiceActual] = useState(0);
   const [productosPorPantalla, setProductosPorPantalla] = useState(4);
   const navigate = useNavigate();
-  const productos = servicios.slice(0, 8);
+
+  useEffect(() => {
+    const cargarServicios = async () => {
+      const data = await obtenerServicios();
+      setProductos(data.slice(0, 8)); // Solo tomamos los primeros 8 servicios destacados
+    };
+
+    cargarServicios();
+  }, []);
 
   useEffect(() => {
     const ajustarCantidadProductos = () => {
@@ -54,7 +63,7 @@ const ProductosDestacados = () => {
     }, 3000);
 
     return () => clearInterval(intervalo);
-  }, [productosPorPantalla]);
+  }, [productosPorPantalla, productos.length]);
 
   return (
     <Box>
@@ -69,7 +78,14 @@ const ProductosDestacados = () => {
       </h2>
       <ContenedorDestacados>
         {productosVisibles.map((producto) => (
-          <TarjetaDestacada key={producto.id} imagen={producto.imagenes[0]}>
+          <TarjetaDestacada
+            key={producto.id}
+            imagen={
+              Array.isArray(producto.imagenes) && producto.imagenes.length > 0
+                ? producto.imagenes[0]
+                : "https://via.placeholder.com/150"
+            }
+          >
             <EstrellaDestacada className="estrella">
               <StarIcon />
             </EstrellaDestacada>
