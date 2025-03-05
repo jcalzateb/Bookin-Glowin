@@ -2,11 +2,13 @@ import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import {
+  ContenedorLogin,
   ContenedorFormulario,
   CampoInput,
   BotonAccion,
   MensajeError,
   Enlace,
+  Titulo,
 } from "./Login.styled";
 
 const Login = () => {
@@ -54,38 +56,48 @@ const Login = () => {
   };
 
   return (
-    <ContenedorFormulario onSubmit={handleSubmit}>
-      <h2>Iniciar Sesión</h2>
+    <ContenedorLogin>
+      <ContenedorFormulario onSubmit={handleSubmit}>
+        <Titulo>Iniciar Sesión</Titulo>
+        <CampoInput
+          type="email"
+          name="email"
+          placeholder="Correo Electrónico"
+          value={formulario.email}
+          onChange={handleChange}
+        />
+        {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
-      {errores.general && <MensajeError>{errores.general}</MensajeError>}
+        {errores.general && <MensajeError>{errores.general}</MensajeError>}
 
-      <CampoInput
-        type="email"
-        name="email"
-        placeholder="Correo Electrónico"
-        value={formulario.email}
-        onChange={handleChange}
-        required
-      />
-      {errores.email && <MensajeError>{errores.email}</MensajeError>}
+        <CampoInput
+          type="email"
+          name="email"
+          placeholder="Correo Electrónico"
+          value={formulario.email}
+          onChange={handleChange}
+          required
+        />
+        {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
-      <CampoInput
-        type="password"
-        name="password"
-        placeholder="Contraseña"
-        value={formulario.password}
-        onChange={handleChange}
-        required
-      />
-      {errores.password && <MensajeError>{errores.password}</MensajeError>}
+        <CampoInput
+          type="password"
+          name="password"
+          placeholder="Contraseña"
+          value={formulario.password}
+          onChange={handleChange}
+          required
+        />
+        {errores.password && <MensajeError>{errores.password}</MensajeError>}
 
-      <BotonAccion type="submit" disabled={botonDeshabilitado}>
-        Iniciar Sesión
-      </BotonAccion>
+        <BotonAccion type="submit" disabled={botonDeshabilitado}>
+          Iniciar Sesión
+        </BotonAccion>
 
-      <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
-      <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
-    </ContenedorFormulario>
+        <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
+        <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
+      </ContenedorFormulario>
+    </ContenedorLogin>
   );
 };
 

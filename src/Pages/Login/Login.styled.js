@@ -1,48 +1,63 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 
+export const ContenedorLogin = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: url('https://luis-liberty.s3.us-east-2.amazonaws.com/tratamiento-facial.png') no-repeat left center;
+  background-size: contain;
+`;
+
 export const ContenedorFormulario = styled.form`
   display: flex;
   flex-direction: column;
   max-width: 400px;
-  margin: 80px auto 20px auto;
-  padding: 20px 20px;
-  background-color: #444;
-  border-radius: 10px;
-  color: white;
+  padding: 40px;
+  background-color: rgba(255, 255, 255, 0.9); 
+  border-radius: 20px; /* Bordes redondeados 
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  color: #333;
   text-align: center;
 `;
 
+export const Titulo = styled.h2`
+  margin-bottom: 20px;
+  color: #7b4eff;
+  font-size: 24px;
+`;
+
 export const CampoInput = styled.input`
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  border: 1px solid white;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
   background: transparent;
-  color: white;
+  color: #333;
 
   &::placeholder {
-    color: #ccc;
+    color: #aaa;
   }
 
   &:focus {
-    border-color: #9747ff;
+    border-color: #7b4eff;
   }
 `;
 
 export const BotonAccion = styled.button`
   padding: 12px;
-  background-color: #9747ff;
+  background-color: #7b4eff;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 16px;
   cursor: pointer;
   text-transform: uppercase;
   font-weight: bold;
 
   &:hover {
-    background-color: #530eae;
+    background-color: #5a3bcc;
   }
 
   &:disabled {
@@ -57,9 +72,8 @@ export const MensajeError = styled.p`
   margin-bottom: 10px;
 `;
 
-// Enlace de navegación
 export const Enlace = styled(Link)`
-  color: #9747ff;
+  color: #7b4eff;
   font-size: 14px;
   text-decoration: none;
   margin-top: 10px;
