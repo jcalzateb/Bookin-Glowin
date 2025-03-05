@@ -73,8 +73,8 @@ const GlobalStyles = createGlobalStyle`
     background-color: ${({ theme }) => theme.palette.botones.activo};
     border: none;
     color: #FFFFFF;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 12px 16px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background-color 0.3s;
 

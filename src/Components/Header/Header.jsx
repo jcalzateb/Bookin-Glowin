@@ -16,7 +16,7 @@ import {
   ListaMenu,
   Lema,
 } from "./Header.styled";
-import Logo from "../../assets/Logo.png";
+import Logo from "../../../public/isotipo_glowin.svg";
 
 const Header = () => {
   const navigate = useNavigate();

@@ -2,8 +2,8 @@ import { createTheme } from "@mui/material/styles";
 
 const tema = createTheme({
   palette: {
-    primario: { main: "#FFFFFF" },
-    secundario: { main: "#121212" },
+    primario: { main: "#f6ebf9" },
+    secundario: { main: "#2D0363" },
     detalle: { main: "#9747FF" },
     botones: {
       activo: "#9747FF",
@@ -12,10 +12,13 @@ const tema = createTheme({
       inactivo: "#B093D5",
     },
   },
+  borderRadius: {
+    botones: "16px",
+  },
   typography: {
-    fontFamily: "Poppins, Lora, Inter, sans-serif",
+    fontFamily: "Poppins, Lora, sans-serif",
     button: {
-      fontFamily: "Inter, sans-serif",
+      fontFamily: "Poppins, sans-serif",
       fontWeight: 600,
       fontSize: "16px",
     },
@@ -27,8 +30,8 @@ const tema = createTheme({
     },
     h2: {
       fontFamily: "Lora, serif",
-      fontWeight: 500,
-      fontStyle: "italic",
+      fontWeight: "bold",
+      fontStyle: "regular",
       fontSize: "26px",
     },
     h3: {
@@ -77,7 +80,7 @@ const tema = createTheme({
       h5: {
         fontFamily: "Poppins, sans-serif",
         fontWeight: "bold",
-        fontStyle: "italic",
+        fontStyle: "regular",
         fontSize: "16px",
       },
       h6: {

@@ -35,12 +35,11 @@ export const ContenedorContenido = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 90%;
+  width: 100%;
   max-width: 600px;
-  background: rgba(255, 255, 255, 0.8);
   padding: 40px;
   border-radius: 0 0 10px 10px;
-  backdrop-filter: blur(5px);
+
 
   @media (max-width: 960px) {
     padding: 30px;
@@ -55,8 +54,8 @@ export const ContenedorContenido = styled.div`
 export const Isologo = styled.img`
   width: 100%;
   max-width: 500px;
-  margin-bottom: 30px;
-
+  margin-bottom: 36px;
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.20));
   @media (max-width: 960px) {
     max-width: 400px;
   }
@@ -68,10 +67,10 @@ export const Isologo = styled.img`
 
 export const BarraBusqueda = styled.div`
   display: flex;
-  width: 100%;
+  width:100%;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 8px;
+  margin-bottom: 24px;
 
   @media (max-width: 600px) {
     flex-wrap: nowrap;
@@ -80,29 +79,31 @@ export const BarraBusqueda = styled.div`
 
 export const CampoBusqueda = styled(TextField)`
   && {
-    background-color: #fff;
-    border-radius: 10px;
+    background-color: #f6ebf9 !important;
+    border-radius: 50px;
+    width: 100%;
+    border-color: #f6ebf9 !important;
+    font-family: ${({ theme }) => theme.typography.button.fontFamily};
 
     & .MuiOutlinedInput-root {
-      border-radius: 5px;
-      border-color: ${({ theme }) => theme.palette.botones.activo} !important;
+      border-radius: 50px;
+      border-color: #f6ebf9 !important;
 
       &:hover fieldset {
-        border-color: ${({ theme }) =>
-          theme.palette.botones.hovered} !important;
+        border-color: #9747ff !important;
       }
 
       &.Mui-focused fieldset {
-        border-color: ${({ theme }) => theme.palette.botones.activo} !important;
+        border-color: #2d0363 !important;
       }
     }
 
     & .MuiInputLabel-root {
-      color: #000 !important;
+      color: #2d0363 !important;
     }
 
     & .MuiOutlinedInput-input {
-      color: #000 !important;
+      color: #2d0363 !important;
     }
 
     & .Mui-focused {
@@ -113,45 +114,43 @@ export const CampoBusqueda = styled(TextField)`
 
 export const BotonLimpiar = styled(Button)`
   && {
-    background-color: rgba(136, 136, 136, 0) !important;
-    color: rgb(129, 129, 129) !important;
+    background-color: #2d0363 !important;
+    color: #f6ebf9 !important;
     border-radius: 50%;
-    width: 48px;
-    height: 48px;
-    min-width: auto;
+    height: 56px;
+    min-width: 56px;
     display: flex;
     align-items: center;
     justify-content: center;
 
     &:hover {
-      color: rgb(255, 255, 255) !important;
-      color: rgba(111, 111, 111, 0.58) !important;
+      background-color: #f6ebf9 !important;
+      color: #2d0363 !important;
     }
     &:active {
-      background-color: rgba(116, 116, 116, 0.88) !important;
+      background-color: #9747ff !important;
     }
   }
 `;
 
 export const BotonBuscar = styled(Button)`
   && {
-    background-color: ${({ theme }) => theme.palette.botones.activo} !important;
-    color: white !important;
+    background-color: #2d0363 !important;
+    color: #f6ebf9 !important;
     font-weight: 500;
     width: 100%;
     padding: 12px;
-    border-radius: 4px;
+    border-radius: ${({ theme }) => theme.borderRadius.botones} !important;
     text-transform: none;
     font-size: 16px;
+    font-family: ${({ theme }) => theme.typography.button.fontFamily} !important;
 
     &:hover {
-      background-color: ${({ theme }) =>
-        theme.palette.botones.hovered} !important;
+      background-color: #530eae !important;
     }
 
     &:active {
-      background-color: ${({ theme }) =>
-        theme.palette.botones.presionado} !important;
+      background-color: #9747ff !important;
     }
 
     &:disabled {
