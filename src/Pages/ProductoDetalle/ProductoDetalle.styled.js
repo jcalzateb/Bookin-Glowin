@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, Button, IconButton, Typography } from "@mui/material";
 
 export const ContenedorDetalle = styled(Box)`
   display: flex;
@@ -268,4 +268,12 @@ export const IconoCaracteristica = styled(Box)`
     font-size: 24px;
     color: #6c63ff;
   }
+`;
+
+export const MensajeError = styled(Typography)`
+  color: red;
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-top: 40px;
 `;

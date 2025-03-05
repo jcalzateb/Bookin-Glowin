@@ -1,5 +1,15 @@
 import api from "./apiConfig";
 
+export const obtenerServicioPorId = async (id) => {
+  try {
+    const respuesta = await api.get(`/servicios/${id}`);
+    return respuesta.data;
+  } catch (error) {
+    console.error("Error al obtener el servicio por ID:", error);
+    return null;
+  }
+};
+
 export const obtenerServicios = async () => {
   try {
     const respuesta = await api.get(`/servicios/all`);
