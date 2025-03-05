@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
-import servicios from "../../Utils/servicios.json";
-import categoriasData from "../../Utils/categorias.json";
+import { obtenerCategorias } from "../../Services/categoriasService";
+import { crearServicio, editarServicio } from "../../Services/serviciosService";
+import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 import {
   ContenedorFormulario,
   CampoContenedor,
   Etiqueta,
   CampoInput,
   AreaTexto,
-  ContenedorImagenes,
-  CajaImagen,
   BotonAccion,
   ContenedorBotones,
   CampoSelect,
@@ -22,75 +21,84 @@ import {
 } from "./FormularioGestion.styled";
 
 const FormularioGestion = ({
-  agregarServicio,
   servicioSeleccionado,
+  actualizarLista,
   cancelarEdicion,
 }) => {
   const [formulario, setFormulario] = useState({
     nombre: "",
+    categoriaId: "",
     categoria: "",
-    precio: "",
-    duracion: "",
-    secciones: "",
+    costo: "",
+    duracionMinutos: "",
+    cantidadSesiones: "",
     descripcion: "",
-    imagenes: [],
   });
 
+  const [categorias, setCategorias] = useState([]);
   const [errores, setErrores] = useState({});
   const [validacion, setValidacion] = useState({});
+  const [mensaje, setMensaje] = useState({
+    abierto: false,
+    tipo: "",
+    texto: "",
+    callback: null,
+  });
+
+  useEffect(() => {
+    const cargarCategorias = async () => {
+      const data = await obtenerCategorias();
+      setCategorias(data);
+    };
+    cargarCategorias();
+  }, []);
 
   useEffect(() => {
     if (servicioSeleccionado) {
+      const categoriaEncontrada = categorias.find(
+        (cat) =>
+          cat.nombre.toUpperCase() ===
+          servicioSeleccionado.categoria.toUpperCase()
+      );
+
       setFormulario({
         nombre: servicioSeleccionado.nombre || "",
-        categoria: servicioSeleccionado.categoria || "",
-        precio: servicioSeleccionado.precio || "",
-        duracion: servicioSeleccionado.duracion || "",
-        secciones: servicioSeleccionado.secciones || "",
+        categoriaId: categoriaEncontrada ? categoriaEncontrada.id : "",
+        categoria: categoriaEncontrada ? categoriaEncontrada.nombre : "",
+        costo: servicioSeleccionado.costo || "",
+        duracionMinutos: servicioSeleccionado.duracionMinutos || "",
+        cantidadSesiones: servicioSeleccionado.cantidadSesiones || "",
         descripcion: servicioSeleccionado.descripcion || "",
-        imagenes: servicioSeleccionado.imagenes || [],
       });
     } else {
       limpiarFormulario();
-      console.log("No se recibió ningún servicio para editar.");
     }
-  }, [servicioSeleccionado]);
+  }, [servicioSeleccionado, categorias]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    let nuevoEstado = { ...formulario, [name]: value };
-    setFormulario(nuevoEstado);
-
+    setFormulario({ ...formulario, [name]: value });
     validarCampo(name, value);
-  };
-
-  const handleImagenes = (e) => {
-    const archivos = Array.from(e.target.files);
-    const urlsImagenes = archivos.map((archivo) =>
-      URL.createObjectURL(archivo)
-    );
-
-    setFormulario({ ...formulario, imagenes: urlsImagenes });
   };
 
   const validarCampo = (name, value) => {
     let mensajeError = "";
     let estadoValidacion = "success";
+    const valorLimpio = typeof value === "string" ? value.trim() : value;
 
-    if (!value.trim()) {
+    if (!valorLimpio) {
       mensajeError = "Este campo es obligatorio";
       estadoValidacion = "error";
     }
 
-    if (["precio", "duracion", "secciones"].includes(name)) {
+    if (["costo", "duracionMinutos", "cantidadSesiones"].includes(name)) {
       if (isNaN(value)) {
         mensajeError = "Debe ser un número";
         estadoValidacion = "error";
       }
     }
 
-    if (name === "nombre") {
+    /*     if (name === "nombre") {
       const servicioExistente = servicios.find(
         (servicio) =>
           servicio.nombre.toLowerCase() === value.toLowerCase().trim()
@@ -99,7 +107,7 @@ const FormularioGestion = ({
         mensajeError = "Este servicio ya existe";
         estadoValidacion = "error";
       }
-    }
+    } */
 
     setErrores((prev) => ({ ...prev, [name]: mensajeError }));
     setValidacion((prev) => ({ ...prev, [name]: estadoValidacion }));
@@ -110,35 +118,103 @@ const FormularioGestion = ({
     let erroresTemp = {};
 
     Object.keys(formulario).forEach((campo) => {
-      validarCampo(campo, formulario[campo]);
-      if (!formulario[campo].trim()) {
-        erroresTemp[campo] = "Este campo es obligatorio";
+      const valorCampo = formulario[campo];
+      if (campo !== "imagenes") {
+        // Se omite la validación de imágenes
+        validarCampo(campo, formulario[campo]);
+        if (typeof valorCampo === "string" && !valorCampo.trim()) {
+          erroresTemp[campo] = "Este campo es obligatorio";
+        }
+
+        if (["precio", "duracion", "secciones"].includes(campo)) {
+          if (valorCampo === "" || isNaN(Number(valorCampo))) {
+            erroresTemp[campo] = "Debe ser un número";
+          }
+        }
       }
     });
 
     setErrores(erroresTemp);
+    console.log("⚠️ Errores encontrados:", erroresTemp);
     return Object.keys(erroresTemp).length === 0;
   };
 
-  // manejar el envío del formulario
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (validarFormulario()) {
-      agregarServicio(formulario);
-      limpiarFormulario();
+    if (!validarFormulario()) return;
+
+    console.log("📋 Categorías disponibles:", categorias);
+    console.log(
+      "🟢 Nombre de la categoría seleccionada:",
+      formulario.categoria
+    );
+
+    const categoriaSeleccionada = categorias.find(
+      (cat) => cat.id === parseInt(formulario.categoriaId, 10)
+    );
+
+    if (!categoriaSeleccionada) {
+      console.error("❌ Error: La categoría seleccionada no existe.");
+      return;
     }
+
+    console.log("✅ Categoría encontrada:", categoriaSeleccionada);
+
+    const servicioAEnviar = {
+      nombre: formulario.nombre,
+      descripcion: formulario.descripcion,
+      duracionMinutos: parseInt(formulario.duracionMinutos, 10),
+      costo: parseFloat(formulario.costo),
+      cantidadSesiones: parseInt(formulario.cantidadSesiones, 10),
+      categoriaId: categoriaSeleccionada.id,
+      categoria: {
+        nombre: categoriaSeleccionada.nombre,
+        urlImagen: categoriaSeleccionada.urlImagen,
+      },
+    };
+
+    setMensaje({
+      abierto: true,
+      tipo: "confirmacion",
+      texto: servicioSeleccionado
+        ? "¿Desea actualizar este servicio?"
+        : "¿Desea agregar este servicio?",
+      callback: async () => {
+        let resultado = null;
+
+        if (servicioSeleccionado) {
+          console.log("✏️ Actualizando servicio:", servicioAEnviar);
+          resultado = await editarServicio(
+            servicioSeleccionado.id,
+            servicioAEnviar
+          );
+        } else {
+          console.log("📡 Creando nuevo servicio:", servicioAEnviar);
+          resultado = await crearServicio(servicioAEnviar);
+        }
+
+        if (resultado) {
+          actualizarLista();
+          limpiarFormulario();
+        } else {
+          console.error("⚠️ Error al procesar la solicitud.");
+        }
+
+        setMensaje({ ...mensaje, abierto: false });
+      },
+    });
   };
 
   const limpiarFormulario = () => {
     setFormulario({
       nombre: "",
+      categoriaId: "",
       categoria: "",
-      precio: "",
-      duracion: "",
-      secciones: "",
+      costo: "",
+      duracionMinutos: "",
+      cantidadSesiones: "",
       descripcion: "",
-      imagenes: [],
     });
     setErrores({});
     setValidacion({});
@@ -150,7 +226,9 @@ const FormularioGestion = ({
 
   return (
     <ContenedorFormulario onSubmit={handleSubmit}>
-      <TituloFormulario>Formulario de Servicio</TituloFormulario>
+      <TituloFormulario>
+        {servicioSeleccionado ? "Editar Servicio" : "Agregar Servicio"}
+      </TituloFormulario>
       <CampoContenedor>
         <Etiqueta>Nombre del Servicio</Etiqueta>
         <CampoInput
@@ -179,16 +257,28 @@ const FormularioGestion = ({
           <Etiqueta>Categoría</Etiqueta>
           <CampoSelect
             name="categoria"
-            value={formulario.categoria}
-            onChange={handleChange}
+            value={formulario.categoriaId || ""}
+            onChange={(e) => {
+              const categoriaSeleccionada = categorias.find(
+                (cat) => cat.id === parseInt(e.target.value)
+              );
+              if (categoriaSeleccionada) {
+                setFormulario({
+                  ...formulario,
+                  categoriaId: categoriaSeleccionada.id,
+                  categoria: categoriaSeleccionada.nombre,
+                });
+              }
+            }}
           >
             <option value="">Seleccionar Categoría</option>
-            {categoriasData.map((categoria) => (
-              <option key={categoria.id} value={categoria.nombre}>
+            {categorias.map((categoria) => (
+              <option key={categoria.id} value={categoria.id}>
                 {categoria.nombre}
               </option>
             ))}
           </CampoSelect>
+
           {errores.categoria && (
             <MensajeError>{errores.categoria}</MensajeError>
           )}
@@ -198,19 +288,19 @@ const FormularioGestion = ({
           <Etiqueta>Precio</Etiqueta>
           <CampoInput
             type="text"
-            name="precio"
-            value={formulario.precio}
+            name="costo"
+            value={formulario.costo}
             onChange={handleChange}
             placeholder="Ej. 25000"
-            estado={validacion.precio}
+            estado={validacion.costo}
           />
-          {errores.precio && <MensajeError>{errores.precio}</MensajeError>}
-          {validacion.precio === "error" && (
+          {errores.costo && <MensajeError>{errores.costo}</MensajeError>}
+          {validacion.costo === "error" && (
             <IconoEstado>
               <IconoError />
             </IconoEstado>
           )}
-          {validacion.precio === "success" && (
+          {validacion.costo === "success" && (
             <IconoEstado>
               <IconoSuccess />
             </IconoEstado>
@@ -221,19 +311,21 @@ const FormularioGestion = ({
           <Etiqueta>Duración (minutos)</Etiqueta>
           <CampoInput
             type="text"
-            name="duracion"
-            value={formulario.duracion}
+            name="duracionMinutos"
+            value={formulario.duracionMinutos}
             onChange={handleChange}
             placeholder="Ej. 45"
-            estado={validacion.duracion}
+            estado={validacion.duracionMinutos}
           />
-          {errores.duracion && <MensajeError>{errores.duracion}</MensajeError>}
-          {validacion.duracion === "error" && (
+          {errores.duracionMinutos && (
+            <MensajeError>{errores.duracionMinutos}</MensajeError>
+          )}
+          {validacion.duracionMinutos === "error" && (
             <IconoEstado>
               <IconoError />
             </IconoEstado>
           )}
-          {validacion.duracion === "success" && (
+          {validacion.duracionMinutos === "success" && (
             <IconoEstado>
               <IconoSuccess />
             </IconoEstado>
@@ -241,24 +333,24 @@ const FormularioGestion = ({
         </CampoContenedor>
 
         <CampoContenedor>
-          <Etiqueta>Cantidad de Secciones</Etiqueta>
+          <Etiqueta>Cantidad de Sesiones</Etiqueta>
           <CampoInput
             type="text"
-            name="secciones"
-            value={formulario.secciones}
+            name="cantidadSesiones"
+            value={formulario.cantidadSesiones}
             onChange={handleChange}
             placeholder="Ej. 5"
-            estado={validacion.secciones}
+            estado={validacion.cantidadSesiones}
           />
-          {errores.secciones && (
-            <MensajeError>{errores.secciones}</MensajeError>
+          {errores.cantidadSesiones && (
+            <MensajeError>{errores.cantidadSesiones}</MensajeError>
           )}
-          {validacion.secciones === "error" && (
+          {validacion.cantidadSesiones === "error" && (
             <IconoEstado>
               <IconoError />
             </IconoEstado>
           )}
-          {validacion.secciones === "success" && (
+          {validacion.cantidadSesiones === "success" && (
             <IconoEstado>
               <IconoSuccess />
             </IconoEstado>
@@ -272,23 +364,12 @@ const FormularioGestion = ({
           value={formulario.descripcion}
           onChange={handleChange}
           placeholder="Breve descripción del servicio..."
-          estado={validacion.duracion}
+          estado={validacion.duracionMinutos}
         />
         {errores.descripcion && (
           <MensajeError>{errores.descripcion}</MensajeError>
         )}
       </CampoContenedor>
-
-      <Etiqueta>Subir Imágenes </Etiqueta>
-      <input type="file" multiple accept="image/*" onChange={handleImagenes} />
-
-      <ContenedorImagenes>
-        {formulario.imagenes.map((img, index) => (
-          <CajaImagen key={index}>
-            <img src={img} alt={`Imagen ${index + 1}`} />
-          </CajaImagen>
-        ))}
-      </ContenedorImagenes>
 
       <ContenedorBotones>
         <BotonAccion color="#28a745" onClick={handleSubmit}>
@@ -298,6 +379,14 @@ const FormularioGestion = ({
           {servicioSeleccionado ? "Cancelar Edición" : "Limpiar Formulario"}
         </BotonAccion>
       </ContenedorBotones>
+
+      <MensajeModal
+        abierto={mensaje.abierto}
+        tipo={mensaje.tipo}
+        mensaje={mensaje.texto}
+        onConfirmar={mensaje.callback}
+        onCancelar={() => setMensaje({ ...mensaje, abierto: false })}
+      />
     </ContenedorFormulario>
   );
 };
