@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
 import {
   ContenedorFormulario,
   CampoInput,
@@ -6,51 +8,56 @@ import {
   MensajeError,
   Enlace,
 } from "./Login.styled";
-import { Link } from "react-router-dom";
 
 const Login = () => {
+  const { login } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     email: "",
-    contraseña: "",
+    password: "",
   });
 
   const [errores, setErrores] = useState({});
   const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
 
-  // Manejar cambios en los campos
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormulario({ ...formulario, [name]: value });
     validarFormulario({ ...formulario, [name]: value });
   };
 
-  // Validacion
   const validarFormulario = (datos) => {
     let erroresTemp = {};
 
-    // Validar correo
     if (!/\S+@\S+\.\S+/.test(datos.email)) {
       erroresTemp.email = "Correo electrónico inválido";
     }
 
-    // Validar que la contraseña no esté vacía
-    if (!datos.contraseña.trim()) {
-      erroresTemp.contraseña = "La contraseña es obligatoria";
+    if (!datos.password.trim()) {
+      erroresTemp.password = "La contraseña es obligatoria";
     }
 
     setErrores(erroresTemp);
     setBotonDeshabilitado(Object.keys(erroresTemp).length > 0);
   };
 
-  // Manejar el envío del formulario
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Inicio de sesión exitoso (simulación)");
+
+    const usuario = await login(formulario.email, formulario.password);
+
+    if (!usuario) {
+      setErrores({ general: "Credenciales incorrectas. Inténtalo de nuevo." });
+    } else {
+      navigate("/");
+    }
   };
 
   return (
     <ContenedorFormulario onSubmit={handleSubmit}>
       <h2>Iniciar Sesión</h2>
+
+      {errores.general && <MensajeError>{errores.general}</MensajeError>}
 
       <CampoInput
         type="email"
@@ -58,23 +65,25 @@ const Login = () => {
         placeholder="Correo Electrónico"
         value={formulario.email}
         onChange={handleChange}
+        required
       />
       {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
       <CampoInput
         type="password"
-        name="contraseña"
+        name="password"
         placeholder="Contraseña"
-        value={formulario.contraseña}
+        value={formulario.password}
         onChange={handleChange}
+        required
       />
-      {errores.contraseña && <MensajeError>{errores.contraseña}</MensajeError>}
+      {errores.password && <MensajeError>{errores.password}</MensajeError>}
 
       <BotonAccion type="submit" disabled={botonDeshabilitado}>
         Iniciar Sesión
       </BotonAccion>
 
-      <Enlace to="/registro">¿No tienes cuenta? Regístrate aquí</Enlace>
+      <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
       <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
     </ContenedorFormulario>
   );

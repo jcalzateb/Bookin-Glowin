@@ -20,9 +20,9 @@ export const obtenerUsuarioPorId = async (id) => {
   }
 };
 
-export const crearUsuario = async (nuevoUsuario) => {
+export const registrarUsuario = async (usuario) => {
   try {
-    const respuesta = await api.post("/usuarios", nuevoUsuario);
+    const respuesta = await api.post("/usuarios", usuario);
     return respuesta.data;
   } catch (error) {
     console.error("Error al crear el usuario:", error);
@@ -47,5 +47,23 @@ export const eliminarUsuario = async (id) => {
   } catch (error) {
     console.error(`Error al eliminar el usuario con ID ${id}:`, error);
     return false;
+  }
+};
+
+export const loginUsuario = async (email) => {
+  try {
+    const usuarios = await obtenerUsuarios();
+    const usuarioEncontrado = usuarios.find(
+      (usuario) => usuario.email === email
+    );
+
+    if (!usuarioEncontrado) {
+      throw new Error("Usuario no encontrado");
+    }
+
+    return usuarioEncontrado;
+  } catch (error) {
+    console.error("Error en el login:", error);
+    return null;
   }
 };

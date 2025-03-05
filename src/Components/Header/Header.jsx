@@ -1,7 +1,9 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/AuthContext";
+import { Menu, MenuItem } from "@mui/material";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
-import { useNavigate } from "react-router-dom";
 import {
   ContenedorHeader,
   BarraNavegacion,
@@ -18,11 +20,13 @@ import Logo from "../../assets/Logo.png";
 
 const Header = () => {
   const navigate = useNavigate();
+  const { usuario, logout } = useContext(AuthContext);
+  //const [menuUsuario, setMenuUsuario] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
 
-  const toggleMenu = (estado) => () => {
-    setMenuAbierto(estado);
-  };
+  const abrirMenu = (event) => setMenuAbierto(event.currentTarget);
+  const cerrarMenu = () => setMenuAbierto(null);
+  const toggleMenu = (estado) => () => setMenuAbierto(estado);
 
   return (
     <ContenedorHeader position="static">
@@ -33,12 +37,41 @@ const Header = () => {
         </ContenedorLogo>
 
         <ContenedorBotones>
-          <BotonNav component={Link} to="/ingresar" variante="bordeado">
-            Iniciar sesión
-          </BotonNav>
-          <BotonNav component={Link} to="/registrar" variante="solido">
-            Crear cuenta
-          </BotonNav>
+          {usuario ? (
+            <>
+              <AccountCircleIcon
+                onClick={abrirMenu}
+                style={{ cursor: "pointer" }}
+              />
+              <Menu
+                anchorEl={menuAbierto}
+                open={Boolean(menuAbierto)}
+                onClose={cerrarMenu}
+              >
+                <MenuItem disabled>
+                  {usuario?.nombre} {usuario?.apellido}
+                </MenuItem>
+                <MenuItem disabled>{usuario?.email}</MenuItem>
+                <MenuItem
+                  onClick={() => {
+                    logout();
+                    cerrarMenu();
+                  }}
+                >
+                  Cerrar sesión
+                </MenuItem>
+              </Menu>
+            </>
+          ) : (
+            <>
+              <BotonNav component={Link} to="/ingresar" variante="bordeado">
+                Iniciar sesión
+              </BotonNav>
+              <BotonNav component={Link} to="/registrar" variante="solido">
+                Crear cuenta
+              </BotonNav>
+            </>
+          )}
         </ContenedorBotones>
 
         <BotonMenu onClick={toggleMenu(true)}>
