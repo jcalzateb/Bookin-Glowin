@@ -31,7 +31,7 @@ const Categorias = ({ setCategoriaSeleccionada }) => {
       <Typography
         variant="h2"
         sx={{
-          fontWeight: "italic",
+          fontWeight: "bold",
           marginBottom: "20px",
           textTransform: "uppercase",
         }}

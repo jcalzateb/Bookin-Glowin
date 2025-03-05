@@ -13,8 +13,8 @@ import {
   BotonLimpiar
 } from "./Buscador.styled";
 
-import Banner from "../../assets/banner.png";
-import IsologoImg from "../../assets/isologo.png";
+import Banner from "/src/assets/banner_chica.jpg";
+import IsologoImg from "/src/assets/isologo_light.svg";
 
 const Buscador = () => {
   const [busqueda, setBusqueda] = useState("");
