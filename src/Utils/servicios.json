@@ -12,7 +12,8 @@
       "https://picsum.photos/600/400?random=5"
     ],
     "precio": "20000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 2,
@@ -27,7 +28,8 @@
       "https://picsum.photos/600/400?random=10"
     ],
     "precio": "45000",
-    "duracion": 3
+    "duracion": 180,
+    "secciones": 3
   },
   {
     "id": 3,
@@ -42,7 +44,8 @@
       "https://picsum.photos/600/400?random=15"
     ],
     "precio": "30000",
-    "duracion": 2
+    "duracion": 120,
+    "secciones": 2
   },
   {
     "id": 4,
@@ -57,7 +60,8 @@
       "https://picsum.photos/600/400?random=20"
     ],
     "precio": "50000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 5,
@@ -72,7 +76,8 @@
       "https://picsum.photos/600/400?random=25"
     ],
     "precio": "35000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 6,
@@ -87,7 +92,8 @@
       "https://picsum.photos/600/400?random=30"
     ],
     "precio": "60000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 7,
@@ -102,7 +108,8 @@
       "https://picsum.photos/600/400?random=35"
     ],
     "precio": "20000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 8,
@@ -117,13 +124,14 @@
       "https://picsum.photos/600/400?random=40"
     ],
     "precio": "70000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 9,
     "nombre": "Limpieza Facial Profunda",
     "descripcion": "Elimina impurezas y renueva tu piel con nuestra limpieza facial.",
-    "categoria": "Facial & Maquillaje",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=41",
       "https://picsum.photos/600/400?random=42",
@@ -132,13 +140,14 @@
       "https://picsum.photos/600/400?random=45"
     ],
     "precio": "50000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 10,
     "nombre": "Masaje Relajante",
     "descripcion": "Relájate con un masaje terapéutico para aliviar el estrés y la tensión.",
-    "categoria": "Cuidado Corporal & Depilación",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=46",
       "https://picsum.photos/600/400?random=47",
@@ -147,13 +156,14 @@
       "https://picsum.photos/600/400?random=50"
     ],
     "precio": "60000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 11,
     "nombre": "Corte Masculino + Barba",
     "descripcion": "Corte de cabello y perfilado de barba con técnicas modernas.",
-    "categoria": "Glowin Men",
+    "categoria": "Hombres",
     "imagenes": [
       "https://picsum.photos/600/400?random=51",
       "https://picsum.photos/600/400?random=52",
@@ -162,13 +172,14 @@
       "https://picsum.photos/600/400?random=55"
     ],
     "precio": "25000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 12,
     "nombre": "Depilación con Cera",
     "descripcion": "Depilación con cera para rostro, cuerpo y zonas íntimas.",
-    "categoria": "Cuidado Corporal & Depilación",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=56",
       "https://picsum.photos/600/400?random=57",
@@ -177,13 +188,14 @@
       "https://picsum.photos/600/400?random=60"
     ],
     "precio": "35000",
-    "duracion": 2
+    "duracion": 120,
+    "secciones": 2
   },
   {
     "id": 13,
     "nombre": "Radiofrecuencia Facial",
     "descripcion": "Tratamiento rejuvenecedor para mejorar la elasticidad de la piel.",
-    "categoria": "Facial & Maquillaje",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=61",
       "https://picsum.photos/600/400?random=62",
@@ -192,7 +204,8 @@
       "https://picsum.photos/600/400?random=65"
     ],
     "precio": "75000",
-    "duracion": 2
+    "duracion": 120,
+    "secciones": 2
   },
   {
     "id": 14,
@@ -207,13 +220,14 @@
       "https://picsum.photos/600/400?random=70"
     ],
     "precio": "40000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 15,
     "nombre": "Maquillaje para Eventos",
     "descripcion": "Maquillaje profesional para bodas, fiestas y eventos especiales.",
-    "categoria": "Facial & Maquillaje",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=71",
       "https://picsum.photos/600/400?random=72",
@@ -222,7 +236,8 @@
       "https://picsum.photos/600/400?random=75"
     ],
     "precio": "80000",
-    "duracion": 3
+    "duracion": 180,
+    "secciones": 1
   },
   {
     "id": 16,
@@ -237,7 +252,8 @@
       "https://picsum.photos/600/400?random=80"
     ],
     "precio": "50000",
-    "duracion": 2
+    "duracion": 120,
+    "secciones": 2
   },
   {
     "id": 17,
@@ -252,13 +268,14 @@
       "https://picsum.photos/600/400?random=85"
     ],
     "precio": "40000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 18,
     "nombre": "Masaje Reductor",
     "descripcion": "Masaje especializado para reducir medidas y mejorar la circulación.",
-    "categoria": "Cuidado Corporal & Depilación",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=86",
       "https://picsum.photos/600/400?random=87",
@@ -267,7 +284,8 @@
       "https://picsum.photos/600/400?random=90"
     ],
     "precio": "90000",
-    "duracion": 3
+    "duracion": 180,
+    "secciones": 3
   },
   {
     "id": 19,
@@ -281,7 +299,8 @@
       "https://picsum.photos/600/400?random=146"
     ],
     "precio": "50000",
-    "duracion": 1
+    "duracion": 30,
+    "secciones": 1
   },
   {
     "id": 20,
@@ -295,13 +314,14 @@
       "https://picsum.photos/600/400?random=150"
     ],
     "precio": "60000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 21,
     "nombre": "Maquillaje Profesional",
     "descripcion": "Maquillaje social, para novias o eventos especiales. Utilizamos productos de alta calidad para un acabado impecable y duradero.",
-    "categoria": "Facial & Maquillaje",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=151",
       "https://picsum.photos/600/400?random=152",
@@ -309,13 +329,14 @@
       "https://picsum.photos/600/400?random=154"
     ],
     "precio": "95000",
-    "duracion": 4
+    "duracion": 240,
+    "secciones": 1
   },
   {
     "id": 22,
     "nombre": "Masaje Relajante",
     "descripcion": "Relaja tu cuerpo y mente con un masaje terapéutico de presión suave a media. Ideal para liberar tensiones y mejorar la circulación.",
-    "categoria": "Cuidado Corporal & Depilación",
+    "categoria": "Cuidados",
     "imagenes": [
       "https://picsum.photos/600/400?random=155",
       "https://picsum.photos/600/400?random=156",
@@ -323,13 +344,14 @@
       "https://picsum.photos/600/400?random=158"
     ],
     "precio": "80000",
-    "duracion": 1
+    "duracion": 60,
+    "secciones": 1
   },
   {
     "id": 23,
     "nombre": "Corte Masculino + Barba",
     "descripcion": "Corte de cabello y perfilado de barba con técnicas modernas. Servicio ideal para hombres que buscan un look impecable.",
-    "categoria": "Glowin Men",
+    "categoria": "Hombres",
     "imagenes": [
       "https://picsum.photos/600/400?random=159",
       "https://picsum.photos/600/400?random=160",
@@ -337,6 +359,7 @@
       "https://picsum.photos/600/400?random=162"
     ],
     "precio": "70000",
-    "duracion": 1
+    "duracion": 30,
+    "secciones": 1
   }
 ]

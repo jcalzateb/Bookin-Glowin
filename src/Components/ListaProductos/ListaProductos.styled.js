@@ -171,3 +171,38 @@ export const ControlesPaginacion = styled(Box)`
     justify-content: space-between;
   }
 `;
+
+// Contenedor del filtro
+export const ContenedorFiltro = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto 10px auto;
+  padding: 5px;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 16px;
+  color: #333;
+`;
+
+// Botón para eliminar el filtro
+export const BotonEliminarFiltro = styled(Button)`
+  background: transparent !important;
+  border: 1px solid rgba(151, 71, 255, 0.36) !important;
+  color: #9747ff !important;
+  font-weight: bold !important;
+  margin-left: 5px !important;
+  text-transform: none !important;
+  padding: 2px 8px !important;
+  border-radius: 8px !important;
+
+  &:hover {
+    background: #530eae !important;
+    color: white !important;
+  }
+`;
+
+export const TextoFiltro = styled.p`
+  margin: 0 2px;
+`;

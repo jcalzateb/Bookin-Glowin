@@ -1,37 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { obtenerCategorias } from "../../Services/categoriasService";
 import {
   ContenedorCategorias,
   ListaCategorias,
   CategoriaItem,
+  ImagenCategoria,
 } from "./Categorias.styled";
 
-import unasImg from "../../assets/categorias/unas.png";
-import pestanasImg from "../../assets/categorias/pestanas.png";
-import cabelloImg from "../../assets/categorias/cabello.png";
-import cejasImg from "../../assets/categorias/cejas.png";
-import facialImg from "../../assets/categorias/facial.png";
-import combosImg from "../../assets/categorias/combos.png";
-
-const Categorias = () => {
+const Categorias = ({ setCategoriaSeleccionada }) => {
   const navigate = useNavigate();
+  const [categorias, setCategorias] = useState([]);
 
-  const categorias = [
-    { nombre: "Uñitas", img: unasImg, ruta: "/categoria/unas" },
-    { nombre: "Pestañas", img: pestanasImg, ruta: "/categoria/pestanas" },
-    { nombre: "Cabello", img: cabelloImg, ruta: "/categoria/cabello" },
-    { nombre: "Cejas", img: cejasImg, ruta: "/categoria/cejas" },
-    { nombre: "Cuidados", img: facialImg, ruta: "/categoria/facial" },
-    { nombre: "Hombres", img: combosImg, ruta: "/categoria/combos" },
-  ];
+  useEffect(() => {
+    const cargarCategorias = async () => {
+      try {
+        const data = await obtenerCategorias();
+        setCategorias(data);
+      } catch (error) {
+        console.error("Error al obtener categorías:", error);
+      }
+    };
+
+    cargarCategorias();
+  }, []);
 
   return (
     <ContenedorCategorias>
       <Typography
         variant="h2"
         sx={{
-          fontWeight: "italic",
+          fontWeight: "bold",
           marginBottom: "20px",
           textTransform: "uppercase",
         }}
@@ -42,15 +42,16 @@ const Categorias = () => {
       <ListaCategorias>
         {categorias.map((categoria) => (
           <CategoriaItem
-            key={categoria.nombre}
-            onClick={() => navigate(categoria.ruta)}
+            key={categoria.id}
+            onClick={() => setCategoriaSeleccionada(categoria.nombre)}
           >
-            <img src={categoria.img} alt={categoria.nombre} />
+            <ImagenCategoria src={categoria.urlImagen} alt={categoria.nombre} />
             <Typography
               variant="h5"
               sx={{
                 marginTop: "5px",
                 padding: "10px",
+                textTransform: "capitalize",
               }}
             >
               {categoria.nombre}

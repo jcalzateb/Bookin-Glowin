@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
-import servicios from "../../Utils/servicios.json";
+import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography } from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import AccessTimeIcon from "@mui/icons-material/AccessTime";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import ContentCutIcon from "@mui/icons-material/ContentCut";
+import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -18,6 +22,11 @@ import {
   TituloProducto,
   TituloDescripcion,
   PrecioProducto,
+  ContenedorCaracteristicas,
+  ListaCaracteristicas,
+  CaracteristicaItem,
+  IconoCaracteristica,
+  MensajeError,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 
@@ -25,35 +34,64 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [modalAbierto, setModalAbierto] = useState(false);
+  const [servicio, setServicio] = useState(null);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    obtenerDetallesServicio();
   }, []);
 
-  const producto = servicios.find((item) => item.id === parseInt(id, 10));
+  const obtenerDetallesServicio = async () => {
+    try {
+      const data = await obtenerServicioPorId(id);
+      setServicio(data);
+    } catch (error) {
+      setError("No se pudo cargar la información del servicio.");
+    } finally {
+      setCargando(false);
+    }
+  };
 
-  if (!producto) {
+  if (cargando) {
+    if (!servicio || !servicio.imagenes) {
+      return (
+        <Typography
+          variant="h4"
+          sx={{ textAlign: "center", marginTop: "40px" }}
+        >
+          Cargando servicio... <CircularProgress size={30} />
+        </Typography>
+      );
+    }
+  }
+
+  if (error || !servicio) {
     return (
-      <Typography variant="h4" sx={{ textAlign: "center", marginTop: "40px" }}>
-        Producto no encontrado
-      </Typography>
+      <MensajeError
+        variant="h4"
+        sx={{ textAlign: "center", marginTop: "40px" }}
+      >
+        {error || "Producto no encontrado"}
+      </MensajeError>
     );
   }
 
   const abrirCarrusel = () => {
     setModalAbierto(true);
-    setMostrarHeader(false); // Oculta el Header
+    setMostrarHeader(false);
   };
 
   const cerrarCarrusel = () => {
     setModalAbierto(false);
-    setMostrarHeader(true); // Muestra el Header nuevamente
+    setMostrarHeader(true);
   };
 
   return (
     <ContenedorDetalle>
       <EncabezadoDetalle>
-        <TituloProducto>{producto.nombre}</TituloProducto>
+        <TituloProducto>{servicio.nombre}</TituloProducto>
         <BotonRetroceso onClick={() => navigate("/")}>
           <ArrowBackIcon />
         </BotonRetroceso>
@@ -61,18 +99,28 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
 
       <BloqueImagenes>
         <ImagenPrincipal
-          style={{ backgroundImage: `url(${producto.imagenes[0]})` }}
+          style={{
+            backgroundImage: servicio?.imagenes?.length
+              ? `url(${servicio.imagenes[0]})`
+              : "url('/ruta-de-imagen-placeholder.jpg')",
+          }}
         />
         <MiniaturasImagenes>
-          {producto.imagenes.slice(1).map((img, index) => (
-            <img key={index} src={img} alt={`Miniatura ${index}`} />
-          ))}
+          {servicio?.imagenes?.length > 1 ? (
+            servicio.imagenes
+              .slice(1)
+              .map((img, index) => (
+                <img key={index} src={img} alt={`Miniatura ${index}`} />
+              ))
+          ) : (
+            <Typography variant="body2">No hay imágenes adicionales</Typography>
+          )}
           <BotonVerMas onClick={abrirCarrusel}>Ver Más</BotonVerMas>
         </MiniaturasImagenes>
       </BloqueImagenes>
 
       <CarruselImagenes
-        imagenes={producto.imagenes}
+        imagenes={servicio.imagenes}
         abierto={modalAbierto}
         cerrar={cerrarCarrusel}
       />
@@ -80,11 +128,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       <ContenedorInfo>
         <DescripcionProducto>
           <TituloDescripcion>Descripción del Servicio</TituloDescripcion>
-          <Typography variant="body1">{producto.descripcion}</Typography>
+          <Typography variant="body1">{servicio.descripcion}</Typography>
         </DescripcionProducto>
 
         <ContenedorReserva>
-          <PrecioProducto>${producto.precio} COP</PrecioProducto>
+          <PrecioProducto>${servicio.costo} USD</PrecioProducto>
           <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
           <Typography variant="body2">
             Disponibilidad: Lunes - Viernes
@@ -92,6 +140,43 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           <BotonReservar>Reservar</BotonReservar>
         </ContenedorReserva>
       </ContenedorInfo>
+      <ContenedorCaracteristicas>
+        <TituloDescripcion>Características del Servicio</TituloDescripcion>
+        <ListaCaracteristicas>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <CategoryIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Categoría: {servicio.categoria}
+            </Typography>
+          </CaracteristicaItem>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <AccessTimeIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Duración: {servicio.duracionMinutos} min
+            </Typography>
+          </CaracteristicaItem>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <AttachMoneyIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Precio: ${servicio.costo} USD
+            </Typography>
+          </CaracteristicaItem>
+          <CaracteristicaItem>
+            <IconoCaracteristica>
+              <ContentCutIcon />
+            </IconoCaracteristica>
+            <Typography variant="body1">
+              Secciones: {servicio.cantidadSesiones}
+            </Typography>
+          </CaracteristicaItem>
+        </ListaCaracteristicas>
+      </ContenedorCaracteristicas>
     </ContenedorDetalle>
   );
 };
