@@ -7,25 +7,28 @@ import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
 import Registro from "./Pages/Registro/Registro";
 import Login from "./Pages/Login/Login";
+import AuthProvider from "./Context/AuthContext";
 
 const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);
 
   return (
-    <Router>
-      {mostrarHeader && <Header />}
-      <Routes>
-        <Route path="/" element={<Inicio />} />
-        <Route
-          path="/producto/:id"
-          element={<ProductoDetalle setMostrarHeader={setMostrarHeader} />}
-        />
-        <Route path="/admin" element={<AdminPanel />} />
-        <Route path="/registrar" element={<Registro />} />
-        <Route path="/ingresar" element={<Login />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <AuthProvider>
+      <Router>
+        {mostrarHeader && <Header />}
+        <Routes>
+          <Route path="/" element={<Inicio />} />
+          <Route
+            path="/producto/:id"
+            element={<ProductoDetalle setMostrarHeader={setMostrarHeader} />}
+          />
+          <Route path="/admin" element={<AdminPanel />} />
+          <Route path="/registrar" element={<Registro />} />
+          <Route path="/ingresar" element={<Login />} />
+        </Routes>
+        <Footer />
+      </Router>
+    </AuthProvider>
   );
 };
 

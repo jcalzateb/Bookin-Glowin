@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUsuario } from "../../Services/authService";
 import { AuthContext } from "../../Context/AuthContext";
 import {
   ContenedorLogin,
@@ -12,46 +13,64 @@ import {
 } from "./Login.styled";
 
 const Login = () => {
-  const { login } = useContext(AuthContext);
+  const { setUsuarioAutenticado } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     email: "",
     password: "",
   });
+  if (!formulario) {
+    setFormulario({ email: "", password: "" });
+  }
 
   const [errores, setErrores] = useState({});
+  const [mensajeError, setMensajeError] = useState("");
   const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormulario({ ...formulario, [name]: value });
-    validarFormulario({ ...formulario, [name]: value });
+    setFormulario((prevState) => ({
+      ...prevState,
+      [name]: value,
+    }));
+    setErrores({ ...errores, [name]: "" });
   };
 
-  const validarFormulario = (datos) => {
-    let erroresTemp = {};
-
-    if (!/\S+@\S+\.\S+/.test(datos.email)) {
-      erroresTemp.email = "Correo electrónico inválido";
+  const validarFormulario = () => {
+    if (!formulario || typeof formulario !== "object") {
+      console.error("⚠️ Error: `formulario` no está definido correctamente.");
+      return false;
     }
 
-    if (!datos.password.trim()) {
+    let erroresTemp = {};
+    if (!formulario.email || !/\S+@\S+\.\S+/.test(formulario.email)) {
+      erroresTemp.email = "Correo electrónico inválido";
+    }
+    if (!formulario.password || formulario.password.trim() === "") {
       erroresTemp.password = "La contraseña es obligatoria";
     }
 
     setErrores(erroresTemp);
-    setBotonDeshabilitado(Object.keys(erroresTemp).length > 0);
+    return Object.keys(erroresTemp).length === 0;
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const usuario = await login(formulario.email, formulario.password);
+    if (!validarFormulario()) return;
 
-    if (!usuario) {
-      setErrores({ general: "Credenciales incorrectas. Inténtalo de nuevo." });
-    } else {
-      navigate("/");
+    try {
+      const respuesta = await loginUsuario(formulario);
+      if (respuesta) {
+        setUsuarioAutenticado(respuesta);
+        localStorage.setItem("usuario", JSON.stringify(respuesta));
+        navigate("/");
+      } else {
+        setMensajeError("Credenciales incorrectas. Intente nuevamente.");
+      }
+    } catch (error) {
+      console.error("❌ Error en el inicio de sesión:", error);
+      setMensajeError("Ocurrió un error al iniciar sesión.");
     }
   };
 
@@ -68,18 +87,6 @@ const Login = () => {
         />
         {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
-        {errores.general && <MensajeError>{errores.general}</MensajeError>}
-
-        <CampoInput
-          type="email"
-          name="email"
-          placeholder="Correo Electrónico"
-          value={formulario.email}
-          onChange={handleChange}
-          required
-        />
-        {errores.email && <MensajeError>{errores.email}</MensajeError>}
-
         <CampoInput
           type="password"
           name="password"
@@ -90,9 +97,7 @@ const Login = () => {
         />
         {errores.password && <MensajeError>{errores.password}</MensajeError>}
 
-        <BotonAccion type="submit" disabled={botonDeshabilitado}>
-          Iniciar Sesión
-        </BotonAccion>
+        <BotonAccion type="submit">Iniciar Sesión</BotonAccion>
 
         <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
         <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
