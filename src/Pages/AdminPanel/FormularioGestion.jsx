@@ -126,7 +126,7 @@ const FormularioGestion = ({
           erroresTemp[campo] = "Este campo es obligatorio";
         }
 
-        if (["precio", "duracion", "secciones"].includes(campo)) {
+        if (["precio", "duracion", "cantidadSesiones"].includes(campo)) {
           if (valorCampo === "" || isNaN(Number(valorCampo))) {
             erroresTemp[campo] = "Debe ser un número";
           }

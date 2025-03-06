@@ -7,6 +7,7 @@ import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
 import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
+import servicios from "../../Utils/servicios.json";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -38,11 +39,19 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
+  const producto = servicios.find((item) => item.id === parseInt(id, 10));
+
   useEffect(() => {
     window.scrollTo(0, 0);
     obtenerDetallesServicio();
   }, []);
-
+  if (!producto) {
+    return (
+      <Typography variant="h4" sx={{ textAlign: "center", marginTop: "40px" }}>
+        Producto no encontrado
+      </Typography>
+    );
+  }
   const obtenerDetallesServicio = async () => {
     try {
       const data = await obtenerServicioPorId(id);
@@ -102,12 +111,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           style={{
             backgroundImage: servicio?.imagenes?.length
               ? `url(${servicio.imagenes[0]})`
-              : "url('/ruta-de-imagen-placeholder.jpg')",
+              : "url('https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
           }}
         />
         <MiniaturasImagenes>
-          {servicio?.imagenes?.length > 1 ? (
-            servicio.imagenes
+          {producto?.imagenes?.length > 1 ? (
+            producto.imagenes
               .slice(1)
               .map((img, index) => (
                 <img key={index} src={img} alt={`Miniatura ${index}`} />
@@ -120,7 +129,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       </BloqueImagenes>
 
       <CarruselImagenes
-        imagenes={servicio.imagenes}
+        imagenes={producto.imagenes}
         abierto={modalAbierto}
         cerrar={cerrarCarrusel}
       />
@@ -172,7 +181,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               <ContentCutIcon />
             </IconoCaracteristica>
             <Typography variant="body1">
-              Secciones: {servicio.cantidadSesiones}
+              Sesiones: {servicio.cantidadSesiones}
             </Typography>
           </CaracteristicaItem>
         </ListaCaracteristicas>

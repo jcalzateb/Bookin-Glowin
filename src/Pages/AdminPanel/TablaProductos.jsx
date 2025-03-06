@@ -61,7 +61,7 @@ const TablaProductos = ({ seleccionarServicio }) => {
             <CeldaEncabezado>Categoría</CeldaEncabezado>
             <CeldaEncabezado>Precio</CeldaEncabezado>
             <CeldaEncabezado>Duración</CeldaEncabezado>
-            <CeldaEncabezado>Secciones</CeldaEncabezado>
+            <CeldaEncabezado>Sesiones</CeldaEncabezado>
             <CeldaEncabezado>Descripción</CeldaEncabezado>
             <CeldaEncabezado>Acción</CeldaEncabezado>
           </FilaEncabezado>

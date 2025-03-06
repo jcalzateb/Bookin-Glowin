@@ -23,7 +23,6 @@ export const ListaCategorias = styled(Box)`
   gap: 50px;
   max-width: 900px;
   width: 100%;
-
 `;
 
 export const CategoriaItem = styled.div`
