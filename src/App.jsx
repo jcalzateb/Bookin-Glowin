@@ -7,7 +7,7 @@ import Footer from "./Components/Footer/Footer";
 import Header from "./Components/Header/Header";
 import Registro from "./Pages/Registro/Registro";
 import Login from "./Pages/Login/Login";
-import AuthProvider from "./Context/AuthContext";
+import { AuthProvider } from "./Context/AuthContext";
 
 const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);

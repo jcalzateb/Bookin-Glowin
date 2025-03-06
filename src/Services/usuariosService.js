@@ -69,20 +69,19 @@ export const eliminarUsuario = async (id) => {
   }
 };
 
-export const loginUsuario = async (email) => {
+export const loginUsuario = async (email, password) => {
   try {
-    const usuarios = await obtenerUsuarios();
-    const usuarioEncontrado = usuarios.find(
-      (usuario) => usuario.email === email
-    );
+    const respuesta = await api.post("/auth/login", { email, password });
 
-    if (!usuarioEncontrado) {
-      throw new Error("Usuario no encontrado");
+    if (respuesta.data) {
+      localStorage.setItem("token", respuesta.data.token);
+      localStorage.setItem("usuarioId", respuesta.data.id); // Guardar ID del usuario
+      console.log("✅ Usuario autenticado:", respuesta.data);
     }
 
-    return usuarioEncontrado;
+    return respuesta.data;
   } catch (error) {
-    console.error("Error en el login:", error);
+    console.error("❌ Error al iniciar sesión:", error);
     return null;
   }
 };

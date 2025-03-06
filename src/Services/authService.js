@@ -6,7 +6,6 @@ export const loginUsuario = async (credenciales) => {
       headers: {
         "Content-Type": "application/json",
       },
-      withCredentials: false,
     });
 
     return respuesta.data;
@@ -34,6 +33,30 @@ export const reenviarConfirmacion = async (email) => {
       "Error al reenviar confirmación:",
       error.response?.data || error
     );
+    return null;
+  }
+};
+
+export const obtenerUsuarioActual = async () => {
+  try {
+    const token = localStorage.getItem("token");
+    const usuarioId = localStorage.getItem("usuarioId");
+
+    if (!token || !usuarioId) {
+      console.error("❌ No hay token o usuarioId en localStorage.");
+      return null;
+    }
+
+    const respuesta = await api.get(`/usuarios/${usuarioId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      withCredentials: true,
+    });
+
+    return respuesta.data;
+  } catch (error) {
+    console.error("❌ Error al obtener el usuario actual:", error);
     return null;
   }
 };

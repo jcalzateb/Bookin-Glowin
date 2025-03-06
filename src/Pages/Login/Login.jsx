@@ -13,7 +13,7 @@ import {
 } from "./Login.styled";
 
 const Login = () => {
-  const { setUsuarioAutenticado } = useContext(AuthContext);
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     email: "",
@@ -57,12 +57,15 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validarFormulario()) return;
-
+    if (!validarFormulario()) {
+      console.log("❌ Formulario inválido:", errores);
+      return;
+    }
+    console.log("📡 Enviando datos de inicio de sesión:", formulario);
     try {
       const respuesta = await loginUsuario(formulario);
       if (respuesta) {
-        setUsuarioAutenticado(respuesta);
+        login(respuesta);
         localStorage.setItem("usuario", JSON.stringify(respuesta));
         navigate("/");
       } else {

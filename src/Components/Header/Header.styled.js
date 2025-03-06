@@ -5,6 +5,8 @@ import {
   IconButton,
   Drawer,
   List,
+  Menu,
+  MenuItem,
 } from "@mui/material";
 import { styled } from "@mui/system";
 
@@ -118,5 +120,46 @@ export const ListaMenu = styled(List)({
       backgroundColor: "#2d0363",
       color: "#f6ebf9",
     },
+  },
+});
+
+export const ContenedorUsuario = styled("div")({
+  position: "relative",
+  display: "flex",
+  alignItems: "center",
+  cursor: "pointer",
+});
+
+export const AvatarUsuario = styled("div")({
+  width: 40,
+  height: 40,
+  borderRadius: "50%",
+  backgroundColor: "#2d0363",
+  color: "#fff",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  fontSize: "1rem",
+  fontWeight: "bold",
+  textTransform: "uppercase",
+  cursor: "pointer",
+  "&:hover": {
+    backgroundColor: "#530eae",
+  },
+});
+
+export const MenuUsuario = styled(Menu)({
+  marginTop: "10px",
+  "& .MuiPaper-root": {
+    backgroundColor: "#fff",
+    minWidth: "200px",
+  },
+});
+
+export const OpcionMenu = styled(MenuItem)({
+  padding: "12px 20px",
+  fontSize: "1rem",
+  "&:hover": {
+    backgroundColor: "#f6ebf9",
   },
 });

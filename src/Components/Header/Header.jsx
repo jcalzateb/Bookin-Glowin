@@ -1,8 +1,6 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
-import { Menu, MenuItem } from "@mui/material";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
   ContenedorHeader,
@@ -15,18 +13,36 @@ import {
   DrawerMenu,
   ListaMenu,
   Lema,
+  AvatarUsuario,
+  ContenedorUsuario,
+  MenuUsuario,
+  OpcionMenu,
 } from "./Header.styled";
 import Logo from "../../assets/isotipo_glowin.svg";
 
 const Header = () => {
   const navigate = useNavigate();
   const { usuario, logout } = useContext(AuthContext);
-  //const [menuUsuario, setMenuUsuario] = useState(null);
+  const [menuUsuario, setMenuUsuario] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
 
-  const abrirMenu = (event) => setMenuAbierto(event.currentTarget);
-  const cerrarMenu = () => setMenuAbierto(null);
+  useEffect(() => {
+    console.log("Estado de usuario en Header:", usuario);
+  }, [usuario]);
+
+  const abrirMenuUsuario = (event) => setMenuUsuario(event.currentTarget);
+  const cerrarMenuUsuario = () => setMenuUsuario(null);
   const toggleMenu = (estado) => () => setMenuAbierto(estado);
+
+  const obtenerIniciales = (nombre) => {
+    return nombre
+      ? nombre
+          .split(" ")
+          .map((n) => n[0])
+          .join("")
+          .toUpperCase()
+      : "";
+  };
 
   return (
     <ContenedorHeader position="static">
@@ -38,30 +54,32 @@ const Header = () => {
 
         <ContenedorBotones>
           {usuario ? (
-            <>
-              <AccountCircleIcon
-                onClick={abrirMenu}
-                style={{ cursor: "pointer" }}
-              />
-              <Menu
-                anchorEl={menuAbierto}
-                open={Boolean(menuAbierto)}
-                onClose={cerrarMenu}
+            <ContenedorUsuario>
+              <AvatarUsuario onClick={abrirMenuUsuario}>
+                {obtenerIniciales(usuario.nombre)}
+              </AvatarUsuario>
+              <MenuUsuario
+                anchorEl={menuUsuario}
+                open={Boolean(menuUsuario)}
+                onClose={cerrarMenuUsuario}
               >
-                <MenuItem disabled>
-                  {usuario?.nombre} {usuario?.apellido}
-                </MenuItem>
-                <MenuItem disabled>{usuario?.email}</MenuItem>
-                <MenuItem
+                <OpcionMenu disabled>
+                  <strong>
+                    {usuario?.nombre} {usuario?.apellido}
+                  </strong>
+                </OpcionMenu>
+                <OpcionMenu disabled>{usuario?.email}</OpcionMenu>
+                <hr />
+                <OpcionMenu
                   onClick={() => {
                     logout();
-                    cerrarMenu();
+                    cerrarMenuUsuario();
                   }}
                 >
                   Cerrar sesión
-                </MenuItem>
-              </Menu>
-            </>
+                </OpcionMenu>
+              </MenuUsuario>
+            </ContenedorUsuario>
           ) : (
             <>
               <BotonNav component={Link} to="/ingresar" variante="bordeado">
@@ -84,8 +102,25 @@ const Header = () => {
           onClose={toggleMenu(false)}
         >
           <ListaMenu>
-            <Link to="/iniciar-sesion">Iniciar Sesión</Link>
-            <Link to="/crear-cuenta">Crear Cuenta</Link>
+            {!usuario ? (
+              <>
+                <Link to="/iniciar-sesion">Iniciar Sesión</Link>
+                <Link to="/crear-cuenta">Crear Cuenta</Link>
+              </>
+            ) : (
+              <>
+                <p>
+                  <strong>
+                    {usuario?.nombre} {usuario?.apellido}
+                  </strong>
+                </p>
+                <p>{usuario?.email}</p>
+                <hr />
+                <Link to="#" onClick={logout}>
+                  Cerrar Sesión
+                </Link>
+              </>
+            )}
           </ListaMenu>
         </DrawerMenu>
       </BarraNavegacion>
