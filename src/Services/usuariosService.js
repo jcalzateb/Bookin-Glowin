@@ -20,12 +20,31 @@ export const obtenerUsuarioPorId = async (id) => {
   }
 };
 
-export const registrarUsuario = async (usuario) => {
+export const registrarUsuario = async (nuevoUsuario) => {
   try {
-    const respuesta = await api.post("/usuarios", usuario);
+    // Obtener la fecha y hora actual para el registro
+    const fechaActual = new Date();
+    const fechaRegistro = fechaActual.toISOString().split("T")[0]; // YYYY-MM-DD
+    const horaRegistro = fechaActual.toTimeString().split(" ")[0]; // HH:mm:ss
+
+    const usuarioAEnviar = {
+      ...nuevoUsuario,
+      fechaRegistro,
+      horaRegistro,
+      rol: nuevoUsuario.rol || "CLIENTE", // Si no se especifica, asignar "CLIENTE"
+    };
+
+    console.log("📡 Enviando usuario al backend:", usuarioAEnviar);
+
+    const respuesta = await api.post(`/usuarios`, usuarioAEnviar, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
     return respuesta.data;
   } catch (error) {
-    console.error("Error al crear el usuario:", error);
+    console.error("❌ Error al crear el usuario:", error);
     return null;
   }
 };

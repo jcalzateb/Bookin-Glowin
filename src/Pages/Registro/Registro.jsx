@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { registrarUsuario } from "../../Services/usuariosService";
 import {
   ContenedorRegistro,
   TituloRegistro,
@@ -12,12 +14,14 @@ import {
 } from "./Registro.styled";
 
 const Registro = () => {
+  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     nombre: "",
     apellido: "",
     email: "",
-    contraseña: "",
-    confirmarContraseña: "",
+    celular: "",
+    password: "",
+    confirmarPassword: "",
   });
 
   const [errores, setErrores] = useState({});
@@ -34,6 +38,7 @@ const Registro = () => {
   const validarFormulario = (datos) => {
     let erroresTemp = {};
     const soloLetras = /^[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+$/;
+    const soloNumeros = /^[0-9]+$/;
 
     if (!datos.nombre.trim()) {
       erroresTemp.nombre = "El nombre es obligatorio";
@@ -51,16 +56,24 @@ const Registro = () => {
       erroresTemp.email = "Correo electrónico inválido";
     }
 
-    if (datos.contraseña.length < 8 || !/\d/.test(datos.contraseña)) {
-      erroresTemp.contraseña = "Mínimo 8 caracteres y al menos un número";
+    if (!datos.celular.trim()) {
+      erroresTemp.celular = "El número de celular es obligatorio";
+    } else if (!soloNumeros.test(datos.celular)) {
+      erroresTemp.celular = "Solo se permiten números";
     }
 
-    if (datos.confirmarContraseña !== datos.contraseña) {
-      erroresTemp.confirmarContraseña = "Las contraseñas no coinciden";
+    if (datos.password.length < 8 || !/\d/.test(datos.password)) {
+      erroresTemp.password = "Mínimo 8 caracteres y al menos un número";
+    }
+
+    if (datos.confirmarPassword !== datos.password) {
+      erroresTemp.confirmarPassword = "Las contraseñas no coinciden";
     }
 
     setErrores(erroresTemp);
-    setBotonDeshabilitado(Object.keys(erroresTemp).length > 0 || !radioSeleccionado);
+    setBotonDeshabilitado(
+      Object.keys(erroresTemp).length > 0 || !radioSeleccionado
+    );
   };
 
   const handleRadioChange = () => {
@@ -69,9 +82,46 @@ const Registro = () => {
     setBotonDeshabilitado(!nuevoRadio || Object.keys(errores).length > 0);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    alert("Usuario registrado correctamente (simulación)");
+
+    // if (!validarFormulario(formulario)) return;
+
+    const usuarioARegistrar = {
+      nombre: formulario.nombre.trim(),
+      apellido: formulario.apellido.trim(),
+      email: formulario.email.trim(),
+      celular: formulario.celular.trim(),
+      password: formulario.password,
+      rol: "CLIENTE",
+    };
+
+    console.log("📡 Enviando datos al backend:", usuarioARegistrar);
+
+    const resultado = await registrarUsuario(usuarioARegistrar);
+
+    if (!resultado) {
+      setErrores({
+        general: "Error al registrar usuario. Inténtalo nuevamente.",
+      });
+    } else {
+      limpiarFormulario();
+      navigate("/ingresar");
+    }
+  };
+
+  const limpiarFormulario = () => {
+    setFormulario({
+      nombre: "",
+      apellido: "",
+      email: "",
+      celular: "",
+      password: "",
+      confirmarPassword: "",
+    });
+    setErrores({});
+    setRadioSeleccionado(false);
+    setBotonDeshabilitado(true);
   };
 
   return (
@@ -79,7 +129,7 @@ const Registro = () => {
       <ContenedorIzquierda>
         <TituloRegistro>REGÍSTRATE</TituloRegistro>
         <ContenedorFormulario onSubmit={handleSubmit}>
-          <CampoInput    
+          <CampoInput
             type="text"
             name="nombre"
             placeholder="Ingresa tu nombre"
@@ -88,7 +138,8 @@ const Registro = () => {
           />
           {errores.nombre && <MensajeError>{errores.nombre}</MensajeError>}
 
-          <CampoInput            type="text"
+          <CampoInput
+            type="text"
             name="apellido"
             placeholder="Ingresa tu apellido"
             value={formulario.apellido}
@@ -96,7 +147,7 @@ const Registro = () => {
           />
           {errores.apellido && <MensajeError>{errores.apellido}</MensajeError>}
 
-          <CampoInput            
+          <CampoInput
             type="email"
             name="email"
             placeholder="Ingresa tu dirección de email"
@@ -105,24 +156,33 @@ const Registro = () => {
           />
           {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
-          <CampoInput            
-            type="password"
-            name="contraseña"
-            placeholder="Crea una contraseña"
-            value={formulario.contraseña}
+          <CampoInput
+            type="text"
+            name="celular"
+            placeholder="Ingresa tu número de celular"
+            value={formulario.celular}
             onChange={handleChange}
           />
-          {errores.contraseña && <MensajeError>{errores.contraseña}</MensajeError>}
+          {errores.celular && <MensajeError>{errores.celular}</MensajeError>}
 
-          <CampoInput            
+          <CampoInput
             type="password"
-            name="confirmarContraseña"
-            placeholder="Ingresa tu contraseña"
-            value={formulario.confirmarContraseña}
+            name="password"
+            placeholder="Crea una contraseña"
+            value={formulario.password}
             onChange={handleChange}
           />
-          {errores.confirmarContraseña && (
-            <MensajeError>{errores.confirmarContraseña}</MensajeError>
+          {errores.password && <MensajeError>{errores.password}</MensajeError>}
+
+          <CampoInput
+            type="password"
+            name="confirmarPassword"
+            placeholder="Confirma tu contraseña"
+            value={formulario.confirmarPassword}
+            onChange={handleChange}
+          />
+          {errores.confirmarPassword && (
+            <MensajeError>{errores.confirmarPassword}</MensajeError>
           )}
 
           <ContenedorRadio>

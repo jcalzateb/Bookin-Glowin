@@ -4,7 +4,11 @@ import {
   eliminarServicio,
 } from "../../Services/serviciosService";
 import { obtenerCategorias } from "../../Services/categoriasService";
-import { obtenerUsuarios } from "../../Services/usuariosService";
+import {
+  obtenerUsuarios,
+  actualizarUsuario,
+  eliminarUsuario,
+} from "../../Services/usuariosService";
 import { useMediaQuery } from "react-responsive";
 
 import {
@@ -93,21 +97,29 @@ const AdminPanel = () => {
     });
   };
 
-  const cambiarRolUsuario = (id, nuevoRol) => {
-    setUsuarios(
-      usuarios.map((usuario) =>
-        usuario.id === id ? { ...usuario, rol: nuevoRol } : usuario
-      )
-    );
+  const cambiarRolUsuario = async (id, nuevoRol) => {
+    const usuarioActualizado = usuarios.find((usuario) => usuario.id === id);
+    if (!usuarioActualizado) return;
+
+    const usuarioModificado = { ...usuarioActualizado, rol: nuevoRol };
+
+    const resultado = await actualizarUsuario(id, usuarioModificado);
+    if (resultado) {
+      setUsuarios((prevUsuarios) =>
+        prevUsuarios.map((usuario) =>
+          usuario.id === id ? { ...usuario, rol: nuevoRol } : usuario
+        )
+      );
+    }
   };
 
-  const eliminarUsuario = (id) => {
+  const handleEliminarUsuario = (id) => {
     const usuario = usuarios.find((user) => user.id === id);
-    if (usuario.rol === "admin") {
+    if (usuario.rol === "SUPER_ADMINISTRADOR") {
       setMensaje({
         abierto: true,
         tipo: "error",
-        texto: "No se puede eliminar al administrador principal.",
+        texto: "No se puede eliminar al Super Administrador.",
         callback: () => setMensaje({ ...mensaje, abierto: false }),
       });
       return;
@@ -117,8 +129,13 @@ const AdminPanel = () => {
       abierto: true,
       tipo: "eliminar",
       texto: "¿Desea eliminar este usuario?",
-      callback: () => {
-        setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
+      callback: async () => {
+        const resultado = await eliminarUsuario(id);
+        if (resultado) {
+          setUsuarios((prevUsuarios) =>
+            prevUsuarios.filter((usuario) => usuario.id !== id)
+          );
+        }
         setMensaje({ ...mensaje, abierto: false });
       },
     });
@@ -293,7 +310,7 @@ const AdminPanel = () => {
           <TablaUsuarios
             usuarios={usuarios}
             cambiarRol={cambiarRolUsuario}
-            eliminarUsuario={eliminarUsuario}
+            eliminarUsuario={handleEliminarUsuario}
           />
         )}
       </Contenido>
