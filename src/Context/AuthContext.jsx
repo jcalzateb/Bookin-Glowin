@@ -8,42 +8,23 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const cargarUsuario = async () => {
-      console.log("🔄 Verificando usuario en localStorage...");
-      const usuarioGuardado = localStorage.getItem("usuario");
-
+      const usuarioGuardado = await obtenerUsuarioActual();
       if (usuarioGuardado) {
-        console.log(
-          "✅ Usuario encontrado en localStorage:",
-          JSON.parse(usuarioGuardado)
-        );
-        setUsuario(JSON.parse(usuarioGuardado));
-      } else {
-        console.log(
-          "❌ No hay usuario en localStorage, consultando backend..."
-        );
-        const usuarioActual = await obtenerUsuarioActual();
-        if (usuarioActual) {
-          console.log("✅ Usuario obtenido del backend:", usuarioActual);
-          setUsuario(usuarioActual);
-          localStorage.setItem("usuario", JSON.stringify(usuarioActual));
-        } else {
-          console.log("❌ No se pudo obtener usuario del backend.");
-        }
+        setUsuario(usuarioGuardado);
       }
     };
     cargarUsuario();
   }, []);
 
   const login = (datosUsuario) => {
-    console.log("✅ Iniciando sesión:", datosUsuario);
     setUsuario(datosUsuario);
-    localStorage.setItem("usuario", JSON.stringify(datosUsuario));
   };
 
+  // Función para logout
   const logout = () => {
-    console.log("🚪 Cerrando sesión...");
+    localStorage.removeItem("token");
+    localStorage.removeItem("usuarioId");
     setUsuario(null);
-    localStorage.removeItem("usuario");
   };
 
   return (

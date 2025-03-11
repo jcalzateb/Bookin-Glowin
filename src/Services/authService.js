@@ -8,7 +8,12 @@ export const loginUsuario = async (credenciales) => {
       },
     });
 
-    return respuesta.data;
+    if (respuesta.data.token) {
+      localStorage.setItem("token", respuesta.data.token); // Guardamos el token en localStorage
+      localStorage.setItem("usuarioId", respuesta.data.id); // Guardamos el ID de usuario en localStorage
+      return respuesta.data;
+    }
+    return null;
   } catch (error) {
     console.error("Error al iniciar sesión:", error.response?.data || error);
     return null;

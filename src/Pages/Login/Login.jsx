@@ -37,11 +37,6 @@ const Login = () => {
   };
 
   const validarFormulario = () => {
-    if (!formulario || typeof formulario !== "object") {
-      console.error("⚠️ Error: `formulario` no está definido correctamente.");
-      return false;
-    }
-
     let erroresTemp = {};
     if (!formulario.email || !/\S+@\S+\.\S+/.test(formulario.email)) {
       erroresTemp.email = "Correo electrónico inválido";
@@ -49,7 +44,6 @@ const Login = () => {
     if (!formulario.password || formulario.password.trim() === "") {
       erroresTemp.password = "La contraseña es obligatoria";
     }
-
     setErrores(erroresTemp);
     return Object.keys(erroresTemp).length === 0;
   };
@@ -57,22 +51,17 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validarFormulario()) {
-      console.log("❌ Formulario inválido:", errores);
-      return;
-    }
-    console.log("📡 Enviando datos de inicio de sesión:", formulario);
+    if (!validarFormulario()) return;
+
     try {
       const respuesta = await loginUsuario(formulario);
       if (respuesta) {
         login(respuesta);
-        localStorage.setItem("usuario", JSON.stringify(respuesta));
-        navigate("/");
+        navigate("/"); // Redirige a la página de inicio o dashboard
       } else {
         setMensajeError("Credenciales incorrectas. Intente nuevamente.");
       }
     } catch (error) {
-      console.error("❌ Error en el inicio de sesión:", error);
       setMensajeError("Ocurrió un error al iniciar sesión.");
     }
   };

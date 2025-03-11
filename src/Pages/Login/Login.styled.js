@@ -6,7 +6,8 @@ export const ContenedorLogin = styled.div`
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url('https://luis-liberty.s3.us-east-2.amazonaws.com/tratamiento-facial.png') no-repeat left center;
+  background: url("https://luis-liberty.s3.us-east-2.amazonaws.com/tratamiento-facial.png")
+    no-repeat left center;
   background-size: contain;
 `;
 
@@ -15,8 +16,8 @@ export const ContenedorFormulario = styled.form`
   flex-direction: column;
   max-width: 400px;
   padding: 40px;
-  background-color: rgba(255, 255, 255, 0.9); 
-  border-radius: 20px; /* Bordes redondeados 
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   color: #333;
   text-align: center;
