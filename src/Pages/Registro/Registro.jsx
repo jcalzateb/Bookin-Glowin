@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registrarUsuario } from "../../Services/usuariosService";
+import { reenviarConfirmacion } from "../../Services/authService";
+import RegistroModal from "../../Components/RegistroModal/RegistroModal";
 import {
   ContenedorRegistro,
   TituloRegistro,
@@ -27,6 +29,10 @@ const Registro = () => {
   const [errores, setErrores] = useState({});
   const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
   const [radioSeleccionado, setRadioSeleccionado] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [mensajeModal, setMensajeModal] = useState("");
+  const [mensajeError, setMensajeError] = useState("");
+  const [emailConfirmacion, setEmailConfirmacion] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,8 +91,6 @@ const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!validarFormulario(formulario)) return;
-
     const usuarioARegistrar = {
       nombre: formulario.nombre.trim(),
       apellido: formulario.apellido.trim(),
@@ -105,8 +109,9 @@ const Registro = () => {
         general: "Error al registrar usuario. Inténtalo nuevamente.",
       });
     } else {
+      setEmailConfirmacion(formulario.email);
       limpiarFormulario();
-      navigate("/ingresar");
+      setOpenModal(true);
     }
   };
 
@@ -122,6 +127,31 @@ const Registro = () => {
     setErrores({});
     setRadioSeleccionado(false);
     setBotonDeshabilitado(true);
+  };
+
+  const handleReenviarCorreo = async () => {
+    try {
+      console.log("Email para reenviar:", emailConfirmacion);
+      if (emailConfirmacion) {
+        const resultado = await reenviarConfirmacion(emailConfirmacion);
+        if (resultado) {
+          console.log("Resultado para reenviar:", resultado);
+          setMensajeModal("Correo reenviado exitosamente a ");
+        } else {
+          setMensajeModal("Hubo un error al reenviar el correo.");
+        }
+      } else {
+        setMensajeModal("No se ha proporcionado un correo electrónico.");
+      }
+    } catch (error) {
+      console.error("Error al reenviar correo:", error);
+      setMensajeModal("Error al reenviar el correo. Intenta nuevamente.");
+    }
+  };
+
+  const handleCerrarModal = () => {
+    setOpenModal(false);
+    navigate("/ingresar");
   };
 
   return (
@@ -201,6 +231,13 @@ const Registro = () => {
           </BotonAccion>
         </ContenedorFormulario>
       </ContenedorIzquierda>
+      <RegistroModal
+        open={openModal}
+        onClose={handleCerrarModal}
+        onReenviarCorreo={handleReenviarCorreo}
+        email={emailConfirmacion}
+        mensajeModal={mensajeModal}
+      />
     </ContenedorRegistro>
   );
 };
