@@ -19,9 +19,6 @@ const Login = () => {
     email: "",
     password: "",
   });
-  if (!formulario) {
-    setFormulario({ email: "", password: "" });
-  }
 
   const [errores, setErrores] = useState({});
   const [mensajeError, setMensajeError] = useState("");
@@ -34,11 +31,15 @@ const Login = () => {
       [name]: value,
     }));
     setErrores({ ...errores, [name]: "" });
+    setBotonDeshabilitado(!validarFormulario());
   };
 
   const validarFormulario = () => {
     let erroresTemp = {};
-    if (!formulario.email || !/\S+@\S+\.\S+/.test(formulario.email)) {
+    if (
+      !formulario.email ||
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com)$/i.test(formulario.email)
+    ) {
       erroresTemp.email = "Correo electrónico inválido";
     }
     if (!formulario.password || formulario.password.trim() === "") {
@@ -55,14 +56,16 @@ const Login = () => {
 
     try {
       const respuesta = await loginUsuario(formulario);
-      if (respuesta) {
-        login(respuesta);
-        navigate("/"); // Redirige a la página de inicio o dashboard
+      console.log("Respuesta del login:", respuesta);
+      if (respuesta?.token) {
+        await login(formulario);
+        navigate("/");
       } else {
         setMensajeError("Credenciales incorrectas. Intente nuevamente.");
       }
     } catch (error) {
       setMensajeError("Ocurrió un error al iniciar sesión.");
+      console.error("Error al iniciar sesión:", error);
     }
   };
 
@@ -89,7 +92,9 @@ const Login = () => {
         />
         {errores.password && <MensajeError>{errores.password}</MensajeError>}
 
-        <BotonAccion type="submit">Iniciar Sesión</BotonAccion>
+        <BotonAccion type="submit" disabled={botonDeshabilitado}>
+          Iniciar Sesión
+        </BotonAccion>
 
         <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
         <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>

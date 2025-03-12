@@ -22,7 +22,7 @@ import Logo from "../../assets/isotipo_glowin.svg";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { usuario, logout } = useContext(AuthContext);
+  const { usuario, cerrarSesion } = useContext(AuthContext);
   const [menuUsuario, setMenuUsuario] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
 
@@ -34,14 +34,14 @@ const Header = () => {
   const cerrarMenuUsuario = () => setMenuUsuario(null);
   const toggleMenu = (estado) => () => setMenuAbierto(estado);
 
-  const obtenerIniciales = (nombre) => {
-    return nombre
-      ? nombre
-          .split(" ")
-          .map((n) => n[0])
-          .join("")
-          .toUpperCase()
-      : "";
+  const obtenerIniciales = (nombre, apellido) => {
+    if (nombre && apellido) {
+      return `${nombre.charAt(0)}${apellido.charAt(0)}`.toUpperCase();
+    }
+    if (nombre) {
+      return nombre.charAt(0).toUpperCase();
+    }
+    return "";
   };
 
   return (
@@ -56,7 +56,7 @@ const Header = () => {
           {usuario ? (
             <ContenedorUsuario>
               <AvatarUsuario onClick={abrirMenuUsuario}>
-                {obtenerIniciales(usuario.nombre)}
+                {obtenerIniciales(usuario.nombre, usuario.apellido)}
               </AvatarUsuario>
               <MenuUsuario
                 anchorEl={menuUsuario}
@@ -68,11 +68,10 @@ const Header = () => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </OpcionMenu>
-                <OpcionMenu disabled>{usuario?.email}</OpcionMenu>
                 <hr />
                 <OpcionMenu
                   onClick={() => {
-                    logout();
+                    cerrarSesion();
                     cerrarMenuUsuario();
                   }}
                 >
@@ -114,9 +113,8 @@ const Header = () => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </p>
-                <p>{usuario?.email}</p>
                 <hr />
-                <Link to="#" onClick={logout}>
+                <Link to="#" onClick={cerrarSesion}>
                   Cerrar Sesión
                 </Link>
               </>
