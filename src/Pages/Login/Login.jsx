@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { loginUsuario } from "../../Services/authService";
 import { AuthContext } from "../../Context/AuthContext";
 import {
@@ -14,7 +13,6 @@ import {
 
 const Login = () => {
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     email: "",
     password: "",
@@ -59,7 +57,6 @@ const Login = () => {
       console.log("Respuesta del login:", respuesta);
       if (respuesta?.token) {
         await login(formulario);
-        navigate("/");
       } else {
         setMensajeError("Credenciales incorrectas. Intente nuevamente.");
       }

@@ -1,4 +1,5 @@
 import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   loginUsuario,
   logout,
@@ -11,7 +12,7 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
-
+  const navigate = useNavigate();
   const verificarUsuario = async () => {
     if (estaAutenticado()) {
       const token = localStorage.getItem("token");
@@ -19,6 +20,11 @@ export const AuthProvider = ({ children }) => {
       const datosUsuario = await obtenerDatosUsuario(usuarioDecodificado.id);
       if (datosUsuario) {
         setUsuario(datosUsuario);
+        if (datosUsuario.rol === "CLIENTE") {
+          navigate("/");
+        } else {
+          navigate("/admin");
+        }
       }
     }
   };
@@ -32,6 +38,11 @@ export const AuthProvider = ({ children }) => {
     if (respuesta && respuesta.token) {
       const usuarioDecoded = JSON.parse(localStorage.getItem("usuario"));
       setUsuario(usuarioDecoded);
+      if (usuarioDecoded.rol === "CLIENTE") {
+        navigate("/");
+      } else {
+        navigate("/admin");
+      }
     }
   };
 

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { obtenerServicios } from "../../Services/serviciosService";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import {
   ContenedorLista,
@@ -14,6 +15,7 @@ import {
   ContenedorFiltro,
   BotonEliminarFiltro,
   TextoFiltro,
+  CorazonFavorito,
 } from "./ListaProductos.styled";
 
 const ListaProductos = ({
@@ -31,7 +33,7 @@ const ListaProductos = ({
         const data = await obtenerServicios();
         setServicios(data);
       } catch (error) {
-        console.error("❌ Error al cargar los servicios:", error);
+        console.error("Error al cargar los servicios:", error);
       }
     };
 
@@ -84,6 +86,21 @@ const ListaProductos = ({
     setPaginaActual(1);
   };
 
+  const agregarAFavoritos = (productoId) => {
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    if (!favoritos.includes(productoId)) {
+      favoritos.push(productoId);
+    } else {
+      favoritos = favoritos.filter((id) => id !== productoId);
+    }
+    localStorage.setItem("favoritos", JSON.stringify(favoritos));
+  };
+
+  const esFavorito = (productoId) => {
+    const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+    return favoritos.includes(productoId);
+  };
+
   return (
     <>
       <div id="lista-productos">
@@ -121,6 +138,12 @@ const ListaProductos = ({
           {serviciosActuales.length > 0 ? (
             serviciosActuales.map((servicio) => (
               <TarjetaProducto key={servicio.id}>
+                <CorazonFavorito
+                  onClick={() => agregarAFavoritos(servicio.id)}
+                  $favorito={esFavorito(servicio.id)}
+                >
+                  <FavoriteIcon />
+                </CorazonFavorito>
                 <ImagenProducto
                   src={
                     Array.isArray(servicio.imagenes) &&

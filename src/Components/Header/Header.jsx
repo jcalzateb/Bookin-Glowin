@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import MenuIcon from "@mui/icons-material/Menu";
 import {
@@ -22,6 +22,7 @@ import Logo from "../../assets/isotipo_glowin.svg";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const { usuario, cerrarSesion } = useContext(AuthContext);
   const [menuUsuario, setMenuUsuario] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -42,6 +43,15 @@ const Header = () => {
       return nombre.charAt(0).toUpperCase();
     }
     return "";
+  };
+
+  const redirigir = () => {
+    if (location.pathname === "/admin") {
+      navigate("/");
+    } else {
+      navigate("/admin");
+    }
+    cerrarMenuUsuario();
   };
 
   return (
@@ -68,6 +78,21 @@ const Header = () => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </OpcionMenu>
+                <OpcionMenu
+                  onClick={() => {
+                    cerrarMenuUsuario();
+                  }}
+                >
+                  Favoritos
+                </OpcionMenu>
+                {usuario.rol === "SUPER_ADMINISTRADOR" ||
+                usuario.rol === "ADMINISTRADOR" ? (
+                  <OpcionMenu onClick={redirigir}>
+                    {location.pathname === "/admin"
+                      ? "Ir al inicio"
+                      : "Ir al administración"}
+                  </OpcionMenu>
+                ) : null}
                 <hr />
                 <OpcionMenu
                   onClick={() => {
@@ -113,6 +138,17 @@ const Header = () => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </p>
+                <Link to="/favoritos" onClick={() => cerrarMenuUsuario()}>
+                  Favoritos
+                </Link>
+                {usuario.rol === "SUPER_ADMINISTRADOR" ||
+                usuario.rol === "ADMINISTRADOR" ? (
+                  <Link to="#" onClick={redirigir}>
+                    {location.pathname === "/admin"
+                      ? "Ir al inicio"
+                      : "Ir al administración"}
+                  </Link>
+                ) : null}
                 <hr />
                 <Link to="#" onClick={cerrarSesion}>
                   Cerrar Sesión

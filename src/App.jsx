@@ -14,8 +14,8 @@ const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);
 
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         {mostrarHeader && <Header />}
         <Routes>
           <Route path="/" element={<Inicio />} />
@@ -31,8 +31,8 @@ const App = () => {
           <Route path="/ingresar" element={<Login />} />
         </Routes>
         <Footer />
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 };
 
