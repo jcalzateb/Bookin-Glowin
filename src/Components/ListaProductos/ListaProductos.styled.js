@@ -19,6 +19,7 @@ export const ContenedorLista = styled(Box)`
 `;
 
 export const TarjetaProducto = styled(Box)`
+  position: relative;
   display: flex;
   background: white;
   border-radius: 12px;

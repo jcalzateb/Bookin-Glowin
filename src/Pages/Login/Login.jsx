@@ -9,6 +9,8 @@ import {
   MensajeError,
   Enlace,
   Titulo,
+  ContenedorDerecha,
+  ContenedorIzquierda,
 } from "./Login.styled";
 
 const Login = () => {
@@ -58,44 +60,51 @@ const Login = () => {
       if (respuesta?.token) {
         await login(formulario);
       } else {
-        setMensajeError("Credenciales incorrectas. Intente nuevamente.");
+        setErrores({
+          general: "Credenciales incorrectas. Intente nuevamente.",
+        });
       }
     } catch (error) {
-      setMensajeError("Ocurrió un error al iniciar sesión.");
+      setErrores({ general: "Ocurrió un error al iniciar sesión." });
       console.error("Error al iniciar sesión:", error);
     }
   };
 
   return (
     <ContenedorLogin>
-      <ContenedorFormulario onSubmit={handleSubmit}>
-        <Titulo>Iniciar Sesión</Titulo>
-        <CampoInput
-          type="email"
-          name="email"
-          placeholder="Correo Electrónico"
-          value={formulario.email}
-          onChange={handleChange}
-        />
-        {errores.email && <MensajeError>{errores.email}</MensajeError>}
+      <ContenedorIzquierda></ContenedorIzquierda>
+      <ContenedorDerecha>
+        <ContenedorFormulario onSubmit={handleSubmit}>
+          <Titulo>Iniciar Sesión</Titulo>
+          <CampoInput
+            type="email"
+            name="email"
+            placeholder="Correo Electrónico"
+            value={formulario.email}
+            onChange={handleChange}
+            $error={errores.email}
+          />
+          {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
-        <CampoInput
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          value={formulario.password}
-          onChange={handleChange}
-          required
-        />
-        {errores.password && <MensajeError>{errores.password}</MensajeError>}
+          <CampoInput
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={formulario.password}
+            onChange={handleChange}
+            $error={errores.password}
+            required
+          />
+          {errores.password && <MensajeError>{errores.password}</MensajeError>}
+          {errores.general && <MensajeError>{errores.general}</MensajeError>}
+          <BotonAccion type="submit" disabled={botonDeshabilitado}>
+            Iniciar Sesión
+          </BotonAccion>
 
-        <BotonAccion type="submit" disabled={botonDeshabilitado}>
-          Iniciar Sesión
-        </BotonAccion>
-
-        <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
-        <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
-      </ContenedorFormulario>
+          <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
+          <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
+        </ContenedorFormulario>
+      </ContenedorDerecha>
     </ContenedorLogin>
   );
 };

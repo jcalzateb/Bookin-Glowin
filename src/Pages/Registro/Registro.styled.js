@@ -1,116 +1,101 @@
 import styled from "styled-components";
+import fondo from "../../assets/Desktop1.png";
 
 export const ContenedorRegistro = styled.div`
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.2)), 
-              url('https://luis-liberty.s3.us-east-2.amazonaws.com/manos-hermosas.png') no-repeat left top;
-  background-size: cover; 
-  padding: 10rem 0; 
-  min-height: 100vh;
-
-  @media (max-width: 768px) {
-    background-attachment: scroll; 
-    background-size: cover;
-    padding: 5rem 0; 
-  }
+  justify-content: center;
+  background-image: url(${fondo});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 90vh;
 `;
 
 export const ContenedorIzquierda = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start; 
-  align-items: flex-start; 
-  flex: 1;
-  margin-right: 2rem;
-  position: relative; 
-
-  @media (max-width: 768px) {
-    margin-right: 0;
-    align-items: center; 
+  width: 100%;
+  margin-top: 70px;
+  @media (max-width: 600px) {
+    width: 0%;
+  }
+`;
+export const ContenedorDerecha = styled.div`
+  width: 100%;
+  padding: 70px 80px;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  @media (max-width: 600px) {
+    width: 100vw;
   }
 `;
 
 export const TituloRegistro = styled.h2`
-  margin: 0;
-  margin-bottom: 1rem;
-  color: #7b4eff; 
-  font-size: 2.5rem;
-  text-align: left;
-  z-index: 3; 
+  text-align: center;
+  font-size: 32px;
+  margin: 15px 0;
+  color: #7b4eff;
 `;
 
 export const ContenedorFormulario = styled.form`
-  flex: 1;
-  max-width: 500px;
-  padding: 2rem;
-  background: white;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  align-items: flex-start; 
-  margin-top: 1rem;
-  z-index: 3; 
+  gap: 10px;
 `;
 
 export const CampoInput = styled.input`
-  width: 100%;
-  padding: 0.8rem;
-  margin: 0.5rem 0;
-  border: 1px solid #ccc;
+  padding: 10px;
   border-radius: 5px;
-  font-size: 1rem;
+  border: 1px solid
+    ${(props) => (props.$error ? "red" : props.$touched ? "green" : "#ccc")};
+  font-size: 14px;
+  outline: none;
+
+  &:focus {
+    border-color: #9747ff;
+  }
 
   &::placeholder {
     color: #aaa;
   }
-`;
-
-export const BotonAccion = styled.button`
-  width: 100%;
-  padding: 0.8rem;
-  margin-top: 1rem;
-  background: #7b4eff;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: background 0.3s;
-
-  &:hover {
-    background: #5a3bcc;
-  }
 
   &:disabled {
-    background: #ccc;
+    background-color: #f0f0f0;
     cursor: not-allowed;
   }
 `;
 
 export const MensajeError = styled.p`
+  font-size: 10px;
   color: red;
-  font-size: 0.9rem;
   margin: 0;
+`;
+
+export const BotonAccion = styled.button`
+  background-color: #9747ff !important;
+  color: white !important;
+  font-weight: bold !important;
+  text-transform: none !important;
+  border-radius: 10px !important;
+  padding: 12px !important;
+  margin: grid-auto-flow;
+
+  &:hover {
+    background-color: #530eae !important;
+  }
+
+  &:disabled {
+    background-color: #b093d5 !important;
+    cursor: not-allowed !important;
+  }
 `;
 
 export const ContenedorRadio = styled.div`
   display: flex;
   align-items: center;
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  color: #666;
-
-  input {
-    margin-right: 0.5rem;
-  }
 `;
 
-export const TextoDecorativo = styled.p`
-  margin: 0; /* Se elimina el margen superior para alinear con el radio */
-  font-size: 0.8rem;
-  color: #666;
-  text-align: left;
+export const TextoDecorativo = styled.span`
+  font-size: 14px;
+  margin-left: 8px;
+  color: #333;
 `;

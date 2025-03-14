@@ -8,6 +8,7 @@ import {
   TituloRegistro,
   ContenedorFormulario,
   ContenedorIzquierda,
+  ContenedorDerecha,
   CampoInput,
   BotonAccion,
   MensajeError,
@@ -74,6 +75,9 @@ const Registro = () => {
 
     if (datos.confirmarPassword !== datos.password) {
       erroresTemp.confirmarPassword = "Las contraseñas no coinciden";
+    }
+    if (!radioSeleccionado) {
+      erroresTemp.terminos = "Debe aceptar los términos y condiciones";
     }
 
     setErrores(erroresTemp);
@@ -156,8 +160,9 @@ const Registro = () => {
 
   return (
     <ContenedorRegistro>
-      <ContenedorIzquierda>
-        <TituloRegistro>REGÍSTRATE</TituloRegistro>
+      <ContenedorIzquierda></ContenedorIzquierda>
+      <ContenedorDerecha>
+        <TituloRegistro>Regístrate</TituloRegistro>
         <ContenedorFormulario onSubmit={handleSubmit}>
           <CampoInput
             type="text"
@@ -165,6 +170,8 @@ const Registro = () => {
             placeholder="Ingresa tu nombre"
             value={formulario.nombre}
             onChange={handleChange}
+            $error={errores.nombre}
+            $touched={formulario.nombre.trim().length > 0}
           />
           {errores.nombre && <MensajeError>{errores.nombre}</MensajeError>}
 
@@ -174,6 +181,8 @@ const Registro = () => {
             placeholder="Ingresa tu apellido"
             value={formulario.apellido}
             onChange={handleChange}
+            $error={errores.apellido}
+            $touched={formulario.apellido.trim().length > 0}
           />
           {errores.apellido && <MensajeError>{errores.apellido}</MensajeError>}
 
@@ -183,6 +192,8 @@ const Registro = () => {
             placeholder="Ingresa tu dirección de email"
             value={formulario.email}
             onChange={handleChange}
+            $error={errores.email}
+            $touched={formulario.email.trim().length > 0}
           />
           {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
@@ -192,6 +203,8 @@ const Registro = () => {
             placeholder="Ingresa tu número de celular"
             value={formulario.celular}
             onChange={handleChange}
+            $error={errores.celular}
+            $touched={formulario.celular.trim().length > 0}
           />
           {errores.celular && <MensajeError>{errores.celular}</MensajeError>}
 
@@ -201,6 +214,8 @@ const Registro = () => {
             placeholder="Crea una contraseña"
             value={formulario.password}
             onChange={handleChange}
+            $error={errores.password}
+            $touched={formulario.password.trim().length > 0}
           />
           {errores.password && <MensajeError>{errores.password}</MensajeError>}
 
@@ -210,6 +225,8 @@ const Registro = () => {
             placeholder="Confirma tu contraseña"
             value={formulario.confirmarPassword}
             onChange={handleChange}
+            $error={errores.confirmarPassword}
+            $touched={formulario.confirmarPassword.trim().length > 0}
           />
           {errores.confirmarPassword && (
             <MensajeError>{errores.confirmarPassword}</MensajeError>
@@ -225,19 +242,21 @@ const Registro = () => {
             />
             <TextoDecorativo>Acepto los términos y condiciones</TextoDecorativo>
           </ContenedorRadio>
+          {errores.terminos && <MensajeError>{errores.terminos}</MensajeError>}
 
           <BotonAccion type="submit" disabled={botonDeshabilitado}>
             Crear cuenta
           </BotonAccion>
         </ContenedorFormulario>
-      </ContenedorIzquierda>
-      <RegistroModal
-        open={openModal}
-        onClose={handleCerrarModal}
-        onReenviarCorreo={handleReenviarCorreo}
-        email={emailConfirmacion}
-        mensajeModal={mensajeModal}
-      />
+
+        <RegistroModal
+          open={openModal}
+          onClose={handleCerrarModal}
+          onReenviarCorreo={handleReenviarCorreo}
+          email={emailConfirmacion}
+          mensajeModal={mensajeModal}
+        />
+      </ContenedorDerecha>
     </ContenedorRegistro>
   );
 };

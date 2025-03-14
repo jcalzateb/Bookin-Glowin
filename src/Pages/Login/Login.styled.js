@@ -1,19 +1,36 @@
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import fondo from "../../assets/Desktop2.png";
 
 export const ContenedorLogin = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-  background: url("https://luis-liberty.s3.us-east-2.amazonaws.com/tratamiento-facial.png")
-    no-repeat left center;
-  background-size: contain;
+  background-image: url(${fondo});
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 90vh;
+`;
+export const ContenedorIzquierda = styled.div`
+  width: 100%;
+  @media (max-width: 600px) {
+    width: 0%;
+  }
+`;
+export const ContenedorDerecha = styled.div`
+  width: 100%;
+  margin-top: 30px;
+  @media (max-width: 600px) {
+    width: 100vw;
+  }
 `;
 
 export const ContenedorFormulario = styled.form`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 2px;
   max-width: 400px;
   padding: 40px;
   background-color: rgba(255, 255, 255, 0.9);
@@ -21,20 +38,23 @@ export const ContenedorFormulario = styled.form`
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   color: #333;
   text-align: center;
+  margin-top: 80px;
 `;
 
 export const Titulo = styled.h2`
   margin-bottom: 20px;
   color: #7b4eff;
-  font-size: 24px;
+  font-size: 32px;
 `;
 
 export const CampoInput = styled.input`
   padding: 12px;
-  margin-bottom: 15px;
+  margin-bottom: 8px;
   border-radius: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid
+    ${(props) => (props.$error ? "red" : props.$touched ? "green" : "#ccc")};
   background: transparent;
+  outline: none;
   color: #333;
 
   &::placeholder {
@@ -43,6 +63,10 @@ export const CampoInput = styled.input`
 
   &:focus {
     border-color: #7b4eff;
+  }
+  &:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
   }
 `;
 
@@ -69,8 +93,8 @@ export const BotonAccion = styled.button`
 
 export const MensajeError = styled.p`
   color: red;
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 11px;
+  margin-bottom: 8px;
 `;
 
 export const Enlace = styled(Link)`
