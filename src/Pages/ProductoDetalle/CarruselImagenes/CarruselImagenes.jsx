@@ -40,7 +40,7 @@ const CarruselImagenes = ({ imagenes, abierto, cerrar }) => {
         </BotonNavegacion>
         {imagenes?.length > 0 ? (
           <ImagenCarrusel
-            src={imagenes[indiceActual] || ""}
+            src={imagenes[indiceActual]?.urlImagen || ""}
             alt={`Imagen ${indiceActual + 1}`}
           />
         ) : (

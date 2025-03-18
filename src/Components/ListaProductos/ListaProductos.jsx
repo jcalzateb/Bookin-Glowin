@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { obtenerServicios } from "../../Services/serviciosService";
+import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import {
@@ -31,7 +32,16 @@ const ListaProductos = ({
     const cargarServicios = async () => {
       try {
         const data = await obtenerServicios();
-        setServicios(data);
+        const serviciosConImagenes = await Promise.all(
+          data.map(async (producto) => {
+            const imagenes = await obtenerImagenesPorServicio(producto.id);
+            return {
+              ...producto,
+              imagenes: imagenes.length > 0 ? imagenes : [],
+            };
+          })
+        );
+        setServicios(serviciosConImagenes);
       } catch (error) {
         console.error("Error al cargar los servicios:", error);
       }
@@ -42,7 +52,6 @@ const ListaProductos = ({
 
   const [productosAleatorios, setProductosAleatorios] = useState([]);
 
-  //Mezcla aleatoria de productos
   const mezclarProductos = (array) => {
     return [...array].sort(() => Math.random() - 0.5);
   };
@@ -61,12 +70,10 @@ const ListaProductos = ({
     setPaginaActual(1);
   }, [categoriaSeleccionada]);
 
-  //Calcular número total de páginas
   const totalPaginas = Math.ceil(
     serviciosFiltrados.length / productosPorPagina
   );
 
-  //Calcular los productos
   const indiceInicial = (paginaActual - 1) * productosPorPagina;
   const serviciosActuales = serviciosFiltrados.slice(
     indiceInicial,
@@ -148,7 +155,7 @@ const ListaProductos = ({
                   src={
                     Array.isArray(servicio.imagenes) &&
                     servicio.imagenes.length > 0
-                      ? servicio.imagenes[0]
+                      ? servicio.imagenes[0].urlImagen
                       : "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                   }
                   alt={servicio.nombre}
