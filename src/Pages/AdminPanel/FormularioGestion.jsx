@@ -84,8 +84,6 @@ const FormularioGestion = ({
     }
   }, [servicioSeleccionado, categorias]);
 
-  console.log("Servicio seleccionado:", servicioSeleccionado);
-
   const handleChange = (e) => {
     const { name, value } = e.target;
 

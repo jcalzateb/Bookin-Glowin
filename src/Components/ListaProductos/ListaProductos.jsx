@@ -4,6 +4,11 @@ import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import {
+  agregarFavorito,
+  eliminarFavorito,
+  obtenerFavoritosUsuario,
+} from "../../Services/favoritosService";
+import {
   ContenedorLista,
   TarjetaProducto,
   ImagenProducto,
@@ -25,6 +30,7 @@ const ListaProductos = ({
 }) => {
   const [servicios, setServicios] = useState([]);
   const [paginaActual, setPaginaActual] = useState(1);
+  const [favoritos, setFavoritos] = useState([]);
   const productosPorPagina = 10;
   const navigate = useNavigate();
 
@@ -42,6 +48,9 @@ const ListaProductos = ({
           })
         );
         setServicios(serviciosConImagenes);
+        const favoritosDelUsuario = await obtenerFavoritosUsuario();
+        console.log("favoritos del usuario ", favoritosDelUsuario);
+        setFavoritos(favoritosDelUsuario);
       } catch (error) {
         console.error("Error al cargar los servicios:", error);
       }
@@ -93,19 +102,41 @@ const ListaProductos = ({
     setPaginaActual(1);
   };
 
-  const agregarAFavoritos = (productoId) => {
-    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    if (!favoritos.includes(productoId)) {
-      favoritos.push(productoId);
-    } else {
-      favoritos = favoritos.filter((id) => id !== productoId);
+  const agregarAFavoritos = async (productoId) => {
+    try {
+      const resultado = await agregarFavorito(productoId);
+      if (resultado) {
+        console.log("Favorito agregado correctamente:", resultado);
+        setFavoritos((prevFavoritos) => [
+          ...prevFavoritos,
+          { id: resultado.id, servicioId: productoId },
+        ]);
+      }
+    } catch (error) {
+      console.error("Error al agregar a favoritos:", error);
     }
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
   };
 
+  const eliminarDeFavoritos = async (productoId) => {
+    try {
+      const favorito = favoritos.find((fav) => fav.servicioId === productoId);
+
+      if (favorito) {
+        console.log("Eliminando favorito con id:", favorito.id);
+        await eliminarFavorito(favorito.id);
+
+        setFavoritos((prevFavoritos) =>
+          prevFavoritos.filter((fav) => fav.id !== favorito.id)
+        );
+      } else {
+        console.log("Favorito no encontrado para el productoId:", productoId);
+      }
+    } catch (error) {
+      console.error("Error al eliminar de favoritos:", error);
+    }
+  };
   const esFavorito = (productoId) => {
-    const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
-    return favoritos.includes(productoId);
+    return favoritos.some((fav) => fav.servicioId === productoId);
   };
 
   return (
@@ -146,7 +177,13 @@ const ListaProductos = ({
             serviciosActuales.map((servicio) => (
               <TarjetaProducto key={servicio.id}>
                 <CorazonFavorito
-                  onClick={() => agregarAFavoritos(servicio.id)}
+                  onClick={() => {
+                    if (esFavorito(servicio.id)) {
+                      eliminarDeFavoritos(servicio.id);
+                    } else {
+                      agregarAFavoritos(servicio.id);
+                    }
+                  }}
                   $favorito={esFavorito(servicio.id)}
                 >
                   <FavoriteIcon />
