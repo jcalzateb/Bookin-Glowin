@@ -27,6 +27,8 @@ import {
 const ListaProductos = ({
   categoriaSeleccionada,
   setCategoriaSeleccionada,
+  mostrarFavoritos,
+  setMostrarFavoritos,
 }) => {
   const [servicios, setServicios] = useState([]);
   const [paginaActual, setPaginaActual] = useState(1);
@@ -75,16 +77,22 @@ const ListaProductos = ({
       )
     : servicios;
 
-  useEffect(() => {
-    setPaginaActual(1);
-  }, [categoriaSeleccionada]);
-
-  const totalPaginas = Math.ceil(
-    serviciosFiltrados.length / productosPorPagina
+  const serviciosFavoritos = serviciosFiltrados.filter((servicio) =>
+    favoritos.some((fav) => fav.servicioId === servicio.id)
   );
 
+  const serviciosAFiltrar = mostrarFavoritos
+    ? serviciosFavoritos
+    : serviciosFiltrados;
+
+  useEffect(() => {
+    setPaginaActual(1);
+  }, [categoriaSeleccionada, mostrarFavoritos]);
+
+  const totalPaginas = Math.ceil(serviciosAFiltrar.length / productosPorPagina);
+
   const indiceInicial = (paginaActual - 1) * productosPorPagina;
-  const serviciosActuales = serviciosFiltrados.slice(
+  const serviciosActuales = serviciosAFiltrar.slice(
     indiceInicial,
     indiceInicial + productosPorPagina
   );
@@ -99,6 +107,7 @@ const ListaProductos = ({
 
   const limpiarFiltro = () => {
     setCategoriaSeleccionada(null);
+    setMostrarFavoritos(null);
     setPaginaActual(1);
   };
 
@@ -154,7 +163,7 @@ const ListaProductos = ({
 
         <ContenedorFiltro>
           <TextoFiltro>
-            Numeros de servicios: {serviciosFiltrados.length}
+            Numeros de servicios: {serviciosAFiltrar.length}
             {""}
           </TextoFiltro>
 
@@ -165,7 +174,9 @@ const ListaProductos = ({
             </TextoFiltro>
           )}
 
-          {categoriaSeleccionada && (
+          {mostrarFavoritos && <TextoFiltro>{"Favoritos"}</TextoFiltro>}
+
+          {(categoriaSeleccionada || mostrarFavoritos) && (
             <BotonEliminarFiltro onClick={limpiarFiltro}>
               Limpiar
             </BotonEliminarFiltro>

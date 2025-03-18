@@ -20,7 +20,7 @@ import {
 } from "./Header.styled";
 import Logo from "../../assets/isotipo_glowin.svg";
 
-const Header = () => {
+const Header = ({ setMostrarFavoritos }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const { usuario, cerrarSesion } = useContext(AuthContext);
@@ -54,6 +54,11 @@ const Header = () => {
     cerrarMenuUsuario();
   };
 
+  const mostrarFavoritos = () => {
+    setMostrarFavoritos(true);
+    cerrarMenuUsuario();
+  };
+
   return (
     <ContenedorHeader position="static">
       <BarraNavegacion>
@@ -78,13 +83,9 @@ const Header = () => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </OpcionMenu>
-                <OpcionMenu
-                  onClick={() => {
-                    cerrarMenuUsuario();
-                  }}
-                >
-                  Favoritos
-                </OpcionMenu>
+                {location.pathname !== "/admin" && (
+                  <OpcionMenu onClick={mostrarFavoritos}>Favoritos</OpcionMenu>
+                )}
                 {usuario.rol === "SUPER_ADMINISTRADOR" ||
                 usuario.rol === "ADMINISTRADOR" ? (
                   <OpcionMenu onClick={redirigir}>
@@ -138,9 +139,9 @@ const Header = () => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </p>
-                <Link to="/favoritos" onClick={() => cerrarMenuUsuario()}>
+                <a href="#" onClick={mostrarFavoritos}>
                   Favoritos
-                </Link>
+                </a>
                 {usuario.rol === "SUPER_ADMINISTRADOR" ||
                 usuario.rol === "ADMINISTRADOR" ? (
                   <Link to="#" onClick={redirigir}>
