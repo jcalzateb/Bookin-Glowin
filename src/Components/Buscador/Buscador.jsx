@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { InputAdornment, IconButton } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import TextField from "@mui/material/TextField";
+import dayjs from 'dayjs'; // Importar dayjs
+//import esLocale from "date-fns/locale/es";
 import { 
   ContenedorBuscador, 
   FondoBanner, 
@@ -10,12 +16,20 @@ import {
   BarraBusqueda, 
   CampoBusqueda, 
   BotonBuscar,
-  BotonLimpiar
+  BotonLimpiar,
+  ContenedorFecha, 
+  ContenedorParametros,
+  ResultadosContainer,
+  TablaResultados,
+  CabeceraTabla,
+  FilaTabla,
+  CeldaTabla
 } from "./Buscador.styled";
 
 import Banner from "/src/assets/banner_chica.jpg";
 import IsologoImg from "/src/assets/isologo_light.svg";
 import servicesData from "../../Utils/servicios.json";
+import SuggestionsList from "./SuggestionList";
 
 const Buscador = () => {
   const [query, setQuery] = useState("");
@@ -23,8 +37,10 @@ const Buscador = () => {
   const [selectedIndex, setSelectedIndex] = useState(-1);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
-  const [hasSelected, setHasSelected] = useState(false);
-  //const [searchDate, setSearchDate] = useState('');
+  const [hasSelected, setHasSelected] = useState(false);//
+  const [selectedDate, setSelectedDate] = useState(dayjs()); // Usar dayjs() en lugar de new Date()
+  const [searchResults, setSearchResults] = useState(null);
+  const [isSearching, setIsSearching] = useState(false);
   const suggestionsContainerRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -46,7 +62,7 @@ const Buscador = () => {
       setShowSuggestions(false);
     }
     // Si el usuario está escribiendo de nuevo, asumimos que quiere cambiar su selección
-    if (hasSelected && query !== selectedService?.name) {
+    if (hasSelected && query !== selectedService?.nombre) {
       setHasSelected(false);
     }
     setSelectedIndex(-1);
@@ -127,25 +143,55 @@ const Buscador = () => {
     inputRef.current.focus();
   };
 
-  const limpiarBusqueda = () => {
-    setQuery("");
+   // Manejar la búsqueda
+   const handleSearch = () => {
+    if (!selectedService) {
+      alert("Por favor selecciona un servicio");
+      return;
+    }
+
+    if (!selectedDate) {
+      alert("Por favor selecciona una fecha");
+      return;
+    }
+
+    setIsSearching(true);
+    
+    // Simular una búsqueda con datos de ejemplo
+    // En una aplicación real, aquí harías una petición a tu API
+    setTimeout(() => {
+      const resultadosEjemplo = [
+        {
+          id: selectedService.id,
+          nombre: selectedService.nombre,
+          fecha: selectedDate.format('DD/MM/YYYY'), // Usar format de dayjs en lugar de toLocaleDateString
+          disponibilidad: "Disponible",
+          turnos: Math.floor(Math.random() * 10) + 1
+        }
+      ];
+      
+      setSearchResults(resultadosEjemplo);
+      setIsSearching(false);
+    }, 1000);
   };
 
   return (
+    <>
     <ContenedorBuscador>
       <FondoBanner src={Banner} alt="Fondo banner" />
       <ContenedorContenido>
         <Isologo src={IsologoImg} alt="Glowin Isologo" />
-        <BarraBusqueda>
+        <ContenedorParametros>
+        <BarraBusqueda
+        >
           <CampoBusqueda
             ref={inputRef}
             variant="outlined"
             placeholder="Buscando..."
-            fullWidth
             value={query}
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
-            //aria-expanded={showSuggestions}
+            aria-expanded={showSuggestions}
             aria-owns="suggestions-list"
             InputProps={{
               endAdornment: (
@@ -155,50 +201,67 @@ const Buscador = () => {
               ),
             }}
           />
-          {showSuggestions && suggestions.length > 0 && (
-            <ul
-              id="suggestions-list"
-              ref={suggestionsContainerRef}
-              className="absolute z-10 w-full mt-1 max-h-60 overflow-auto bg-white border border-gray-300 rounded shadow-lg"
-              role="listbox"
+          {showSuggestions && 
+            <SuggestionsList
+              suggestions={suggestions}
+              selectedIndex={selectedIndex}
+              onSuggestionClick={handleSuggestionClick}
+              containerRef={suggestionsContainerRef}
+              isTyping={query.trim().length >= MIN_CHARS_FOR_SUGGESTIONS}
+            />
+  }
+          {query && <BotonLimpiar
+            onClick={handleClearSelection}
+            aria-label="Limpiar busqueda"
             >
-              {suggestions.map((suggestion, index) => (
-                <li
-                  key={suggestion.id}
-                  onClick={() => handleSuggestionClick(suggestion)}
-                  className={`px-4 py-2 cursor-pointer hover:bg-gray-100 ${
-                    index === selectedIndex ? 'bg-blue-100' : ''
-                  }`}
-                  role="option"
-                  aria-selected={index === selectedIndex}
-                >
-                  <div className="font-medium">{suggestion.nombre}</div>
-                  {suggestion.description && (
-                    <div className="text-sm text-gray-600">{suggestion.descripcion}</div>
-                  )}
-                </li>
-              ))}
-            </ul>
-          )}
-          <BotonLimpiar onClick={limpiarBusqueda}>
             <CleaningServicesIcon />
           </BotonLimpiar>
-          {query && (
-            <button
-              type="button"
-              onClick={handleClearSelection}
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
-              aria-label="Limpiar búsqueda"
-            >
-              Equis
-            </button>
-          )}
+          }
         </BarraBusqueda>
         {console.log("Servicio seleccionado:", selectedService)}
-
-        <BotonBuscar>Realizar Búsqueda</BotonBuscar>
+        <ContenedorFecha>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DatePicker
+            label="Selecciona una fecha"
+            value={selectedDate}
+            onChange={(newValue) => setSelectedDate(newValue)} // Restaurar el callback onChange
+            renderInput={(params) => <TextField {...params} fullWidth/>}
+            minDate={dayjs()} // Usar dayjs() para la fecha mínima
+          />
+          </LocalizationProvider>
+        </ContenedorFecha>
+        </ContenedorParametros>
+        <BotonBuscar onClick={handleSearch} disabled={isSearching}>
+            {isSearching ? 'Buscando...' : 'Realizar Búsqueda'}
+        </BotonBuscar>
       </ContenedorContenido>
     </ContenedorBuscador>
+    {searchResults && (
+      <ResultadosContainer>
+        <h2>Resultados de la búsqueda</h2>
+        <TablaResultados>
+          <thead>
+            <tr>
+              <CabeceraTabla>Servicio</CabeceraTabla>
+              <CabeceraTabla>Fecha</CabeceraTabla>
+              <CabeceraTabla>Disponibilidad</CabeceraTabla>
+              <CabeceraTabla>Turnos disponibles</CabeceraTabla>
+            </tr>
+          </thead>
+          <tbody>
+            {searchResults.map((resultado) => (
+              <FilaTabla key={resultado.id}>
+                <CeldaTabla>{resultado.nombre}</CeldaTabla>
+                <CeldaTabla>{resultado.fecha}</CeldaTabla>
+                <CeldaTabla>{resultado.disponibilidad}</CeldaTabla>
+                <CeldaTabla>{resultado.turnos}</CeldaTabla>
+              </FilaTabla>
+            ))}
+          </tbody>
+        </TablaResultados>
+      </ResultadosContainer>
+    )}
+  </>
   );
 };
 
