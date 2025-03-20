@@ -1,6 +1,6 @@
 // Componente para la lista de sugerencias
 //import SuggestionItem from "./SuggestionItem";
-import './SuggestionList.css'; // Import your CSS file
+//import './SuggestionList.css'; // Import your CSS file
 // Componente para la lista de sugerencias
 import React from "react";
 import styled from "styled-components";
@@ -35,12 +35,12 @@ const NoSuggestionsMessage = styled.div`
 `;
 
 const SuggestionsList = ({ suggestions, selectedIndex, onSuggestionClick, containerRef, isTyping }) => {
-  if (suggestions.length === 0) return null;
+  if (suggestions.content.length === 0) return null;
 
   return (
     <SuggestionContainer ref={containerRef}>
-      {suggestions.length > 0 ? (
-        suggestions.map((suggestion, index) => (
+      {suggestions.content.length > 0 ? (
+        suggestions.content.map((suggestion, index) => (
           <SuggestionItem 
             key={suggestion.id} 
             selected={index === selectedIndex}
@@ -50,7 +50,7 @@ const SuggestionsList = ({ suggestions, selectedIndex, onSuggestionClick, contai
           </SuggestionItem>
         ))
       ) : (
-        isTyping && <NoSuggestionsMessage>No hay sugerencias</NoSuggestionsMessage>
+        isTyping && <NoSuggestionsMessage>No hay sugerencias por ahora</NoSuggestionsMessage>
       )}
     </SuggestionContainer>
   );
