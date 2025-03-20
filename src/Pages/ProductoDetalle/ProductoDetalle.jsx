@@ -2,12 +2,13 @@ import React, { useState, useEffect } from "react";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, CircularProgress } from "@mui/material";
+import { Typography, CircularProgress, IconButton } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
 import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -30,6 +31,11 @@ import {
   MensajeError,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
+import {
+  agregarFavorito,
+  eliminarFavorito,
+  obtenerFavoritosUsuario,
+} from "../../Services/favoritosService";
 
 const ProductoDetalle = ({ setMostrarHeader }) => {
   const { id } = useParams();
@@ -39,6 +45,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [imagenes, setImagenes] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
+  const [favoritos, setFavoritos] = useState([]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -51,11 +58,43 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       const imagenesDelServicio = await obtenerImagenesPorServicio(id);
       setServicio(data);
       setImagenes(imagenesDelServicio);
+      const favoritosDelUsuario = await obtenerFavoritosUsuario();
+      setFavoritos(favoritosDelUsuario);
     } catch (error) {
-      setError("No se pudo cargar la información del servicio.");
+      console.log("No se pudo cargar la información del servicio.", error);
     } finally {
       setCargando(false);
     }
+  };
+
+  const agregarAFavoritos = async () => {
+    try {
+      const resultado = await agregarFavorito(servicio.id);
+      setFavoritos((prevFavoritos) => [
+        ...prevFavoritos,
+        { id: resultado.id, servicioId: servicio.id },
+      ]);
+    } catch (error) {
+      console.error("Error al agregar a favoritos:", error);
+    }
+  };
+
+  const eliminarDeFavoritos = async () => {
+    try {
+      const favorito = favoritos.find((fav) => fav.servicioId === servicio.id);
+      if (favorito) {
+        await eliminarFavorito(favorito.id);
+        setFavoritos((prevFavoritos) =>
+          prevFavoritos.filter((fav) => fav.id !== favorito.id)
+        );
+      }
+    } catch (error) {
+      console.error("Error al eliminar de favoritos:", error);
+    }
+  };
+
+  const esFavorito = (productoId) => {
+    return favoritos.some((fav) => fav.servicioId === productoId);
   };
 
   if (cargando) {
@@ -95,10 +134,23 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   return (
     <ContenedorDetalle>
       <EncabezadoDetalle>
-        <TituloProducto>{servicio.nombre}</TituloProducto>
         <BotonRetroceso onClick={() => navigate("/")}>
           <ArrowBackIcon />
         </BotonRetroceso>
+        <TituloProducto>{servicio.nombre}</TituloProducto>
+        <FavoriteIcon
+          onClick={() => {
+            if (esFavorito(servicio.id)) {
+              eliminarDeFavoritos();
+            } else {
+              agregarAFavoritos();
+            }
+          }}
+          style={{
+            cursor: "pointer",
+            color: esFavorito(servicio.id) ? "red" : "gray",
+          }}
+        />
       </EncabezadoDetalle>
 
       <BloqueImagenes>

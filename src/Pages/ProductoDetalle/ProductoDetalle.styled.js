@@ -5,7 +5,7 @@ export const ContenedorDetalle = styled(Box)`
   display: flex;
   flex-direction: column;
   padding: 80px 50px 20px 50px;
-  max-width: 1200px;
+  max-width: 1920px;
   margin: auto;
   background-color: ${({ theme }) => theme.palette.primario.main};
   color: ${({ theme }) => theme.palette.secundario.main};
@@ -24,6 +24,7 @@ export const EncabezadoDetalle = styled(Box)`
 `;
 
 export const TituloProducto = styled.h1`
+  text-align: center;
   font-family: ${({ theme }) => theme.typography.h1.fontFamily};
   font-weight: 900;
   font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.6);
@@ -60,7 +61,7 @@ export const BloqueImagenes = styled(Box)`
 
 export const ImagenPrincipal = styled(Box)`
   width: 100%;
-  height: 400px;
+  height: 100%;
   border-radius: 12px;
   overflow: hidden;
   background-size: cover;
@@ -73,6 +74,9 @@ export const ImagenPrincipal = styled(Box)`
 
   @media (max-width: 600px) {
     height: 280px;
+  }
+  @media (max-width: 768px) {
+    height: 400px;
   }
 `;
 

@@ -129,8 +129,8 @@ const Header = ({ setMostrarFavoritos }) => {
           <ListaMenu>
             {!usuario ? (
               <>
-                <Link to="/iniciar-sesion">Iniciar Sesión</Link>
-                <Link to="/crear-cuenta">Crear Cuenta</Link>
+                <Link to="/ingresar">Iniciar Sesión</Link>
+                <Link to="/registrar">Crear Cuenta</Link>
               </>
             ) : (
               <>
@@ -139,16 +139,18 @@ const Header = ({ setMostrarFavoritos }) => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </p>
-                <a href="#" onClick={mostrarFavoritos}>
-                  Favoritos
-                </a>
+                {location.pathname !== "/admin" && (
+                  <a href="#" onClick={mostrarFavoritos}>
+                    Favoritos
+                  </a>
+                )}
                 {usuario.rol === "SUPER_ADMINISTRADOR" ||
                 usuario.rol === "ADMINISTRADOR" ? (
-                  <Link to="#" onClick={redirigir}>
+                  <a href="#" onClick={redirigir}>
                     {location.pathname === "/admin"
                       ? "Ir al inicio"
                       : "Ir al administración"}
-                  </Link>
+                  </a>
                 ) : null}
                 <hr />
                 <Link to="#" onClick={cerrarSesion}>
