@@ -281,3 +281,25 @@ export const MensajeError = styled(Typography)`
   text-align: center;
   margin-top: 40px;
 `;
+export const BotonesIconos = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BotonCompartirRedes = styled(Button)`
+  background-color: transparent;
+  color: gray;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: ${({ theme }) => theme.palette.botones.hovered};
+  }
+`;

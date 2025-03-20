@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, CircularProgress, IconButton } from "@mui/material";
+import { Typography, CircularProgress } from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import ContentCutIcon from "@mui/icons-material/ContentCut";
 import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -29,6 +30,8 @@ import {
   CaracteristicaItem,
   IconoCaracteristica,
   MensajeError,
+  BotonCompartirRedes,
+  BotonesIconos,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 import {
@@ -36,6 +39,7 @@ import {
   eliminarFavorito,
   obtenerFavoritosUsuario,
 } from "../../Services/favoritosService";
+import CompartirModal from "../../Pages/ProductoDetalle/CompartirModal/CompartirModal";
 
 const ProductoDetalle = ({ setMostrarHeader }) => {
   const { id } = useParams();
@@ -46,6 +50,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [favoritos, setFavoritos] = useState([]);
+  const [compartirModalAbierto, setCompartirModalAbierto] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -131,6 +136,14 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setMostrarHeader(true);
   };
 
+  const abrirModalCompartir = () => {
+    setCompartirModalAbierto(true);
+  };
+
+  const cerrarModalCompartir = () => {
+    setCompartirModalAbierto(false);
+  };
+
   return (
     <ContenedorDetalle>
       <EncabezadoDetalle>
@@ -138,19 +151,24 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           <ArrowBackIcon />
         </BotonRetroceso>
         <TituloProducto>{servicio.nombre}</TituloProducto>
-        <FavoriteIcon
-          onClick={() => {
-            if (esFavorito(servicio.id)) {
-              eliminarDeFavoritos();
-            } else {
-              agregarAFavoritos();
-            }
-          }}
-          style={{
-            cursor: "pointer",
-            color: esFavorito(servicio.id) ? "red" : "gray",
-          }}
-        />
+        <BotonesIconos>
+          <BotonCompartirRedes onClick={abrirModalCompartir}>
+            <ShareIcon />
+          </BotonCompartirRedes>
+          <FavoriteIcon
+            onClick={() => {
+              if (esFavorito(servicio.id)) {
+                eliminarDeFavoritos();
+              } else {
+                agregarAFavoritos();
+              }
+            }}
+            style={{
+              cursor: "pointer",
+              color: esFavorito(servicio.id) ? "red" : "gray",
+            }}
+          />
+        </BotonesIconos>
       </EncabezadoDetalle>
 
       <BloqueImagenes>
@@ -237,6 +255,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           </CaracteristicaItem>
         </ListaCaracteristicas>
       </ContenedorCaracteristicas>
+      <CompartirModal
+        abierto={compartirModalAbierto}
+        cerrar={cerrarModalCompartir}
+        servicio={servicio}
+        imagenesServicio={imagenes}
+      />
     </ContenedorDetalle>
   );
 };

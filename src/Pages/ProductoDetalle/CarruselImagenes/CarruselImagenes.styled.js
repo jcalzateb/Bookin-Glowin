@@ -39,8 +39,8 @@ export const BotonCerrar = styled(IconButton)`
 export const ImagenCarrusel = styled.img`
   width: 100%;
   max-width: 800px;
-  height: auto;
-  max-height: 80vh;
+  height: 70vh;
+  max-height: 800px;
   object-fit: contain;
   border-radius: 8px;
   margin: auto;
@@ -48,7 +48,7 @@ export const ImagenCarrusel = styled.img`
 
   @media (max-width: 600px) {
     padding: 0 25px 0 0;
-    border-radius: 0;
+    border-radius: 4px;
     width: 90%;
     max-width: 95%;
     max-height: 70vh;
