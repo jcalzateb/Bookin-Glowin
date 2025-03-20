@@ -4,8 +4,10 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 export const ContenedorDetalle = styled(Box)`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 80px 50px 20px 50px;
-  max-width: 1920px;
+  width: 100%;
   margin: auto;
   background-color: ${({ theme }) => theme.palette.primario.main};
   color: ${({ theme }) => theme.palette.secundario.main};
@@ -15,10 +17,11 @@ export const EncabezadoDetalle = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 80%;
   margin-bottom: 15px;
 
   @media (max-width: 600px) {
+    width: 100%;
     font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
   }
 `;
@@ -50,10 +53,11 @@ export const BloqueImagenes = styled(Box)`
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 10px;
-  width: 100%;
+  width: 80%;
   margin-bottom: 10px;
 
   @media (max-width: 768px) {
+    width: 100%;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
   }
@@ -134,9 +138,10 @@ export const ContenedorInfo = styled(Box)`
   display: flex;
   gap: 20px;
   margin-top: 10px;
-  width: 100%;
+  width: 80%;
 
   @media (max-width: 768px) {
+    width: 100%;
     flex-direction: column;
   }
 `;
@@ -238,6 +243,10 @@ export const ContenedorCaracteristicas = styled(Box)`
   padding: 10px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.1);
+  width: 80%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const ListaCaracteristicas = styled(Box)`
