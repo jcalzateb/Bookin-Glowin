@@ -31,7 +31,7 @@ export const TituloProducto = styled.h1`
   color: ${({ theme }) => theme.palette.secundario.main};
 
   @media (max-width: 600px) {
-    font-size: 32px;
+    font-size: 24px;
     text-align: center;
   }
 `;

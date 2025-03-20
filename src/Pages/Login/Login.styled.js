@@ -12,39 +12,69 @@ export const ContenedorLogin = styled.div`
   height: 90vh;
 `;
 export const ContenedorIzquierda = styled.div`
-  width: 100%;
+  width: 50%;
   @media (max-width: 600px) {
+    width: 0%;
+  }
+  @media (max-width: 768px) {
     width: 0%;
   }
 `;
 export const ContenedorDerecha = styled.div`
-  width: 100%;
-  margin-top: 30px;
+  width: 50%;
+  display: flex;
+
+  justify-content: center;
+  align-items: center;
   @media (max-width: 600px) {
-    width: 100vw;
+    align-content: none;
   }
 `;
 
 export const ContenedorFormulario = styled.form`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-content: center;
   flex-wrap: wrap;
   gap: 2px;
-  max-width: 400px;
-  padding: 40px;
+  max-width: 500px;
+  padding: 60px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 20px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
   color: #333;
   text-align: center;
   margin-top: 80px;
+
+  @media (min-width: 600px) {
+    padding: 60px;
+  }
+
+  @media (min-width: 768px) {
+    max-width: 700px;
+    padding: 70px;
+  }
+
+  @media (min-width: 1024px) {
+    max-width: 900px;
+    padding: 100px;
+  }
 `;
 
 export const Titulo = styled.h2`
   margin-bottom: 20px;
   color: #7b4eff;
   font-size: 32px;
+  @media (min-width: 600px) {
+    font-size: 32px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 40px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 48px;
+  }
 `;
 
 export const CampoInput = styled.input`
@@ -99,12 +129,23 @@ export const MensajeError = styled.p`
 
 export const Enlace = styled(Link)`
   color: #7b4eff;
-  font-size: 14px;
+  font-size: 12px;
   text-decoration: none;
   margin-top: 10px;
   display: block;
 
   &:hover {
     text-decoration: underline;
+  }
+
+  @media (min-width: 600px) {
+    font-size: 12px;
+  }
+
+  @media (min-width: 768px) {
+    font-size: 14px;
+  }
+  @media (min-width: 1024px) {
+    font-size: 16px;
   }
 `;

@@ -97,9 +97,7 @@ const Login = () => {
           />
           {errores.password && <MensajeError>{errores.password}</MensajeError>}
           {errores.general && <MensajeError>{errores.general}</MensajeError>}
-          <BotonAccion type="submit" disabled={botonDeshabilitado}>
-            Iniciar Sesión
-          </BotonAccion>
+          <BotonAccion type="submit">Iniciar Sesión</BotonAccion>
 
           <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
           <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>

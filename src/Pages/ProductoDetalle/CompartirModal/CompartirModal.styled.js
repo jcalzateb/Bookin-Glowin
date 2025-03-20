@@ -40,11 +40,14 @@ export const RedesSocialesContenedor = styled(Box)`
 `;
 
 export const CopiarLinkButton = styled(Button)`
-  background-color: #00c853;
+  background-color: ${({ theme }) => theme.palette.botones.activo};
   color: white;
   font-weight: bold;
   width: 100%;
   &:hover {
-    background-color: #00b34d;
+    background-color: ${({ theme }) => theme.palette.botones.presionado};
+  }
+  &:active {
+    background-color: ${({ theme }) => theme.palette.botones.presionado};
   }
 `;

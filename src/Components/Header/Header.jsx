@@ -83,9 +83,12 @@ const Header = ({ setMostrarFavoritos }) => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </OpcionMenu>
-                {location.pathname !== "/admin" && (
-                  <OpcionMenu onClick={mostrarFavoritos}>Favoritos</OpcionMenu>
-                )}
+                {location.pathname !== "/admin" &&
+                  !location.pathname.startsWith("/producto/") && (
+                    <OpcionMenu onClick={mostrarFavoritos}>
+                      Favoritos
+                    </OpcionMenu>
+                  )}
                 {usuario.rol === "SUPER_ADMINISTRADOR" ||
                 usuario.rol === "ADMINISTRADOR" ? (
                   <OpcionMenu onClick={redirigir}>
@@ -139,11 +142,12 @@ const Header = ({ setMostrarFavoritos }) => {
                     {usuario?.nombre} {usuario?.apellido}
                   </strong>
                 </p>
-                {location.pathname !== "/admin" && (
-                  <a href="#" onClick={mostrarFavoritos}>
-                    Favoritos
-                  </a>
-                )}
+                {location.pathname !== "/admin" &&
+                  !location.pathname.startsWith("/producto/") && (
+                    <a href="#" onClick={mostrarFavoritos}>
+                      Favoritos
+                    </a>
+                  )}
                 {usuario.rol === "SUPER_ADMINISTRADOR" ||
                 usuario.rol === "ADMINISTRADOR" ? (
                   <a href="#" onClick={redirigir}>
