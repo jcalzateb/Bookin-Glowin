@@ -1,0 +1,365 @@
+[
+  {
+    "id": 1,
+    "nombre": "Corte de Cabello",
+    "descripcion": "Corte profesional para mujeres, hombres y niños, adaptado a las últimas tendencias.",
+    "categoria": "Cabello",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=1",
+      "https://picsum.photos/600/400?random=2",
+      "https://picsum.photos/600/400?random=3",
+      "https://picsum.photos/600/400?random=4",
+      "https://picsum.photos/600/400?random=5"
+    ],
+    "precio": "20000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 2,
+    "nombre": "Coloración y Tintes",
+    "descripcion": "Tintes, mechas, balayage e iluminaciones para transformar tu estilo.",
+    "categoria": "Cabello",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=6",
+      "https://picsum.photos/600/400?random=7",
+      "https://picsum.photos/600/400?random=8",
+      "https://picsum.photos/600/400?random=9",
+      "https://picsum.photos/600/400?random=10"
+    ],
+    "precio": "45000",
+    "duracion": 180,
+    "secciones": 3
+  },
+  {
+    "id": 3,
+    "nombre": "Esmaltado Semipermanente",
+    "descripcion": "Uñas impecables y con mayor duración gracias a nuestra técnica de esmaltado.",
+    "categoria": "Uñas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=11",
+      "https://picsum.photos/600/400?random=12",
+      "https://picsum.photos/600/400?random=13",
+      "https://picsum.photos/600/400?random=14",
+      "https://picsum.photos/600/400?random=15"
+    ],
+    "precio": "30000",
+    "duracion": 120,
+    "secciones": 2
+  },
+  {
+    "id": 4,
+    "nombre": "Uñas Esculpidas en Acrílico",
+    "descripcion": "Uñas acrílicas esculpidas para una apariencia elegante y sofisticada.",
+    "categoria": "Uñas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=16",
+      "https://picsum.photos/600/400?random=17",
+      "https://picsum.photos/600/400?random=18",
+      "https://picsum.photos/600/400?random=19",
+      "https://picsum.photos/600/400?random=20"
+    ],
+    "precio": "50000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 5,
+    "nombre": "Lifting y Rizado de Pestañas",
+    "descripcion": "Dale curvatura y realce a tus pestañas naturales sin necesidad de extensiones.",
+    "categoria": "Pestañas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=21",
+      "https://picsum.photos/600/400?random=22",
+      "https://picsum.photos/600/400?random=23",
+      "https://picsum.photos/600/400?random=24",
+      "https://picsum.photos/600/400?random=25"
+    ],
+    "precio": "35000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 6,
+    "nombre": "Extensiones de Pestañas Volumen",
+    "descripcion": "Extensiones personalizadas para un efecto más denso y voluminoso.",
+    "categoria": "Pestañas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=26",
+      "https://picsum.photos/600/400?random=27",
+      "https://picsum.photos/600/400?random=28",
+      "https://picsum.photos/600/400?random=29",
+      "https://picsum.photos/600/400?random=30"
+    ],
+    "precio": "60000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 7,
+    "nombre": "Perfilado y Depilación de Cejas",
+    "descripcion": "Definimos y embellecemos tus cejas según la forma de tu rostro.",
+    "categoria": "Cejas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=31",
+      "https://picsum.photos/600/400?random=32",
+      "https://picsum.photos/600/400?random=33",
+      "https://picsum.photos/600/400?random=34",
+      "https://picsum.photos/600/400?random=35"
+    ],
+    "precio": "20000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 8,
+    "nombre": "Microblading de Cejas",
+    "descripcion": "Dale un diseño semipermanente a tus cejas con trazos hiperrealistas.",
+    "categoria": "Cejas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=36",
+      "https://picsum.photos/600/400?random=37",
+      "https://picsum.photos/600/400?random=38",
+      "https://picsum.photos/600/400?random=39",
+      "https://picsum.photos/600/400?random=40"
+    ],
+    "precio": "70000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 9,
+    "nombre": "Limpieza Facial Profunda",
+    "descripcion": "Elimina impurezas y renueva tu piel con nuestra limpieza facial.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=41",
+      "https://picsum.photos/600/400?random=42",
+      "https://picsum.photos/600/400?random=43",
+      "https://picsum.photos/600/400?random=44",
+      "https://picsum.photos/600/400?random=45"
+    ],
+    "precio": "50000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 10,
+    "nombre": "Masaje Relajante",
+    "descripcion": "Relájate con un masaje terapéutico para aliviar el estrés y la tensión.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=46",
+      "https://picsum.photos/600/400?random=47",
+      "https://picsum.photos/600/400?random=48",
+      "https://picsum.photos/600/400?random=49",
+      "https://picsum.photos/600/400?random=50"
+    ],
+    "precio": "60000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 11,
+    "nombre": "Corte Masculino + Barba",
+    "descripcion": "Corte de cabello y perfilado de barba con técnicas modernas.",
+    "categoria": "Hombres",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=51",
+      "https://picsum.photos/600/400?random=52",
+      "https://picsum.photos/600/400?random=53",
+      "https://picsum.photos/600/400?random=54",
+      "https://picsum.photos/600/400?random=55"
+    ],
+    "precio": "25000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 12,
+    "nombre": "Depilación con Cera",
+    "descripcion": "Depilación con cera para rostro, cuerpo y zonas íntimas.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=56",
+      "https://picsum.photos/600/400?random=57",
+      "https://picsum.photos/600/400?random=58",
+      "https://picsum.photos/600/400?random=59",
+      "https://picsum.photos/600/400?random=60"
+    ],
+    "precio": "35000",
+    "duracion": 120,
+    "secciones": 2
+  },
+  {
+    "id": 13,
+    "nombre": "Radiofrecuencia Facial",
+    "descripcion": "Tratamiento rejuvenecedor para mejorar la elasticidad de la piel.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=61",
+      "https://picsum.photos/600/400?random=62",
+      "https://picsum.photos/600/400?random=63",
+      "https://picsum.photos/600/400?random=64",
+      "https://picsum.photos/600/400?random=65"
+    ],
+    "precio": "75000",
+    "duracion": 120,
+    "secciones": 2
+  },
+  {
+    "id": 14,
+    "nombre": "Tratamiento Capilar",
+    "descripcion": "Hidratación profunda y reparación para un cabello más fuerte y sano.",
+    "categoria": "Cabello",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=66",
+      "https://picsum.photos/600/400?random=67",
+      "https://picsum.photos/600/400?random=68",
+      "https://picsum.photos/600/400?random=69",
+      "https://picsum.photos/600/400?random=70"
+    ],
+    "precio": "40000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 15,
+    "nombre": "Maquillaje para Eventos",
+    "descripcion": "Maquillaje profesional para bodas, fiestas y eventos especiales.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=71",
+      "https://picsum.photos/600/400?random=72",
+      "https://picsum.photos/600/400?random=73",
+      "https://picsum.photos/600/400?random=74",
+      "https://picsum.photos/600/400?random=75"
+    ],
+    "precio": "80000",
+    "duracion": 180,
+    "secciones": 1
+  },
+  {
+    "id": 16,
+    "nombre": "Manicure y Pedicure",
+    "descripcion": "Cuidado completo para tus uñas con hidratación, exfoliación y esmaltado.",
+    "categoria": "Uñas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=76",
+      "https://picsum.photos/600/400?random=77",
+      "https://picsum.photos/600/400?random=78",
+      "https://picsum.photos/600/400?random=79",
+      "https://picsum.photos/600/400?random=80"
+    ],
+    "precio": "50000",
+    "duracion": 120,
+    "secciones": 2
+  },
+  {
+    "id": 17,
+    "nombre": "Lifting de Cejas",
+    "descripcion": "Técnica para realzar y definir la forma natural de tus cejas.",
+    "categoria": "Cejas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=81",
+      "https://picsum.photos/600/400?random=82",
+      "https://picsum.photos/600/400?random=83",
+      "https://picsum.photos/600/400?random=84",
+      "https://picsum.photos/600/400?random=85"
+    ],
+    "precio": "40000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 18,
+    "nombre": "Masaje Reductor",
+    "descripcion": "Masaje especializado para reducir medidas y mejorar la circulación.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=86",
+      "https://picsum.photos/600/400?random=87",
+      "https://picsum.photos/600/400?random=88",
+      "https://picsum.photos/600/400?random=89",
+      "https://picsum.photos/600/400?random=90"
+    ],
+    "precio": "90000",
+    "duracion": 180,
+    "secciones": 3
+  },
+  {
+    "id": 19,
+    "nombre": "Extensiones de Pestañas Volumen",
+    "descripcion": "Obtén una mirada impactante con nuestras extensiones de pestañas. Técnicas de volumen y mega volumen disponibles.",
+    "categoria": "Pestañas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=143",
+      "https://picsum.photos/600/400?random=144",
+      "https://picsum.photos/600/400?random=145",
+      "https://picsum.photos/600/400?random=146"
+    ],
+    "precio": "50000",
+    "duracion": 30,
+    "secciones": 1
+  },
+  {
+    "id": 20,
+    "nombre": "Perfilado de Cejas",
+    "descripcion": "Define y estructura tus cejas con nuestro servicio de perfilado profesional. Logra un marco perfecto para tu rostro.",
+    "categoria": "Cejas",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=147",
+      "https://picsum.photos/600/400?random=148",
+      "https://picsum.photos/600/400?random=149",
+      "https://picsum.photos/600/400?random=150"
+    ],
+    "precio": "60000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 21,
+    "nombre": "Maquillaje Profesional",
+    "descripcion": "Maquillaje social, para novias o eventos especiales. Utilizamos productos de alta calidad para un acabado impecable y duradero.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=151",
+      "https://picsum.photos/600/400?random=152",
+      "https://picsum.photos/600/400?random=153",
+      "https://picsum.photos/600/400?random=154"
+    ],
+    "precio": "95000",
+    "duracion": 240,
+    "secciones": 1
+  },
+  {
+    "id": 22,
+    "nombre": "Masaje Relajante",
+    "descripcion": "Relaja tu cuerpo y mente con un masaje terapéutico de presión suave a media. Ideal para liberar tensiones y mejorar la circulación.",
+    "categoria": "Cuidados",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=155",
+      "https://picsum.photos/600/400?random=156",
+      "https://picsum.photos/600/400?random=157",
+      "https://picsum.photos/600/400?random=158"
+    ],
+    "precio": "80000",
+    "duracion": 60,
+    "secciones": 1
+  },
+  {
+    "id": 23,
+    "nombre": "Corte Masculino + Barba",
+    "descripcion": "Corte de cabello y perfilado de barba con técnicas modernas. Servicio ideal para hombres que buscan un look impecable.",
+    "categoria": "Hombres",
+    "imagenes": [
+      "https://picsum.photos/600/400?random=159",
+      "https://picsum.photos/600/400?random=160",
+      "https://picsum.photos/600/400?random=161",
+      "https://picsum.photos/600/400?random=162"
+    ],
+    "precio": "70000",
+    "duracion": 30,
+    "secciones": 1
+  }
+]
