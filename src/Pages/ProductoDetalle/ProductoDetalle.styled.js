@@ -11,6 +11,9 @@ export const ContenedorDetalle = styled(Box)`
   margin: auto;
   background-color: ${({ theme }) => theme.palette.primario.main};
   color: ${({ theme }) => theme.palette.secundario.main};
+  @media (max-width: 600px) {
+    padding: 80px 20px 20px 20px;
+  }
 `;
 
 export const EncabezadoDetalle = styled(Box)`
@@ -23,6 +26,9 @@ export const EncabezadoDetalle = styled(Box)`
   @media (max-width: 600px) {
     width: 100%;
     font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
+  }
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
@@ -310,5 +316,42 @@ export const BotonCompartirRedes = styled(Button)`
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
     color: ${({ theme }) => theme.palette.botones.hovered};
+  }
+`;
+
+export const PoliticasContenedor = styled(Box)`
+  width: 80%;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const TituloPoliticas = styled.h2`
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+`;
+
+export const PoliticaItem = styled(Box)`
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+
+  & > strong {
+    font-weight: 600;
+  }
+
+  & > p {
+    margin-left: 15px;
   }
 `;
