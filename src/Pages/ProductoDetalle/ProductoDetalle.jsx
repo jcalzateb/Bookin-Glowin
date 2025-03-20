@@ -260,7 +260,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       </ContenedorCaracteristicas>
 
       <PoliticasContenedor>
-        <TituloPoliticas>Políticas de Uso del Servicio</TituloPoliticas>
+        <TituloPoliticas>Políticas de uso del servicio</TituloPoliticas>
         <PoliticaItem>
           <Typography variant="body1">
             Para brindarte la mejor experiencia y garantizar un servicio de
