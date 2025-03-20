@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { obtenerServicios } from "../../Services/serviciosService";
+import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useNavigate } from "react-router-dom";
 import {
   ContenedorDestacados,
@@ -25,7 +26,16 @@ const ProductosDestacados = () => {
   useEffect(() => {
     const cargarServicios = async () => {
       const data = await obtenerServicios();
-      setProductos(data.slice(0, 8)); // Solo tomamos los primeros 8 servicios destacados
+      const serviciosConImagenes = await Promise.all(
+        data.map(async (producto) => {
+          const imagenes = await obtenerImagenesPorServicio(producto.id);
+          return {
+            ...producto,
+            imagenes: imagenes.length > 0 ? imagenes : [],
+          };
+        })
+      );
+      setProductos(serviciosConImagenes.slice(0, 8));
     };
 
     cargarServicios();
@@ -82,7 +92,7 @@ const ProductosDestacados = () => {
             key={producto.id}
             imagen={
               Array.isArray(producto.imagenes) && producto.imagenes.length > 0
-                ? producto.imagenes[0]
+                ? producto.imagenes[0].urlImagen
                 : "https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
             }
           >

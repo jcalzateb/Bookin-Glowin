@@ -9,8 +9,8 @@ import {
   actualizarUsuario,
   eliminarUsuario,
 } from "../../Services/usuariosService";
+import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useMediaQuery } from "react-responsive";
-
 import {
   ContenedorAdmin,
   MenuSuperior,
@@ -70,10 +70,31 @@ const AdminPanel = () => {
     }
   };
 
-  const seleccionarServicio = (servicio) => {
-    setServicioSeleccionado(servicio);
-    setVistaActual("agregarServicio");
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const seleccionarServicio = async (servicio) => {
+    try {
+      const imagenes = await obtenerImagenesPorServicio(servicio.id);
+
+      if (Array.isArray(imagenes)) {
+        setServicioSeleccionado({
+          ...servicio,
+          imagenes: imagenes.map((imagen) => ({
+            id: imagen.id,
+            urlImagen: imagen.urlImagen,
+          })),
+        });
+      } else {
+        console.error("La respuesta no es un array de imágenes:", imagenes);
+        setServicioSeleccionado({
+          ...servicio,
+          imagenes: [],
+        });
+      }
+
+      setVistaActual("agregarServicio");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (error) {
+      console.error("Error al obtener imágenes del servicio:", error);
+    }
   };
 
   const cancelarEdicion = () => {
@@ -148,118 +169,6 @@ const AdminPanel = () => {
       <MensajeNoDisponible> No disponible para mobile.</MensajeNoDisponible>
     );
   }
-
-  /* 
-  const servicioExiste = (nombre) => servicios.some((s) => s.nombre === nombre);
-
-  const agregarServicio = (nuevoServicio) => {
-    if (servicioExiste(nuevoServicio.nombre) && !servicioSeleccionado) {
-      setMensaje({
-        abierto: true,
-        tipo: "error",
-        texto: "El nombre asignado al producto ya existe",
-        callback: () => setMensaje({ ...mensaje, abierto: false }),
-      });
-      return;
-    }
-
-    setMensaje({
-      abierto: true,
-      tipo: "confirmacion",
-      texto: servicioSeleccionado
-        ? "¿Desea actualizar el servicio?"
-        : "¿Desea guardar el servicio?",
-      callback: () => {
-        if (servicioSeleccionado) {
-          setServicios(
-            servicios.map((servicio) =>
-              servicio.id === servicioSeleccionado.id
-                ? { ...nuevoServicio, id: servicioSeleccionado.id }
-                : servicio
-            )
-          );
-        } else {
-          setServicios([
-            ...servicios,
-            { id: servicios.length + 1, ...nuevoServicio },
-          ]);
-        }
-        setServicioSeleccionado(null);
-        setMensaje({ ...mensaje, abierto: false });
-      },
-    });
-  };
-  const eliminarServicio = (id) => {
-    setMensaje({
-      abierto: true,
-      tipo: "eliminar",
-      texto: "¿Desea eliminar el producto?",
-      callback: () => {
-        setServicios(servicios.filter((servicio) => servicio.id !== id));
-        setMensaje({ ...mensaje, abierto: false });
-      },
-    });
-  };
-
-  const agregarCategoria = (nuevaCategoria) => {
-    const existe = categorias.some(
-      (cat) => cat.nombre.toLowerCase() === nuevaCategoria.nombre.toLowerCase()
-    );
-
-    if (existe) {
-      setMensaje({
-        abierto: true,
-        tipo: "error",
-        texto: "Esta categoría ya existe.",
-        callback: () => setMensaje({ ...mensaje, abierto: false }),
-      });
-      return;
-    }
-
-    setMensaje({
-      abierto: true,
-      tipo: "confirmacion",
-      texto: "¿Desea guardar la nueva categoría?",
-      callback: () => {
-        setCategorias([
-          ...categorias,
-          { id: categorias.length + 1, ...nuevaCategoria },
-        ]);
-        setMensaje({ ...mensaje, abierto: false });
-      },
-    });
-  };
-
-  const cambiarRolUsuario = (id, nuevoRol) => {
-    setUsuarios(
-      usuarios.map((usuario) =>
-        usuario.id === id ? { ...usuario, rol: nuevoRol } : usuario
-      )
-    );
-  };
-
-  const eliminarUsuario = (id) => {
-    const usuario = usuarios.find((user) => user.id === id);
-    if (usuario.rol === "admin") {
-      setMensaje({
-        abierto: true,
-        tipo: "error",
-        texto: "No se puede eliminar al administrador principal.",
-        callback: () => setMensaje({ ...mensaje, abierto: false }),
-      });
-      return;
-    }
-
-    setMensaje({
-      abierto: true,
-      tipo: "eliminar",
-      texto: "¿Desea eliminar este usuario?",
-      callback: () => {
-        setUsuarios(usuarios.filter((usuario) => usuario.id !== id));
-        setMensaje({ ...mensaje, abierto: false });
-      },
-    });
-  }; */
 
   return (
     <ContenedorAdmin>

@@ -22,7 +22,6 @@ export const obtenerUsuarioPorId = async (id) => {
 
 export const registrarUsuario = async (nuevoUsuario) => {
   try {
-    // Obtener la fecha y hora actual para el registro
     const fechaActual = new Date();
     const fechaRegistro = fechaActual.toISOString().split("T")[0];
     const horaRegistro = fechaActual.toTimeString().split(" ")[0];
@@ -71,11 +70,11 @@ export const eliminarUsuario = async (id) => {
 
 export const loginUsuario = async (email, password) => {
   try {
-    const respuesta = await api.post("/auth/login", { email, password });
+    const respuesta = await api.post("/auth/ingresar", { email, password });
 
     if (respuesta.data) {
       localStorage.setItem("token", respuesta.data.token);
-      localStorage.setItem("usuarioId", respuesta.data.id); // Guardar ID del usuario
+      localStorage.setItem("usuarioId", respuesta.data.id);
       console.log("✅ Usuario autenticado:", respuesta.data);
     }
 

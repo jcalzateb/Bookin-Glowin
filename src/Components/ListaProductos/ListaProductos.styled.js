@@ -19,6 +19,7 @@ export const ContenedorLista = styled(Box)`
 `;
 
 export const TarjetaProducto = styled(Box)`
+  position: relative;
   display: flex;
   background: white;
   border-radius: 12px;
@@ -35,6 +36,19 @@ export const TarjetaProducto = styled(Box)`
 
   @media (max-width: 600px) {
     flex-direction: column;
+  }
+`;
+
+export const CorazonFavorito = styled(Box)`
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  cursor: pointer;
+  color: ${(props) => (props.$favorito ? "red" : "gray")};
+  transition: color 0.3s;
+  font-size: 24px;
+  &:hover {
+    color: red;
   }
 `;
 
@@ -172,7 +186,6 @@ export const ControlesPaginacion = styled(Box)`
   }
 `;
 
-// Contenedor del filtro
 export const ContenedorFiltro = styled(Box)`
   display: flex;
   justify-content: center;
@@ -186,7 +199,6 @@ export const ContenedorFiltro = styled(Box)`
   color: #333;
 `;
 
-// Botón para eliminar el filtro
 export const BotonEliminarFiltro = styled(Button)`
   background: transparent !important;
   border: 1px solid rgba(151, 71, 255, 0.36) !important;

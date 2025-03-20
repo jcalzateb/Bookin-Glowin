@@ -26,6 +26,17 @@ const Categorias = ({ setCategoriaSeleccionada }) => {
     cargarCategorias();
   }, []);
 
+  const obtenerNombreCategoria = (nombre) => {
+    const partes = nombre.split("_");
+    if (partes.length > 1) {
+      if (partes[0] === "GLOWIN") {
+        return partes[1];
+      }
+      return partes[0];
+    }
+    return nombre;
+  };
+
   return (
     <ContenedorCategorias>
       <Typography
@@ -54,7 +65,7 @@ const Categorias = ({ setCategoriaSeleccionada }) => {
                 textTransform: "capitalize",
               }}
             >
-              {categoria.nombre}
+              {obtenerNombreCategoria(categoria.nombre)}
             </Typography>
           </CategoriaItem>
         ))}

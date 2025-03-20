@@ -4,33 +4,43 @@ import { Box, Button, IconButton, Typography } from "@mui/material";
 export const ContenedorDetalle = styled(Box)`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 80px 50px 20px 50px;
-  max-width: 1200px;
+  width: 100%;
   margin: auto;
   background-color: ${({ theme }) => theme.palette.primario.main};
   color: ${({ theme }) => theme.palette.secundario.main};
+  @media (max-width: 600px) {
+    padding: 80px 20px 20px 20px;
+  }
 `;
 
 export const EncabezadoDetalle = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%;
+  width: 80%;
   margin-bottom: 15px;
 
   @media (max-width: 600px) {
+    width: 100%;
     font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
+  }
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 
 export const TituloProducto = styled.h1`
+  text-align: center;
   font-family: ${({ theme }) => theme.typography.h1.fontFamily};
   font-weight: 900;
   font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.6);
   color: ${({ theme }) => theme.palette.secundario.main};
 
   @media (max-width: 600px) {
-    font-size: 32px;
+    font-size: 24px;
     text-align: center;
   }
 `;
@@ -49,10 +59,11 @@ export const BloqueImagenes = styled(Box)`
   display: grid;
   grid-template-columns: 2fr 1fr;
   gap: 10px;
-  width: 100%;
+  width: 80%;
   margin-bottom: 10px;
 
   @media (max-width: 768px) {
+    width: 100%;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
   }
@@ -60,7 +71,7 @@ export const BloqueImagenes = styled(Box)`
 
 export const ImagenPrincipal = styled(Box)`
   width: 100%;
-  height: 400px;
+  height: 100%;
   border-radius: 12px;
   overflow: hidden;
   background-size: cover;
@@ -73,6 +84,9 @@ export const ImagenPrincipal = styled(Box)`
 
   @media (max-width: 600px) {
     height: 280px;
+  }
+  @media (max-width: 768px) {
+    height: 400px;
   }
 `;
 
@@ -130,9 +144,10 @@ export const ContenedorInfo = styled(Box)`
   display: flex;
   gap: 20px;
   margin-top: 10px;
-  width: 100%;
+  width: 80%;
 
   @media (max-width: 768px) {
+    width: 100%;
     flex-direction: column;
   }
 `;
@@ -234,6 +249,10 @@ export const ContenedorCaracteristicas = styled(Box)`
   padding: 10px;
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.1);
+  width: 80%;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `;
 
 export const ListaCaracteristicas = styled(Box)`
@@ -276,4 +295,63 @@ export const MensajeError = styled(Typography)`
   font-weight: bold;
   text-align: center;
   margin-top: 40px;
+`;
+export const BotonesIconos = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const BotonCompartirRedes = styled(Button)`
+  background-color: transparent;
+  color: gray;
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 8px;
+  text-transform: none;
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+    color: ${({ theme }) => theme.palette.botones.hovered};
+  }
+`;
+
+export const PoliticasContenedor = styled(Box)`
+  width: 80%;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const TituloPoliticas = styled.h2`
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+`;
+
+export const PoliticaItem = styled(Box)`
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: #555;
+
+  & > strong {
+    font-weight: 600;
+  }
+
+  & > p {
+    margin-left: 15px;
+  }
 `;

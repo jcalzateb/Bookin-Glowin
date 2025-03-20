@@ -41,3 +41,13 @@ export const eliminarCategoria = async (id) => {
     throw error;
   }
 };
+
+export const obtenerCategoriaPorId = async (idCategoria) => {
+  try {
+    const response = await api.get(`/categorias-servicios/${idCategoria}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener la categoría por ID:", error);
+    return null;
+  }
+};
