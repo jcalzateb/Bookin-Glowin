@@ -76,9 +76,6 @@ const Registro = () => {
     if (datos.confirmarPassword !== datos.password) {
       erroresTemp.confirmarPassword = "Las contraseñas no coinciden";
     }
-    if (!radioSeleccionado) {
-      erroresTemp.terminos = "Debe aceptar los términos y condiciones";
-    }
 
     setErrores(erroresTemp);
     setBotonDeshabilitado(
