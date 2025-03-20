@@ -10,6 +10,7 @@ import ContentCutIcon from "@mui/icons-material/ContentCut";
 import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
+import CalendarioDisponibilidad from "../../Components/CalendarioDisponibilidad/CalendarioDisponibilidad";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -51,6 +52,8 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [error, setError] = useState(null);
   const [favoritos, setFavoritos] = useState([]);
   const [compartirModalAbierto, setCompartirModalAbierto] = useState(false);
+  // Nuevo estado para el turno seleccionado
+  const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -144,6 +147,15 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCompartirModalAbierto(false);
   };
 
+  // Función para manejar la selección de un turno desde el calendario
+  const manejarSeleccionTurno = (fecha, turno) => {
+    setTurnoSeleccionado({
+      fecha: fecha,
+      hora: turno.hora,
+      id: turno.id
+    });
+  };
+
   return (
     <ContenedorDetalle>
       <EncabezadoDetalle>
@@ -152,6 +164,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         </BotonRetroceso>
         <TituloProducto>{servicio.nombre}</TituloProducto>
         <BotonesIconos>
+          {/* Añadir el componente de calendario */}
+          <CalendarioDisponibilidad 
+            servicioId={servicio.id}
+            onSeleccionTurno={manejarSeleccionTurno}
+          />
           <BotonCompartirRedes onClick={abrirModalCompartir}>
             <ShareIcon />
           </BotonCompartirRedes>
@@ -211,11 +228,39 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
 
         <ContenedorReserva>
           <PrecioProducto>${servicio.costo} USD</PrecioProducto>
-          <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
-          <Typography variant="body2">
-            Disponibilidad: Lunes - Viernes
-          </Typography>
-          <BotonReservar>Reservar</BotonReservar>
+          
+          {/* Mostrar información del turno seleccionado o información genérica */}
+          {turnoSeleccionado ? (
+            <Typography variant="body2" sx={{ color: 'green', fontWeight: 'bold', my: 1 }}>
+              Turno seleccionado: {turnoSeleccionado.fecha.toLocaleDateString('es-ES')} a las {turnoSeleccionado.hora}
+            </Typography>
+          ) : (
+            <>
+              <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
+              <Typography variant="body2">
+                Disponibilidad: Lunes - Viernes
+              </Typography>
+            </>
+          )}
+          
+          {/* Actualizar botón de reserva */}
+          <BotonReservar 
+            onClick={() => {
+              if (turnoSeleccionado) {
+                navigate(`/reserva/${id}`, { 
+                  state: { 
+                    servicioId: id,
+                    turnoId: turnoSeleccionado.id,
+                    fecha: turnoSeleccionado.fecha.toISOString().split('T')[0]
+                  }
+                });
+              } else {
+                alert("Por favor seleccione un turno disponible haciendo clic en el icono de calendario");
+              }
+            }}
+          >
+            {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
+          </BotonReservar>
         </ContenedorReserva>
       </ContenedorInfo>
       <ContenedorCaracteristicas>
