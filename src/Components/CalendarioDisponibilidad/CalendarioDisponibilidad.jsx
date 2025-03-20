@@ -5,7 +5,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CloseIcon from '@mui/icons-material/Close';
 import styled from '@emotion/styled';
-import { obtenerDisponibilidadMensual, obtenerTurnosDisponibles } from '../../Services/disponibilidadService';
+import { obtenerDisponibilidadMensual, obtenerTurnosDisponibles } from '../../Services/disponibilidadServiceModal';
 
 // Estilos para el componente
 const CalendarioIcono = styled(IconButton)({
