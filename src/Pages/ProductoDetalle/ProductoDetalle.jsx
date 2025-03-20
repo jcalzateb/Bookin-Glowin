@@ -33,6 +33,9 @@ import {
   MensajeError,
   BotonCompartirRedes,
   BotonesIconos,
+  PoliticasContenedor,
+  PoliticaItem,
+  TituloPoliticas,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 import {
@@ -300,6 +303,62 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           </CaracteristicaItem>
         </ListaCaracteristicas>
       </ContenedorCaracteristicas>
+
+      <PoliticasContenedor>
+        <TituloPoliticas>Políticas de uso del servicio</TituloPoliticas>
+        <PoliticaItem>
+          <Typography variant="body1">
+            Para brindarte la mejor experiencia y garantizar un servicio de
+            calidad, te pedimos que tengas en cuenta las siguientes cosas:
+          </Typography>
+        </PoliticaItem>
+        <PoliticaItem>
+          <Typography variant="body2">
+            <strong>Puntualidad:</strong> Llegar a tiempo para no afectar la
+            programación de otros clientes.
+          </Typography>
+        </PoliticaItem>
+        <PoliticaItem>
+          <Typography variant="body2">
+            <strong>Reservas y Cancelaciones:</strong> Las reservas deben
+            hacerse con al menos 24 horas de antelación. Las cancelaciones deben
+            realizarse con un mínimo de 12 horas.
+          </Typography>
+        </PoliticaItem>
+        <PoliticaItem>
+          <Typography variant="body2">
+            <strong>Condiciones Previas al Servicio:</strong> Asegúrate de
+            seguir las instrucciones previas al servicio para obtener los
+            mejores resultados.
+          </Typography>
+        </PoliticaItem>
+        <PoliticaItem>
+          <Typography variant="body2">
+            <strong>Salud y Cuidado de Piel y Cabello:</strong> Es importante
+            que nos informes de cualquier condición de salud relevante antes de
+            tu servicio.
+          </Typography>
+        </PoliticaItem>
+        <PoliticaItem>
+          <Typography variant="body2">
+            <strong>Menores de Edad:</strong> Los menores de edad deben estar
+            acompañados por un adulto responsable durante el servicio.
+          </Typography>
+        </PoliticaItem>
+        <PoliticaItem>
+          <Typography variant="body2">
+            <strong>Formas de Pago:</strong> Aceptamos pagos en efectivo,
+            tarjetas de crédito/débito y pagos electrónicos.
+          </Typography>
+        </PoliticaItem>
+        <PoliticaItem>
+          <Typography variant="body2">
+            Tu bienestar y satisfacción son nuestra prioridad. Gracias por
+            confiar en nosotros.
+          </Typography>
+        </PoliticaItem>
+      </PoliticasContenedor>
+
       <CompartirModal
         abierto={compartirModalAbierto}
         cerrar={cerrarModalCompartir}
