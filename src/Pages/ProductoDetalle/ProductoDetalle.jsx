@@ -150,12 +150,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCompartirModalAbierto(false);
   };
 
-  // Función para manejar la selección de un turno desde el calendario
   const manejarSeleccionTurno = (fecha, turno) => {
     setTurnoSeleccionado({
       fecha: fecha,
       hora: turno.hora,
-      id: turno.id
+      id: turno.id,
     });
   };
 
@@ -168,7 +167,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         <TituloProducto>{servicio.nombre}</TituloProducto>
         <BotonesIconos>
           {/* Añadir el componente de calendario */}
-          <CalendarioDisponibilidad 
+          <CalendarioDisponibilidad
             servicioId={servicio.id}
             onSeleccionTurno={manejarSeleccionTurno}
           />
@@ -231,34 +230,41 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
 
         <ContenedorReserva>
           <PrecioProducto>${servicio.costo} USD</PrecioProducto>
-          
-          {/* Mostrar información del turno seleccionado o información genérica */}
+
           {turnoSeleccionado ? (
-            <Typography variant="body2" sx={{ color: 'green', fontWeight: 'bold', my: 1 }}>
-              Turno seleccionado: {turnoSeleccionado.fecha.toLocaleDateString('es-ES')} a las {turnoSeleccionado.hora}
+            <Typography
+              variant="body2"
+              sx={{ color: "green", fontWeight: "bold", my: 1 }}
+            >
+              Turno seleccionado:{" "}
+              {turnoSeleccionado.fecha.toLocaleDateString("es-ES")} a las{" "}
+              {turnoSeleccionado.hora}
             </Typography>
           ) : (
             <>
-              <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
+              <Typography variant="body2">
+                Horario: 10:00 AM - 6:00 PM
+              </Typography>
               <Typography variant="body2">
                 Disponibilidad: Lunes - Viernes
               </Typography>
             </>
           )}
-          
-          {/* Actualizar botón de reserva */}
-          <BotonReservar 
+
+          <BotonReservar
             onClick={() => {
               if (turnoSeleccionado) {
-                navigate(`/reserva/${id}`, { 
-                  state: { 
+                navigate(`/reserva`, {
+                  state: {
                     servicioId: id,
                     turnoId: turnoSeleccionado.id,
-                    fecha: turnoSeleccionado.fecha.toISOString().split('T')[0]
-                  }
+                    fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
+                  },
                 });
               } else {
-                alert("Por favor seleccione un turno disponible haciendo clic en el icono de calendario");
+                alert(
+                  "Por favor seleccione un turno disponible haciendo clic en el icono de calendario"
+                );
               }
             }}
           >
