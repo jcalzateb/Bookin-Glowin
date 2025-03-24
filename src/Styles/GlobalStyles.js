@@ -10,7 +10,7 @@ const GlobalStyles = createGlobalStyle`
   body {
     background-color: ${({ theme }) => theme.palette.primario.main};
     color: ${({ theme }) => theme.palette.secundario.main};
-    font-family: "Poppins", sans-serif;
+    font-family: 'Poppins', sans-serif;
     height: 100%;
   }
 
