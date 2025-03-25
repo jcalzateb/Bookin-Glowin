@@ -258,6 +258,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                   state: {
                     servicioId: id,
                     turnoId: turnoSeleccionado.id,
+                    hora: turnoSeleccionado.hora,
                     fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
                   },
                 });

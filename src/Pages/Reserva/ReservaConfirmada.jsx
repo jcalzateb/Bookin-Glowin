@@ -1,22 +1,31 @@
 import React from "react";
-import { Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
+import {
+  ContenedorConfirmacion,
+  TituloConfirmacion,
+  SubtituloConfirmacion,
+  BotonInicio,
+} from "./ReservaConfirmada.styled";
 
 const ReservaConfirmada = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <Typography variant="h4" color="primary">
-        ¡Reserva Confirmada!
-      </Typography>
-      <Typography variant="body1">
-        Tu reserva ha sido confirmada con éxito.
-      </Typography>
-      <Button variant="contained" color="primary" onClick={() => navigate("/")}>
+    <ContenedorConfirmacion>
+      <TituloConfirmacion variant="h4">¡Reserva Confirmada!</TituloConfirmacion>
+      <SubtituloConfirmacion variant="body1">
+        Tu reserva ha sido confirmada con éxito. Gracias por elegirnos.
+      </SubtituloConfirmacion>
+
+      <BotonInicio
+        variant="contained"
+        color="primary"
+        onClick={() => navigate("/")}
+      >
         Volver al Inicio
-      </Button>
-    </div>
+      </BotonInicio>
+    </ContenedorConfirmacion>
   );
 };
 

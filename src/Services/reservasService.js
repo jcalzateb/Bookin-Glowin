@@ -7,29 +7,18 @@ import api from "./apiConfig";
  * @param {number} idEmpleado - El ID del empleado.
  * @param {string} fecha - La fecha de la reserva (en formato YYYY-MM-DD).
  * @param {string} hora - La hora de la reserva (en formato HH:mm).
+ * @param {string} estado - La hora de la reserva (en formato HH:mm).
  * @returns {Promise} - Promesa con la respuesta de la reserva
  */
-export const realizarReserva = async (
-  idCliente,
-  idServicio,
-  idEmpleado,
-  fecha,
-  hora
-) => {
+export const realizarReserva = async (reservaData) => {
   try {
-    const reservaData = {
-      idCliente,
-      idServicio,
-      idEmpleado,
-      fecha,
-      hora,
-      estado: "pendiente",
-    };
-
     const response = await api.post("/reservas", reservaData);
     return response.data;
   } catch (error) {
-    console.error("Error al realizar la reserva:", error);
+    console.error(
+      "Error en el backend al crear la reserva:",
+      error.response || error.message
+    );
     throw error;
   }
 };
