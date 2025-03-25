@@ -110,6 +110,13 @@ export const DescripcionProducto = styled.p`
   margin-bottom: 10px;
 `;
 
+export const PuntuacionProducto = styled.p`
+  font-size: 14px;
+  color: #666;
+  max-height: 60px;
+  margin-bottom: 10px;
+`;
+
 export const BotonVerMas = styled(Button)`
   background-color: #9747ff !important;
   color: white !important;

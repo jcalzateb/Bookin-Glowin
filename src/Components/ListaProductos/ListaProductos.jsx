@@ -8,6 +8,7 @@ import {
   eliminarFavorito,
   obtenerFavoritosUsuario,
 } from "../../Services/favoritosService";
+import { Rating } from "@mui/material";
 import {
   ContenedorLista,
   TarjetaProducto,
@@ -22,6 +23,7 @@ import {
   BotonEliminarFiltro,
   TextoFiltro,
   CorazonFavorito,
+  PuntuacionProducto,
 } from "./ListaProductos.styled";
 
 const ListaProductos = ({
@@ -213,6 +215,14 @@ const ListaProductos = ({
                   <DescripcionProducto variant="body2">
                     {servicio.descripcion}
                   </DescripcionProducto>
+                  <Rating
+                    value={servicio.puntuacionMedia || 0}
+                    readOnly
+                    size="small"
+                  />
+                  <PuntuacionProducto variant="body2">
+                    Puntuación media: {servicio.puntuacionMedia || "N/A"}
+                  </PuntuacionProducto>
                   <BotonVerMas
                     onClick={() => navigate(`/producto/${servicio.id}`)}
                   >

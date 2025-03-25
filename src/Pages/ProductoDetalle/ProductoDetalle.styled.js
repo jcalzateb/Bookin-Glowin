@@ -319,6 +319,53 @@ export const BotonCompartirRedes = styled(Button)`
   }
 `;
 
+export const ContenedorPuntuacion = styled(Box)`
+  width: 80%;
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+export const ContenedorTuValoracion = styled(Box)`
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+`;
+
+export const TituloTuValoracion = styled.h2`
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+`;
+
+export const ContenedorValoracionReseña = styled(Box)`
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+`;
+
+export const TituloValoracion = styled.h3`
+  font-size: 22px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20px;
+`;
+
+export const ContenedorReseñas = styled(Box)`
+  width: 100%;
+  margin: auto;
+  padding: 20px;
+`;
+
 export const PoliticasContenedor = styled(Box)`
   width: 80%;
   margin-top: 20px;
