@@ -6,7 +6,7 @@ import {
   estaAutenticado,
   obtenerDatosUsuario,
   decodificarToken,
-} from "../services/authService";
+} from "../Services/authService";
 
 export const AuthContext = createContext();
 
