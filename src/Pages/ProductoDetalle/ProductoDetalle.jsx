@@ -19,6 +19,7 @@ import ShareIcon from "@mui/icons-material/Share";
 import CalendarioDisponibilidad from "../../Components/CalendarioDisponibilidad/CalendarioDisponibilidad";
 import { realizarValoracion } from "../../Services/valoracionesService";
 import {
+  Contenedor,
   ContenedorDetalle,
   EncabezadoDetalle,
   BloqueImagenes,
@@ -26,7 +27,11 @@ import {
   MiniaturasImagenes,
   BotonVerMas,
   ContenedorInfo,
+  ContenedorInfoI,
+  ContenedorInfoD,
+  Horario,
   DescripcionProducto,
+  CuerpoDescripcion,
   ContenedorReserva,
   BotonReservar,
   BotonRetroceso,
@@ -44,11 +49,13 @@ import {
   PoliticaItem,
   TituloPoliticas,
   ContenedorPuntuacion,
-  TituloTuValoracion,
-  ContenedorTuValoracion,
   TituloValoracion,
-  ContenedorValoracionReseña,
-  ContenedorReseñas,
+  ContenedorValoracionResena,
+  ContenedorResenas,
+  Valoracion,
+  BotonVerResena,
+  Turno,
+  Disponibilidad,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 import {
@@ -68,7 +75,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [error, setError] = useState(null);
   const [favoritos, setFavoritos] = useState([]);
   const [compartirModalAbierto, setCompartirModalAbierto] = useState(false);
-  // Nuevo estado para el turno seleccionado
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
   const [valoracion, setValoracion] = useState(0);
   const [comentario, setComentario] = useState("");
@@ -102,7 +108,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     try {
       await realizarValoracion(id, valoracion, comentario);
       alert("Valoración enviada con éxito");
-      // Limpiar los campos después de enviar la valoración
       setValoracion(0);
       setComentario("");
     } catch (err) {
@@ -191,158 +196,190 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   };
 
   return (
-    <ContenedorDetalle>
-      <EncabezadoDetalle>
-        <BotonRetroceso onClick={() => navigate("/")}>
-          <ArrowBackIcon />
-        </BotonRetroceso>
-        <TituloProducto>{servicio.nombre}</TituloProducto>
-        <BotonesIconos>
-          {/* Añadir el componente de calendario */}
-          <CalendarioDisponibilidad
-            servicioId={servicio.id}
-            onSeleccionTurno={manejarSeleccionTurno}
-          />
-          <BotonCompartirRedes onClick={abrirModalCompartir}>
-            <ShareIcon />
-          </BotonCompartirRedes>
-          <FavoriteIcon
-            onClick={() => {
-              if (esFavorito(servicio.id)) {
-                eliminarDeFavoritos();
-              } else {
-                agregarAFavoritos();
-              }
-            }}
+    <Contenedor>
+      <ContenedorDetalle>
+        <EncabezadoDetalle>
+          <BotonRetroceso onClick={() => navigate("/")}>
+            <ArrowBackIcon />
+          </BotonRetroceso>
+          <TituloProducto>{servicio.nombre}</TituloProducto>
+          <BotonesIconos>
+            <BotonCompartirRedes onClick={abrirModalCompartir}>
+              <ShareIcon />
+            </BotonCompartirRedes>
+            <FavoriteIcon
+              onClick={() => {
+                if (esFavorito(servicio.id)) {
+                  eliminarDeFavoritos();
+                } else {
+                  agregarAFavoritos();
+                }
+              }}
+              style={{
+                cursor: "pointer",
+                color: esFavorito(servicio.id) ? "red" : "gray",
+              }}
+            />
+          </BotonesIconos>
+        </EncabezadoDetalle>
+
+        <BloqueImagenes>
+          <ImagenPrincipal
             style={{
-              cursor: "pointer",
-              color: esFavorito(servicio.id) ? "red" : "gray",
+              backgroundImage: imagenes.length
+                ? `url(${imagenes[0].urlImagen})`
+                : "url('https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
             }}
           />
-        </BotonesIconos>
-      </EncabezadoDetalle>
+          <MiniaturasImagenes>
+            {imagenes.length > 1 ? (
+              imagenes
+                .slice(1)
+                .map((img, index) => (
+                  <img
+                    key={index}
+                    src={img.urlImagen}
+                    alt={`Miniatura ${index}`}
+                  />
+                ))
+            ) : (
+              <Typography variant="body2">
+                No hay imágenes adicionales
+              </Typography>
+            )}
+            <BotonVerMas onClick={abrirCarrusel}>Ver Más</BotonVerMas>
+          </MiniaturasImagenes>
+        </BloqueImagenes>
 
-      <BloqueImagenes>
-        <ImagenPrincipal
-          style={{
-            backgroundImage: imagenes.length
-              ? `url(${imagenes[0].urlImagen})`
-              : "url('https://images.unsplash.com/photo-1580618672591-eb180b1a973f?q=80&w=1738&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
-          }}
+        <CarruselImagenes
+          imagenes={imagenes}
+          abierto={modalAbierto}
+          cerrar={cerrarCarrusel}
         />
-        <MiniaturasImagenes>
-          {imagenes.length > 1 ? (
-            imagenes
-              .slice(1)
-              .map((img, index) => (
-                <img
-                  key={index}
-                  src={img.urlImagen}
-                  alt={`Miniatura ${index}`}
+
+        <ContenedorInfo>
+          <ContenedorInfoI>
+            <DescripcionProducto>
+              <TituloDescripcion>Descripción del Servicio</TituloDescripcion>
+              <CuerpoDescripcion>{servicio.descripcion}</CuerpoDescripcion>
+            </DescripcionProducto>
+            <ContenedorValoracionResena>
+              <TituloValoracion>
+                La puntuación del servicio es:
+              </TituloValoracion>
+              <Valoracion>
+                <Typography variant="body1">
+                  {servicio.puntuacionMedia || "N/A"}
+                </Typography>
+                <Rating
+                  value={servicio.puntuacionMedia || 0}
+                  readOnly
+                  size="large"
                 />
-              ))
-          ) : (
-            <Typography variant="body2">No hay imágenes adicionales</Typography>
-          )}
-          <BotonVerMas onClick={abrirCarrusel}>Ver Más</BotonVerMas>
-        </MiniaturasImagenes>
-      </BloqueImagenes>
+              </Valoracion>
 
-      <CarruselImagenes
-        imagenes={imagenes}
-        abierto={modalAbierto}
-        cerrar={cerrarCarrusel}
-      />
+              <BotonVerResena>Ver reseñas</BotonVerResena>
+            </ContenedorValoracionResena>
+            <ContenedorCaracteristicas>
+              <TituloDescripcion>
+                Características del Servicio
+              </TituloDescripcion>
+              <ListaCaracteristicas>
+                <CaracteristicaItem>
+                  <IconoCaracteristica>
+                    <CategoryIcon />
+                  </IconoCaracteristica>
+                  <Typography variant="body2">
+                    Categoría: {servicio.categoria}
+                  </Typography>
+                </CaracteristicaItem>
+                <CaracteristicaItem>
+                  <IconoCaracteristica>
+                    <AccessTimeIcon />
+                  </IconoCaracteristica>
+                  <Typography variant="body1">
+                    Duración: {servicio.duracionMinutos} min
+                  </Typography>
+                </CaracteristicaItem>
+                <CaracteristicaItem>
+                  <IconoCaracteristica>
+                    <AttachMoneyIcon />
+                  </IconoCaracteristica>
+                  <Typography variant="body1">
+                    Precio: ${servicio.costo} USD
+                  </Typography>
+                </CaracteristicaItem>
+                <CaracteristicaItem>
+                  <IconoCaracteristica>
+                    <ContentCutIcon />
+                  </IconoCaracteristica>
+                  <Typography variant="body1">
+                    Sesiones: {servicio.cantidadSesiones}
+                  </Typography>
+                </CaracteristicaItem>
+              </ListaCaracteristicas>
+            </ContenedorCaracteristicas>
+          </ContenedorInfoI>
 
-      <ContenedorInfo>
-        <DescripcionProducto>
-          <TituloDescripcion>Descripción del Servicio</TituloDescripcion>
-          <Typography variant="body1">{servicio.descripcion}</Typography>
-        </DescripcionProducto>
-
-        <ContenedorReserva>
-          <PrecioProducto>${servicio.costo} USD</PrecioProducto>
-
-          {turnoSeleccionado ? (
-            <Typography
-              variant="body2"
-              sx={{ color: "green", fontWeight: "bold", my: 1 }}
+          <ContenedorInfoD>
+            <PrecioProducto>Precio: ${servicio.costo} USD</PrecioProducto>
+            <ContenedorReserva>
+              <Turno>
+                <AccessTimeIcon />
+                <Horario>
+                  <Typography variant="body2">Horario:</Typography>
+                  <Typography variant="body2">10:00 AM - 6:00 PM</Typography>
+                  <Typography variant="body2">Lunes - Viernes</Typography>
+                </Horario>
+              </Turno>
+              <Disponibilidad>
+                <CalendarioDisponibilidad
+                  servicioId={servicio.id}
+                  onSeleccionTurno={manejarSeleccionTurno}
+                />
+                {turnoSeleccionado ? (
+                  <Typography
+                    variant="body2"
+                    sx={{ color: "green", fontWeight: "bold", my: 1 }}
+                  >
+                    Turno seleccionado:{" "}
+                    {turnoSeleccionado.fecha.toLocaleDateString("es-ES")} a las{" "}
+                    {turnoSeleccionado.hora}
+                  </Typography>
+                ) : (
+                  <Typography variant="body2">
+                    Seleccionar Disponibilidad
+                  </Typography>
+                )}
+              </Disponibilidad>
+            </ContenedorReserva>
+            <BotonReservar
+              onClick={() => {
+                if (turnoSeleccionado) {
+                  navigate(`/reserva`, {
+                    state: {
+                      servicioId: id,
+                      turnoId: turnoSeleccionado.id,
+                      hora: turnoSeleccionado.hora,
+                      fecha: turnoSeleccionado.fecha
+                        .toISOString()
+                        .split("T")[0],
+                    },
+                  });
+                } else {
+                  alert(
+                    "Por favor seleccione un turno disponible haciendo clic en el icono de calendario"
+                  );
+                }
+              }}
             >
-              Turno seleccionado:{" "}
-              {turnoSeleccionado.fecha.toLocaleDateString("es-ES")} a las{" "}
-              {turnoSeleccionado.hora}
-            </Typography>
-          ) : (
-            <>
-              <Typography variant="body2">
-                Horario: 10:00 AM - 6:00 PM
-              </Typography>
-              <Typography variant="body2">
-                Disponibilidad: Lunes - Viernes
-              </Typography>
-            </>
-          )}
+              {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
+            </BotonReservar>
+          </ContenedorInfoD>
+        </ContenedorInfo>
 
-          <BotonReservar
-            onClick={() => {
-              if (turnoSeleccionado) {
-                navigate(`/reserva`, {
-                  state: {
-                    servicioId: id,
-                    turnoId: turnoSeleccionado.id,
-                    hora: turnoSeleccionado.hora,
-                    fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
-                  },
-                });
-              } else {
-                alert(
-                  "Por favor seleccione un turno disponible haciendo clic en el icono de calendario"
-                );
-              }
-            }}
-          >
-            {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
-          </BotonReservar>
-        </ContenedorReserva>
-      </ContenedorInfo>
-
-      <ContenedorPuntuacion>
-        <ContenedorTuValoracion>
-          <TituloTuValoracion>Tu Valoración</TituloTuValoracion>
-          <Rating
-            name="producto-rating"
-            value={valoracion}
-            onChange={(event, newValue) => setValoracion(newValue)}
-            size="large"
-          />
-          <TextField
-            label="Comentario"
-            multiline
-            rows={4}
-            value={comentario}
-            onChange={(e) => setComentario(e.target.value)}
-            fullWidth
-            variant="outlined"
-            margin="normal"
-          />
-          {error && <Typography color="error">{error}</Typography>}
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={manejarValoracion}
-          >
-            Enviar Valoración
-          </Button>
-        </ContenedorTuValoracion>
-
-        <ContenedorValoracionReseña>
-          <TituloValoracion>Valoraciones del Producto</TituloValoracion>
-          <Rating value={servicio.puntuacionMedia || 0} readOnly size="large" />
-          <Typography variant="body1">
-            Puntuación Media: {servicio.puntuacionMedia || "N/A"}
-          </Typography>
-
-          <ContenedorReseñas>
+        <ContenedorPuntuacion>
+          <ContenedorResenas>
             {servicio.valoraciones &&
               servicio.valoraciones.map((valoracion, index) => (
                 <div key={index}>
@@ -355,109 +392,74 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                   </Typography>
                 </div>
               ))}
-          </ContenedorReseñas>
-        </ContenedorValoracionReseña>
-      </ContenedorPuntuacion>
-      <ContenedorCaracteristicas>
-        <TituloDescripcion>Características del Servicio</TituloDescripcion>
-        <ListaCaracteristicas>
-          <CaracteristicaItem>
-            <IconoCaracteristica>
-              <CategoryIcon />
-            </IconoCaracteristica>
-            <Typography variant="body1">
-              Categoría: {servicio.categoria}
-            </Typography>
-          </CaracteristicaItem>
-          <CaracteristicaItem>
-            <IconoCaracteristica>
-              <AccessTimeIcon />
-            </IconoCaracteristica>
-            <Typography variant="body1">
-              Duración: {servicio.duracionMinutos} min
-            </Typography>
-          </CaracteristicaItem>
-          <CaracteristicaItem>
-            <IconoCaracteristica>
-              <AttachMoneyIcon />
-            </IconoCaracteristica>
-            <Typography variant="body1">
-              Precio: ${servicio.costo} USD
-            </Typography>
-          </CaracteristicaItem>
-          <CaracteristicaItem>
-            <IconoCaracteristica>
-              <ContentCutIcon />
-            </IconoCaracteristica>
-            <Typography variant="body1">
-              Sesiones: {servicio.cantidadSesiones}
-            </Typography>
-          </CaracteristicaItem>
-        </ListaCaracteristicas>
-      </ContenedorCaracteristicas>
+          </ContenedorResenas>
+        </ContenedorPuntuacion>
 
-      <PoliticasContenedor>
-        <TituloPoliticas>Políticas de uso del servicio</TituloPoliticas>
-        <PoliticaItem>
-          <Typography variant="body1">
-            Para brindarte la mejor experiencia y garantizar un servicio de
-            calidad, te pedimos que tengas en cuenta las siguientes cosas:
-          </Typography>
-        </PoliticaItem>
-        <PoliticaItem>
-          <Typography variant="body2">
-            <strong>Puntualidad:</strong> Llegar a tiempo para no afectar la
-            programación de otros clientes.
-          </Typography>
-        </PoliticaItem>
-        <PoliticaItem>
-          <Typography variant="body2">
-            <strong>Reservas y Cancelaciones:</strong> Las reservas deben
-            hacerse con al menos 24 horas de antelación. Las cancelaciones deben
-            realizarse con un mínimo de 12 horas.
-          </Typography>
-        </PoliticaItem>
-        <PoliticaItem>
-          <Typography variant="body2">
-            <strong>Condiciones Previas al Servicio:</strong> Asegúrate de
-            seguir las instrucciones previas al servicio para obtener los
-            mejores resultados.
-          </Typography>
-        </PoliticaItem>
-        <PoliticaItem>
-          <Typography variant="body2">
-            <strong>Salud y Cuidado de Piel y Cabello:</strong> Es importante
-            que nos informes de cualquier condición de salud relevante antes de
-            tu servicio.
-          </Typography>
-        </PoliticaItem>
-        <PoliticaItem>
-          <Typography variant="body2">
-            <strong>Menores de Edad:</strong> Los menores de edad deben estar
-            acompañados por un adulto responsable durante el servicio.
-          </Typography>
-        </PoliticaItem>
-        <PoliticaItem>
-          <Typography variant="body2">
-            <strong>Formas de Pago:</strong> Aceptamos pagos en efectivo,
-            tarjetas de crédito/débito y pagos electrónicos.
-          </Typography>
-        </PoliticaItem>
-        <PoliticaItem>
-          <Typography variant="body2">
-            Tu bienestar y satisfacción son nuestra prioridad. Gracias por
-            confiar en nosotros.
-          </Typography>
-        </PoliticaItem>
-      </PoliticasContenedor>
+        <PoliticasContenedor>
+          <TituloPoliticas>Políticas de uso del servicio</TituloPoliticas>
+          <PoliticaItem>
+            <Typography variant="body1">
+              Para brindarte e la mejor experiencia y garantizar un servicio de
+              calidad, te pedimos tener en cuenta las siguientes políticas:
+            </Typography>
+          </PoliticaItem>
+          <PoliticaItem>
+            <Typography variant="body2">
+              <strong>Puntualidad:</strong> 5 minutos de anticipación. En caso
+              de retraso, el tiempo del servicio podría verse reducido o
+              necesitar reprogramación.
+            </Typography>
+          </PoliticaItem>
+          <PoliticaItem>
+            <Typography variant="body2">
+              <strong>Reservas y Cancelaciones:</strong> Cancelar con al menos
+              24 horas de anticipación. De lo contrario el servicio será
+              confirmado.
+            </Typography>
+          </PoliticaItem>
+          <PoliticaItem>
+            <Typography variant="body2">
+              <strong>Condiciones Previas al Servicio:</strong> Zona a tratar
+              limpia y libre de productos como maquillaje, aceites, cremas o
+              fijadores, según el servicio seleccionado.
+            </Typography>
+          </PoliticaItem>
+          <PoliticaItem>
+            <Typography variant="body2">
+              <strong>SSalud y Cuidados de la Piel y el Cabello:</strong> Si
+              presentas alguna condición dermatológica, informar con
+              anticipación.
+            </Typography>
+          </PoliticaItem>
+          <PoliticaItem>
+            <Typography variant="body2">
+              <strong>Menores de Edad:</strong> Acompañados por un adulto
+              responsable durante todo el servicio.
+            </Typography>
+          </PoliticaItem>
+          <PoliticaItem>
+            <Typography variant="body2">
+              <strong>Formas de Pago:</strong> Aceptamos pagos en efectivo y
+              medios electrónicos. Consulte por promociones o descuentos
+              vigentes.
+            </Typography>
+          </PoliticaItem>
+          <PoliticaItem>
+            <Typography variant="body2">
+              Tu bienestar y satisfacción son nuestra prioridad. ¡Gracias por
+              confiar en nosotros!
+            </Typography>
+          </PoliticaItem>
+        </PoliticasContenedor>
 
-      <CompartirModal
-        abierto={compartirModalAbierto}
-        cerrar={cerrarModalCompartir}
-        servicio={servicio}
-        imagenesServicio={imagenes}
-      />
-    </ContenedorDetalle>
+        <CompartirModal
+          abierto={compartirModalAbierto}
+          cerrar={cerrarModalCompartir}
+          servicio={servicio}
+          imagenesServicio={imagenes}
+        />
+      </ContenedorDetalle>
+    </Contenedor>
   );
 };
 

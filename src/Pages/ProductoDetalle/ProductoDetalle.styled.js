@@ -1,18 +1,30 @@
 import styled from "styled-components";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 
+export const Contenedor = styled(Box)`
+  background-color: white;
+  padding: 80px 50px 20px 50px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  @media (max-width: 600px) {
+    padding: 80px 20px 20px 20px;
+  }
+`;
+
 export const ContenedorDetalle = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 80px 50px 20px 50px;
-  width: 100%;
+  width: 80%;
   margin: auto;
-  background-color: ${({ theme }) => theme.palette.primario.main};
-  color: ${({ theme }) => theme.palette.secundario.main};
-  @media (max-width: 600px) {
-    padding: 80px 20px 20px 20px;
+  padding: 20px;
+
+  @media (max-width: 786px) {
+    padding: 0 10px;
+    width: 100%;
   }
 `;
 
@@ -20,15 +32,17 @@ export const EncabezadoDetalle = styled(Box)`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80%;
-  margin-bottom: 15px;
+  width: 100%;
+  //padding: 0 20px;
+  margin-bottom: 20px;
+
+  @media (max-width: 786px) {
+    width: 100%;
+  }
 
   @media (max-width: 600px) {
     width: 100%;
     font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
-  }
-  @media (max-width: 768px) {
-    width: 100%;
   }
 `;
 
@@ -44,7 +58,6 @@ export const TituloProducto = styled.h1`
     text-align: center;
   }
 `;
-
 export const BotonRetroceso = styled(IconButton)`
   background: #e0e0e0;
   border-radius: 50%;
@@ -55,66 +68,61 @@ export const BotonRetroceso = styled(IconButton)`
   }
 `;
 
-export const BloqueImagenes = styled(Box)`
-  display: grid;
-  grid-template-columns: 2fr 1fr;
+export const BotonesIconos = styled(Box)`
+  display: flex;
+  align-items: center;
   gap: 10px;
-  width: 80%;
+
+  @media (max-width: 600px) {
+    justify-content: flex-start;
+    gap: 8px;
+  }
+`;
+
+export const BloqueImagenes = styled(Box)`
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  width: 100%;
   margin-bottom: 10px;
 
-  @media (max-width: 768px) {
-    width: 100%;
-    grid-template-columns: 1fr;
-    grid-template-rows: auto auto;
+  @media (max-width: 786px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 export const ImagenPrincipal = styled(Box)`
-  width: 100%;
-  height: 100%;
+  width: 50%;
   border-radius: 12px;
   overflow: hidden;
   background-size: cover;
   background-position: center;
-  transition: transform 0.1s ease-in-out;
 
-  &:hover {
-    transform: scale(1.015);
-  }
-
-  @media (max-width: 600px) {
-    height: 280px;
-  }
-  @media (max-width: 768px) {
-    height: 400px;
+  @media (max-width: 786px) {
+    width: 100%;
+    height: 350px;
   }
 `;
 
 export const MiniaturasImagenes = styled(Box)`
-  position: relative !important;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(2, 1fr);
+  position: relative;
+  width: 50%;
+  display: flex;
   gap: 10px;
-  height: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
 
   img {
-    width: 100%;
-    height: 100%;
-    border-radius: 8px;
+    width: 48%;
+    height: 100px;
     object-fit: cover;
-    cursor: pointer;
-    transition: transform 0.2s;
-
-    &:hover {
-      transform: scale(1.05);
-    }
+    border-radius: 8px;
   }
 
-  @media (max-width: 768px) {
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: none;
-    height: auto;
+  @media (max-width: 786px) {
+    width: 100%;
+    justify-content: center;
   }
 `;
 
@@ -140,153 +148,250 @@ export const BotonVerMas = styled(Button)`
   }
 `;
 
+export const CarruselImagenes = styled(Box)`
+  display: ${(props) => (props.abierto ? "block" : "none")};
+`;
+
 export const ContenedorInfo = styled(Box)`
   display: flex;
+  justify-content: space-between;
   gap: 20px;
-  margin-top: 10px;
-  width: 80%;
+  width: 100%;
+  padding: 30px 0 50px 0;
 
-  @media (max-width: 768px) {
-    width: 100%;
+  @media (max-width: 786px) {
     flex-direction: column;
+    gap: 10px;
+    margin-top: 30px;
   }
 `;
 
-export const TituloDescripcion = styled.h2`
-  font-family: ${({ theme }) => theme.typography.h2.fontFamily};
-  font-weight: 900;
-  font-size: calc(${({ theme }) => theme.typography.h2.fontSize} * 1.4);
-  color: ${({ theme }) => theme.palette.secundario.main};
-  margin-bottom: 10px;
-
-  @media (max-width: 600px) {
-    font-size: 28px;
-  }
+export const ContenedorInfoI = styled(Box)`
+  flex: 70%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 0;
 `;
 
 export const DescripcionProducto = styled(Box)`
-  flex: 2;
-  padding: 20px;
-  font-family: ${({ theme }) => theme.typography.h3.fontFamily};
+  margin-bottom: 20px;
+`;
+
+export const TituloDescripcion = styled.h2`
+  font-size: 24px;
   font-weight: bold;
-  font-size: calc(${({ theme }) => theme.typography.h3.fontSize} * 1.3);
-  font-style: normal;
+  color: #2d0363;
+  margin-bottom: 20px;
+`;
 
-  @media (max-width: 600px) {
-    font-size: ${({ theme }) => theme.typography.h4.fontSize};
-    padding: 10px;
+export const CuerpoDescripcion = styled(Typography)`
+  font-size: 18px !important;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+`;
+
+export const ContenedorValoracionResena = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 20px;
+  gap: 20px;
+  margin-bottom: 12px;
+  @media (max-width: 1030px) {
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
-export const ContenedorReserva = styled(Box)`
-  flex: 1;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 12px;
-  text-align: center;
-  background: white;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-  font-family: ${({ theme }) => theme.typography.h4.fontFamily};
+export const TituloValoracion = styled(Typography)`
+  font-size: 18px;
   font-weight: bold;
-  font-size: calc(${({ theme }) => theme.typography.h4.fontSize} * 1.3);
-  color: black;
-
-  @media (max-width: 600px) {
-    padding: 8px;
-    font-size: ${({ theme }) => theme.typography.h5.fontSize};
-  }
+  color: #555;
 `;
 
-export const PrecioProducto = styled.p`
-  font-family: ${({ theme }) => theme.typography.h2.fontFamily};
-  font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.1);
-  font-weight: 600;
-  color: ${({ theme }) => theme.palette.secundario.main};
-  margin-bottom: 8px;
-
-  @media (max-width: 600px) {
-    font-size: 18px;
-  }
+export const Valoracion = styled.div`
+  font-size: 18px;
+  font-weight: bold;
+  color: #2d0363;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 `;
 
-export const BotonReservar = styled(Button)`
-  color: white !important;
-  font-weight: 400 !important;
-  text-transform: none !important;
-  border-radius: 5px !important;
-  width: 30%;
-  margin: 10px 0 !important;
-  padding: 2px !important;
-  font-size: 16px !important;
-  background-color: ${({ theme }) => theme.palette.botones.activo} !important;
-
+export const BotonVerResena = styled(Button)`
+  font-weight: bold;
+  color: ${({ theme }) => theme.palette.detalle.main} !important;
+  background: transparent;
+  padding: 0 !important;
+  font-family: ${({ theme }) => theme.typography.button.fontFamily};
   &:hover {
-    background-color: ${({ theme }) =>
-      theme.palette.botones.hovered} !important;
+    background: transparent;
+    color: ${({ theme }) => theme.palette.botones.hovered} !important;
   }
-
-  &:active {
-    background-color: ${({ theme }) =>
-      theme.palette.botones.presionado} !important;
-  }
-
-  &:disabled {
-    background-color: ${({ theme }) =>
-      theme.palette.botones.inactivo} !important;
-  }
-
   @media (max-width: 600px) {
-    padding: 10px;
     font-size: 14px;
   }
 `;
+
 export const ContenedorCaracteristicas = styled(Box)`
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
-  justify-content: flex-start;
-  margin-top: 10px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.1);
-  width: 80%;
-  @media (max-width: 768px) {
-    width: 100%;
+  margin-top: 20px;
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  @media (max-width: 786px) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
 export const ListaCaracteristicas = styled(Box)`
   display: flex;
-  gap: 5px;
+  flex-direction: row;
   justify-content: center;
-  flex-wrap: wrap;
-  width: 100%;
+
+  gap: 10px;
+  @media (max-width: 1130px) {
+    padding: 10px 30px;
+    flex-direction: column;
+  }
 `;
 
 export const CaracteristicaItem = styled(Box)`
   display: flex;
   align-items: center;
-  gap: 5px;
-  padding: 8px 12px;
-  width: 40%;
-
-  @media (max-width: 500px) {
-    width: 85%;
-  }
+  gap: 10px;
 `;
 
 export const IconoCaracteristica = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background: transparent;
-  width: 35px;
-  height: 35px;
+  background-color: #f6ebf9;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  padding: 5px;
+`;
 
-  svg {
-    font-size: 24px;
-    color: #6c63ff;
+export const ContenedorInfoD = styled(Box)`
+  flex: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  padding: 20px 40px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #fff;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+`;
+export const PrecioProducto = styled.h2`
+  font-size: 18px;
+  font-weight: bold;
+  color: #2d0363;
+  margin-bottom: 10px;
+`;
+
+export const ContenedorReserva = styled(Box)`
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 12px;
+  font-weight: bold;
+  height: 80%;
+`;
+
+export const Turno = styled(Box)`
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  padding: 20px;
+`;
+export const Horario = styled(Box)`
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+`;
+export const Disponibilidad = styled(Box)`
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-top: 1px solid #ddd;
+  padding: 20px;
+`;
+
+export const BotonReservar = styled(Button)`
+  background-color: #2d0363;
+  color: white;
+  font-weight: 500;
+  text-transform: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  &:hover {
+    background-color: #530eae;
   }
+`;
+
+export const ContenedorPuntuacion = styled(Box)`
+  margin-top: 20px;
+`;
+
+export const ContenedorResenas = styled(Box)`
+  margin-top: 20px;
+  padding: 10px;
+  border-radius: 8px;
+`;
+
+export const PoliticasContenedor = styled(Box)`
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  color: #333;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`;
+
+export const TituloPoliticas = styled.h2`
+  font-size: 22px;
+  font-weight: 600;
+  color: #2d0363;
+  margin-bottom: 20px;
+  text-align: center;
+`;
+
+export const PoliticaItem = styled(Box)`
+  margin-bottom: 15px;
+  font-size: 16px;
+  color: #555;
+
+  & > strong {
+    font-weight: bold;
+    color: #2d0363;
+  }
+
+  & > p {
+    margin-left: 15px;
+  }
+`;
+
+export const LineaSeparator = styled.hr`
+  border: 0;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
 `;
 
 export const MensajeError = styled(Typography)`
@@ -295,11 +400,6 @@ export const MensajeError = styled(Typography)`
   font-weight: bold;
   text-align: center;
   margin-top: 40px;
-`;
-export const BotonesIconos = styled(Box)`
-  display: flex;
-  align-items: center;
-  justify-content: center;
 `;
 
 export const BotonCompartirRedes = styled(Button)`
@@ -316,89 +416,5 @@ export const BotonCompartirRedes = styled(Button)`
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
     color: ${({ theme }) => theme.palette.botones.hovered};
-  }
-`;
-
-export const ContenedorPuntuacion = styled(Box)`
-  width: 80%;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  @media (max-width: 600px) {
-    width: 100%;
-    font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-export const ContenedorTuValoracion = styled(Box)`
-  width: 100%;
-  margin: auto;
-  padding: 20px;
-`;
-
-export const TituloTuValoracion = styled.h2`
-  font-size: 22px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 20px;
-`;
-
-export const ContenedorValoracionReseña = styled(Box)`
-  width: 100%;
-  margin: auto;
-  padding: 20px;
-`;
-
-export const TituloValoracion = styled.h3`
-  font-size: 22px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 20px;
-`;
-
-export const ContenedorReseñas = styled(Box)`
-  width: 100%;
-  margin: auto;
-  padding: 20px;
-`;
-
-export const PoliticasContenedor = styled(Box)`
-  width: 80%;
-  margin-top: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  @media (max-width: 600px) {
-    width: 100%;
-    font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
-  }
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`;
-
-export const TituloPoliticas = styled.h2`
-  font-size: 22px;
-  font-weight: 600;
-  color: #333;
-  margin-bottom: 20px;
-`;
-
-export const PoliticaItem = styled(Box)`
-  margin-bottom: 10px;
-  font-size: 16px;
-  color: #555;
-
-  & > strong {
-    font-weight: 600;
-  }
-
-  & > p {
-    margin-left: 15px;
   }
 `;
