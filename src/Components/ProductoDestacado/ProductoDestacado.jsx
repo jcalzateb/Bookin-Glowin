@@ -6,6 +6,7 @@ import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useNavigate } from "react-router-dom";
 import {
   Contenedor,
+  TituloSeccion,
   ContenedorDestacados,
   TarjetaDestacada,
   ContenidoHover,
@@ -82,17 +83,7 @@ const ProductosDestacados = () => {
 
   return (
     <Contenedor>
-      <Typography
-        variant="h2"
-        sx={{
-          textAlign: "center",
-          margin: "30px 0 10px 0",
-          fontStyle: "italic",
-          color: "#2D0363",
-        }}
-      >
-        SERVICIOS DESTACADOS
-      </Typography>
+      <TituloSeccion>SERVICIOS DESTACADOS</TituloSeccion>
       <ContenedorDestacados>
         {productosVisibles.map((producto) => (
           <TarjetaDestacada

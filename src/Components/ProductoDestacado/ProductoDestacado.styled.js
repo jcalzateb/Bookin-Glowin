@@ -16,6 +16,14 @@ export const Contenedor = styled.div`
     padding: 10px;
   }
 `;
+export const TituloSeccion = styled.h2`
+  font-size: 42px;
+  font-weight: bold;
+  color: #2d0363;
+  margin: 10px 20px;
+  overflow: hidden;
+  text-align: center;
+`;
 
 export const ContenedorDestacados = styled.div`
   display: flex;
@@ -133,15 +141,18 @@ export const ContenidoHover = styled(Box)`
   @media (max-width: 1400px) {
     padding: 4px 16px;
     gap: 12px;
+    font-size: 16px;
   }
   @media (max-width: 960px) {
     padding: 5px 14px;
     gap: 7px;
+    font-size: 14px;
   }
 
   @media (max-width: 600px) {
     padding: 5px 20px;
     gap: 17px;
+    font-size: 12px;
   }
 `;
 export const Valoracion = styled(Box)`
@@ -166,6 +177,12 @@ export const BotonVerMas = styled.b`
 
   &:hover {
     background-color: #530eae;
+  }
+  @media (min-width: 960px) {
+    font-size: 16px;
+  }
+  @media (max-width: 600px) {
+    font-size: 12px;
   }
 `;
 
