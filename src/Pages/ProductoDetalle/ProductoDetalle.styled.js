@@ -2,8 +2,8 @@ import styled from "styled-components";
 import { Box, Button, IconButton, Typography } from "@mui/material";
 
 export const Contenedor = styled(Box)`
-  background-color: white;
-  padding: 80px 50px 20px 50px;
+  background-color: #2d0363;
+  padding: 80px 0 0 0;
   width: 100%;
   margin: 0 auto;
   display: flex;
@@ -18,9 +18,8 @@ export const ContenedorDetalle = styled(Box)`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 80%;
+  width: 100%;
   margin: auto;
-  padding: 20px;
 
   @media (max-width: 786px) {
     padding: 0 10px;
@@ -29,11 +28,13 @@ export const ContenedorDetalle = styled(Box)`
 `;
 
 export const EncabezadoDetalle = styled(Box)`
+  background-color: #2d0363;
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  //padding: 0 20px;
+  color: #f6ebf9;
+  padding: 0 50px;
   margin-bottom: 20px;
 
   @media (max-width: 786px) {
@@ -47,11 +48,12 @@ export const EncabezadoDetalle = styled(Box)`
 `;
 
 export const TituloProducto = styled.h1`
+  font-size: 36px !important;
   text-align: center;
   font-family: ${({ theme }) => theme.typography.h1.fontFamily};
-  font-weight: 900;
+  font-weight: 600 !important;
   font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.6);
-  color: ${({ theme }) => theme.palette.secundario.main};
+  color: #f6ebf9;
 
   @media (max-width: 600px) {
     font-size: 24px;
@@ -84,6 +86,8 @@ export const BloqueImagenes = styled(Box)`
   justify-content: space-between;
   gap: 10px;
   width: 100%;
+  background-color: #ffffff;
+  padding: 30px 150px;
   margin-bottom: 10px;
 
   @media (max-width: 786px) {
@@ -153,11 +157,12 @@ export const CarruselImagenes = styled(Box)`
 `;
 
 export const ContenedorInfo = styled(Box)`
+  background-color: #2d0363;
   display: flex;
   justify-content: space-between;
   gap: 20px;
   width: 100%;
-  padding: 30px 0 50px 0;
+  padding: 30px 150px;
 
   @media (max-width: 786px) {
     flex-direction: column;
@@ -179,13 +184,14 @@ export const DescripcionProducto = styled(Box)`
 `;
 
 export const TituloDescripcion = styled.h2`
+  color: white;
   font-size: 24px;
   font-weight: bold;
-  color: #2d0363;
   margin-bottom: 20px;
 `;
 
 export const CuerpoDescripcion = styled(Typography)`
+  color: white !important;
   font-size: 18px !important;
   color: #555;
   line-height: 1.6;
@@ -193,6 +199,7 @@ export const CuerpoDescripcion = styled(Typography)`
 `;
 
 export const ContenedorValoracionResena = styled(Box)`
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -208,13 +215,13 @@ export const ContenedorValoracionResena = styled(Box)`
 export const TituloValoracion = styled(Typography)`
   font-size: 18px;
   font-weight: bold;
-  color: #555;
+  color: white;
 `;
 
 export const Valoracion = styled.div`
   font-size: 18px;
   font-weight: bold;
-  color: #2d0363;
+  color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -223,7 +230,7 @@ export const Valoracion = styled.div`
 
 export const BotonVerResena = styled(Button)`
   font-weight: bold;
-  color: ${({ theme }) => theme.palette.detalle.main} !important;
+  color: white !important;
   background: transparent;
   padding: 0 !important;
   font-family: ${({ theme }) => theme.typography.button.fontFamily};
@@ -239,7 +246,8 @@ export const BotonVerResena = styled(Button)`
 export const ContenedorCaracteristicas = styled(Box)`
   margin-top: 20px;
   border-top: 1px solid #ddd;
-  padding-top: 10px;
+  padding: 30px 10px 0 0;
+  color: white;
   @media (max-width: 786px) {
     display: flex;
     flex-direction: column;
@@ -270,7 +278,6 @@ export const IconoCaracteristica = styled(Box)`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #f6ebf9;
   width: 24px;
   height: 24px;
   border-radius: 50%;
@@ -341,19 +348,21 @@ export const BotonReservar = styled(Button)`
 `;
 
 export const ContenedorPuntuacion = styled(Box)`
-  margin-top: 20px;
+  width: 100%;
+  height: 10px;
+  background-color: #ffffff;
+  border-top: 2px solid #ddd;
 `;
 
 export const ContenedorResenas = styled(Box)`
-  margin-top: 20px;
-  padding: 10px;
-  border-radius: 8px;
+  width: 100%;
+  background-color: #ffffff;
 `;
 
 export const PoliticasContenedor = styled(Box)`
-  margin-top: 20px;
-  padding: 20px;
-  border-radius: 8px;
+  width: 100%;
+  background-color: #ffffff;
+  padding: 30px 150px;
   color: #333;
 
   @media (max-width: 600px) {
@@ -373,18 +382,31 @@ export const TituloPoliticas = styled.h2`
   text-align: center;
 `;
 
+export const ListaPoliticas = styled(Box)`
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+  }
+`;
+
 export const PoliticaItem = styled(Box)`
   margin-bottom: 15px;
   font-size: 16px;
   color: #555;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 
   & > strong {
-    font-weight: bold;
+    font-weight: 700;
     color: #2d0363;
   }
 
   & > p {
-    margin-left: 15px;
+    color: #555;
+    font-size: 16px;
   }
 `;
 
@@ -403,18 +425,17 @@ export const MensajeError = styled(Typography)`
 `;
 
 export const BotonCompartirRedes = styled(Button)`
+  width: 10px;
+  height: 10px;
   background-color: transparent;
-  color: gray;
-  font-weight: bold;
-  padding: 6px 12px;
-  border-radius: 8px;
-  text-transform: none;
+  padding: 5px !important;
+  font-size: 10px !important;
+  border-radius: 50% !important;
   display: flex;
   align-items: center;
-  margin-left: 10px;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
-    color: ${({ theme }) => theme.palette.botones.hovered};
+    color: rgb(60, 20, 112) !important;
   }
 `;

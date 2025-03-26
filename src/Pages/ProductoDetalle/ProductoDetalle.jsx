@@ -56,6 +56,7 @@ import {
   BotonVerResena,
   Turno,
   Disponibilidad,
+  ListaPoliticas,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 import {
@@ -200,12 +201,22 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       <ContenedorDetalle>
         <EncabezadoDetalle>
           <BotonRetroceso onClick={() => navigate("/")}>
-            <ArrowBackIcon />
+            <ArrowBackIcon
+              style={{
+                cursor: "pointer",
+                color: "#f6ebf9",
+              }}
+            />
           </BotonRetroceso>
           <TituloProducto>{servicio.nombre}</TituloProducto>
           <BotonesIconos>
             <BotonCompartirRedes onClick={abrirModalCompartir}>
-              <ShareIcon />
+              <ShareIcon
+                style={{
+                  cursor: "pointer",
+                  color: "#f6ebf9",
+                }}
+              />
             </BotonCompartirRedes>
             <FavoriteIcon
               onClick={() => {
@@ -217,7 +228,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               }}
               style={{
                 cursor: "pointer",
-                color: esFavorito(servicio.id) ? "red" : "gray",
+                color: esFavorito(servicio.id) ? "red" : "#f6ebf9",
               }}
             />
           </BotonesIconos>
@@ -347,9 +358,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                     {turnoSeleccionado.hora}
                   </Typography>
                 ) : (
-                  <Typography variant="body2">
-                    Seleccionar Disponibilidad
-                  </Typography>
+                  <Typography variant="body2">Ver Disponibilidad</Typography>
                 )}
               </Disponibilidad>
             </ContenedorReserva>
@@ -396,54 +405,56 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         </ContenedorPuntuacion>
 
         <PoliticasContenedor>
-          <TituloPoliticas>Políticas de uso del servicio</TituloPoliticas>
           <PoliticaItem>
+            <TituloPoliticas>Políticas de uso del servicio</TituloPoliticas>
             <Typography variant="body1">
               Para brindarte e la mejor experiencia y garantizar un servicio de
               calidad, te pedimos tener en cuenta las siguientes políticas:
             </Typography>
           </PoliticaItem>
-          <PoliticaItem>
-            <Typography variant="body2">
-              <strong>Puntualidad:</strong> 5 minutos de anticipación. En caso
-              de retraso, el tiempo del servicio podría verse reducido o
-              necesitar reprogramación.
-            </Typography>
-          </PoliticaItem>
-          <PoliticaItem>
-            <Typography variant="body2">
-              <strong>Reservas y Cancelaciones:</strong> Cancelar con al menos
-              24 horas de anticipación. De lo contrario el servicio será
-              confirmado.
-            </Typography>
-          </PoliticaItem>
-          <PoliticaItem>
-            <Typography variant="body2">
-              <strong>Condiciones Previas al Servicio:</strong> Zona a tratar
-              limpia y libre de productos como maquillaje, aceites, cremas o
-              fijadores, según el servicio seleccionado.
-            </Typography>
-          </PoliticaItem>
-          <PoliticaItem>
-            <Typography variant="body2">
-              <strong>SSalud y Cuidados de la Piel y el Cabello:</strong> Si
-              presentas alguna condición dermatológica, informar con
-              anticipación.
-            </Typography>
-          </PoliticaItem>
-          <PoliticaItem>
-            <Typography variant="body2">
-              <strong>Menores de Edad:</strong> Acompañados por un adulto
-              responsable durante todo el servicio.
-            </Typography>
-          </PoliticaItem>
-          <PoliticaItem>
-            <Typography variant="body2">
-              <strong>Formas de Pago:</strong> Aceptamos pagos en efectivo y
-              medios electrónicos. Consulte por promociones o descuentos
-              vigentes.
-            </Typography>
-          </PoliticaItem>
+          <ListaPoliticas>
+            <PoliticaItem>
+              <strong>Puntualidad:</strong>
+              <Typography variant="body2">
+                5 minutos de anticipación. En caso de retraso, el tiempo del
+                servicio podría verse reducido o necesitar reprogramación.
+              </Typography>
+            </PoliticaItem>
+            <PoliticaItem>
+              <strong>Reservas y Cancelaciones:</strong>
+              <Typography variant="body2">
+                Cancelar con al menos 24 horas de anticipación. De lo contrario
+                el servicio será confirmado.
+              </Typography>
+            </PoliticaItem>
+            <PoliticaItem>
+              <strong>Condiciones Previas al Servicio:</strong>
+              <Typography variant="body2">
+                Zona a tratar limpia y libre de productos como maquillaje,
+                aceites, cremas o fijadores, según el servicio seleccionado.
+              </Typography>
+            </PoliticaItem>
+            <PoliticaItem>
+              <strong>SSalud y Cuidados de la Piel y el Cabello:</strong>
+              <Typography variant="body2">
+                Si presentas alguna condición dermatológica, informar con
+                anticipación.
+              </Typography>
+            </PoliticaItem>
+            <PoliticaItem>
+              <strong>Menores de Edad:</strong>
+              <Typography variant="body2">
+                Acompañados por un adulto responsable durante todo el servicio.
+              </Typography>
+            </PoliticaItem>
+            <PoliticaItem>
+              <strong>Formas de Pago:</strong>
+              <Typography variant="body2">
+                Aceptamos pagos en efectivo y medios electrónicos. Consulte por
+                promociones o descuentos vigentes.
+              </Typography>
+            </PoliticaItem>
+          </ListaPoliticas>
           <PoliticaItem>
             <Typography variant="body2">
               Tu bienestar y satisfacción son nuestra prioridad. ¡Gracias por
