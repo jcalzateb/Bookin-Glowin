@@ -1,13 +1,14 @@
 import styled from "styled-components";
 import { Button, TextField } from "@mui/material";
+import tema from "../../Styles/tema";
 
 export const ContenedorBuscador = styled.div`
   position: relative;
   width: 100%;
-  height: 600px;
+  height: 85vh;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: start;
   overflow: hidden;
   
   @media (max-width: 960px) {
@@ -30,14 +31,14 @@ export const FondoBanner = styled.img`
   z-index: -1;
 `;
 
-// Contenedor (isologo + barra de búsqueda + botón)
+// Contenedor (Títulos + barra de búsqueda + botón)
 export const ContenedorContenido = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   width: 100%;
   max-width: 900px;
-  padding: 25px;
+  padding: 25px 6%;
   border-radius: 0 0 10px 10px;
 
 
@@ -51,25 +52,131 @@ export const ContenedorContenido = styled.div`
   }
 `;
 
-// Contenedor (barra de búsqueda + fecha)
+// Nuevos componentes para el título y subtítulo
+export const TituloBuscador = styled.h1`
+  color: white;
+  font-size: 4rem;
+  line-height: 1.15;
+  margin-bottom: 0.5rem;
+  text-align: left;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  
+  @media (max-width: 600px) {
+    font-size: 1.8rem;
+  }
+`;
+
+export const SubtituloBuscador = styled.h2`
+  color: white;
+  font-size: 2.5rem;
+  font-family: 'Poppins';
+  font-style: italic;
+  margin-bottom: 2rem;
+  text-align: left;
+  font-weight: normal;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+    margin-bottom: 1.5rem;
+  }
+`;
+
+// Actualizar el contenedor de parámetros para una vista más integrada
 export const ContenedorParametros = styled.div`
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 900px;
-  padding: 40px;
-  border-radius: 0 0 10px 10px;
-  gap: 30px;
-
-  @media (max-width: 960px) {
-    padding: 30px;
-  }
+  max-width: 700px;
+  background-color: #f6ebf9;
+  border-radius: 50px;
+  padding: 5px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 600px) {
-    padding: 20px;
-    width: 85%;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 20px;
+  }
+`;
+
+export const BarraBusqueda = styled.div`
+  display: flex;
+  flex: 2;
+  align-items: center;
+  position: relative;
+  padding: 5px;
+
+  @media (max-width: 600px) {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+`;
+
+export const CampoBusqueda = styled(TextField)`
+  && {
+    width: 100%;
+    background-color: transparent !important;
+    
+    & .MuiOutlinedInput-root {
+      border-radius: 30px;
+      
+      & fieldset {
+        border: none;
+      }
+      
+      &:hover fieldset {
+        border: none;
+      }
+      
+      &.Mui-focused fieldset {
+        border: none;
+      }
+    }
+
+    & .MuiInputLabel-root {
+      color: #2d0363 !important;
+    }
+
+    & .MuiOutlinedInput-input {
+      color: #2d0363 !important;
+      padding: 12px 16px;
+    }
+  }
+`;
+
+export const DividerVertical = styled.div`
+  width: 1px;
+  height: 36px;
+  background-color: #ccc;
+  margin: 0 8px;
+  
+  @media (max-width: 600px) {
+    display: none;
+  }
+`;
+
+
+export const BotonBuscarCircular = styled(Button)`
+  && {
+    width: 50px;
+    height: 50px;
+    min-width: 50px;
+    border-radius: 50%;
+    margin-left: 10px;
+    background-color: ${(props) => props.disabled ? '#C9B9DF' : '#9F72D9'} !important;
+    color: ${(props) => props.disabled ? '#9F72D9' : '#2D0363'} !important;
+    transition: all 0.3s ease;
+    box-shadow: ${(props) => props.disabled ? 'none' : '0 3px 5px rgba(0, 0, 0, 0.2)'};
+    
+    &:hover {
+      background-color: ${(props) => props.disabled ? '#e6d0f0' : '#7b27dd'} !important;
+    }
+    
+    @media (max-width: 600px) {
+      margin-top: 10px;
+    }
   }
 `;
 
@@ -84,55 +191,6 @@ export const Isologo = styled.img`
 
   @media (max-width: 600px) {
     max-width: 280px;
-  }
-`;
-
-export const BarraBusqueda = styled.div`
-  display: flex;
-  width:90%;
-  align-items: center;
-  gap: 8px;
-  padding: 12px;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-
-  @media (max-width: 600px) {
-    flex-wrap: nowrap;
-  }
-`;
-
-export const CampoBusqueda = styled(TextField)`
-  && {
-    background-color: #f6ebf9 !important;
-    border-radius: 20px;
-    width: 100%;
-    border-color: #f6ebf9 !important;
-    font-family: ${({ theme }) => theme.typography.button.fontFamily};
-
-    & .MuiOutlinedInput-root {
-      border-radius: 20px;
-      border-color: #f6ebf9 !important;
-
-      &:hover fieldset {
-        border-color: #9747ff !important;
-      }
-
-      &.Mui-focused fieldset {
-        border-color: #2d0363 !important;
-      }
-    }
-
-    & .MuiInputLabel-root {
-      color: #2d0363 !important;
-    }
-
-    & .MuiOutlinedInput-input {
-      color: #2d0363 !important;
-    }
-
-    & .Mui-focused {
-      color: ${({ theme }) => theme.palette.botones.activo} !important;
-    }
   }
 `;
 
