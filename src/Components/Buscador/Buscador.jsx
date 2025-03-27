@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/es"; // Importar locale español para dayjs
 import { useNavigate } from "react-router-dom";
 import { buscarServicios } from "../../Services/buscadorService";
-import { buscarDisponibilidad } from "../../Services/disponibilidadService";
+import { buscarDisponibilidad } from "../../Services/disponibilidadServiceModal";
 import {
   ContenedorBuscador,
   FondoBanner,
@@ -30,7 +30,7 @@ import {
   TituloBuscador,
   SubtituloBuscador,
   DividerVertical,
-  BotonBuscarCircular
+  BotonBuscarCircular,
 } from "./Buscador.styled";
 
 import Banner from "/src/assets/banner_chica.jpg";
@@ -139,7 +139,12 @@ const Buscador = () => {
   // Manejar navegación con teclado
   const handleKeyDown = (e) => {
     // Si no hay sugerencias visibles, no hacemos nada
-    if (!showSuggestions || !suggestions.content || suggestions.content.length === 0) return;
+    if (
+      !showSuggestions ||
+      !suggestions.content ||
+      suggestions.content.length === 0
+    )
+      return;
 
     // Flecha abajo
     if (e.key === "ArrowDown") {
@@ -234,9 +239,12 @@ const Buscador = () => {
       <ContenedorBuscador>
         <FondoBanner src={Banner} alt="Fondo banner" />
         <ContenedorContenido>
-          <TituloBuscador>Estás a un clic <br/>de brillar</TituloBuscador>
+          <TituloBuscador>
+            Estás a un clic <br />
+            de brillar
+          </TituloBuscador>
           <SubtituloBuscador>¡Reserva ahora!</SubtituloBuscador>
-  
+
           <ContenedorParametros>
             <BarraBusqueda>
               <CampoBusqueda
@@ -276,7 +284,7 @@ const Buscador = () => {
               )}
             </BarraBusqueda>
             {console.log("Servicio seleccionado:", selectedService)}
-            <DividerVertical />          
+            <DividerVertical />
             <ContenedorFecha>
               <LocalizationProvider
                 dateAdapter={AdapterDayjs}
@@ -289,12 +297,12 @@ const Buscador = () => {
                   minDate={dayjs()}
                   format="DD/MM/YYYY"
                   slotProps={{
-                    textField: { 
+                    textField: {
                       fullWidth: true,
                       variant: "standard",
                       InputProps: {
-                        disableUnderline: true
-                      }
+                        disableUnderline: true,
+                      },
                     },
                     day: {
                       disableHighlightToday: false,
@@ -303,9 +311,9 @@ const Buscador = () => {
                 />
               </LocalizationProvider>
             </ContenedorFecha>
-            
-            <BotonBuscarCircular 
-              onClick={handleSearch} 
+
+            <BotonBuscarCircular
+              onClick={handleSearch}
               disabled={isBusquedaDisabled || isSearching}
               aria-label="Buscar"
             >
@@ -314,7 +322,7 @@ const Buscador = () => {
           </ContenedorParametros>
         </ContenedorContenido>
       </ContenedorBuscador>
-      
+
       {searchResults && (
         <ResultadosContainer>
           <h2>Resultados de la búsqueda</h2>
