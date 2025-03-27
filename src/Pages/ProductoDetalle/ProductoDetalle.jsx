@@ -80,6 +80,8 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
   const [valoracion, setValoracion] = useState(0);
   const [comentario, setComentario] = useState("");
+  // Nuevo estado para controlar la visibilidad del calendario
+  const [calendarioAbierto, setCalendarioAbierto] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -189,12 +191,36 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCompartirModalAbierto(false);
   };
 
+  // Función para manejar la apertura/cierre del calendario
+  const toggleCalendario = () => {
+    setCalendarioAbierto(!calendarioAbierto);
+  };
+
   const manejarSeleccionTurno = (fecha, turno) => {
     setTurnoSeleccionado({
       fecha: fecha,
       hora: turno.hora,
       id: turno.id,
     });
+    setCalendarioAbierto(false); // Cerrar el calendario después de seleccionar
+  };
+
+  // Función para manejar el clic en el botón de reserva
+  const manejarBotonReserva = () => {
+    if (!turnoSeleccionado) {
+      // Si no hay turno seleccionado, mostrar el calendario
+      toggleCalendario();
+    } else {
+      // Si ya hay turno seleccionado, navegar a la página de reserva
+      navigate(`/reserva`, {
+        state: {
+          servicioId: id,
+          turnoId: turnoSeleccionado.id,
+          hora: turnoSeleccionado.hora,
+          fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
+        },
+      });
+    }
   };
 
   return (
@@ -395,6 +421,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
             </BotonReservar>
           </ContenedorInfoD>
         </ContenedorInfo>
+
 
         <ContenedorPuntuacion>
           <ContenedorResenas>
