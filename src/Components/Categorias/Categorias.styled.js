@@ -7,8 +7,8 @@ export const ContenedorCategorias = styled(Box)`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 36px;
-  padding: 20px;
+  gap: 10px;
+  padding: 30px 20px;
   color: white;
 
   @media (min-width: 760px) and (max-width: 1000px) {
@@ -21,7 +21,7 @@ export const ListaCategorias = styled(Box)`
   justify-content: center;
   flex-wrap: wrap;
   gap: 50px;
-  max-width: 900px;
+  max-width: 700px;
   width: 100%;
 `;
 

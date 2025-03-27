@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import { loginUsuario } from "../../Services/authService";
 import { AuthContext } from "../../Context/AuthContext";
 import {
@@ -10,18 +9,16 @@ import {
   MensajeError,
   Enlace,
   Titulo,
+  ContenedorDerecha,
+  ContenedorIzquierda,
 } from "./Login.styled";
 
 const Login = () => {
   const { login } = useContext(AuthContext);
-  const navigate = useNavigate();
   const [formulario, setFormulario] = useState({
     email: "",
     password: "",
   });
-  if (!formulario) {
-    setFormulario({ email: "", password: "" });
-  }
 
   const [errores, setErrores] = useState({});
   const [mensajeError, setMensajeError] = useState("");
@@ -34,22 +31,20 @@ const Login = () => {
       [name]: value,
     }));
     setErrores({ ...errores, [name]: "" });
+    setBotonDeshabilitado(!validarFormulario());
   };
 
   const validarFormulario = () => {
-    if (!formulario || typeof formulario !== "object") {
-      console.error("⚠️ Error: `formulario` no está definido correctamente.");
-      return false;
-    }
-
     let erroresTemp = {};
-    if (!formulario.email || !/\S+@\S+\.\S+/.test(formulario.email)) {
+    if (
+      !formulario.email ||
+      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com)$/i.test(formulario.email)
+    ) {
       erroresTemp.email = "Correo electrónico inválido";
     }
     if (!formulario.password || formulario.password.trim() === "") {
       erroresTemp.password = "La contraseña es obligatoria";
     }
-
     setErrores(erroresTemp);
     return Object.keys(erroresTemp).length === 0;
   };
@@ -57,54 +52,57 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validarFormulario()) {
-      console.log("❌ Formulario inválido:", errores);
-      return;
-    }
-    console.log("📡 Enviando datos de inicio de sesión:", formulario);
+    if (!validarFormulario()) return;
+
     try {
       const respuesta = await loginUsuario(formulario);
-      if (respuesta) {
-        login(respuesta);
-        localStorage.setItem("usuario", JSON.stringify(respuesta));
-        navigate("/");
+      console.log("Respuesta del login:", respuesta);
+      if (respuesta?.token) {
+        await login(formulario);
       } else {
-        setMensajeError("Credenciales incorrectas. Intente nuevamente.");
+        setErrores({
+          general: "Credenciales incorrectas. Intente nuevamente.",
+        });
       }
     } catch (error) {
-      console.error("❌ Error en el inicio de sesión:", error);
-      setMensajeError("Ocurrió un error al iniciar sesión.");
+      setErrores({ general: "Ocurrió un error al iniciar sesión." });
+      console.error("Error al iniciar sesión:", error);
     }
   };
 
   return (
     <ContenedorLogin>
-      <ContenedorFormulario onSubmit={handleSubmit}>
-        <Titulo>Iniciar Sesión</Titulo>
-        <CampoInput
-          type="email"
-          name="email"
-          placeholder="Correo Electrónico"
-          value={formulario.email}
-          onChange={handleChange}
-        />
-        {errores.email && <MensajeError>{errores.email}</MensajeError>}
+      <ContenedorIzquierda></ContenedorIzquierda>
+      <ContenedorDerecha>
+        <ContenedorFormulario onSubmit={handleSubmit}>
+          <Titulo>Iniciar Sesión</Titulo>
+          <CampoInput
+            type="email"
+            name="email"
+            placeholder="Correo Electrónico"
+            value={formulario.email}
+            onChange={handleChange}
+            $error={errores.email}
+          />
+          {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
-        <CampoInput
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          value={formulario.password}
-          onChange={handleChange}
-          required
-        />
-        {errores.password && <MensajeError>{errores.password}</MensajeError>}
+          <CampoInput
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={formulario.password}
+            onChange={handleChange}
+            $error={errores.password}
+            required
+          />
+          {errores.password && <MensajeError>{errores.password}</MensajeError>}
+          {errores.general && <MensajeError>{errores.general}</MensajeError>}
+          <BotonAccion type="submit">Iniciar Sesión</BotonAccion>
 
-        <BotonAccion type="submit">Iniciar Sesión</BotonAccion>
-
-        <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
-        <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
-      </ContenedorFormulario>
+          <Enlace to="/registrar">¿No tienes cuenta? Regístrate aquí</Enlace>
+          <Enlace to="#">¿Olvidaste tu contraseña?</Enlace>
+        </ContenedorFormulario>
+      </ContenedorDerecha>
     </ContenedorLogin>
   );
 };

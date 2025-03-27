@@ -3,6 +3,11 @@ import { obtenerCategorias } from "../../Services/categoriasService";
 import { crearServicio, editarServicio } from "../../Services/serviciosService";
 import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 import {
+  crearImagenParaServicio,
+  actualizarImagen,
+} from "../../Services/imagenesService";
+
+import {
   ContenedorFormulario,
   CampoContenedor,
   Etiqueta,
@@ -33,6 +38,7 @@ const FormularioGestion = ({
     duracionMinutos: "",
     cantidadSesiones: "",
     descripcion: "",
+    imagenes: ["", "", "", "", ""],
   });
 
   const [categorias, setCategorias] = useState([]);
@@ -69,6 +75,9 @@ const FormularioGestion = ({
         duracionMinutos: servicioSeleccionado.duracionMinutos || "",
         cantidadSesiones: servicioSeleccionado.cantidadSesiones || "",
         descripcion: servicioSeleccionado.descripcion || "",
+        imagenes: servicioSeleccionado.imagenes
+          ? servicioSeleccionado.imagenes.map((img) => img.urlImagen)
+          : ["", "", "", "", ""],
       });
     } else {
       limpiarFormulario();
@@ -77,7 +86,15 @@ const FormularioGestion = ({
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormulario({ ...formulario, [name]: value });
+
+    if (name.startsWith("imagen")) {
+      const index = parseInt(name.charAt(name.length - 1)) - 1;
+      const newImagenes = [...formulario.imagenes];
+      newImagenes[index] = value;
+      setFormulario({ ...formulario, imagenes: newImagenes });
+    } else {
+      setFormulario({ ...formulario, [name]: value });
+    }
     validarCampo(name, value);
   };
 
@@ -98,29 +115,16 @@ const FormularioGestion = ({
       }
     }
 
-    /*     if (name === "nombre") {
-      const servicioExistente = servicios.find(
-        (servicio) =>
-          servicio.nombre.toLowerCase() === value.toLowerCase().trim()
-      );
-      if (servicioExistente) {
-        mensajeError = "Este servicio ya existe";
-        estadoValidacion = "error";
-      }
-    } */
-
     setErrores((prev) => ({ ...prev, [name]: mensajeError }));
     setValidacion((prev) => ({ ...prev, [name]: estadoValidacion }));
   };
 
-  // validar el formulario antes de agregar
   const validarFormulario = () => {
     let erroresTemp = {};
 
     Object.keys(formulario).forEach((campo) => {
       const valorCampo = formulario[campo];
       if (campo !== "imagenes") {
-        // Se omite la validación de imágenes
         validarCampo(campo, formulario[campo]);
         if (typeof valorCampo === "string" && !valorCampo.trim()) {
           erroresTemp[campo] = "Este campo es obligatorio";
@@ -173,6 +177,7 @@ const FormularioGestion = ({
         urlImagen: categoriaSeleccionada.urlImagen,
       },
     };
+    console.log("🚀 Servicio a enviar:", servicioAEnviar);
 
     setMensaje({
       abierto: true,
@@ -195,10 +200,51 @@ const FormularioGestion = ({
         }
 
         if (resultado) {
+          const idServicio = servicioSeleccionado
+            ? servicioSeleccionado.id
+            : resultado.id;
+
+          for (let i = 0; i < formulario.imagenes.length; i++) {
+            const imagenData = {
+              titulo: `Imagen ${i + 1}`,
+              descripcion: `Descripción de la imagen ${i + 1}`,
+              urlImagen: formulario.imagenes[i],
+              fechaCreacion: new Date().toISOString(),
+              idServicio: idServicio,
+              servicio: {
+                nombre: formulario.nombre,
+                descripcion: formulario.descripcion,
+                duracionMinutos: formulario.duracionMinutos,
+                costo: formulario.costo,
+                cantidadSesiones: formulario.cantidadSesiones,
+                categoriaId: categoriaSeleccionada.id,
+                nombreCategoria: categoriaSeleccionada.nombre,
+              },
+            };
+
+            if (servicioSeleccionado) {
+              const imagenOriginal = servicioSeleccionado.imagenes[i];
+              if (imagenOriginal && imagenOriginal.id) {
+                await actualizarImagen(
+                  idServicio,
+                  imagenData,
+                  imagenOriginal.id
+                );
+                console.log(
+                  `🖼️ Actualizando imagen con ID ${imagenOriginal.id}`
+                );
+              } else {
+                await crearImagenParaServicio(idServicio, imagenData);
+              }
+            } else {
+              await crearImagenParaServicio(idServicio, imagenData);
+            }
+          }
+
           actualizarLista();
           limpiarFormulario();
         } else {
-          console.error("⚠️ Error al procesar la solicitud.");
+          console.error("Error al procesar la solicitud.");
         }
 
         setMensaje({ ...mensaje, abierto: false });
@@ -215,6 +261,7 @@ const FormularioGestion = ({
       duracionMinutos: "",
       cantidadSesiones: "",
       descripcion: "",
+      imagenes: ["", "", "", "", ""],
     });
     setErrores({});
     setValidacion({});
@@ -370,6 +417,24 @@ const FormularioGestion = ({
           <MensajeError>{errores.descripcion}</MensajeError>
         )}
       </CampoContenedor>
+
+      <div>
+        {Array.from({ length: 5 }, (_, i) => (
+          <CampoContenedor key={i}>
+            <Etiqueta>{`URL Imagen ${i + 1}`}</Etiqueta>
+            <CampoInput
+              type="url"
+              name={`imagen${i + 1}`}
+              value={formulario.imagenes[i]}
+              onChange={handleChange}
+              placeholder={`URL de la imagen ${i + 1}`}
+            />
+            {errores[`imagen${i + 1}`] && (
+              <MensajeError>{errores[`imagen${i + 1}`]}</MensajeError>
+            )}
+          </CampoContenedor>
+        ))}
+      </div>
 
       <ContenedorBotones>
         <BotonAccion color="#28a745" onClick={handleSubmit}>

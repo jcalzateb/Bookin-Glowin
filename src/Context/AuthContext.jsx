@@ -1,53 +1,58 @@
-import { createContext, useState, useEffect } from "react";
-import { obtenerUsuarioActual } from "../Services/authService";
+import React, { createContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  loginUsuario,
+  logout,
+  estaAutenticado,
+  obtenerDatosUsuario,
+  decodificarToken,
+} from "../Services/authService";
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [usuario, setUsuario] = useState(null);
-
-  useEffect(() => {
-    const cargarUsuario = async () => {
-      console.log("🔄 Verificando usuario en localStorage...");
-      const usuarioGuardado = localStorage.getItem("usuario");
-
-      if (usuarioGuardado) {
-        console.log(
-          "✅ Usuario encontrado en localStorage:",
-          JSON.parse(usuarioGuardado)
-        );
-        setUsuario(JSON.parse(usuarioGuardado));
-      } else {
-        console.log(
-          "❌ No hay usuario en localStorage, consultando backend..."
-        );
-        const usuarioActual = await obtenerUsuarioActual();
-        if (usuarioActual) {
-          console.log("✅ Usuario obtenido del backend:", usuarioActual);
-          setUsuario(usuarioActual);
-          localStorage.setItem("usuario", JSON.stringify(usuarioActual));
+  const navigate = useNavigate();
+  const verificarUsuario = async () => {
+    if (estaAutenticado()) {
+      const token = localStorage.getItem("token");
+      const usuarioDecodificado = decodificarToken(token);
+      const datosUsuario = await obtenerDatosUsuario(usuarioDecodificado.id);
+      if (datosUsuario) {
+        setUsuario(datosUsuario);
+        if (datosUsuario.rol === "CLIENTE") {
+          navigate("/");
         } else {
-          console.log("❌ No se pudo obtener usuario del backend.");
+          navigate("/admin");
         }
       }
-    };
-    cargarUsuario();
-  }, []);
-
-  const login = (datosUsuario) => {
-    console.log("✅ Iniciando sesión:", datosUsuario);
-    setUsuario(datosUsuario);
-    localStorage.setItem("usuario", JSON.stringify(datosUsuario));
+    }
   };
 
-  const logout = () => {
-    console.log("🚪 Cerrando sesión...");
+  useEffect(() => {
+    verificarUsuario();
+  }, []);
+
+  const login = async (credenciales) => {
+    const respuesta = await loginUsuario(credenciales);
+    if (respuesta && respuesta.token) {
+      const usuarioDecoded = JSON.parse(localStorage.getItem("usuario"));
+      setUsuario(usuarioDecoded);
+      if (usuarioDecoded.rol === "CLIENTE") {
+        navigate("/");
+      } else {
+        navigate("/admin");
+      }
+    }
+  };
+
+  const cerrarSesion = () => {
+    logout();
     setUsuario(null);
-    localStorage.removeItem("usuario");
   };
 
   return (
-    <AuthContext.Provider value={{ usuario, login, logout }}>
+    <AuthContext.Provider value={{ usuario, login, cerrarSesion }}>
       {children}
     </AuthContext.Provider>
   );

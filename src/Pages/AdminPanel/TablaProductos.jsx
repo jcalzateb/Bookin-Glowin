@@ -16,6 +16,10 @@ import {
   obtenerServicios,
   eliminarServicio,
 } from "../../Services/serviciosService";
+import {
+  eliminarImagen,
+  obtenerImagenesPorServicio,
+} from "../../Services/imagenesService";
 import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 
 const TablaProductos = ({ seleccionarServicio }) => {
@@ -35,12 +39,25 @@ const TablaProductos = ({ seleccionarServicio }) => {
     cargarServicios();
   }, []);
 
+  const eliminarImagenes = async (idServicio) => {
+    try {
+      const imagenes = await obtenerImagenesPorServicio(idServicio);
+      for (let imagen of imagenes) {
+        await eliminarImagen(idServicio, imagen.id);
+        console.log(`Imagen ${imagen.id} eliminada`);
+      }
+    } catch (error) {
+      console.error("Error al eliminar las imágenes:", error);
+    }
+  };
+
   const handleEliminarServicio = (id) => {
     setMensaje({
       abierto: true,
       tipo: "eliminar",
       texto: "¿Desea eliminar este servicio?",
       callback: async () => {
+        await eliminarImagenes(id);
         const resultado = await eliminarServicio(id);
         if (resultado) {
           setServicios(servicios.filter((servicio) => servicio.id !== id));

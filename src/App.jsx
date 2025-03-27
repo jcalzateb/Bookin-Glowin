@@ -8,13 +8,14 @@ import Header from "./Components/Header/Header";
 import Registro from "./Pages/Registro/Registro";
 import Login from "./Pages/Login/Login";
 import { AuthProvider } from "./Context/AuthContext";
+import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 
 const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);
 
   return (
-    <AuthProvider>
-      <Router>
+    <Router>
+      <AuthProvider>
         {mostrarHeader && <Header />}
         <Routes>
           <Route path="/" element={<Inicio />} />
@@ -22,13 +23,16 @@ const App = () => {
             path="/producto/:id"
             element={<ProductoDetalle setMostrarHeader={setMostrarHeader} />}
           />
-          <Route path="/admin" element={<AdminPanel />} />
+          <Route
+            path="/admin"
+            element={<PrivateRoute element={<AdminPanel />} />}
+          />
           <Route path="/registrar" element={<Registro />} />
           <Route path="/ingresar" element={<Login />} />
         </Routes>
         <Footer />
-      </Router>
-    </AuthProvider>
+      </AuthProvider>
+    </Router>
   );
 };
 

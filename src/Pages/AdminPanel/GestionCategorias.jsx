@@ -4,7 +4,16 @@ import {
   agregarCategoria,
   editarCategoria,
   eliminarCategoria,
+  obtenerCategoriaPorId,
 } from "../../Services/categoriasService";
+import {
+  eliminarServicio,
+  obtenerServicios,
+} from "../../Services/serviciosService";
+import {
+  obtenerImagenesPorServicio,
+  eliminarImagen,
+} from "../../Services/imagenesService";
 import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 import {
   ContenedorGestionCategorias,
@@ -44,7 +53,7 @@ const GestionCategorias = () => {
       const data = await obtenerCategorias();
       setCategorias(data);
     } catch (error) {
-      setError("Error al cargar categorías");
+      console.error("Error al cargar categorías", error);
     }
   };
 
@@ -77,7 +86,7 @@ const GestionCategorias = () => {
           setCategoriaSeleccionada(null);
           setError("");
         } catch (error) {
-          setError("Error al guardar la categoría");
+          console.error("Error al guardar la categoría", error);
         } finally {
           setMensaje({ ...mensaje, abierto: false });
         }
@@ -107,20 +116,75 @@ const GestionCategorias = () => {
     setMensaje({
       abierto: true,
       tipo: "eliminar",
-      texto: "¿Desea eliminar la categoría?",
+      texto:
+        "¿Está seguro de que desea eliminar esta categoría? Se eliminarán todos los servicios asociados.",
       callback: async () => {
         try {
+          console.log(`Iniciando eliminación de la categoría con id: ${id}`);
+
+          // Obtener todos los servicios
+          const servicios = await obtenerServicios();
+          console.log(`Servicios obtenidos: ${JSON.stringify(servicios)}`);
+
+          // Filtrar los servicios por la categoría
+          const serviciosAEliminar = servicios.filter(
+            (servicio) => servicio.categoriaId === id
+          );
+          console.log(
+            `Servicios asociados a la categoría ${id}: ${JSON.stringify(
+              serviciosAEliminar
+            )}`
+          );
+
+          // Eliminar las imágenes asociadas a cada servicio
+          if (serviciosAEliminar.length > 0) {
+            console.log(`Eliminando imágenes de los servicios...`);
+            for (const servicio of serviciosAEliminar) {
+              // Obtener las imágenes de cada servicio
+              const imagenes = await obtenerImagenesPorServicio(servicio.id);
+              // Eliminar todas las imágenes asociadas al servicio
+              await Promise.all(
+                imagenes.map(async (imagen) => {
+                  await eliminarImagen(servicio.id, imagen.id);
+                  console.log(`Imagen con id ${imagen.id} eliminada`);
+                })
+              );
+            }
+
+            // Eliminar los servicios de la categoría
+            console.log(`Eliminando ${serviciosAEliminar.length} servicios...`);
+            await Promise.all(
+              serviciosAEliminar.map((servicio) => {
+                console.log(`Eliminando servicio con id: ${servicio.id}`);
+                return eliminarServicio(servicio.id);
+              })
+            );
+            console.log("Servicios eliminados con éxito.");
+          } else {
+            console.log("No hay servicios para eliminar.");
+          }
+
+          // Eliminar la categoría
+          console.log(`Eliminando categoría con id: ${id}`);
           await eliminarCategoria(id);
-          cargarCategorias();
+          console.log("Categoría eliminada con éxito.");
+
+          // Actualizar la lista de categorías después de eliminar
+          setCategorias((prevCategorias) =>
+            prevCategorias.filter((categoria) => categoria.id !== id)
+          );
+          console.log("Lista de categorías actualizada.");
+          setMensaje({ ...mensaje, abierto: false });
         } catch (error) {
-          setError("Error al eliminar la categoría");
-        } finally {
+          console.error(
+            "Error al eliminar la categoría y sus servicios:",
+            error
+          );
           setMensaje({ ...mensaje, abierto: false });
         }
       },
     });
   };
-
   return (
     <ContenedorGestionCategorias>
       <SeccionRegistro id="formulario-categorias">

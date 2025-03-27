@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { registrarUsuario } from "../../Services/usuariosService";
+import { reenviarConfirmacion } from "../../Services/authService";
+import RegistroModal from "../../Components/RegistroModal/RegistroModal";
 import {
   ContenedorRegistro,
   TituloRegistro,
   ContenedorFormulario,
   ContenedorIzquierda,
+  ContenedorDerecha,
   CampoInput,
   BotonAccion,
   MensajeError,
@@ -27,6 +30,10 @@ const Registro = () => {
   const [errores, setErrores] = useState({});
   const [botonDeshabilitado, setBotonDeshabilitado] = useState(true);
   const [radioSeleccionado, setRadioSeleccionado] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const [mensajeModal, setMensajeModal] = useState("");
+  const [mensajeError, setMensajeError] = useState("");
+  const [emailConfirmacion, setEmailConfirmacion] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -85,8 +92,6 @@ const Registro = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // if (!validarFormulario(formulario)) return;
-
     const usuarioARegistrar = {
       nombre: formulario.nombre.trim(),
       apellido: formulario.apellido.trim(),
@@ -105,8 +110,9 @@ const Registro = () => {
         general: "Error al registrar usuario. Inténtalo nuevamente.",
       });
     } else {
+      setEmailConfirmacion(formulario.email);
       limpiarFormulario();
-      navigate("/ingresar");
+      setOpenModal(true);
     }
   };
 
@@ -124,10 +130,36 @@ const Registro = () => {
     setBotonDeshabilitado(true);
   };
 
+  const handleReenviarCorreo = async () => {
+    try {
+      console.log("Email para reenviar:", emailConfirmacion);
+      if (emailConfirmacion) {
+        const resultado = await reenviarConfirmacion(emailConfirmacion);
+        if (resultado) {
+          console.log("Resultado para reenviar:", resultado);
+          setMensajeModal("Correo reenviado exitosamente a ");
+        } else {
+          setMensajeModal("Hubo un error al reenviar el correo.");
+        }
+      } else {
+        setMensajeModal("No se ha proporcionado un correo electrónico.");
+      }
+    } catch (error) {
+      console.error("Error al reenviar correo:", error);
+      setMensajeModal("Error al reenviar el correo. Intenta nuevamente.");
+    }
+  };
+
+  const handleCerrarModal = () => {
+    setOpenModal(false);
+    navigate("/ingresar");
+  };
+
   return (
     <ContenedorRegistro>
-      <ContenedorIzquierda>
-        <TituloRegistro>REGÍSTRATE</TituloRegistro>
+      <ContenedorIzquierda></ContenedorIzquierda>
+      <ContenedorDerecha>
+        <TituloRegistro>Regístrate</TituloRegistro>
         <ContenedorFormulario onSubmit={handleSubmit}>
           <CampoInput
             type="text"
@@ -135,6 +167,8 @@ const Registro = () => {
             placeholder="Ingresa tu nombre"
             value={formulario.nombre}
             onChange={handleChange}
+            $error={errores.nombre}
+            $touched={formulario.nombre.trim().length > 0}
           />
           {errores.nombre && <MensajeError>{errores.nombre}</MensajeError>}
 
@@ -144,6 +178,8 @@ const Registro = () => {
             placeholder="Ingresa tu apellido"
             value={formulario.apellido}
             onChange={handleChange}
+            $error={errores.apellido}
+            $touched={formulario.apellido.trim().length > 0}
           />
           {errores.apellido && <MensajeError>{errores.apellido}</MensajeError>}
 
@@ -153,6 +189,8 @@ const Registro = () => {
             placeholder="Ingresa tu dirección de email"
             value={formulario.email}
             onChange={handleChange}
+            $error={errores.email}
+            $touched={formulario.email.trim().length > 0}
           />
           {errores.email && <MensajeError>{errores.email}</MensajeError>}
 
@@ -162,6 +200,8 @@ const Registro = () => {
             placeholder="Ingresa tu número de celular"
             value={formulario.celular}
             onChange={handleChange}
+            $error={errores.celular}
+            $touched={formulario.celular.trim().length > 0}
           />
           {errores.celular && <MensajeError>{errores.celular}</MensajeError>}
 
@@ -171,6 +211,8 @@ const Registro = () => {
             placeholder="Crea una contraseña"
             value={formulario.password}
             onChange={handleChange}
+            $error={errores.password}
+            $touched={formulario.password.trim().length > 0}
           />
           {errores.password && <MensajeError>{errores.password}</MensajeError>}
 
@@ -180,6 +222,8 @@ const Registro = () => {
             placeholder="Confirma tu contraseña"
             value={formulario.confirmarPassword}
             onChange={handleChange}
+            $error={errores.confirmarPassword}
+            $touched={formulario.confirmarPassword.trim().length > 0}
           />
           {errores.confirmarPassword && (
             <MensajeError>{errores.confirmarPassword}</MensajeError>
@@ -195,12 +239,21 @@ const Registro = () => {
             />
             <TextoDecorativo>Acepto los términos y condiciones</TextoDecorativo>
           </ContenedorRadio>
+          {errores.terminos && <MensajeError>{errores.terminos}</MensajeError>}
 
           <BotonAccion type="submit" disabled={botonDeshabilitado}>
             Crear cuenta
           </BotonAccion>
         </ContenedorFormulario>
-      </ContenedorIzquierda>
+
+        <RegistroModal
+          open={openModal}
+          onClose={handleCerrarModal}
+          onReenviarCorreo={handleReenviarCorreo}
+          email={emailConfirmacion}
+          mensajeModal={mensajeModal}
+        />
+      </ContenedorDerecha>
     </ContenedorRegistro>
   );
 };
