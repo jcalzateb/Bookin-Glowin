@@ -1,70 +1,108 @@
-import React, { useState, useEffect } from 'react';
-import { Box, Modal, Typography, IconButton, Button, Grid, CircularProgress } from '@mui/material';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import CloseIcon from '@mui/icons-material/Close';
-import styled from '@emotion/styled';
-import { obtenerDisponibilidadMensual, obtenerTurnosDisponibles } from '../../Services/disponibilidadService';
+import React, { useState, useEffect } from "react";
+import {
+  Box,
+  Modal,
+  Typography,
+  IconButton,
+  Button,
+  Grid,
+  CircularProgress,
+} from "@mui/material";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import CloseIcon from "@mui/icons-material/Close";
+import styled from "@emotion/styled";
+import {
+  obtenerDisponibilidadMensual,
+  obtenerTurnosDisponibles,
+} from "../../Services/disponibilidadServiceModal";
 
-// Estilos para el componente
 const CalendarioIcono = styled(IconButton)({
-  color: '#1976d2',
-  '&:hover': {
-    backgroundColor: 'rgba(25, 118, 210, 0.04)',
+  color: "#2d0363",
+  bordeRadius: "50% !important",
+  "&:hover": {
+    color: "#581ca7",
+    backgroundColor: "transparent !important",
   },
 });
 
 const ModalContenido = styled(Box)({
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: '90%',
-  maxWidth: 800, // Aumentado para acomodar el layout horizontal
-  backgroundColor: 'white',
-  boxShadow: '0px 4px 20px rgba(0, 0, 0, 0.15)',
-  borderRadius: '8px',
-  padding: '24px',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%) !important",
+  width: "80% !important",
+  maxWidth: "800px !important",
+  backgroundColor: "white",
+  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15) !important",
+  borderRadius: "8px !important",
+  padding: "20px !important",
+  alignItems: "center !important",
+  textAlign: "center !important",
+  "@media (max-width: 786px)": {
+    width: "90% !important",
+    padding: "35px 20px !important",
+  },
 });
 
 const CalendarioHeader = styled(Box)({
-  display: 'flex',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  marginBottom: '16px',
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  marginBottom: "16px",
+
+  "@media (max-width: 786px)": {
+    gap: "8px",
+  },
 });
 
 const DiaSemana = styled(Typography)({
-  textAlign: 'center',
-  fontWeight: 'bold',
-  padding: '8px 0',
+  textAlign: "center",
+  fontWeight: "bold",
+  padding: "4px 0 !important",
 });
 
-const DiaCelda = styled(Button)(({ disponible, hoy, fueraMes, seleccionado }) => ({
-  width: '100%',
-  height: '40px',
-  borderRadius: '50%',
-  margin: '2px',
-  color: fueraMes ? '#bdbdbd' : 
-         !disponible ? '#9c27b0' : // Color morado para no disponible
-         hoy ? '#1976d2' : 
-         '#000',
-  backgroundColor: seleccionado ? '#9c27b0' : 'transparent',
-  '&:hover': {
-    backgroundColor: !disponible ? 'rgba(156, 39, 176, 0.08)' : '#e3f2fd',
-  },
-  '&.Mui-disabled': {
-    color: '#bdbdbd',
-  },
-}));
+const DiaCelda = styled(Button)(
+  ({ disponible, hoy, esMesActual, seleccionado, esPasado }) => ({
+    width: "50%",
+    height: "50px",
+    borderRadius: "5px",
+    margin: "1px",
+    padding: "0 20px",
+    color: !esMesActual
+      ? "#bdbdbd"
+      : !disponible
+      ? "#9c27b0"
+      : hoy
+      ? "#1976d2"
+      : "#000",
+    backgroundColor: seleccionado ? "#9c27b0" : "transparent",
+    "&:hover": {
+      backgroundColor: !disponible ? "rgba(156, 39, 176, 0.08)" : "#e3f2fd",
+    },
+    "&.Mui-disabled": {
+      color: "#bdbdbd",
+    },
+
+    "@media (max-width: 786px)": {
+      width: "30%px !important",
+      height: "30px !important",
+      padding: "0 !important",
+      fontSize: "12px !important",
+    },
+  })
+);
 
 const TurnoBoton = styled(Button)({
-  margin: '4px',
-  textTransform: 'none',
-  '&:hover': {
-    backgroundColor: '#9c27b0', // Morado en hover
-    color: 'white', // Texto blanco en hover
+  margin: "4px",
+  textTransform: "none",
+  "&:hover": {
+    backgroundColor: "#9c27b0",
+    color: "white",
+  },
+  "@media (max-width: 786px)": {
+    fontSize: "12px",
   },
 });
 
@@ -77,64 +115,67 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
   const [cargando, setCargando] = useState(false);
   const [error, setError] = useState(null);
 
-  // Cargar disponibilidad cuando se abra el modal o cambie el mes
   useEffect(() => {
     if (modalAbierto) {
       cargarDisponibilidadMensual();
     }
   }, [modalAbierto, fechaActual, servicioId]);
 
-  // Función para obtener la disponibilidad del mes actual
   const cargarDisponibilidadMensual = async () => {
     setCargando(true);
     try {
       const anio = fechaActual.getFullYear();
-      const mes = fechaActual.getMonth() + 1; // JavaScript usa 0-11 para meses
-      const disponibilidadPorDia = await obtenerDisponibilidadMensual(servicioId, anio, mes);
+      const mes = fechaActual.getMonth() + 1;
+      const disponibilidadPorDia = await obtenerDisponibilidadMensual(
+        servicioId,
+        anio,
+        mes
+      );
       setDisponibilidad(disponibilidadPorDia);
-      console.log('Disponibilidad por día:', disponibilidadPorDia);
+      console.log("Disponibilidad por día:", disponibilidadPorDia);
     } catch (err) {
-      setError('No se pudo cargar la disponibilidad');
+      setError("No se pudo cargar la disponibilidad");
       console.error(err);
     } finally {
       setCargando(false);
     }
   };
 
-  // Función para obtener turnos disponibles de un día específico
   const cargarTurnosDisponibles = async (fecha) => {
     setCargando(true);
     try {
-      const fechaFormateada = fecha.toISOString().split('T')[0];
-      const turnos = await obtenerTurnosDisponibles(servicioId, fechaFormateada);
+      const fechaFormateada = fecha.toISOString().split("T")[0];
+      const turnos = await obtenerTurnosDisponibles(
+        servicioId,
+        fechaFormateada
+      );
       setTurnosDisponibles(turnos);
       setFechaSeleccionada(fecha);
-      console.log('Turnos disponibles:', turnos);
+      console.log("Turnos disponibles:", turnos);
     } catch (err) {
-      console.error('Error al obtener turnos:', err);
+      console.error("Error al obtener turnos:", err);
       setTurnosDisponibles([]);
     } finally {
       setCargando(false);
     }
   };
 
-  // Abrir/cerrar modal y navegar entre meses
   const abrirModal = () => {
     setModalAbierto(true);
   };
-  
+
   const cerrarModal = () => {
     setModalAbierto(false);
     setFechaSeleccionada(null);
     setTurnosDisponibles([]);
   };
-  
+
   const mesAnterior = () => {
     const nuevaFecha = new Date(fechaActual);
     nuevaFecha.setMonth(fechaActual.getMonth() - 1);
     setFechaActual(nuevaFecha);
   };
-  
+
   const mesSiguiente = () => {
     const nuevaFecha = new Date(fechaActual);
     nuevaFecha.setMonth(fechaActual.getMonth() + 1);
@@ -159,9 +200,9 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
     const diasEnMes = new Date(anio, mes + 1, 0).getDate();
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0); // Normalizar la hora para comparaciones de fecha
-    
+
     const dias = [];
-    
+
     // Días del mes anterior
     for (let i = diaSemana - 1; i >= 0; i--) {
       const dia = new Date(anio, mes, -i);
@@ -169,26 +210,26 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
         fecha: dia,
         diaMes: dia.getDate(),
         esMesActual: false,
-        esPasado: dia < hoy
+        esPasado: dia < hoy,
       });
     }
-    
+
     // Días del mes actual
     for (let i = 1; i <= diasEnMes; i++) {
       const dia = new Date(anio, mes, i);
-      const fechaStr = dia.toISOString().split('T')[0];
+      const fechaStr = dia.toISOString().split("T")[0];
       const horarios = disponibilidad[fechaStr] || [];
-      
+
       dias.push({
         fecha: dia,
         diaMes: i,
         esMesActual: true,
         esPasado: dia < hoy,
         disponible: horarios.length > 0,
-        horarios: horarios
+        horarios: horarios,
       });
     }
-    
+
     // Días del mes siguiente
     const diasRestantes = 7 - (dias.length % 7);
     if (diasRestantes < 7) {
@@ -198,75 +239,115 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
           fecha: dia,
           diaMes: i,
           esMesActual: false,
-          esPasado: dia < hoy
+          esPasado: dia < hoy,
         });
       }
     }
-    
+
     return dias;
   };
 
   const renderizarCalendario = () => {
     const dias = generarCalendario();
-    const diasSemana = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
+    const diasSemana = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
     const hoy = new Date();
     hoy.setHours(0, 0, 0, 0);
-    
+
     return (
       <Box>
         <CalendarioHeader>
           <IconButton onClick={mesAnterior}>
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h6">
-            {fechaActual.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}
+          <Typography
+            variant="h5"
+            sx={{
+              textTransform: "capitalize",
+            }}
+          >
+            {fechaActual.toLocaleDateString("es-ES", {
+              month: "long",
+              year: "numeric",
+            })}
           </Typography>
           <IconButton onClick={mesSiguiente}>
             <ArrowForwardIcon />
           </IconButton>
         </CalendarioHeader>
-        
+
         <Grid container>
           {/* Cabecera de días */}
-          {diasSemana.map(dia => (
-            <Grid item xs={12/7} key={dia}>
+          {diasSemana.map((dia) => (
+            <Grid
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              item
+              xs={12 / 7}
+              key={dia}
+            >
               <DiaSemana variant="subtitle2">{dia}</DiaSemana>
             </Grid>
           ))}
-          
+
           {/* Días del calendario */}
           {dias.map((dia, index) => (
-            <Grid item xs={12/7} key={index}>
-              <DiaCelda 
-                disponible={dia.disponible}
-                hoy={dia.fecha.toDateString() === hoy.toDateString()}
-                fueraMes={!dia.esMesActual}
-                seleccionado={fechaSeleccionada && fechaSeleccionada.toDateString() === dia.fecha.toDateString()}
+            <Grid
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              item
+              xs={12 / 7}
+              key={index}
+            >
+              <DiaCelda
+                disponible={dia.disponible ? "true" : "false"}
+                hoy={
+                  dia.fecha.toDateString() === hoy.toDateString()
+                    ? "true"
+                    : "false"
+                }
+                // No pasar `esMesActual` como prop al DOM
+                seleccionado={
+                  fechaSeleccionada &&
+                  fechaSeleccionada.toDateString() === dia.fecha.toDateString()
+                    ? "true"
+                    : "false"
+                }
                 disabled={dia.esPasado || !dia.disponible || !dia.esMesActual}
-                onClick={() => dia.disponible && cargarTurnosDisponibles(dia.fecha)}
+                onClick={() =>
+                  dia.disponible && cargarTurnosDisponibles(dia.fecha)
+                }
                 sx={{
-                  backgroundColor: dia.disponible && dia.esMesActual && !dia.esPasado ? '#e8f5e9' : 
-                                   !dia.esMesActual ? 'transparent' : 
-                                   !dia.disponible ? 'rgba(156, 39, 176, 0.12)' : // Morado más transparente
-                                   '#f5f5f5',
-                  color: dia.disponible && dia.esMesActual && !dia.esPasado ? '#2e7d32' : undefined
+                  backgroundColor:
+                    dia.disponible && dia.esMesActual && !dia.esPasado
+                      ? "#e8f5e9"
+                      : !dia.esMesActual
+                      ? "transparent"
+                      : !dia.disponible
+                      ? "rgba(156, 39, 176, 0.12)" // Morado más transparente
+                      : "#f5f5f5",
+                  color:
+                    dia.disponible && dia.esMesActual && !dia.esPasado
+                      ? "#2e7d32"
+                      : undefined,
                 }}
               >
                 {dia.diaMes}
-                {dia.disponible && dia.esMesActual && !dia.esPasado && 
-                  <Box 
-                    sx={{ 
-                      width: '4px', // Tamaño reducido
-                      height: '4px', // Tamaño reducido
-                      borderRadius: '50%', 
-                      backgroundColor: '#2e7d32', 
-                      position: 'absolute', 
-                      bottom: '3px', 
-                      left: '50%', 
-                      transform: 'translateX(-50%)' 
-                    }} 
+                {dia.disponible && dia.esMesActual && !dia.esPasado && (
+                  <Box
+                    sx={{
+                      width: "5px",
+                      height: "5px",
+                      borderRadius: "50%",
+                      backgroundColor: "#transparent",
+                      position: "absolute",
+                      bottom: "3px",
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                    }}
                   />
-                }
+                )}
               </DiaCelda>
             </Grid>
           ))}
@@ -285,7 +366,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
         </Box>
       );
     }
-    
+
     if (cargando) {
       return (
         <Box mt={0} display="flex" justifyContent="center">
@@ -293,7 +374,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
         </Box>
       );
     }
-    
+
     if (turnosDisponibles.length === 0) {
       return (
         <Box mt={0}>
@@ -307,21 +388,22 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
     return (
       <Box mt={0}>
         <Typography variant="h6" gutterBottom>
-          Turnos para {fechaSeleccionada.toLocaleDateString('es-ES', { dateStyle: 'long' })}
+          Turnos para{" "}
+          {fechaSeleccionada.toLocaleDateString("es-ES", { dateStyle: "long" })}
         </Typography>
         <Grid container spacing={1}>
-          {turnosDisponibles.map(turno => (
+          {turnosDisponibles.map((turno) => (
             <Grid item xs={4} key={turno.id}>
-              <TurnoBoton 
-                variant="outlined" 
+              <TurnoBoton
+                variant="outlined"
                 color="secondary"
                 fullWidth
                 onClick={() => seleccionarTurno(turno)}
                 sx={{
-                  '&:hover': {
-                    backgroundColor: '#9c27b0',
-                    color: 'white',
-                  }
+                  "&:hover": {
+                    backgroundColor: "#9c27b0",
+                    color: "white",
+                  },
                 }}
               >
                 {turno.hora}
@@ -338,54 +420,67 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
       <CalendarioIcono onClick={abrirModal} aria-label="Ver disponibilidad">
         <CalendarMonthIcon />
       </CalendarioIcono>
-      
+
       <Modal
         open={modalAbierto}
         onClose={cerrarModal}
         aria-labelledby="calendario-disponibilidad"
       >
         <ModalContenido>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography variant="h5">Disponibilidad</Typography>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="start-flex"
+            mb={2}
+          >
             <IconButton onClick={cerrarModal} size="small">
               <CloseIcon />
             </IconButton>
+            <Typography variant="h5">Disponibilidad</Typography>
           </Box>
-          
-          {error && <Typography color="error" mb={2}>{error}</Typography>}
-          
+
+          {error && (
+            <Typography color="error" mb={2}>
+              {error}
+            </Typography>
+          )}
+
           {/* Layout horizontal para calendario y turnos */}
           <Grid container spacing={3}>
             {/* Columna del calendario */}
             <Grid item xs={12} md={7}>
               {cargando && !fechaSeleccionada ? (
-                <Box display="flex" justifyContent="center" alignItems="center" height="300px">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  height="300px"
+                >
                   <CircularProgress />
                 </Box>
               ) : (
                 renderizarCalendario()
               )}
             </Grid>
-            
+
             {/* Columna de los turnos */}
             <Grid item xs={12} md={5}>
-              <Box 
+              <Box
                 sx={{
-                  border: '1px solid #e0e0e0',
-                  borderRadius: '8px',
-                  padding: '16px',
-                  height: '100%',
-                  minHeight: '200px',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'flex-start'
+                  border: "1px solid #e0e0e0",
+                  borderRadius: "8px",
+                  padding: "10px",
+                  height: "80%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "flex-start",
                 }}
               >
                 {renderizarTurnos()}
               </Box>
             </Grid>
           </Grid>
-          
+
           <Box mt={3} display="flex" justifyContent="flex-end">
             <Button onClick={cerrarModal}>Cerrar</Button>
           </Box>

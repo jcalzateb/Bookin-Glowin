@@ -7,10 +7,10 @@ import styled from "styled-components";
 
 const SuggestionContainer = styled.div`
   position: absolute;
-  width: 35%;
-  top:73.1%;
+  width: 80%;
+  top:80%;
   background-color: white;
-  border-radius: 0 0 20px 20px;
+  border-radius: 15px;
   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
   max-height: 300px;
   overflow-y: auto;
@@ -35,7 +35,8 @@ const NoSuggestionsMessage = styled.div`
 `;
 
 const SuggestionsList = ({ suggestions, selectedIndex, onSuggestionClick, containerRef, isTyping }) => {
-  if (suggestions.content.length === 0) return null;
+  // Solo retornamos null si no hay sugerencias Y el usuario no está escribiendo
+  if (suggestions.content.length === 0 && !isTyping) return null;
 
   return (
     <SuggestionContainer ref={containerRef}>
@@ -50,7 +51,7 @@ const SuggestionsList = ({ suggestions, selectedIndex, onSuggestionClick, contai
           </SuggestionItem>
         ))
       ) : (
-        isTyping && <NoSuggestionsMessage>No hay sugerencias por ahora</NoSuggestionsMessage>
+        isTyping && <NoSuggestionsMessage>No hay sugerencias</NoSuggestionsMessage>
       )}
     </SuggestionContainer>
   );

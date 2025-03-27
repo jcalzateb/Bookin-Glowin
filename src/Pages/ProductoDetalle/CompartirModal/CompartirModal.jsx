@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Modal,
   Box,
@@ -15,23 +15,54 @@ import {
   RedesSocialesContenedor,
   CopiarLinkButton,
 } from "./CompartirModal.styled";
+import { obtenerEnlacesCompartir } from "../../../Services/compartirService";
 
 const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
   const [mensajePersonalizado, setMensajePersonalizado] = useState("");
+  const [enlacesCompartir, setEnlacesCompartir] = useState({
+    facebook: "",
+    whatsapp: "",
+  });
+
+  useEffect(() => {
+    if (servicio && servicio.id) {
+      obtenerEnlacesCompartir(servicio.id)
+        .then((data) => {
+          setEnlacesCompartir({
+            facebook: data.enlaceFacebook,
+            whatsapp: data.enlaceWhatsApp,
+          });
+        })
+        .catch((error) => {
+          console.error("Error al obtener enlaces para compartir:", error);
+        });
+    }
+  }, [servicio]);
 
   const copiarEnlace = () => {
-    navigator.clipboard.writeText(window.location.href);
+    const imagenUrl =
+      imagenesServicio && imagenesServicio[0]
+        ? imagenesServicio[0].urlImagen
+        : "https://via.placeholder.com/150";
+
+    const mensajeCompleto = `
+      ¡Mira este servicio increíble! 
+      ${servicio.nombre}
+      ${imagenUrl}
+      Enlace: ${window.location.href}
+      ${mensajePersonalizado ? `${mensajePersonalizado}` : "Brilla con estilo"}
+    `;
+
+    navigator.clipboard.writeText(mensajeCompleto);
     alert("Enlace copiado al portapapeles!");
   };
 
   const compartirEnFacebook = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${window.location.href}`;
-    window.open(url, "_blank");
+    window.open(enlacesCompartir.facebook, "_blank");
   };
 
   const compartirEnWhatsApp = () => {
-    const url = `https://api.whatsapp.com/send?text=${window.location.href}`;
-    window.open(url, "_blank");
+    window.open(enlacesCompartir.whatsapp, "_blank");
   };
 
   return (
@@ -57,10 +88,18 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
           label="Escribe un mensaje personalizado (opcional)"
         />
         <RedesSocialesContenedor>
-          <IconButton onClick={compartirEnFacebook} color="primary">
+          <IconButton
+            onClick={compartirEnFacebook}
+            color="primary"
+            disabled={!enlacesCompartir.facebook}
+          >
             <Facebook />
           </IconButton>
-          <IconButton onClick={compartirEnWhatsApp} color="success">
+          <IconButton
+            onClick={compartirEnWhatsApp}
+            color="success"
+            disabled={!enlacesCompartir.whatsapp}
+          >
             <WhatsApp />
           </IconButton>
           <IconButton onClick={copiarEnlace} color="action">

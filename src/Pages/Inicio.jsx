@@ -4,6 +4,7 @@ import Buscador from "../Components/Buscador/Buscador";
 import ProductoDestacado from "../Components/ProductoDestacado/ProductoDestacado";
 import ListaProductos from "../Components/ListaProductos/ListaProductos";
 import Header from "../Components/Header/Header";
+import ContactoWhatsapp from "../Components/WhatsApp/ContactoWhatsapp";
 
 const Inicio = () => {
   const [categoriaSeleccionada, setCategoriaSeleccionada] = useState(null);
@@ -41,6 +42,7 @@ const Inicio = () => {
         mostrarFavoritos={mostrarFavoritos}
         setMostrarFavoritos={setMostrarFavoritos}
       />
+      <ContactoWhatsapp />
     </div>
   );
 };
