@@ -16,12 +16,14 @@ import styled from "@emotion/styled";
 import {
   obtenerDisponibilidadMensual,
   obtenerTurnosDisponibles,
-} from "../../Services/disponibilidadService";
+} from "../../Services/disponibilidadServiceModal";
 
 const CalendarioIcono = styled(IconButton)({
-  color: "#1976d2",
+  color: "#2d0363",
+  bordeRadius: "50% !important",
   "&:hover": {
-    backgroundColor: "rgba(25, 118, 210, 0.04)",
+    color: "#581ca7",
+    backgroundColor: "transparent !important",
   },
 });
 
@@ -29,13 +31,19 @@ const ModalContenido = styled(Box)({
   position: "absolute",
   top: "50%",
   left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: "90%",
-  maxWidth: 800,
+  transform: "translate(-50%, -50%) !important",
+  width: "80% !important",
+  maxWidth: "800px !important",
   backgroundColor: "white",
-  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15)",
-  borderRadius: "8px",
-  padding: "24px",
+  boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15) !important",
+  borderRadius: "8px !important",
+  padding: "20px !important",
+  alignItems: "center !important",
+  textAlign: "center !important",
+  "@media (max-width: 786px)": {
+    width: "90% !important",
+    padding: "35px 20px !important",
+  },
 });
 
 const CalendarioHeader = styled(Box)({
@@ -43,20 +51,25 @@ const CalendarioHeader = styled(Box)({
   justifyContent: "space-between",
   alignItems: "center",
   marginBottom: "16px",
+
+  "@media (max-width: 786px)": {
+    gap: "8px",
+  },
 });
 
 const DiaSemana = styled(Typography)({
   textAlign: "center",
   fontWeight: "bold",
-  padding: "8px 0",
+  padding: "4px 0 !important",
 });
 
 const DiaCelda = styled(Button)(
   ({ disponible, hoy, esMesActual, seleccionado, esPasado }) => ({
-    width: "100%",
-    height: "40px",
-    borderRadius: "50%",
-    margin: "2px",
+    width: "50%",
+    height: "50px",
+    borderRadius: "5px",
+    margin: "1px",
+    padding: "0 20px",
     color: !esMesActual
       ? "#bdbdbd"
       : !disponible
@@ -71,6 +84,13 @@ const DiaCelda = styled(Button)(
     "&.Mui-disabled": {
       color: "#bdbdbd",
     },
+
+    "@media (max-width: 786px)": {
+      width: "30%px !important",
+      height: "30px !important",
+      padding: "0 !important",
+      fontSize: "12px !important",
+    },
   })
 );
 
@@ -80,6 +100,9 @@ const TurnoBoton = styled(Button)({
   "&:hover": {
     backgroundColor: "#9c27b0",
     color: "white",
+  },
+  "@media (max-width: 786px)": {
+    fontSize: "12px",
   },
 });
 
@@ -236,7 +259,12 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
           <IconButton onClick={mesAnterior}>
             <ArrowBackIcon />
           </IconButton>
-          <Typography variant="h6">
+          <Typography
+            variant="h5"
+            sx={{
+              textTransform: "capitalize",
+            }}
+          >
             {fechaActual.toLocaleDateString("es-ES", {
               month: "long",
               year: "numeric",
@@ -250,14 +278,28 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
         <Grid container>
           {/* Cabecera de días */}
           {diasSemana.map((dia) => (
-            <Grid item xs={12 / 7} key={dia}>
+            <Grid
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              item
+              xs={12 / 7}
+              key={dia}
+            >
               <DiaSemana variant="subtitle2">{dia}</DiaSemana>
             </Grid>
           ))}
 
           {/* Días del calendario */}
           {dias.map((dia, index) => (
-            <Grid item xs={12 / 7} key={index}>
+            <Grid
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              item
+              xs={12 / 7}
+              key={index}
+            >
               <DiaCelda
                 disponible={dia.disponible ? "true" : "false"}
                 hoy={
@@ -295,10 +337,10 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
                 {dia.disponible && dia.esMesActual && !dia.esPasado && (
                   <Box
                     sx={{
-                      width: "4px", // Tamaño reducido
-                      height: "4px", // Tamaño reducido
+                      width: "5px",
+                      height: "5px",
                       borderRadius: "50%",
-                      backgroundColor: "#2e7d32",
+                      backgroundColor: "#transparent",
                       position: "absolute",
                       bottom: "3px",
                       left: "50%",
@@ -385,11 +427,16 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
         aria-labelledby="calendario-disponibilidad"
       >
         <ModalContenido>
-          <Box display="flex" justifyContent="space-between" mb={2}>
-            <Typography variant="h5">Disponibilidad</Typography>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="start-flex"
+            mb={2}
+          >
             <IconButton onClick={cerrarModal} size="small">
               <CloseIcon />
             </IconButton>
+            <Typography variant="h5">Disponibilidad</Typography>
           </Box>
 
           {error && (
@@ -422,9 +469,8 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
                 sx={{
                   border: "1px solid #e0e0e0",
                   borderRadius: "8px",
-                  padding: "16px",
-                  height: "100%",
-                  minHeight: "200px",
+                  padding: "10px",
+                  height: "80%",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "flex-start",

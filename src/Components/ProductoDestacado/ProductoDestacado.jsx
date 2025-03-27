@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Rating } from "@mui/material";
 import StarIcon from "@mui/icons-material/Star";
 import { obtenerServicios } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useNavigate } from "react-router-dom";
 import {
+  Contenedor,
+  TituloSeccion,
   ContenedorDestacados,
   TarjetaDestacada,
   ContenidoHover,
@@ -14,6 +16,8 @@ import {
   Indicadores,
   Indicador,
   TituloDestacado,
+  PuntuacionProducto,
+  Valoracion,
 } from "./ProductoDestacado.styled";
 
 const ProductosDestacados = () => {
@@ -45,7 +49,9 @@ const ProductosDestacados = () => {
     const ajustarCantidadProductos = () => {
       if (window.innerWidth < 600) {
         setProductosPorPantalla(1);
-      } else if (window.innerWidth < 960) {
+      } else if (window.innerWidth < 820) {
+        setProductosPorPantalla(2);
+      } else if (window.innerWidth < 1220) {
         setProductosPorPantalla(3);
       } else {
         setProductosPorPantalla(4);
@@ -61,7 +67,7 @@ const ProductosDestacados = () => {
     setProductosVisibles(
       productos.slice(indiceActual, indiceActual + productosPorPantalla)
     );
-  }, [indiceActual, productosPorPantalla]);
+  }, [indiceActual, productosPorPantalla, productos]);
 
   useEffect(() => {
     const intervalo = setInterval(() => {
@@ -76,16 +82,8 @@ const ProductosDestacados = () => {
   }, [productosPorPantalla, productos.length]);
 
   return (
-    <Box>
-      <h2
-        style={{
-          textAlign: "center",
-          margin: "30px 0 10px 0",
-          fontStyle: "italic",
-        }}
-      >
-        SERVICIOS DESTACADOS
-      </h2>
+    <Contenedor>
+      <TituloSeccion>SERVICIOS DESTACADOS</TituloSeccion>
       <ContenedorDestacados>
         {productosVisibles.map((producto) => (
           <TarjetaDestacada
@@ -103,12 +101,32 @@ const ProductosDestacados = () => {
               {producto.nombre}
             </TituloDestacado>
             <ContenidoHover className="hover">
-              <Typography variant="h6" fontWeight="bold">
+              <Typography
+                variant="h4"
+                fontWeight="bold"
+                style={{ fontStyle: "italic", color: "#2D0363" }}
+              >
                 {producto.nombre}
               </Typography>
-              <Typography variant="body2">{producto.descripcion}</Typography>
+              <Typography
+                variant="h6"
+                style={{ fontStyle: "italic", color: "#3d3d3d" }}
+              >
+                {producto.categoria}
+              </Typography>
+              <Typography variant="body1">{producto.descripcion}</Typography>
+              <Valoracion>
+                <PuntuacionProducto variant="body2">
+                  {producto.puntuacionMedia || "N/A"}
+                </PuntuacionProducto>
+                <Rating
+                  value={producto.puntuacionMedia || 0}
+                  readOnly
+                  size="small"
+                />
+              </Valoracion>
               <BotonVerMas onClick={() => navigate(`/producto/${producto.id}`)}>
-                Ver más
+                Ver servicio
               </BotonVerMas>
             </ContenidoHover>
           </TarjetaDestacada>
@@ -128,7 +146,7 @@ const ProductosDestacados = () => {
           ))}
         </Indicadores>
       </ControlesCarrusel>
-    </Box>
+    </Contenedor>
   );
 };
 
