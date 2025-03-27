@@ -16,8 +16,7 @@ import styled from "@emotion/styled";
 import {
   obtenerDisponibilidadMensual,
   obtenerTurnosDisponibles,
-} from "../../Services/disponibilidadService";
-import { Padding } from "@mui/icons-material";
+} from "../../Services/disponibilidadServiceModal";
 
 const CalendarioIcono = styled(IconButton)({
   color: "#2d0363",
