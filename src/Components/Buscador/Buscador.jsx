@@ -16,10 +16,9 @@ import {
   ContenedorBuscador,
   FondoBanner,
   ContenedorContenido,
-  Isologo,
+  //Isologo,
   BarraBusqueda,
   CampoBusqueda,
-  BotonBuscar,
   BotonLimpiar,
   ContenedorFecha,
   ContenedorParametros,
@@ -28,10 +27,14 @@ import {
   CabeceraTabla,
   FilaTabla,
   CeldaTabla,
+  TituloBuscador,
+  SubtituloBuscador,
+  DividerVertical,
+  BotonBuscarCircular
 } from "./Buscador.styled";
 
 import Banner from "/src/assets/banner_chica.jpg";
-import IsologoImg from "/src/assets/isologo_light.svg";
+//import IsologoImg from "/src/assets/isologo_light.svg";
 import SuggestionsList from "./SuggestionList";
 
 // Configurar dayjs para usar español como idioma por defecto
@@ -52,6 +55,9 @@ const Buscador = () => {
   const suggestionsContainerRef = useRef(null);
   const inputRef = useRef(null);
   const navigate = useNavigate();
+
+  // Determinar si el botón de búsqueda debe estar activado
+  const isBusquedaDisabled = !selectedService || !selectedDate;
 
   // Constante para el mínimo de caracteres antes de mostrar sugerencias
   const MIN_CHARS_FOR_SUGGESTIONS = 3;
@@ -133,32 +139,33 @@ const Buscador = () => {
   // Manejar navegación con teclado
   const handleKeyDown = (e) => {
     // Si no hay sugerencias visibles, no hacemos nada
-    if (!showSuggestions || suggestions.length === 0) return;
+    if (!showSuggestions || !suggestions.content || suggestions.content.length === 0) return;
 
     // Flecha abajo
     if (e.key === "ArrowDown") {
       e.preventDefault();
       setSelectedIndex((prevIndex) =>
-        prevIndex < suggestions.length - 1 ? prevIndex + 1 : 0
+        prevIndex < suggestions.content.length - 1 ? prevIndex + 1 : 0
       );
     }
     // Flecha arriba
     else if (e.key === "ArrowUp") {
       e.preventDefault();
       setSelectedIndex((prevIndex) =>
-        prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1
+        prevIndex > 0 ? prevIndex - 1 : suggestions.content.length - 1
       );
     }
     // Enter
     else if (e.key === "Enter" && selectedIndex >= 0) {
       e.preventDefault();
-      handleSuggestionClick(suggestions[selectedIndex]);
+      handleSuggestionClick(suggestions.content[selectedIndex]);
     }
     // Escape
     else if (e.key === "Escape") {
       setShowSuggestions(false);
     }
   };
+
   // Manejar borrado de la selección
   const handleClearSelection = () => {
     setQuery("");
@@ -227,13 +234,16 @@ const Buscador = () => {
       <ContenedorBuscador>
         <FondoBanner src={Banner} alt="Fondo banner" />
         <ContenedorContenido>
-          <Isologo src={IsologoImg} alt="Glowin Isologo" />
+          <TituloBuscador>Estás a un clic <br/>de brillar</TituloBuscador>
+          <SubtituloBuscador>¡Reserva ahora!</SubtituloBuscador>
+  
           <ContenedorParametros>
             <BarraBusqueda>
               <CampoBusqueda
                 ref={inputRef}
+                label="Selecciona un servicio"
                 variant="outlined"
-                placeholder="Buscando..."
+                placeholder="¿Qué servicio buscas?"
                 value={query}
                 onChange={handleInputChange}
                 onKeyDown={handleKeyDown}
@@ -242,7 +252,15 @@ const Buscador = () => {
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
-                      {isLoading ? <span>Cargando...</span> : <SearchIcon />}
+                      {isLoading ? <span>Cargando...</span> : null}
+                      {query && (
+                        <BotonLimpiar
+                          onClick={handleClearSelection}
+                          aria-label="Limpiar búsqueda"
+                        >
+                          <CleaningServicesIcon />
+                        </BotonLimpiar>
+                      )}
                     </InputAdornment>
                   ),
                 }}
@@ -256,16 +274,9 @@ const Buscador = () => {
                   isTyping={query.trim().length >= MIN_CHARS_FOR_SUGGESTIONS}
                 />
               )}
-              {query && (
-                <BotonLimpiar
-                  onClick={handleClearSelection}
-                  aria-label="Limpiar busqueda"
-                >
-                  <CleaningServicesIcon />
-                </BotonLimpiar>
-              )}
             </BarraBusqueda>
             {console.log("Servicio seleccionado:", selectedService)}
+            <DividerVertical />          
             <ContenedorFecha>
               <LocalizationProvider
                 dateAdapter={AdapterDayjs}
@@ -278,7 +289,13 @@ const Buscador = () => {
                   minDate={dayjs()}
                   format="DD/MM/YYYY"
                   slotProps={{
-                    textField: { fullWidth: true },
+                    textField: { 
+                      fullWidth: true,
+                      variant: "standard",
+                      InputProps: {
+                        disableUnderline: true
+                      }
+                    },
                     day: {
                       disableHighlightToday: false,
                     },
@@ -286,13 +303,18 @@ const Buscador = () => {
                 />
               </LocalizationProvider>
             </ContenedorFecha>
-            {console.log("Fecha seleccionada:", selectedDate)}
+            
+            <BotonBuscarCircular 
+              onClick={handleSearch} 
+              disabled={isBusquedaDisabled || isSearching}
+              aria-label="Buscar"
+            >
+              <SearchIcon />
+            </BotonBuscarCircular>
           </ContenedorParametros>
-          <BotonBuscar onClick={handleSearch} disabled={isSearching}>
-            {isSearching ? "Buscando..." : "Realizar Búsqueda"}
-          </BotonBuscar>
         </ContenedorContenido>
       </ContenedorBuscador>
+      
       {searchResults && (
         <ResultadosContainer>
           <h2>Resultados de la búsqueda</h2>
