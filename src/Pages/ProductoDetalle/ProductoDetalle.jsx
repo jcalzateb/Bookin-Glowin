@@ -2,7 +2,13 @@ import React, { useState, useEffect } from "react";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useParams, useNavigate } from "react-router-dom";
-import { Typography, CircularProgress } from "@mui/material";
+import {
+  Typography,
+  CircularProgress,
+  Rating,
+  TextField,
+  Button,
+} from "@mui/material";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
@@ -11,6 +17,7 @@ import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import CalendarioDisponibilidad from "../../Components/CalendarioDisponibilidad/CalendarioDisponibilidad";
+import { realizarValoracion } from "../../Services/valoracionesService";
 import {
   ContenedorDetalle,
   EncabezadoDetalle,
@@ -36,6 +43,12 @@ import {
   PoliticasContenedor,
   PoliticaItem,
   TituloPoliticas,
+  ContenedorPuntuacion,
+  TituloTuValoracion,
+  ContenedorTuValoracion,
+  TituloValoracion,
+  ContenedorValoracionReseña,
+  ContenedorReseñas,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 import {
@@ -57,6 +70,8 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [compartirModalAbierto, setCompartirModalAbierto] = useState(false);
   // Nuevo estado para el turno seleccionado
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
+  const [valoracion, setValoracion] = useState(0);
+  const [comentario, setComentario] = useState("");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -75,6 +90,23 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       console.log("No se pudo cargar la información del servicio.", error);
     } finally {
       setCargando(false);
+    }
+  };
+
+  const manejarValoracion = async () => {
+    if (valoracion === 0) {
+      setError("Por favor, selecciona una puntuación.");
+      return;
+    }
+
+    try {
+      await realizarValoracion(id, valoracion, comentario);
+      alert("Valoración enviada con éxito");
+      // Limpiar los campos después de enviar la valoración
+      setValoracion(0);
+      setComentario("");
+    } catch (err) {
+      setError("Hubo un error al enviar la valoración.");
     }
   };
 
@@ -150,12 +182,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCompartirModalAbierto(false);
   };
 
-  // Función para manejar la selección de un turno desde el calendario
   const manejarSeleccionTurno = (fecha, turno) => {
     setTurnoSeleccionado({
       fecha: fecha,
       hora: turno.hora,
-      id: turno.id
+      id: turno.id,
     });
   };
 
@@ -168,7 +199,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         <TituloProducto>{servicio.nombre}</TituloProducto>
         <BotonesIconos>
           {/* Añadir el componente de calendario */}
-          <CalendarioDisponibilidad 
+          <CalendarioDisponibilidad
             servicioId={servicio.id}
             onSeleccionTurno={manejarSeleccionTurno}
           />
@@ -231,34 +262,42 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
 
         <ContenedorReserva>
           <PrecioProducto>${servicio.costo} USD</PrecioProducto>
-          
-          {/* Mostrar información del turno seleccionado o información genérica */}
+
           {turnoSeleccionado ? (
-            <Typography variant="body2" sx={{ color: 'green', fontWeight: 'bold', my: 1 }}>
-              Turno seleccionado: {turnoSeleccionado.fecha.toLocaleDateString('es-ES')} a las {turnoSeleccionado.hora}
+            <Typography
+              variant="body2"
+              sx={{ color: "green", fontWeight: "bold", my: 1 }}
+            >
+              Turno seleccionado:{" "}
+              {turnoSeleccionado.fecha.toLocaleDateString("es-ES")} a las{" "}
+              {turnoSeleccionado.hora}
             </Typography>
           ) : (
             <>
-              <Typography variant="body2">Horario: 10:00 AM - 6:00 PM</Typography>
+              <Typography variant="body2">
+                Horario: 10:00 AM - 6:00 PM
+              </Typography>
               <Typography variant="body2">
                 Disponibilidad: Lunes - Viernes
               </Typography>
             </>
           )}
-          
-          {/* Actualizar botón de reserva */}
-          <BotonReservar 
+
+          <BotonReservar
             onClick={() => {
               if (turnoSeleccionado) {
-                navigate(`/reserva/${id}`, { 
-                  state: { 
+                navigate(`/reserva`, {
+                  state: {
                     servicioId: id,
                     turnoId: turnoSeleccionado.id,
-                    fecha: turnoSeleccionado.fecha.toISOString().split('T')[0]
-                  }
+                    hora: turnoSeleccionado.hora,
+                    fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
+                  },
                 });
               } else {
-                alert("Por favor seleccione un turno disponible haciendo clic en el icono de calendario");
+                alert(
+                  "Por favor seleccione un turno disponible haciendo clic en el icono de calendario"
+                );
               }
             }}
           >
@@ -266,6 +305,59 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           </BotonReservar>
         </ContenedorReserva>
       </ContenedorInfo>
+
+      <ContenedorPuntuacion>
+        <ContenedorTuValoracion>
+          <TituloTuValoracion>Tu Valoración</TituloTuValoracion>
+          <Rating
+            name="producto-rating"
+            value={valoracion}
+            onChange={(event, newValue) => setValoracion(newValue)}
+            size="large"
+          />
+          <TextField
+            label="Comentario"
+            multiline
+            rows={4}
+            value={comentario}
+            onChange={(e) => setComentario(e.target.value)}
+            fullWidth
+            variant="outlined"
+            margin="normal"
+          />
+          {error && <Typography color="error">{error}</Typography>}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={manejarValoracion}
+          >
+            Enviar Valoración
+          </Button>
+        </ContenedorTuValoracion>
+
+        <ContenedorValoracionReseña>
+          <TituloValoracion>Valoraciones del Producto</TituloValoracion>
+          <Rating value={servicio.puntuacionMedia || 0} readOnly size="large" />
+          <Typography variant="body1">
+            Puntuación Media: {servicio.puntuacionMedia || "N/A"}
+          </Typography>
+
+          <ContenedorReseñas>
+            {servicio.valoraciones &&
+              servicio.valoraciones.map((valoracion, index) => (
+                <div key={index}>
+                  <Rating value={valoracion.puntuacion} readOnly size="small" />
+                  <Typography variant="body2">
+                    {valoracion.comentario}
+                  </Typography>
+                  <Typography variant="body2" color="textSecondary">
+                    - {valoracion.usuarioNombre}, {valoracion.fecha}
+                  </Typography>
+                </div>
+              ))}
+          </ContenedorReseñas>
+        </ContenedorValoracionReseña>
+      </ContenedorPuntuacion>
       <ContenedorCaracteristicas>
         <TituloDescripcion>Características del Servicio</TituloDescripcion>
         <ListaCaracteristicas>

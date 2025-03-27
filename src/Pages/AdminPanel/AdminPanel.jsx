@@ -10,6 +10,7 @@ import {
   eliminarUsuario,
 } from "../../Services/usuariosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
+import { obtenerEmpleados } from "../../Services/empleadosService";
 import { useMediaQuery } from "react-responsive";
 import {
   ContenedorAdmin,
@@ -23,12 +24,14 @@ import FormularioGestion from "./FormularioGestion";
 import TablaProductos from "./TablaProductos";
 import GestionCategorias from "./GestionCategorias";
 import TablaUsuarios from "./TablaUsuarios";
+import GestionEmpleados from "./GestionEmpleados";
 
 const AdminPanel = () => {
   const [vistaActual, setVistaActual] = useState("agregarServicio");
   const [servicios, setServicios] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [usuarios, setUsuarios] = useState([]);
+  const [empleados, setEmpleados] = useState([]);
   const [servicioSeleccionado, setServicioSeleccionado] = useState(null);
   const [mensaje, setMensaje] = useState({
     abierto: false,
@@ -41,6 +44,7 @@ const AdminPanel = () => {
     actualizarLista();
     cargarCategorias();
     cargarUsuarios();
+    cargarEmpleados();
   }, []);
 
   const actualizarLista = async () => {
@@ -67,6 +71,15 @@ const AdminPanel = () => {
       setUsuarios(data);
     } catch (error) {
       console.error("Error al obtener los usuarios:", error);
+    }
+  };
+
+  const cargarEmpleados = async () => {
+    try {
+      const data = await obtenerEmpleados();
+      setEmpleados(data);
+    } catch (error) {
+      console.error("Error al obtener los empleados:", error);
     }
   };
 
@@ -192,6 +205,12 @@ const AdminPanel = () => {
           Categoría
         </BotonMenu>
         <BotonMenu
+          $activo={vistaActual === "empleados"}
+          onClick={() => setVistaActual("empleados")}
+        >
+          Empleados
+        </BotonMenu>
+        <BotonMenu
           $activo={vistaActual === "usuarios"}
           onClick={() => setVistaActual("usuarios")}
         >
@@ -215,6 +234,7 @@ const AdminPanel = () => {
           />
         )}
         {vistaActual === "agregarCategoria" && <GestionCategorias />}
+        {vistaActual === "empleados" && <GestionEmpleados />}
         {vistaActual === "usuarios" && (
           <TablaUsuarios
             usuarios={usuarios}

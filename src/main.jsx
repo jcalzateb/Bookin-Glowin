@@ -5,6 +5,8 @@ import { ThemeProvider as MuiThemeProvider, CssBaseline } from "@mui/material";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 import tema from "./Styles/tema";
 import GlobalStyles from "./Styles/GlobalStyles";
+// Importar el archivo de fuentes antes que cualquier otro estilo
+import "./Styles/fonts.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
