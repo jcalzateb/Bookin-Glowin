@@ -8,9 +8,6 @@ export const Contenedor = styled(Box)`
   margin: 0 auto;
   display: flex;
   justify-content: center;
-  @media (max-width: 600px) {
-    padding: 80px 20px 20px 20px;
-  }
 `;
 
 export const ContenedorDetalle = styled(Box)`
@@ -20,11 +17,6 @@ export const ContenedorDetalle = styled(Box)`
   align-items: center;
   width: 100%;
   margin: auto;
-
-  @media (max-width: 786px) {
-    padding: 0 10px;
-    width: 100%;
-  }
 `;
 
 export const EncabezadoDetalle = styled(Box)`
@@ -34,15 +26,18 @@ export const EncabezadoDetalle = styled(Box)`
   align-items: center;
   width: 100%;
   color: #f6ebf9;
-  padding: 0 50px;
+  padding: 10px 50px;
   margin-bottom: 20px;
+  @media (max-width: 1030px) {
+    padding: 10px 40px;
+  }
 
   @media (max-width: 786px) {
-    width: 100%;
+    padding: 0 30px;
   }
 
   @media (max-width: 600px) {
-    width: 100%;
+    padding: 0 20px;
     font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
   }
 `;
@@ -61,12 +56,14 @@ export const TituloProducto = styled.h1`
   }
 `;
 export const BotonRetroceso = styled(IconButton)`
-  background: #e0e0e0;
-  border-radius: 50%;
-  padding: 6px;
+  border-radius: 50% !important;
+  padding: 6px !important;
 
   &:hover {
-    background: ${({ theme }) => theme.palette.botones.hovered};
+    color: #9747ff !important;
+  }
+  &:active {
+    color: #530eae !important;
   }
 `;
 
@@ -87,12 +84,23 @@ export const BloqueImagenes = styled(Box)`
   gap: 10px;
   width: 100%;
   background-color: #ffffff;
-  padding: 30px 150px;
+  padding: 30px 130px;
   margin-bottom: 10px;
 
+  @media (max-width: 600px) {
+    padding: 10px 20px;
+    justify-content: flex-start;
+    gap: 8px;
+  }
+
   @media (max-width: 786px) {
+    padding: 20px 30px;
     flex-direction: column;
     align-items: center;
+  }
+
+  @media (max-width: 1130px) {
+    padding: 30px 60px;
   }
 `;
 
@@ -162,12 +170,17 @@ export const ContenedorInfo = styled(Box)`
   justify-content: space-between;
   gap: 20px;
   width: 100%;
-  padding: 30px 150px;
+  padding: 30px 130px;
 
   @media (max-width: 786px) {
+    padding: 20px 10px;
     flex-direction: column;
+    align-items: center;
     gap: 10px;
-    margin-top: 30px;
+  }
+
+  @media (max-width: 1130px) {
+    padding: 30px 60px;
   }
 `;
 
@@ -177,6 +190,7 @@ export const ContenedorInfoI = styled(Box)`
   flex-direction: column;
   gap: 10px;
   padding: 0;
+  margin-bottom: 10px;
 `;
 
 export const DescripcionProducto = styled(Box)`
@@ -259,9 +273,7 @@ export const ContenedorCaracteristicas = styled(Box)`
 export const ListaCaracteristicas = styled(Box)`
   display: flex;
   flex-direction: row;
-  justify-content: center;
-
-  gap: 10px;
+  gap: 50px;
   @media (max-width: 1130px) {
     padding: 10px 30px;
     flex-direction: column;
@@ -296,6 +308,7 @@ export const ContenedorInfoD = styled(Box)`
   border-radius: 10px;
   background-color: #fff;
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
 `;
 export const PrecioProducto = styled.h2`
   font-size: 18px;
@@ -336,14 +349,14 @@ export const Disponibilidad = styled(Box)`
 `;
 
 export const BotonReservar = styled(Button)`
-  background-color: #2d0363;
-  color: white;
+  background-color: #2d0363 !important;
+  color: white !important;
   font-weight: 500;
   text-transform: none;
   padding: 10px 20px;
   border-radius: 8px;
   &:hover {
-    background-color: #530eae;
+    background-color: #530eae !important;
   }
 `;
 
@@ -362,7 +375,7 @@ export const ContenedorResenas = styled(Box)`
 export const PoliticasContenedor = styled(Box)`
   width: 100%;
   background-color: #ffffff;
-  padding: 30px 150px;
+  padding: 30px 130px;
   color: #333;
 
   @media (max-width: 600px) {
@@ -370,7 +383,11 @@ export const PoliticasContenedor = styled(Box)`
     font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
   }
   @media (max-width: 768px) {
-    width: 100%;
+    padding: 20px;
+  }
+
+  @media (max-width: 1130px) {
+    padding: 30px 60px;
   }
 `;
 
@@ -424,18 +441,23 @@ export const MensajeError = styled(Typography)`
   margin-top: 40px;
 `;
 
-export const BotonCompartirRedes = styled(Button)`
-  width: 10px;
-  height: 10px;
-  background-color: transparent;
-  padding: 5px !important;
-  font-size: 10px !important;
+export const BotonCompartirRedes = styled(IconButton)`
   border-radius: 50% !important;
-  display: flex;
-  align-items: center;
-
+  padding: 6px !important;
   &:hover {
-    background-color: rgba(0, 0, 0, 0.1);
-    color: rgb(60, 20, 112) !important;
+    color: #9747ff !important;
+  }
+  &:active {
+    color: #530eae !important;
+  }
+`;
+export const FavoritoIcono = styled(IconButton)`
+  border-radius: 50% !important;
+  padding: 6px !important;
+  &:hover {
+    color: ${({ $favorito }) => ($favorito ? "darkred" : "#9747ff")}!important;
+  }
+  &:active {
+    color: ${({ $favorito }) => ($favorito ? "darkred" : "#530eae")};
   }
 `;

@@ -57,6 +57,7 @@ import {
   Turno,
   Disponibilidad,
   ListaPoliticas,
+  FavoritoIcono,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 import {
@@ -218,19 +219,21 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 }}
               />
             </BotonCompartirRedes>
-            <FavoriteIcon
-              onClick={() => {
-                if (esFavorito(servicio.id)) {
-                  eliminarDeFavoritos();
-                } else {
-                  agregarAFavoritos();
-                }
-              }}
-              style={{
-                cursor: "pointer",
-                color: esFavorito(servicio.id) ? "red" : "#f6ebf9",
-              }}
-            />
+            <FavoritoIcono>
+              <FavoriteIcon
+                onClick={() => {
+                  if (esFavorito(servicio.id)) {
+                    eliminarDeFavoritos();
+                  } else {
+                    agregarAFavoritos();
+                  }
+                }}
+                style={{
+                  cursor: "pointer",
+                  color: esFavorito(servicio.id) ? "red" : "#f6ebf9",
+                }}
+              />
+            </FavoritoIcono>
           </BotonesIconos>
         </EncabezadoDetalle>
 
@@ -336,7 +339,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
             <PrecioProducto>Precio: ${servicio.costo} USD</PrecioProducto>
             <ContenedorReserva>
               <Turno>
-                <AccessTimeIcon />
+                <AccessTimeIcon
+                  style={{
+                    cursor: "pointer",
+                    color: "#2d0363",
+                  }}
+                />
                 <Horario>
                   <Typography variant="body2">Horario:</Typography>
                   <Typography variant="body2">10:00 AM - 6:00 PM</Typography>
@@ -348,6 +356,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                   servicioId={servicio.id}
                   onSeleccionTurno={manejarSeleccionTurno}
                 />
+
                 {turnoSeleccionado ? (
                   <Typography
                     variant="body2"
