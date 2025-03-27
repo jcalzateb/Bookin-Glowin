@@ -1,5 +1,10 @@
 import React from "react";
-import { ContenedorFooter, TextoFooter, LogoFooter } from "./Footer.styled";
+import {
+  ContenedorFooter,
+  TextoFooter,
+  LogoFooter,
+  IconoCopyright,
+} from "./Footer.styled";
 import Isologo from "../../assets/isologoFooter.png";
 
 const Footer = () => {
@@ -7,7 +12,8 @@ const Footer = () => {
     <ContenedorFooter>
       <LogoFooter src={Isologo} alt="Logo" />
       <TextoFooter>
-        Copyright 2025 Glowin. Todos los derechos reservados.
+        <IconoCopyright>©</IconoCopyright>Copyright 2025 Glowin. Todos los
+        derechos reservados.
       </TextoFooter>
     </ContenedorFooter>
   );

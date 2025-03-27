@@ -10,6 +10,8 @@ import {
 } from "../../Services/favoritosService";
 import { Rating } from "@mui/material";
 import {
+  Contenedor,
+  TituloSeccion,
   ContenedorLista,
   TarjetaProducto,
   ImagenProducto,
@@ -24,6 +26,8 @@ import {
   TextoFiltro,
   CorazonFavorito,
   PuntuacionProducto,
+  CategiraProducto,
+  Valoracion,
 } from "./ListaProductos.styled";
 
 const ListaProductos = ({
@@ -38,6 +42,10 @@ const ListaProductos = ({
   const productosPorPagina = 10;
   const navigate = useNavigate();
 
+  const mezclarProductos = (array) => {
+    return [...array].sort(() => Math.random() - 0.5);
+  };
+
   useEffect(() => {
     const cargarServicios = async () => {
       try {
@@ -51,7 +59,7 @@ const ListaProductos = ({
             };
           })
         );
-        setServicios(serviciosConImagenes);
+        setServicios(mezclarProductos(serviciosConImagenes));
         const favoritosDelUsuario = await obtenerFavoritosUsuario();
         console.log("favoritos del usuario ", favoritosDelUsuario);
         setFavoritos(favoritosDelUsuario);
@@ -63,15 +71,11 @@ const ListaProductos = ({
     cargarServicios();
   }, []);
 
-  const [productosAleatorios, setProductosAleatorios] = useState([]);
+  //const [productosAleatorios, setProductosAleatorios] = useState([]);
 
-  const mezclarProductos = (array) => {
-    return [...array].sort(() => Math.random() - 0.5);
-  };
-
-  useEffect(() => {
-    setProductosAleatorios(mezclarProductos(servicios));
-  }, []);
+  /*   useEffect(() => {
+    setProductosAleatorios(mezclarProductos(servicios)); // Mezclar productos cuando se cargan
+  }, [servicios]); // Re-ejecutar cuando los servicios cambien */
 
   const serviciosFiltrados = categoriaSeleccionada
     ? servicios.filter(
@@ -151,17 +155,9 @@ const ListaProductos = ({
   };
 
   return (
-    <>
+    <Contenedor>
       <div id="lista-productos">
-        <h2
-          style={{
-            textAlign: "center",
-            margin: "30px 0 5px 0",
-            fontStyle: "italic",
-          }}
-        >
-          SERVICIOS
-        </h2>
+        <TituloSeccion>SERVICIOS</TituloSeccion>
 
         <ContenedorFiltro>
           <TextoFiltro>
@@ -212,21 +208,25 @@ const ListaProductos = ({
                 />
                 <ContenidoProducto>
                   <TituloProducto>{servicio.nombre}</TituloProducto>
+                  <CategiraProducto>{servicio.categoria}</CategiraProducto>
                   <DescripcionProducto variant="body2">
                     {servicio.descripcion}
                   </DescripcionProducto>
-                  <Rating
-                    value={servicio.puntuacionMedia || 0}
-                    readOnly
-                    size="small"
-                  />
-                  <PuntuacionProducto variant="body2">
-                    Puntuación media: {servicio.puntuacionMedia || "N/A"}
-                  </PuntuacionProducto>
+                  <Valoracion>
+                    <PuntuacionProducto variant="body2">
+                      {servicio.puntuacionMedia || "N/A "}
+                    </PuntuacionProducto>
+                    <Rating
+                      value={servicio.puntuacionMedia || 0}
+                      readOnly
+                      size="small"
+                    />
+                  </Valoracion>
+
                   <BotonVerMas
                     onClick={() => navigate(`/producto/${servicio.id}`)}
                   >
-                    VER MÁS
+                    Ver servicio
                   </BotonVerMas>
                 </ContenidoProducto>
               </TarjetaProducto>
@@ -266,7 +266,7 @@ const ListaProductos = ({
           </ContenedorPaginacion>
         )}
       </div>
-    </>
+    </Contenedor>
   );
 };
 

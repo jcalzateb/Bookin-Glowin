@@ -7,13 +7,26 @@ export const ContenedorCategorias = styled(Box)`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 10px;
-  padding: 30px 20px;
+  gap: 20px;
+  padding: 40px 20px;
   color: white;
 
   @media (min-width: 760px) and (max-width: 1000px) {
-    padding: 40px 120px;
+    padding: 50px 120px;
   }
+
+  @media (max-width: 600px) {
+    padding: 30px 15px;
+  }
+`;
+
+export const TituloSeccion = styled.h2`
+  font-size: 42px;
+  font-weight: bold;
+  color: #f6ebf9;
+  margin-bottom: 20px;
+  overflow: hidden;
+  text-align: center;
 `;
 
 export const ListaCategorias = styled(Box)`
@@ -21,7 +34,7 @@ export const ListaCategorias = styled(Box)`
   justify-content: center;
   flex-wrap: wrap;
   gap: 50px;
-  max-width: 700px;
+  max-width: 900px;
   width: 100%;
 `;
 
@@ -30,9 +43,9 @@ export const CategoriaItem = styled.div`
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 100px;
+  width: 130px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   color: white;
 
   &:hover {
@@ -40,18 +53,19 @@ export const CategoriaItem = styled.div`
   }
 
   img {
-    width: 100px;
-    height: 100px;
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
     object-fit: cover;
-    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 5px solid rgba(74, 26, 119, 0.21);
   }
 `;
 
 export const ImagenCategoria = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid rgba(134, 134, 134, 0.2);
+  border: 5px solid rgba(134, 134, 134, 0.3);
 `;

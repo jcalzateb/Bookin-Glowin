@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import { obtenerCategorias } from "../../Services/categoriasService";
 import {
   ContenedorCategorias,
+  TituloSeccion,
   ListaCategorias,
   CategoriaItem,
   ImagenCategoria,
 } from "./Categorias.styled";
 
 const Categorias = ({ setCategoriaSeleccionada }) => {
-  const navigate = useNavigate();
+  //const navigate = useNavigate();
   const [categorias, setCategorias] = useState([]);
 
   useEffect(() => {
@@ -39,16 +40,7 @@ const Categorias = ({ setCategoriaSeleccionada }) => {
 
   return (
     <ContenedorCategorias>
-      <Typography
-        variant="h2"
-        sx={{
-          fontWeight: "bold",
-          marginBottom: "20px",
-          textTransform: "uppercase",
-        }}
-      >
-        Categorías
-      </Typography>
+      <TituloSeccion>Categorías</TituloSeccion>
 
       <ListaCategorias>
         {categorias.map((categoria) => (
