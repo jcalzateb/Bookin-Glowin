@@ -68,10 +68,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [error, setError] = useState(null);
   const [favoritos, setFavoritos] = useState([]);
   const [compartirModalAbierto, setCompartirModalAbierto] = useState(false);
-  // Nuevo estado para el turno seleccionado
+  // Estado para el turno seleccionado
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
   const [valoracion, setValoracion] = useState(0);
   const [comentario, setComentario] = useState("");
+  // Nuevo estado para controlar la visibilidad del calendario
+  const [calendarioAbierto, setCalendarioAbierto] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -182,12 +184,36 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCompartirModalAbierto(false);
   };
 
+  // Función para manejar la apertura/cierre del calendario
+  const toggleCalendario = () => {
+    setCalendarioAbierto(!calendarioAbierto);
+  };
+
   const manejarSeleccionTurno = (fecha, turno) => {
     setTurnoSeleccionado({
       fecha: fecha,
       hora: turno.hora,
       id: turno.id,
     });
+    setCalendarioAbierto(false); // Cerrar el calendario después de seleccionar
+  };
+
+  // Función para manejar el clic en el botón de reserva
+  const manejarBotonReserva = () => {
+    if (!turnoSeleccionado) {
+      // Si no hay turno seleccionado, mostrar el calendario
+      toggleCalendario();
+    } else {
+      // Si ya hay turno seleccionado, navegar a la página de reserva
+      navigate(`/reserva`, {
+        state: {
+          servicioId: id,
+          turnoId: turnoSeleccionado.id,
+          hora: turnoSeleccionado.hora,
+          fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
+        },
+      });
+    }
   };
 
   return (
@@ -198,11 +224,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         </BotonRetroceso>
         <TituloProducto>{servicio.nombre}</TituloProducto>
         <BotonesIconos>
-          {/* Añadir el componente de calendario */}
-          <CalendarioDisponibilidad
-            servicioId={servicio.id}
-            onSeleccionTurno={manejarSeleccionTurno}
-          />
           <BotonCompartirRedes onClick={abrirModalCompartir}>
             <ShareIcon />
           </BotonCompartirRedes>
@@ -283,26 +304,17 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
             </>
           )}
 
-          <BotonReservar
-            onClick={() => {
-              if (turnoSeleccionado) {
-                navigate(`/reserva`, {
-                  state: {
-                    servicioId: id,
-                    turnoId: turnoSeleccionado.id,
-                    hora: turnoSeleccionado.hora,
-                    fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
-                  },
-                });
-              } else {
-                alert(
-                  "Por favor seleccione un turno disponible haciendo clic en el icono de calendario"
-                );
-              }
-            }}
-          >
-            {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
+          <BotonReservar onClick={manejarBotonReserva}>
+            {turnoSeleccionado ? "Reservar" : "Ver Disponibilidad"}
           </BotonReservar>
+          
+          {/* Calendario de disponibilidad como componente controlado */}
+          {calendarioAbierto && (
+            <CalendarioDisponibilidad
+              servicioId={servicio.id}
+              onSeleccionTurno={manejarSeleccionTurno}
+            />
+          )}
         </ContenedorReserva>
       </ContenedorInfo>
 
