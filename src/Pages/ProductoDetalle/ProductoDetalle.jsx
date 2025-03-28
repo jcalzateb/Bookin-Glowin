@@ -195,9 +195,10 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCalendarioAbierto(!calendarioAbierto);
   };
 
+  // Función modificada para manejar correctamente objetos dayjs
   const manejarSeleccionTurno = (fecha, turno) => {
     setTurnoSeleccionado({
-      fecha: fecha,
+      fecha: fecha, // Guardamos el objeto dayjs completo
       hora: turno.hora,
       id: turno.id,
     });
@@ -216,7 +217,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           servicioId: id,
           turnoId: turnoSeleccionado.id,
           hora: turnoSeleccionado.hora,
-          fecha: turnoSeleccionado.fecha.toISOString().split("T")[0],
+          fecha: turnoSeleccionado.fecha.format("YYYY-MM-DD"), // Usamos format en lugar de split
         },
       });
     }
@@ -369,11 +370,10 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                     cursor: "pointer",
                     color: "#2d0363",
                   }}
-                />
+                /> 
                 <Horario>
-                  <Typography variant="body2">Horario:</Typography>
-                  <Typography variant="body2">10:00 AM - 6:00 PM</Typography>
-                  <Typography variant="body2">Lunes - Viernes</Typography>
+                  <Typography variant="body2">Horarios disponibles:</Typography>
+                  <Typography variant="body2">Lunes - Viernes / 10:00 AM - 6:00 PM</Typography>
                 </Horario>
               </Turno>
               <Disponibilidad>
@@ -385,21 +385,41 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 )}
 
                 {turnoSeleccionado ? (
-                  <Typography
-                    variant="body2"
-                    sx={{ color: "green", fontWeight: "bold", my: 1 }}
-                  >
-                    Turno seleccionado:{" "}
-                    {turnoSeleccionado.fecha.toLocaleDateString("es-ES")} a las{" "}
-                    {turnoSeleccionado.hora}
-                  </Typography>
+                  <>
+                    <Typography variant="body2" sx={{ textAlign: "left", paddingLeft: "2rem" }}>
+                      {/* Usamos formato de dayjs en lugar de toLocaleDateString */}
+                      Fecha seleccionada:{" "} <strong>{turnoSeleccionado.fecha.format("DD/MM/YYYY")}</strong>
+                    </Typography>
+                    <Typography variant="body2" sx={{ textAlign: "left", paddingLeft: "2rem" }}>
+                      Turno seleccionado: <strong>{turnoSeleccionado.hora}</strong>
+                    </Typography>
+                </>
                 ) : (
                   <Typography variant="body2">Ver Disponibilidad</Typography>
                 )}
               </Disponibilidad>
             </ContenedorReserva>
-            <BotonReservar onClick={manejarBotonReserva}>
-              {turnoSeleccionado ? "Reservar" : "Ver Disponibilidad"}
+
+            <BotonReservar
+              onClick={() => {
+                if (turnoSeleccionado) {
+                  navigate(`/reserva`, {
+                    state: {
+                      servicioId: id,
+                      turnoId: turnoSeleccionado.id,
+                      hora: turnoSeleccionado.hora,
+                      fecha: turnoSeleccionado.fecha.format("YYYY-MM-DD"), // Usamos format en lugar de split
+                    },
+                  });
+                } else {
+                  alert(
+                    "Por favor seleccione un turno disponible haciendo clic en el icono de calendario"
+                  );
+                }
+              }}
+            >
+              {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
+
             </BotonReservar>
           </ContenedorInfoD>
         </ContenedorInfo>
