@@ -10,7 +10,7 @@ import Login from "./Pages/Login/Login";
 import { AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import Reserva from "./Pages/Reserva/Reserva";
-import ReservaConfirmada from "./pages/Reserva/ReservaConfirmada";
+import ReservaConfirmada from "./Pages/Reserva/ReservaConfirmada";
 
 const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);
