@@ -11,7 +11,7 @@ import dayjs from "dayjs";
 import "dayjs/locale/es"; // Importar locale español para dayjs
 import { useNavigate } from "react-router-dom";
 import { buscarServicios } from "../../Services/buscadorService";
-import { buscarDisponibilidad } from "../../Services/disponibilidadServiceModal";
+import { buscarDisponibilidad } from "../../Services/disponibilidadService";
 import {
   ContenedorBuscador,
   FondoBanner,
