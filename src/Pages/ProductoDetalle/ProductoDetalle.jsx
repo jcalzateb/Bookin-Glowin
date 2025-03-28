@@ -78,9 +78,8 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [favoritos, setFavoritos] = useState([]);
   const [compartirModalAbierto, setCompartirModalAbierto] = useState(false);
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
-  const [valoracion, setValoracion] = useState(0);
-  const [comentario, setComentario] = useState("");
-  // Nuevo estado para controlar la visibilidad del calendario
+  /*   const [valoracion, setValoracion] = useState(0);
+  const [comentario, setComentario] = useState(""); */
   const [calendarioAbierto, setCalendarioAbierto] = useState(false);
 
   useEffect(() => {
@@ -103,7 +102,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     }
   };
 
-  const manejarValoracion = async () => {
+  /*   const manejarValoracion = async () => {
     if (valoracion === 0) {
       setError("Por favor, selecciona una puntuación.");
       return;
@@ -117,7 +116,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     } catch (err) {
       setError("Hubo un error al enviar la valoración.");
     }
-  };
+  }; */
 
   const agregarAFavoritos = async () => {
     try {
@@ -378,10 +377,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 </Horario>
               </Turno>
               <Disponibilidad>
-                <CalendarioDisponibilidad
-                  servicioId={servicio.id}
-                  onSeleccionTurno={manejarSeleccionTurno}
-                />
+                {calendarioAbierto && (
+                  <CalendarioDisponibilidad
+                    servicioId={servicio.id}
+                    onSeleccionTurno={manejarSeleccionTurno}
+                  />
+                )}
 
                 {turnoSeleccionado ? (
                   <>
@@ -398,6 +399,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 )}
               </Disponibilidad>
             </ContenedorReserva>
+
             <BotonReservar
               onClick={() => {
                 if (turnoSeleccionado) {
@@ -417,10 +419,10 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               }}
             >
               {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
+
             </BotonReservar>
           </ContenedorInfoD>
         </ContenedorInfo>
-
 
         <ContenedorPuntuacion>
           <ContenedorResenas>
