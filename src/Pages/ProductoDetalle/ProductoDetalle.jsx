@@ -377,12 +377,10 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 </Horario>
               </Turno>
               <Disponibilidad>
-                {calendarioAbierto && (
                   <CalendarioDisponibilidad
                     servicioId={servicio.id}
                     onSeleccionTurno={manejarSeleccionTurno}
                   />
-                )}
 
                 {turnoSeleccionado ? (
                   <>
