@@ -1,5 +1,5 @@
 # Etapa 1: Construcción del frontend
-FROM node:18.18.0-alpine AS build
+FROM node:20.10.0-alpine AS build
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm install
