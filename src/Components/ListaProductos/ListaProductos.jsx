@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { obtenerServicios } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
+import { obtenerCategorias } from "../../Services/categoriasService";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import { useNavigate } from "react-router-dom";
 import {
@@ -28,6 +29,8 @@ import {
   PuntuacionProducto,
   CategiraProducto,
   Valoracion,
+  SelectCategoria,
+  CheckboxFavoritos,
 } from "./ListaProductos.styled";
 
 const ListaProductos = ({
@@ -39,6 +42,7 @@ const ListaProductos = ({
   const [servicios, setServicios] = useState([]);
   const [paginaActual, setPaginaActual] = useState(1);
   const [favoritos, setFavoritos] = useState([]);
+  const [categorias, setCategorias] = useState([]);
   const productosPorPagina = 10;
   const navigate = useNavigate();
 
@@ -68,14 +72,18 @@ const ListaProductos = ({
       }
     };
 
+    const cargarCategorias = async () => {
+      try {
+        const data = await obtenerCategorias();
+        setCategorias(data);
+      } catch (error) {
+        console.error("Error al cargar las categorías:", error);
+      }
+    };
+
     cargarServicios();
+    cargarCategorias();
   }, []);
-
-  //const [productosAleatorios, setProductosAleatorios] = useState([]);
-
-  /*   useEffect(() => {
-    setProductosAleatorios(mezclarProductos(servicios)); // Mezclar productos cuando se cargan
-  }, [servicios]); // Re-ejecutar cuando los servicios cambien */
 
   const serviciosFiltrados = categoriaSeleccionada
     ? servicios.filter(
@@ -113,7 +121,7 @@ const ListaProductos = ({
 
   const limpiarFiltro = () => {
     setCategoriaSeleccionada(null);
-    setMostrarFavoritos(null);
+    setMostrarFavoritos(false);
     setPaginaActual(1);
   };
 
@@ -160,23 +168,37 @@ const ListaProductos = ({
         <TituloSeccion>SERVICIOS</TituloSeccion>
 
         <ContenedorFiltro>
-          <TextoFiltro>
-            Numeros de servicios: {serviciosAFiltrar.length}
-            {""}
-          </TextoFiltro>
+          <TextoFiltro>Filtros: </TextoFiltro>
 
-          {categoriaSeleccionada && (
-            <TextoFiltro>
-              {"en la categoria de "}
-              {categoriaSeleccionada}
-            </TextoFiltro>
-          )}
+          <div>
+            <SelectCategoria
+              onChange={(e) => setCategoriaSeleccionada(e.target.value)}
+              value={categoriaSeleccionada || ""}
+            >
+              <option value="">Selecciona una categoría</option>
+              {categorias.map((categoria) => (
+                <option key={categoria.id} value={categoria.nombre}>
+                  {categoria.nombre}
+                </option>
+              ))}
+            </SelectCategoria>
+          </div>
 
-          {mostrarFavoritos && <TextoFiltro>{"Favoritos"}</TextoFiltro>}
+          <div>
+            <CheckboxFavoritos>
+              <input
+                type="checkbox"
+                checked={mostrarFavoritos}
+                onChange={(e) => setMostrarFavoritos(e.target.checked)}
+              />
+              Mostrar favoritos
+            </CheckboxFavoritos>
+          </div>
 
+          {/* Limpiar Filtros */}
           {(categoriaSeleccionada || mostrarFavoritos) && (
             <BotonEliminarFiltro onClick={limpiarFiltro}>
-              Limpiar
+              Limpiar filtros
             </BotonEliminarFiltro>
           )}
         </ContenedorFiltro>
