@@ -72,54 +72,57 @@ const ContenedorFecha = styled(Box)({
     padding: "10px 0",
     marginTop: 0,
     borderRadius: "10px 10px 0 0",
+    flexDirection: "row", // Asegurar dirección de flexbox correcta
   },
   
   // Estilo para el nombre del mes y año
   "& .MuiPickersCalendarHeader-labelContainer": {
-    fontWeight: "bold",
+    fontWeight: "normal",
     fontSize: "16px",
+    width: "100%",
     textTransform: "capitalize",
     color: "#f6ebf9", // Rosa claro
-    order: 2, // Colocar el nombre en el medio
+    order: 1, // Colocar el nombre en el medio
   },
   
-  // Estilo para la flecha izquierda
+  // Estilo para la flecha izquierda (mes anterior)
   "& .MuiPickersArrowSwitcher-button:first-of-type": {
     color: "#f6ebf9", // Rosa claro para las flechas
-    order: 1, // Colocar flecha izquierda a la izquierda
+    order: 0, // Colocar flecha izquierda a la izquierda
+    '&.Mui-disabled': {
+      color: 'rgba(246, 235, 249, 0.3)', // Rosa claro semi-transparente cuando está deshabilitado
+    },
+    pointerEvents: 'auto', // Asegurarse de que los eventos del mouse funcionen
   },
   
-  // Estilo para la flecha derecha
+  // Estilo para la flecha derecha (mes siguiente)
   "& .MuiPickersArrowSwitcher-button:last-of-type": {
     color: "#f6ebf9", // Rosa claro para las flechas
-    order: 3, // Colocar flecha derecha a la derecha
-  },
-  
-  // Reorganizar el encabezado para tener el mes en medio de las flechas
-  "& .MuiPickersCalendarHeader-switchViewButton": {
-    display: "none", // Ocultar el botón de cambio de vista
+    order: 2, // Colocar flecha derecha a la derecha
+    pointerEvents: 'auto', // Asegurarse de que los eventos del mouse funcionen
   },
   
   // Estilo para la fila de días de la semana
   "& .MuiDayCalendar-weekDayLabel": {
     backgroundColor: "#f6ebf9", // Rosa pastel claro
     color: "#2d0363", // Morado oscuro
-    fontWeight: "bold",
-    width: "36px",
+    fontWeight: "normal",
+    width: "100%",//100%
     height: "36px",
     margin: "2px",
+
   },
   
   // Ajustar el espaciado entre elementos del encabezado
   "& .MuiPickersArrowSwitcher-spacer": {
-    width: "0px", // Eliminar espaciador por defecto
+    width: "0px", // Ajustar espaciador
   },
   
   // Estilo para el contenedor de días de la semana
   "& .MuiDayCalendar-weekDayContainer": {
     backgroundColor: "#f6ebf9", // Rosa pastel claro
-    margin: "0",
-    padding: "2px",
+    margin: "0px",
+    padding: "0px",
   },
   
   "@media (max-width: 768px)": {
@@ -134,9 +137,10 @@ const EncabezadoTurnos = styled(Typography)(({theme}) => ({
   padding: "10px",
   borderRadius: "8px 8px 0 0",
   width: "100%",
-  textAlign: "center",
+  fontFamily: 'Poppins, sans-serif',
+  textAlign: "left",
   marginBottom: "15px",
-  fontWeight: "bold",
+  fontWeight: "normal",
 }));
 
 // Estilo para botones de turnos disponibles e indisponibles
@@ -388,6 +392,8 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
                   minDate={dayjs()}
                   onMonthChange={handleMesChange}
                   shouldDisableDate={esFechaDisponible}
+                  disablePast={true} // Asegurar que no se pueda navegar al pasado
+                  views={['day']} // Solo mostrar la vista de días
                   sx={{
                     opacity: cambiandoMes ? 0.7 : 1,
                     transition: 'opacity 0.3s ease-in-out',
@@ -429,6 +435,14 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
                     },
                     '& .MuiDayCalendar-weekDayContainer': {
                       backgroundColor: '#f6ebf9',
+                    },
+                    '& .MuiPickersArrowSwitcher-root': {
+                      display: 'flex',
+                      justifyContent: 'space-between',
+                      width: '100%',
+                    },
+                    '& .MuiPickersArrowSwitcher-spacer': {
+                      width: '10px',
                     },
                   }}
                 />
