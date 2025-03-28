@@ -3,7 +3,7 @@ stages:
   - deploy
 
 variables:
-  DOCKER_IMAGE: "valenpelaez99/glowin-frontend"
+  DOCKER_IMAGE: "gravel3497/glowinfront"
 
 build_image:
   stage: build
