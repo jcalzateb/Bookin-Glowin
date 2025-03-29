@@ -18,14 +18,17 @@ const ModalContainer = styled(Box)`
   border-radius: 15px !important;
   width: 100%;
   max-width: 400px;
-  height: 400px;
+  height: 350px;
   text-align: center;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   gap: 10px;
 `;
+
+const Contenedor1 = styled(Box)``;
+const Contenedor2 = styled(Box)``;
 
 const ModalTitle = styled(DialogTitle)`
   font-size: 24px !important;
@@ -90,27 +93,35 @@ const RegistroModal = ({
       }}
     >
       <ModalContainer>
-        <IconButton
-          sx={{ color: "#2d0363", fontSize: 60, padding: " 0 !important" }}
-          aria-label="Correo"
-        >
-          <MailOutlineIcon
-            sx={{ fontSize: "50px", padding: " 0 !important" }}
-          />
-        </IconButton>
-        <ModalTitle>Gracias por registrarte</ModalTitle>
-
-        <Typography
-          variant="body2"
-          sx={{ fontWeight: "400", color: "#2d0363" }}
-        >
-          Correo de confirmación enviado a: {email}
-        </Typography>
-
-        <EnlaceReenviar onClick={onReenviarCorreo}>
-          Reenviar confirmación
-        </EnlaceReenviar>
+        <Contenedor1>
+          <IconButton
+            sx={{ color: "#2d0363", fontSize: 60, padding: " 0 !important" }}
+            aria-label="Correo"
+            disabled
+          >
+            <MailOutlineIcon
+              sx={{
+                fontSize: "50px",
+                padding: " 0 !important",
+                color: "#2d0363",
+              }}
+            />
+          </IconButton>
+          <ModalTitle>Gracias por registrarte</ModalTitle>
+        </Contenedor1>
+        <Contenedor2>
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: "400", color: "#2d0363" }}
+          >
+            Correo de confirmación enviado a: {email}
+          </Typography>
+          <EnlaceReenviar onClick={onReenviarCorreo}>
+            Reenviar confirmación
+          </EnlaceReenviar>
+        </Contenedor2>
         <ModalText>{mensajeModal}</ModalText>
+
         <DialogActions>
           <ModalButton onClick={onClose}>Confirmar registro</ModalButton>
         </DialogActions>
