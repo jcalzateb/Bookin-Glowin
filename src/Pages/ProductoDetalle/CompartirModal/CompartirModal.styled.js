@@ -9,7 +9,6 @@ export const ModalContenedor = styled(Box)`
   display: flex;
   flex-direction: column;
   padding: 20px;
-  align-items: center;
   width: 100%;
   max-width: 400px;
   background-color: #fff;
@@ -36,18 +35,27 @@ export const RedesSocialesContenedor = styled(Box)`
   display: flex;
   justify-content: space-around;
   width: 100%;
-  margin-bottom: 10px;
+  height: 100%;
+  margin: 15px 0;
 `;
 
 export const CopiarLinkButton = styled(Button)`
-  background-color: ${({ theme }) => theme.palette.botones.activo};
+  background-color: #2d0363;
+  font-weight: 500;
   color: white;
-  font-weight: bold;
   width: 100%;
   &:hover {
-    background-color: ${({ theme }) => theme.palette.botones.presionado};
+    background-color: #530eae;
   }
   &:active {
     background-color: ${({ theme }) => theme.palette.botones.presionado};
   }
+`;
+
+export const ContenedorCompartir = styled(Box)`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 5px;
+  margin-bottom: 10px;
 `;

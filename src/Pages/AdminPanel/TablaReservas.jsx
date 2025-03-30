@@ -16,10 +16,17 @@ import {
   SelectRol,
   BotonEliminar,
 } from "./TablaReserva.styled";
+import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 
 const TablaReservas = () => {
   const [reservas, setReservas] = useState([]);
   const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
+  const [mensaje, setMensaje] = useState({
+    abierto: false,
+    tipo: "",
+    texto: "",
+    callback: null,
+  });
 
   useEffect(() => {
     cargarReservas();
@@ -67,12 +74,20 @@ const TablaReservas = () => {
   };
 
   const eliminarReservaHandler = async (idReserva) => {
-    try {
-      await eliminarReserva(idReserva);
-      cargarReservas();
-    } catch (error) {
-      console.error("Error al eliminar la reserva", error);
-    }
+    setMensaje({
+      abierto: true,
+      tipo: "eliminar",
+      texto: "¿Desea eliminar este servicio?",
+      callback: async () => {
+        try {
+          await eliminarReserva(idReserva);
+          cargarReservas();
+        } catch (error) {
+          console.error("Error al eliminar la reserva", error);
+        }
+        setMensaje({ ...mensaje, abierto: false });
+      },
+    });
   };
 
   return (
@@ -136,6 +151,13 @@ const TablaReservas = () => {
           </CuerpoTabla>
         </TablaReservasEstilizada>
       </SeccionLista>
+      <MensajeModal
+        abierto={mensaje.abierto}
+        tipo={mensaje.tipo}
+        mensaje={mensaje.texto}
+        onConfirmar={mensaje.callback}
+        onCancelar={() => setMensaje({ ...mensaje, abierto: false })}
+      />
     </ContenedorTablaReservas>
   );
 };
