@@ -22,3 +22,37 @@ export const realizarReserva = async (reservaData) => {
     throw error;
   }
 };
+
+export const obtenerReservas = async () => {
+  try {
+    const response = await api.get("/reservas/all", {
+      params: {
+        page: 0,
+        size: 1073741824,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener las reservas:", error);
+    throw error;
+  }
+};
+
+export const actualizarReserva = async (idReserva, nuevaInformacion) => {
+  try {
+    const response = await api.put(`/reservas/${idReserva}`, nuevaInformacion);
+    return response.data;
+  } catch (error) {
+    console.error("Error al actualizar la reserva:", error);
+    throw error;
+  }
+};
+
+export const eliminarReserva = async (idReserva) => {
+  try {
+    await api.delete(`/reservas/${idReserva}`);
+  } catch (error) {
+    console.error("Error al eliminar la reserva:", error);
+    throw error;
+  }
+};

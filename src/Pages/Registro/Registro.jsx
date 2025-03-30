@@ -137,7 +137,7 @@ const Registro = () => {
         const resultado = await reenviarConfirmacion(emailConfirmacion);
         if (resultado) {
           console.log("Resultado para reenviar:", resultado);
-          setMensajeModal("Correo reenviado exitosamente a ");
+          setMensajeModal("Correo reenviado exitosamente");
         } else {
           setMensajeModal("Hubo un error al reenviar el correo.");
         }

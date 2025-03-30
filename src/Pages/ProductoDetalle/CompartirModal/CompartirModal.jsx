@@ -7,13 +7,16 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { Facebook, WhatsApp, ContentCopy } from "@mui/icons-material";
+import { WhatsApp } from "@mui/icons-material";
+import FacebookOutlinedIcon from "@mui/icons-material/FacebookOutlined";
+import CloseIcon from "@mui/icons-material/Close";
 import {
   ModalContenedor,
   ModalImagen,
   ModalTitulo,
   RedesSocialesContenedor,
   CopiarLinkButton,
+  ContenedorCompartir,
 } from "./CompartirModal.styled";
 import { obtenerEnlacesCompartir } from "../../../Services/compartirService";
 
@@ -68,6 +71,21 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
   return (
     <Modal open={abierto} onClose={cerrar}>
       <ModalContenedor>
+        <ContenedorCompartir>
+          <IconButton
+            onClick={cerrar}
+            size="small"
+            sx={{
+              fontSize: "30px",
+            }}
+          >
+            <CloseIcon sx={{ fontSize: "inherit" }} />
+          </IconButton>
+          <Typography variant="h2" sx={{ color: "#2d0363" }}>
+            Compartir
+          </Typography>
+        </ContenedorCompartir>
+
         <ModalImagen
           src={
             imagenesServicio && imagenesServicio[0]
@@ -76,8 +94,8 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
           }
           alt={servicio.nombre}
         />
-        <ModalTitulo variant="h6">
-          Compartir producto: {servicio.nombre}
+        <ModalTitulo variant="h6" sx={{ color: "#2d0363" }}>
+          Compartir servicio: {servicio.nombre}
         </ModalTitulo>
         <TextField
           fullWidth
@@ -92,23 +110,40 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
             onClick={compartirEnFacebook}
             color="primary"
             disabled={!enlacesCompartir.facebook}
+            sx={{
+              fontSize: "30px",
+              border: "2px solid #1877F2",
+              borderRadius: "50%",
+              padding: "8px",
+              color: "#1877F2",
+              "&:hover": {
+                backgroundColor: "#1877F2",
+                color: "white",
+              },
+            }}
           >
-            <Facebook />
+            <FacebookOutlinedIcon sx={{ fontSize: "inherit" }} />
           </IconButton>
           <IconButton
             onClick={compartirEnWhatsApp}
             color="success"
             disabled={!enlacesCompartir.whatsapp}
+            sx={{
+              fontSize: "30px",
+              border: "2px solid #25D366",
+              borderRadius: "50%",
+              padding: "8px",
+              color: "#25D366",
+              "&:hover": {
+                backgroundColor: "#25D366",
+                color: "white",
+              },
+            }}
           >
-            <WhatsApp />
-          </IconButton>
-          <IconButton onClick={copiarEnlace} color="action">
-            <ContentCopy />
+            <WhatsApp sx={{ fontSize: "inherit" }} />
           </IconButton>
         </RedesSocialesContenedor>
-        <CopiarLinkButton onClick={copiarEnlace}>
-          Copiar enlace
-        </CopiarLinkButton>
+        <CopiarLinkButton onClick={copiarEnlace}>Copiar</CopiarLinkButton>
       </ModalContenedor>
     </Modal>
   );

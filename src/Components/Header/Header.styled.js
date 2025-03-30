@@ -33,7 +33,6 @@ export const ContenedorLogo = styled("div")({
   alignItems: "center",
 });
 
-// Imagen del Logo
 export const LogoImg = styled("img")({
   height: 50,
   cursor: "pointer",
@@ -100,12 +99,13 @@ export const DrawerMenu = styled(Drawer)({
   "& .MuiDrawer-paper": {
     width: 250,
     padding: "80px 20px",
-    backgroundColor: "#fff",
+    backgroundColor: "#C9B9DF",
   },
 });
 
 export const ListaMenu = styled(List)({
   display: "flex",
+  color: "#2d0363",
   flexDirection: "column",
   gap: 15,
   padding: "20px",
@@ -151,15 +151,17 @@ export const AvatarUsuario = styled("div")({
 export const MenuUsuario = styled(Menu)({
   marginTop: "10px",
   "& .MuiPaper-root": {
-    backgroundColor: "#fff",
+    backgroundColor: "#F6EBF9",
     minWidth: "200px",
   },
 });
 
 export const OpcionMenu = styled(MenuItem)({
   padding: "12px 20px",
+  backgroundColor: "#F6EBF9",
+  color: "#2d0363",
   fontSize: "1rem",
   "&:hover": {
-    backgroundColor: "#f6ebf9",
+    backgroundColor: "rgba(167, 81, 190, 0.47)",
   },
 });

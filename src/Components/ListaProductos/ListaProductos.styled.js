@@ -226,13 +226,64 @@ export const ContenedorFiltro = styled(Box)`
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 600px;
   margin: 0 auto 10px auto;
   padding: 5px;
   background: transparent;
   border-radius: 8px;
   font-size: 16px;
   color: #333;
+  gap: 16px;
+  @media (max-width: 600px) {
+    padding: 12px;
+  }
+`;
+
+export const TextoFiltro = styled.p`
+  font-size: 16px;
+  font-weight: bold;
+  color: #2d0363;
+`;
+
+export const SelectCategoria = styled.select`
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background-color: white;
+  font-size: 14px;
+  width: 100%;
+  color: #333;
+  cursor: pointer;
+
+  &:focus {
+    border-color: #2d0363;
+    outline: none;
+  }
+
+  option {
+    padding: 8px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 8px 10px;
+  }
+`;
+
+export const CheckboxFavoritos = styled.label`
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  color: #2d0363;
+  font-weight: 400;
+  gap: 8px;
+
+  input {
+    width: 18px;
+    height: 18px;
+  }
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const BotonEliminarFiltro = styled(Button)`
@@ -249,8 +300,8 @@ export const BotonEliminarFiltro = styled(Button)`
     background: #530eae !important;
     color: white !important;
   }
-`;
 
-export const TextoFiltro = styled.p`
-  margin: 0 2px;
+  @media (max-width: 600px) {
+    padding: 5px 10px;
+  }
 `;

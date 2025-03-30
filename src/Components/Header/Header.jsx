@@ -2,6 +2,10 @@ import React, { useState, useContext, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { AuthContext } from "../../Context/AuthContext";
 import MenuIcon from "@mui/icons-material/Menu";
+import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
+import LogoutIcon from "@mui/icons-material/Logout";
+import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import {
   ContenedorHeader,
   BarraNavegacion,
@@ -59,6 +63,14 @@ const Header = ({ setMostrarFavoritos }) => {
     cerrarMenuUsuario();
   };
 
+  const obtenerIconoMenu = () => {
+    if (location.pathname === "/admin") {
+      return <HomeOutlinedIcon style={{ marginRight: "5px" }} />;
+    } else {
+      return <ManageAccountsOutlinedIcon style={{ marginRight: "5px" }} />;
+    }
+  };
+
   return (
     <ContenedorHeader position="static">
       <BarraNavegacion>
@@ -86,15 +98,21 @@ const Header = ({ setMostrarFavoritos }) => {
                 {location.pathname !== "/admin" &&
                   !location.pathname.startsWith("/producto/") && (
                     <OpcionMenu onClick={mostrarFavoritos}>
-                      Favoritos
+                      <FavoriteBorderIcon
+                        style={{
+                          marginRight: "5px",
+                        }}
+                      />
+                      Mis favoritos
                     </OpcionMenu>
                   )}
                 {usuario.rol === "SUPER_ADMINISTRADOR" ||
                 usuario.rol === "ADMINISTRADOR" ? (
                   <OpcionMenu onClick={redirigir}>
+                    {obtenerIconoMenu()}
                     {location.pathname === "/admin"
-                      ? "Ir al inicio"
-                      : "Ir al administración"}
+                      ? "Inicio"
+                      : "Panel administrador"}
                   </OpcionMenu>
                 ) : null}
                 <hr />
@@ -104,6 +122,11 @@ const Header = ({ setMostrarFavoritos }) => {
                     cerrarMenuUsuario();
                   }}
                 >
+                  <LogoutIcon
+                    style={{
+                      marginRight: "5px",
+                    }}
+                  />
                   Cerrar sesión
                 </OpcionMenu>
               </MenuUsuario>
@@ -145,15 +168,15 @@ const Header = ({ setMostrarFavoritos }) => {
                 {location.pathname !== "/admin" &&
                   !location.pathname.startsWith("/producto/") && (
                     <a href="#" onClick={mostrarFavoritos}>
-                      Favoritos
+                      Mis favoritos
                     </a>
                   )}
                 {usuario.rol === "SUPER_ADMINISTRADOR" ||
                 usuario.rol === "ADMINISTRADOR" ? (
                   <a href="#" onClick={redirigir}>
                     {location.pathname === "/admin"
-                      ? "Ir al inicio"
-                      : "Ir al administración"}
+                      ? "Inicio"
+                      : "Panel administrador"}
                   </a>
                 ) : null}
                 <hr />

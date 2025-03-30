@@ -25,6 +25,7 @@ import TablaProductos from "./TablaProductos";
 import GestionCategorias from "./GestionCategorias";
 import TablaUsuarios from "./TablaUsuarios";
 import GestionEmpleados from "./GestionEmpleados";
+import TablaReservas from "./TablaReservas";
 
 const AdminPanel = () => {
   const [vistaActual, setVistaActual] = useState("agregarServicio");
@@ -205,6 +206,12 @@ const AdminPanel = () => {
           Categoría
         </BotonMenu>
         <BotonMenu
+          $activo={vistaActual === "reservas"}
+          onClick={() => setVistaActual("reservas")}
+        >
+          Reservas
+        </BotonMenu>
+        <BotonMenu
           $activo={vistaActual === "empleados"}
           onClick={() => setVistaActual("empleados")}
         >
@@ -234,6 +241,7 @@ const AdminPanel = () => {
           />
         )}
         {vistaActual === "agregarCategoria" && <GestionCategorias />}
+        {vistaActual === "reservas" && <TablaReservas />}
         {vistaActual === "empleados" && <GestionEmpleados />}
         {vistaActual === "usuarios" && (
           <TablaUsuarios
