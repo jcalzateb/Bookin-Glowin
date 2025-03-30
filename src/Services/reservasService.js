@@ -25,7 +25,12 @@ export const realizarReserva = async (reservaData) => {
 
 export const obtenerReservas = async () => {
   try {
-    const response = await api.get("/reservas/all");
+    const response = await api.get("/reservas/all", {
+      params: {
+        page: 0,
+        size: 1073741824,
+      },
+    });
     return response.data;
   } catch (error) {
     console.error("Error al obtener las reservas:", error);

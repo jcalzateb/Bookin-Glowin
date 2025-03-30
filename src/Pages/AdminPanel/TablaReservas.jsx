@@ -100,7 +100,8 @@ const TablaReservas = () => {
               <CeldaEncabezado>Servicio</CeldaEncabezado>
               <CeldaEncabezado>Usuario</CeldaEncabezado>
               <CeldaEncabezado>Empleado</CeldaEncabezado>
-              <CeldaEncabezado>Fecha y Hora</CeldaEncabezado>
+              <CeldaEncabezado>Fecha</CeldaEncabezado>
+              <CeldaEncabezado>Hora</CeldaEncabezado>
               <CeldaEncabezado>Estado</CeldaEncabezado>
               <CeldaEncabezado>Acciones</CeldaEncabezado>
             </tr>
@@ -116,9 +117,8 @@ const TablaReservas = () => {
                   <Celda>
                     {reserva.empleado.nombre} {reserva.empleado.apellido}
                   </Celda>
-                  <Celda>
-                    {reserva.fecha} / {reserva.hora}
-                  </Celda>
+                  <Celda>{reserva.fecha}</Celda>
+                  <Celda>{reserva.hora}</Celda>
                   <Celda>
                     <SelectRol
                       value={reserva.estado}
@@ -127,7 +127,6 @@ const TablaReservas = () => {
                       }
                     >
                       <option value="CONCLUIDA">Concluida</option>
-                      <option value="EN CURSO">En curso</option>
                       <option value="CONFIRMADA">Confirmada</option>
                       <option value="CANCELADA">Cancelada</option>
                     </SelectRol>
