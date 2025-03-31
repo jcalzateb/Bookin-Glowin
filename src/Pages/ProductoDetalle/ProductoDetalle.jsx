@@ -209,7 +209,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCalendarioAbierto(false); // Cerrar el calendario después de seleccionar
   };
 
-  // Función para manejar el clic en el botón de reserva
+  /*   // Función para manejar el clic en el botón de reserva
   const manejarBotonReserva = () => {
     if (!turnoSeleccionado) {
       // Si no hay turno seleccionado, mostrar el calendario
@@ -225,14 +225,17 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         },
       });
     }
-  };
+  }; */
 
   const manejarBotonVerResenas = () => {
     setMostrarResenas(!mostrarResenas);
-    window.scrollTo({
-      top: document.getElementById("reseñas-seccion").offsetTop - 20,
-      behavior: "smooth",
-    });
+    console.log(mostrarResenas);
+    if (mostrarResenas == false) {
+      window.scrollTo({
+        top: document.getElementById("reseñas-seccion").offsetTop - 20,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -448,7 +451,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           </ContenedorInfoD>
         </ContenedorInfo>
         {/* La seccion de reseña */}
-        <ContenedorPuntuacion>
+        <ContenedorPuntuacion id="reseñas-seccion">
           {/*           <ContenedorResenas>
             {servicio.valoraciones &&
               servicio.valoraciones.map((valoracion, index) => (
@@ -464,7 +467,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               ))}
           </ContenedorResenas> */}
           {mostrarResenas && (
-            <ContenedorResenas id="reseñas-seccion">
+            <ContenedorResenas>
               <Typography
                 variant="h2"
                 style={{
