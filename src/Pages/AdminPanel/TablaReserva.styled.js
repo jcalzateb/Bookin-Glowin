@@ -77,3 +77,32 @@ export const BotonEliminar = styled.button`
     background-color: #c82333;
   }
 `;
+
+export const ContenedorPaginacion = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+  gap: 20px;
+  align-items: baseline;
+`;
+
+export const BotonPagina = styled.button`
+  min-width: 40px;
+  height: 40px;
+  background: transparent;
+  color: #2d0363;
+  border-radius: 8px;
+  font-size: 14px;
+  text-transform: none;
+
+  &:hover {
+    background: transparent;
+    color: white;
+  }
+
+  &:disabled {
+    background: transparent;
+    color: #a0a0a0;
+  }
+`;
