@@ -10,6 +10,8 @@ import {
   Celda,
   IconosAccion,
   TituloSeccion,
+  ContenedorPaginacion,
+  BotonPagina,
 } from "./TablaProductos.styled";
 import { Edit, Delete, Star } from "@mui/icons-material";
 import {
@@ -24,6 +26,8 @@ import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 
 const TablaProductos = ({ seleccionarServicio }) => {
   const [servicios, setServicios] = useState([]);
+  const [paginaActual, setPaginaActual] = useState(0);
+  const [totalPaginas, setTotalPaginas] = useState(0);
   const [mensaje, setMensaje] = useState({
     abierto: false,
     tipo: "",
@@ -32,12 +36,23 @@ const TablaProductos = ({ seleccionarServicio }) => {
   });
 
   useEffect(() => {
-    const cargarServicios = async () => {
-      const data = await obtenerServicios();
-      setServicios(data);
-    };
     cargarServicios();
-  }, []);
+  }, [paginaActual]);
+
+  const cargarServicios = async () => {
+    try {
+      const data = await obtenerServicios();
+      const totalReservas = data.length;
+      const totalPaginas = Math.ceil(totalReservas / 10);
+      const indiceInicial = paginaActual * 10;
+      const reservasPaginas = data.slice(indiceInicial, indiceInicial + 10);
+      setServicios(reservasPaginas);
+      setTotalPaginas(totalPaginas);
+    } catch (error) {
+      console.error("Error al cargar las reservas", error);
+      setServicios([]);
+    }
+  };
 
   const eliminarImagenes = async (idServicio) => {
     try {
@@ -65,6 +80,10 @@ const TablaProductos = ({ seleccionarServicio }) => {
         setMensaje({ ...mensaje, abierto: false });
       },
     });
+  };
+
+  const cambiarPagina = (nuevaPagina) => {
+    setPaginaActual(nuevaPagina);
   };
 
   return (
@@ -121,7 +140,21 @@ const TablaProductos = ({ seleccionarServicio }) => {
           )}
         </CuerpoTabla>
       </Tabla>
-
+      <ContenedorPaginacion>
+        <BotonPagina
+          onClick={() => cambiarPagina(paginaActual - 1)}
+          disabled={paginaActual === 0}
+        >
+          Página Anterior
+        </BotonPagina>
+        <span>{paginaActual + 1}</span>
+        <BotonPagina
+          onClick={() => cambiarPagina(paginaActual + 1)}
+          disabled={paginaActual === totalPaginas - 1}
+        >
+          Página Siguiente
+        </BotonPagina>
+      </ContenedorPaginacion>
       <MensajeModal
         abierto={mensaje.abierto}
         tipo={mensaje.tipo}

@@ -15,11 +15,15 @@ import {
   Celda,
   SelectRol,
   BotonEliminar,
+  ContenedorPaginacion,
+  BotonPagina,
 } from "./TablaReserva.styled";
 import MensajeModal from "../../Components/MensajeModal/MensajeModal";
 
 const TablaReservas = () => {
   const [reservas, setReservas] = useState([]);
+  const [paginaActual, setPaginaActual] = useState(0);
+  const [totalPaginas, setTotalPaginas] = useState(0);
   const [estadoSeleccionado, setEstadoSeleccionado] = useState("");
   const [mensaje, setMensaje] = useState({
     abierto: false,
@@ -30,13 +34,24 @@ const TablaReservas = () => {
 
   useEffect(() => {
     cargarReservas();
-  }, []);
+  }, [paginaActual]);
 
   const cargarReservas = async () => {
     try {
       const reservasData = await obtenerReservas();
       if (Array.isArray(reservasData.content)) {
-        setReservas(reservasData.content);
+        const reservasOrdenadas = reservasData.content.sort(
+          (a, b) => new Date(b.fecha) - new Date(a.fecha)
+        );
+        const totalReservas = reservasOrdenadas.length;
+        const totalPaginas = Math.ceil(totalReservas / 10);
+        const indiceInicial = paginaActual * 10;
+        const reservasPaginas = reservasOrdenadas.slice(
+          indiceInicial,
+          indiceInicial + 10
+        );
+        setReservas(reservasPaginas);
+        setTotalPaginas(totalPaginas);
       } else {
         console.error("La respuesta no contiene un array de reservas.");
         setReservas([]);
@@ -88,6 +103,10 @@ const TablaReservas = () => {
         setMensaje({ ...mensaje, abierto: false });
       },
     });
+  };
+
+  const cambiarPagina = (nuevaPagina) => {
+    setPaginaActual(nuevaPagina);
   };
 
   return (
@@ -149,6 +168,21 @@ const TablaReservas = () => {
             )}
           </CuerpoTabla>
         </TablaReservasEstilizada>
+        <ContenedorPaginacion>
+          <BotonPagina
+            onClick={() => cambiarPagina(paginaActual - 1)}
+            disabled={paginaActual === 0}
+          >
+            Página Anterior
+          </BotonPagina>
+          <span>{paginaActual + 1}</span>
+          <BotonPagina
+            onClick={() => cambiarPagina(paginaActual + 1)}
+            disabled={paginaActual === totalPaginas - 1}
+          >
+            Página Siguiente
+          </BotonPagina>
+        </ContenedorPaginacion>
       </SeccionLista>
       <MensajeModal
         abierto={mensaje.abierto}

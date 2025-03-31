@@ -195,7 +195,6 @@ const ListaProductos = ({
             </CheckboxFavoritos>
           </div>
 
-          {/* Limpiar Filtros */}
           {(categoriaSeleccionada || mostrarFavoritos) && (
             <BotonEliminarFiltro onClick={limpiarFiltro}>
               Limpiar filtros
@@ -235,11 +234,18 @@ const ListaProductos = ({
                     {servicio.descripcion}
                   </DescripcionProducto>
                   <Valoracion>
-                    <PuntuacionProducto variant="body2">
-                      {servicio.puntuacionMedia || "N/A "}
+                    <PuntuacionProducto
+                      variant="body2"
+                      style={{
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        marginRight: "10px",
+                      }}
+                    >
+                      {servicio.puntuacionMedia || "5.0 "}
                     </PuntuacionProducto>
                     <Rating
-                      value={servicio.puntuacionMedia || 0}
+                      value={servicio.puntuacionMedia || 5}
                       readOnly
                       size="small"
                     />

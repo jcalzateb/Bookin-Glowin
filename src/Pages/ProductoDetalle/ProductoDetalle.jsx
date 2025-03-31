@@ -17,7 +17,7 @@ import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import CalendarioDisponibilidad from "../../Components/CalendarioDisponibilidad/CalendarioDisponibilidad";
-import { realizarValoracion } from "../../Services/valoracionesService";
+//import { realizarValoracion } from "../../Services/valoracionesService";
 import {
   Contenedor,
   ContenedorDetalle,
@@ -58,6 +58,9 @@ import {
   Disponibilidad,
   ListaPoliticas,
   FavoritoIcono,
+  ContenedorComentario,
+  EstrellaComentario,
+  DetallesComentario,
 } from "./ProductoDetalle.styled";
 import CarruselImagenes from "./CarruselImagenes/CarruselImagenes";
 import {
@@ -80,6 +83,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
   /*   const [valoracion, setValoracion] = useState(0);
   const [comentario, setComentario] = useState(""); */
+  const [mostrarResenas, setMostrarResenas] = useState(false);
   const [calendarioAbierto, setCalendarioAbierto] = useState(false);
 
   useEffect(() => {
@@ -223,6 +227,14 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     }
   };
 
+  const manejarBotonVerResenas = () => {
+    setMostrarResenas(!mostrarResenas);
+    window.scrollTo({
+      top: document.getElementById("reseñas-seccion").offsetTop - 20,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <Contenedor>
       <ContenedorDetalle>
@@ -309,17 +321,20 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               </TituloValoracion>
               <Valoracion>
                 <Typography variant="body1">
-                  {servicio.puntuacionMedia || "N/A"}
+                  {servicio.puntuacionMedia || "5.0"}
                 </Typography>
                 <Rating
-                  value={servicio.puntuacionMedia || 0}
+                  value={servicio.puntuacionMedia || 5}
                   readOnly
                   size="large"
                 />
               </Valoracion>
 
-              <BotonVerResena>Ver reseñas</BotonVerResena>
+              <BotonVerResena onClick={manejarBotonVerResenas}>
+                {mostrarResenas ? "Ocultar reseñas" : "Ver reseñas"}
+              </BotonVerResena>
             </ContenedorValoracionResena>
+
             <ContenedorCaracteristicas>
               <TituloDescripcion>
                 Características del Servicio
@@ -367,31 +382,43 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               <Turno>
                 <AccessTimeIcon
                   style={{
-                    cursor: "pointer",
                     color: "#2d0363",
+                    fontSize: "30px",
                   }}
-                /> 
+                />
                 <Horario>
                   <Typography variant="body2">Horarios disponibles:</Typography>
-                  <Typography variant="body2">Lunes - Viernes / 10:00 AM - 6:00 PM</Typography>
+                  <Typography variant="body2">
+                    Lunes - Viernes / 10:00 AM - 6:00 PM
+                  </Typography>
                 </Horario>
               </Turno>
               <Disponibilidad>
-                  <CalendarioDisponibilidad
-                    servicioId={servicio.id}
-                    onSeleccionTurno={manejarSeleccionTurno}
-                  />
+                <CalendarioDisponibilidad
+                  servicioId={servicio.id}
+                  onSeleccionTurno={manejarSeleccionTurno}
+                />
 
                 {turnoSeleccionado ? (
                   <>
-                    <Typography variant="body2" sx={{ textAlign: "left", paddingLeft: "2rem" }}>
+                    <Typography
+                      variant="body2"
+                      sx={{ textAlign: "left", paddingLeft: "2rem" }}
+                    >
                       {/* Usamos formato de dayjs en lugar de toLocaleDateString */}
-                      Fecha seleccionada:{" "} <strong>{turnoSeleccionado.fecha.format("DD/MM/YYYY")}</strong>
+                      Fecha seleccionada:{" "}
+                      <strong>
+                        {turnoSeleccionado.fecha.format("DD/MM/YYYY")}
+                      </strong>
                     </Typography>
-                    <Typography variant="body2" sx={{ textAlign: "left", paddingLeft: "2rem" }}>
-                      Turno seleccionado: <strong>{turnoSeleccionado.hora}</strong>
+                    <Typography
+                      variant="body2"
+                      sx={{ textAlign: "left", paddingLeft: "2rem" }}
+                    >
+                      Turno seleccionado:{" "}
+                      <strong>{turnoSeleccionado.hora}</strong>
                     </Typography>
-                </>
+                  </>
                 ) : (
                   <Typography variant="body2">Ver Disponibilidad</Typography>
                 )}
@@ -417,13 +444,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               }}
             >
               {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
-
             </BotonReservar>
           </ContenedorInfoD>
         </ContenedorInfo>
-
+        {/* La seccion de reseña */}
         <ContenedorPuntuacion>
-          <ContenedorResenas>
+          {/*           <ContenedorResenas>
             {servicio.valoraciones &&
               servicio.valoraciones.map((valoracion, index) => (
                 <div key={index}>
@@ -436,7 +462,36 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                   </Typography>
                 </div>
               ))}
-          </ContenedorResenas>
+          </ContenedorResenas> */}
+          {mostrarResenas && (
+            <ContenedorResenas id="reseñas-seccion">
+              <Typography
+                variant="h2"
+                style={{
+                  marginBottom: "20px",
+                  fontSize: "24px",
+                  fontWeight: "600",
+                  color: "#2d0363",
+                }}
+              >
+                Reseñas del Servicio:
+              </Typography>
+              <ContenedorComentario>
+                <EstrellaComentario value={5} readOnly size="small" />
+                <Typography variant="body2" style={{ fontStyle: "italic" }}>
+                  Comentario: Excelente servicio!
+                </Typography>
+                <DetallesComentario>- Usuario 1, 25/03/2025</DetallesComentario>
+              </ContenedorComentario>
+              <ContenedorComentario>
+                <EstrellaComentario value={4} readOnly size="small" />
+                <Typography variant="body2" style={{ fontStyle: "italic" }}>
+                  Comentario: Muy bueno, pero me gustaría más variedad.
+                </Typography>
+                <DetallesComentario>- Usuario 2, 26/03/2025</DetallesComentario>
+              </ContenedorComentario>
+            </ContenedorResenas>
+          )}
         </ContenedorPuntuacion>
 
         <PoliticasContenedor>
