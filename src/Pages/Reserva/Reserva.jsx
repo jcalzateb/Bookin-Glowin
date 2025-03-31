@@ -51,6 +51,7 @@ import mastercardLogo from "../../assets/logo_mastercard.svg";
 import mercadopagoLogo from "../../assets/logo_mercadopago.svg";
 import cashLogo from "../../assets/logo_cash.svg";
 
+
 const Reserva = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ const Reserva = () => {
     fecha: fecha
   };
   //*/
+  console.log("Fecha:", fecha);
 
   useEffect(() => {
     if (!servicioId || !turnoId || !hora || !fecha) {
@@ -224,7 +226,7 @@ const Reserva = () => {
               
               <CampoFormulario>
                 <LabelCampo variant="subtitle2">Teléfono</LabelCampo>
-                <ValorCampo variant="body1">{usuario?.telefono || "No disponible"}</ValorCampo>
+                <ValorCampo variant="body1">{usuario?.celular || "No disponible"}</ValorCampo>
               </CampoFormulario>
               
               <CampoFormulario>
@@ -235,7 +237,7 @@ const Reserva = () => {
               <CampoFormulario>
                 <LabelCampo variant="subtitle2">Fecha y Hora</LabelCampo>
                 <ValorCampo variant="body1">
-                  {new Date(fecha).toLocaleDateString()} - {hora} horas
+                  {new Date(fecha).toLocaleDateString("es-ES", { timeZone: "UTC",})} - {hora} horas
                 </ValorCampo>
               </CampoFormulario>
             </DatosUsuarioForm>
