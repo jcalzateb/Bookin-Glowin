@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CircularProgress, RadioGroup } from "@mui/material";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import { realizarReserva } from "../../Services/reservasService";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
@@ -47,9 +46,10 @@ import {
 } from "./Reserva.styled";
 
 // Importamos los logos de las tarjetas
-import visaLogo from "../../assets/visa-logo.png";
-import mastercardLogo from "../../assets/mastercard-logo.png";
-import mercadopagoLogo from "../../assets/mercadopago-logo.png";
+import visaLogo from "../../assets/logo_visa.svg";
+import mastercardLogo from "../../assets/logo_mastercard.svg";
+import mercadopagoLogo from "../../assets/logo_mercadopago.svg";
+import cashLogo from "../../assets/logo_cash.svg";
 
 const Reserva = () => {
   const location = useLocation();
@@ -64,7 +64,7 @@ const Reserva = () => {
   const [empleados, setEmpleados] = useState([]);
   const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState(null);
   const [metodoPago, setMetodoPago] = useState("efectivo");
-  const [turno, setTurno] = useState({});
+  //const [turno, setTurno] = useState({});
 
   // Obtener datos del state de navegación
   const servicioId = location.state?.servicioId;
@@ -74,13 +74,13 @@ const Reserva = () => {
   
   // Definimos el turno directamente con los valores de location.state
   // en lugar de usar useState para evitar problemas de sincronización
-  /*
+  ///*
   const turno = {
     id: turnoId,
     hora: hora,
     fecha: fecha
   };
-  */
+  //*/
 
   useEffect(() => {
     if (!servicioId || !turnoId || !hora || !fecha) {
@@ -93,7 +93,7 @@ const Reserva = () => {
       try {
         // Obtener información del servicio
         if (servicioId && turnoId && hora && fecha) {
-          setTurno({ id: turnoId, hora: hora, fecha: fecha });
+          //setTurno({ id: turnoId, hora: hora, fecha: fecha });
           console.log("Turno:", { id: turnoId, hora: hora, fecha: fecha });
           const servicioData = await obtenerServicioPorId(servicioId);
           setServicio(servicioData);
@@ -347,7 +347,7 @@ const Reserva = () => {
                   control={<RadioPago />} 
                   label={
                     <IconoMetodoPago>
-                      <AttachMoneyIcon color="primary" />
+                      <LogoPago src={cashLogo} alt="Efectivo" />
                       <span style={{ marginLeft: '4px' }}>Efectivo</span>
                     </IconoMetodoPago>
                   } 
