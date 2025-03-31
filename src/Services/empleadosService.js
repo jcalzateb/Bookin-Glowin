@@ -39,3 +39,19 @@ export const eliminarEmpleado = async (id) => {
     throw error;
   }
 };
+
+/**
+ * Obtiene los empleados disponibles para un servicio en una hora específica
+ * @param {number} idServicio - ID del servicio
+ * @param {string} horaServicio - Hora del servicio (formato: "HH:MM")
+ * @returns {Promise} - Promesa con la lista de empleados disponibles
+ */
+export const obtenerEmpleadosDisponibles = async (idServicio, horaServicio) => {
+  try {
+    const response = await api.get(`/empleados-servicios/servicio/${idServicio}/hora/${horaServicio}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener empleados disponibles:", error);
+    throw error;
+  }
+};
