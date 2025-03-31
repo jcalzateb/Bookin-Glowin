@@ -26,6 +26,7 @@ import {
 dayjs.locale("es");
 
 const CalendarioIcono = styled(IconButton)({
+  fontSize: "30px",
   color: "#2d0363",
   borderRadius: "50% !important",
   "&:hover": {
@@ -59,13 +60,13 @@ const ContenedorFecha = styled(Box)({
   margin: "1rem auto",
   borderRadius: "20px",
   padding: "15px",
-  
+
   // Cambio del fondo del calendario a blanco
   "& .MuiDateCalendar-root": {
     backgroundColor: "#ffffff",
     transition: "opacity 0.2s ease-in-out",
   },
-  
+
   // Estilo del encabezado del mes/año
   "& .MuiPickersCalendarHeader-root": {
     backgroundColor: "#2d0363", // Morado oscuro
@@ -74,7 +75,7 @@ const ContenedorFecha = styled(Box)({
     borderRadius: "10px 10px 0 0",
     flexDirection: "row", // Asegurar dirección de flexbox correcta
   },
-  
+
   // Estilo para el nombre del mes y año
   "& .MuiPickersCalendarHeader-labelContainer": {
     fontWeight: "normal",
@@ -84,67 +85,66 @@ const ContenedorFecha = styled(Box)({
     color: "#f6ebf9", // Rosa claro
     order: 1, // Colocar el nombre en el medio
   },
-  
+
   // Estilo para la flecha izquierda (mes anterior)
   "& .MuiPickersArrowSwitcher-button:first-of-type": {
     color: "#f6ebf9", // Rosa claro para las flechas
     order: 0, // Colocar flecha izquierda a la izquierda
-    '&.Mui-disabled': {
-      color: 'rgba(246, 235, 249, 0.3)', // Rosa claro semi-transparente cuando está deshabilitado
+    "&.Mui-disabled": {
+      color: "rgba(246, 235, 249, 0.3)", // Rosa claro semi-transparente cuando está deshabilitado
     },
-    pointerEvents: 'auto', // Asegurarse de que los eventos del mouse funcionen
+    pointerEvents: "auto", // Asegurarse de que los eventos del mouse funcionen
   },
-  
+
   // Estilo para la flecha derecha (mes siguiente)
   "& .MuiPickersArrowSwitcher-button:last-of-type": {
     color: "#f6ebf9", // Rosa claro para las flechas
     order: 2, // Colocar flecha derecha a la derecha
-    pointerEvents: 'auto', // Asegurarse de que los eventos del mouse funcionen
+    pointerEvents: "auto", // Asegurarse de que los eventos del mouse funcionen
   },
-  
+
   // Estilo para la fila de días de la semana
   "& .MuiDayCalendar-weekDayLabel": {
     backgroundColor: "#f6ebf9", // Rosa pastel claro
     color: "#2d0363", // Morado oscuro
     fontWeight: "normal",
-    width: "100%",//100%
+    width: "100%", //100%
     height: "36px",
     margin: "2px",
-
   },
-  
+
   // Ajustar el espaciado entre elementos del encabezado
   "& .MuiPickersArrowSwitcher-spacer": {
     width: "0px", // Ajustar espaciador
   },
-  
+
   // Estilo para el contenedor de días de la semana
   "& .MuiDayCalendar-weekDayContainer": {
     backgroundColor: "#f6ebf9", // Rosa pastel claro
     margin: "0px",
     padding: "0px",
   },
-  
+
   "@media (max-width: 768px)": {
     maxWidth: "100%",
   },
 });
 
 // Estilo para el encabezado de los turnos disponibles
-const EncabezadoTurnos = styled(Typography)(({theme}) => ({
+const EncabezadoTurnos = styled(Typography)(({ theme }) => ({
   backgroundColor: "#2d0363", // Morado oscuro
   color: "#f6ebf9", // Rosa claro
   padding: "10px",
   borderRadius: "8px 8px 0 0",
   width: "100%",
-  fontFamily: 'Poppins, sans-serif',
+  fontFamily: "Poppins, sans-serif",
   textAlign: "left",
   marginBottom: "15px",
   fontWeight: "normal",
 }));
 
 // Estilo para botones de turnos disponibles e indisponibles
-const TurnoBoton = styled(Button)(({disabled}) => ({
+const TurnoBoton = styled(Button)(({ disabled }) => ({
   margin: "4px",
   textTransform: "none",
   backgroundColor: disabled ? "#f5f5f5" : "transparent",
@@ -169,14 +169,22 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
   const [disponibilidadMensual, setDisponibilidadMensual] = useState({});
   const [mesActual, setMesActual] = useState({
     anio: dayjs().year(),
-    mes: dayjs().month() + 1
+    mes: dayjs().month() + 1,
   });
   const [cambiandoMes, setCambiandoMes] = useState(false);
 
   // Definir horarios posibles de 9:00 a 18:00
   const TODOS_HORARIOS = [
-    "09:00", "10:00", "11:00", "12:00", "13:00", 
-    "14:00", "15:00", "16:00", "17:00", "18:00"
+    "09:00",
+    "10:00",
+    "11:00",
+    "12:00",
+    "13:00",
+    "14:00",
+    "15:00",
+    "16:00",
+    "17:00",
+    "18:00",
   ];
 
   useEffect(() => {
@@ -188,14 +196,17 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
   useEffect(() => {
     if (fechaSeleccionada && modalAbierto) {
       cargarTurnosDisponibles(fechaSeleccionada);
-      
+
       const mesSeleccionado = fechaSeleccionada.month() + 1;
       const anioSeleccionado = fechaSeleccionada.year();
-      
-      if (mesSeleccionado !== mesActual.mes || anioSeleccionado !== mesActual.anio) {
+
+      if (
+        mesSeleccionado !== mesActual.mes ||
+        anioSeleccionado !== mesActual.anio
+      ) {
         setMesActual({
           anio: anioSeleccionado,
-          mes: mesSeleccionado
+          mes: mesSeleccionado,
         });
       }
     }
@@ -205,16 +216,18 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
   useEffect(() => {
     if (fechaSeleccionada) {
       const fechaFormateada = fechaSeleccionada.format("YYYY-MM-DD");
-      const turnosCompletos = TODOS_HORARIOS.map(hora => {
+      const turnosCompletos = TODOS_HORARIOS.map((hora) => {
         // Verificar si este horario está disponible
-        const disponible = turnosDisponibles.some(turno => turno.hora === hora);
+        const disponible = turnosDisponibles.some(
+          (turno) => turno.hora === hora
+        );
         return {
-          id: disponible ? 
-            turnosDisponibles.find(t => t.hora === hora).id : 
-            `indisponible-${fechaFormateada}-${hora}`,
+          id: disponible
+            ? turnosDisponibles.find((t) => t.hora === hora).id
+            : `indisponible-${fechaFormateada}-${hora}`,
           hora,
           fecha: fechaFormateada,
-          disponible
+          disponible,
         };
       });
       setTodosLosTurnos(turnosCompletos);
@@ -229,9 +242,9 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
         anio,
         mes
       );
-      setDisponibilidadMensual(prevDisponibilidad => ({
+      setDisponibilidadMensual((prevDisponibilidad) => ({
         ...prevDisponibilidad,
-        ...disponibilidadPorDia
+        ...disponibilidadPorDia,
       }));
     } catch (err) {
       setError("No se pudo cargar la disponibilidad");
@@ -244,7 +257,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
 
   const cargarTurnosDisponibles = async (fecha) => {
     if (!fecha) return;
-    
+
     setCargando(true);
     try {
       const fechaFormateada = fecha.format("YYYY-MM-DD");
@@ -280,16 +293,16 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
 
   const handleMesChange = (fecha) => {
     if (!fecha) return;
-    
+
     setCambiandoMes(true);
-    
+
     const nuevoAnio = fecha.year();
     const nuevoMes = fecha.month() + 1;
-    
+
     if (nuevoMes !== mesActual.mes || nuevoAnio !== mesActual.anio) {
       setMesActual({
         anio: nuevoAnio,
-        mes: nuevoMes
+        mes: nuevoMes,
       });
     }
   };
@@ -297,7 +310,10 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
   // Función para marcar fechas con disponibilidad
   const esFechaDisponible = (date) => {
     const fechaStr = date.format("YYYY-MM-DD");
-    return !disponibilidadMensual[fechaStr] || disponibilidadMensual[fechaStr].length === 0;
+    return (
+      !disponibilidadMensual[fechaStr] ||
+      disponibilidadMensual[fechaStr].length === 0
+    );
   };
 
   const renderizarTurnos = () => {
@@ -327,7 +343,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
         <EncabezadoTurnos variant="h6">
           Horario Disponible: {fechaFormato}
         </EncabezadoTurnos>
-        
+
         {todosLosTurnos.length === 0 ? (
           <Typography variant="body1" color="text.secondary" textAlign="center">
             No hay información de horarios para esta fecha.
@@ -355,7 +371,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
   return (
     <>
       <CalendarioIcono onClick={abrirModal} aria-label="Ver disponibilidad">
-        <CalendarMonthIcon />
+        <CalendarMonthIcon sx={{ fontSize: "inherit" }} />
       </CalendarioIcono>
 
       <Modal
@@ -382,9 +398,16 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
             </Typography>
           )}
 
-          <Box display="flex" flexDirection={{ xs: 'column', md: 'row' }} gap={2}>
+          <Box
+            display="flex"
+            flexDirection={{ xs: "column", md: "row" }}
+            gap={2}
+          >
             <ContenedorFecha>
-              <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="es">
+              <LocalizationProvider
+                dateAdapter={AdapterDayjs}
+                adapterLocale="es"
+              >
                 <DateCalendar
                   value={fechaSeleccionada}
                   onChange={(newValue) => setFechaSeleccionada(newValue)}
@@ -393,56 +416,56 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
                   onMonthChange={handleMesChange}
                   shouldDisableDate={esFechaDisponible}
                   disablePast={true} // Asegurar que no se pueda navegar al pasado
-                  views={['day']} // Solo mostrar la vista de días
+                  views={["day"]} // Solo mostrar la vista de días
                   sx={{
                     opacity: cambiandoMes ? 0.7 : 1,
-                    transition: 'opacity 0.3s ease-in-out',
-                    backgroundColor: '#fff',
-                    '& .MuiPickersDay-root': {
-                      borderRadius: '50%',
+                    transition: "opacity 0.3s ease-in-out",
+                    backgroundColor: "#fff",
+                    "& .MuiPickersDay-root": {
+                      borderRadius: "50%",
                     },
-                    '& .MuiPickersDay-today': {
-                      border: '1px solid #9c27b0',
-                      color: '#9c27b0',
+                    "& .MuiPickersDay-today": {
+                      border: "1px solid #9c27b0",
+                      color: "#9c27b0",
                     },
-                    '& .MuiPickersDay-daySelected': {
-                      backgroundColor: '#9c27b0',
-                      color: '#fff',
-                      '&:hover': {
-                        backgroundColor: '#7b1fa2',
+                    "& .MuiPickersDay-daySelected": {
+                      backgroundColor: "#9c27b0",
+                      color: "#fff",
+                      "&:hover": {
+                        backgroundColor: "#7b1fa2",
                       },
                     },
-                    '& .Mui-disabled': {
-                      color: '#bdbdbd',
+                    "& .Mui-disabled": {
+                      color: "#bdbdbd",
                     },
-                    '& .MuiPickersCalendarHeader-switchViewButton': {
-                      display: 'none',
+                    "& .MuiPickersCalendarHeader-switchViewButton": {
+                      display: "none",
                     },
-                    '& .MuiPickersCalendarHeader-root': {
-                      backgroundColor: '#2d0363',
-                      padding: '10px 0',
+                    "& .MuiPickersCalendarHeader-root": {
+                      backgroundColor: "#2d0363",
+                      padding: "10px 0",
                       marginTop: 0,
-                      borderRadius: '10px 10px 0 0',
-                      color: '#f6ebf9',
+                      borderRadius: "10px 10px 0 0",
+                      color: "#f6ebf9",
                     },
-                    '& .MuiPickersArrowSwitcher-button': {
-                      color: '#f6ebf9',
+                    "& .MuiPickersArrowSwitcher-button": {
+                      color: "#f6ebf9",
                     },
-                    '& .MuiDayCalendar-weekDayLabel': {
-                      backgroundColor: '#f6ebf9',
-                      color: '#2d0363',
-                      fontWeight: 'bold',
+                    "& .MuiDayCalendar-weekDayLabel": {
+                      backgroundColor: "#f6ebf9",
+                      color: "#2d0363",
+                      fontWeight: "bold",
                     },
-                    '& .MuiDayCalendar-weekDayContainer': {
-                      backgroundColor: '#f6ebf9',
+                    "& .MuiDayCalendar-weekDayContainer": {
+                      backgroundColor: "#f6ebf9",
                     },
-                    '& .MuiPickersArrowSwitcher-root': {
-                      display: 'flex',
-                      justifyContent: 'space-between',
-                      width: '100%',
+                    "& .MuiPickersArrowSwitcher-root": {
+                      display: "flex",
+                      justifyContent: "space-between",
+                      width: "100%",
                     },
-                    '& .MuiPickersArrowSwitcher-spacer': {
-                      width: '10px',
+                    "& .MuiPickersArrowSwitcher-spacer": {
+                      width: "10px",
                     },
                   }}
                 />
@@ -459,7 +482,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
                 display: "flex",
                 flexDirection: "column",
                 justifyContent: "flex-start",
-                overflow: "hidden"
+                overflow: "hidden",
               }}
             >
               {renderizarTurnos()}
@@ -467,7 +490,9 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
           </Box>
 
           <Box mt={3} display="flex" justifyContent="flex-end">
-            <Button onClick={cerrarModal} color="primary">Cerrar</Button>
+            <Button onClick={cerrarModal} color="primary">
+              Cerrar
+            </Button>
           </Box>
         </ModalContenido>
       </Modal>

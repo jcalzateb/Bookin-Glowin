@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, Button, IconButton, Typography, Rating } from "@mui/material";
 
 export const Contenedor = styled(Box)`
   background-color: #2d0363;
@@ -28,17 +28,17 @@ export const EncabezadoDetalle = styled(Box)`
   color: #f6ebf9;
   padding: 10px 50px;
   margin-bottom: 20px;
-  @media (max-width: 1030px) {
-    padding: 10px 40px;
-  }
-
-  @media (max-width: 786px) {
-    padding: 0 30px;
-  }
 
   @media (max-width: 600px) {
+    padding: 0 10px;
+  }
+
+  @media (min-width: 601px) and (max-width: 768px) {
     padding: 0 20px;
-    font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.2);
+  }
+
+  @media (min-width: 769px) {
+    padding: 10px 40px;
   }
 `;
 
@@ -50,8 +50,8 @@ export const TituloProducto = styled.h1`
   font-size: calc(${({ theme }) => theme.typography.h1.fontSize} * 1.6);
   color: #f6ebf9;
 
-  @media (max-width: 600px) {
-    font-size: 24px;
+  @media (max-width: 768px) {
+    font-size: 24px !important;
     text-align: center;
   }
 `;
@@ -83,29 +83,34 @@ export const BloqueImagenes = styled(Box)`
   justify-content: space-between;
   gap: 10px;
   width: 100%;
+  height: 100%;
+  max-height: 550px;
   background-color: #ffffff;
   padding: 30px 130px;
   margin-bottom: 10px;
 
   @media (max-width: 600px) {
     padding: 10px 20px;
-    justify-content: flex-start;
-    gap: 8px;
-  }
-
-  @media (max-width: 786px) {
-    padding: 20px 30px;
     flex-direction: column;
     align-items: center;
   }
 
-  @media (max-width: 1130px) {
-    padding: 30px 60px;
+  @media (min-width: 601px) and (max-width: 786px) {
+    padding: 30px 50px;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  @media (min-width: 787px) and (max-width: 1080px) {
+    padding: 30px 100px;
+    flex-direction: column;
+    align-items: center;
   }
 `;
 
 export const ImagenPrincipal = styled(Box)`
   width: 50%;
+  height: 450px;
   border-radius: 12px;
   overflow: hidden;
   background-size: cover;
@@ -113,28 +118,61 @@ export const ImagenPrincipal = styled(Box)`
 
   @media (max-width: 786px) {
     width: 100%;
-    height: 350px;
+    height: 300px;
+  }
+  @media (min-width: 787px) and (max-width: 1080px) {
+    width: 100%;
+    height: 400px;
   }
 `;
 
 export const MiniaturasImagenes = styled(Box)`
   position: relative;
   width: 50%;
+  height: 450px;
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
+  align-content: space-between;
 
   img {
     width: 48%;
-    height: 100px;
+    height: 48%;
     object-fit: cover;
     border-radius: 8px;
   }
 
-  @media (max-width: 786px) {
+  @media (max-width: 600px) {
     width: 100%;
-    justify-content: center;
+    height: 175px;
+    align-content: space-between;
+    justify-content: space-between;
+  }
+
+  @media (min-width: 601px) and (max-width: 786px) {
+    width: 100%;
+    height: 100px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    img {
+      width: 22%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+  }
+  @media (min-width: 787px) and (max-width: 1080px) {
+    width: 100%;
+    height: 200px;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    img {
+      width: 22%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
   }
 `;
 
@@ -172,15 +210,18 @@ export const ContenedorInfo = styled(Box)`
   width: 100%;
   padding: 30px 130px;
 
-  @media (max-width: 786px) {
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 30px;
+  }
+
+  @media (min-width: 601px) and (max-width: 786px) {
     padding: 20px 10px;
     flex-direction: column;
     align-items: center;
     gap: 10px;
-  }
-
-  @media (max-width: 1130px) {
-    padding: 30px 60px;
   }
 `;
 
@@ -346,6 +387,7 @@ export const Disponibilidad = styled(Box)`
   justify-content: center;
   border-top: 1px solid #ddd;
   padding: 20px;
+  font-size: 30px;
 `;
 
 export const BotonReservar = styled(Button)`
@@ -362,14 +404,51 @@ export const BotonReservar = styled(Button)`
 
 export const ContenedorPuntuacion = styled(Box)`
   width: 100%;
-  height: 10px;
   background-color: #ffffff;
-  border-top: 2px solid #ddd;
+  padding: 30px 130px;
+  @media (max-width: 600px) {
+    padding: 30px 20px;
+  }
+
+  @media (min-width: 601px) and (max-width: 768px) {
+    padding: 30px 20px;
+  }
 `;
 
 export const ContenedorResenas = styled(Box)`
   width: 100%;
-  background-color: #ffffff;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  border: 2px solid #ddd;
+`;
+
+export const ContenedorComentario = styled(Box)`
+  width: 100%;
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ddd;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+`;
+
+export const EstrellaComentario = styled(Rating)`
+  color: #ff9800;
+  margin-bottom: 10px;
+`;
+
+export const DetallesComentario = styled(Box)`
+  margin-top: 10px;
+  font-size: 0.9rem;
+  color: #888;
+  text-align: left;
 `;
 
 export const PoliticasContenedor = styled(Box)`
@@ -392,7 +471,7 @@ export const PoliticasContenedor = styled(Box)`
 `;
 
 export const TituloPoliticas = styled.h2`
-  font-size: 22px;
+  font-size: 26px;
   font-weight: 600;
   color: #2d0363;
   margin-bottom: 20px;

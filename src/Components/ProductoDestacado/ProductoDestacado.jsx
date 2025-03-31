@@ -116,11 +116,18 @@ const ProductosDestacados = () => {
               </Typography>
               <Typography variant="body1">{producto.descripcion}</Typography>
               <Valoracion>
-                <PuntuacionProducto variant="body2">
-                  {producto.puntuacionMedia || "N/A"}
+                <PuntuacionProducto
+                  variant="body2"
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    marginRight: "10px",
+                  }}
+                >
+                  {producto.puntuacionMedia || "5.0"}
                 </PuntuacionProducto>
                 <Rating
-                  value={producto.puntuacionMedia || 0}
+                  value={producto.puntuacionMedia || 5}
                   readOnly
                   size="small"
                 />
