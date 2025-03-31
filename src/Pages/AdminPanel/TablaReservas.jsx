@@ -43,11 +43,8 @@ const TablaReservas = () => {
         const reservasOrdenadas = reservasData.content.sort(
           (a, b) => new Date(b.fecha) - new Date(a.fecha)
         );
-        // Después aplicamos la paginación
         const totalReservas = reservasOrdenadas.length;
-        const totalPaginas = Math.ceil(totalReservas / 10); // 10 reservas por página
-
-        // Determinar la sección de reservas a mostrar en la página actual
+        const totalPaginas = Math.ceil(totalReservas / 10);
         const indiceInicial = paginaActual * 10;
         const reservasPaginas = reservasOrdenadas.slice(
           indiceInicial,
