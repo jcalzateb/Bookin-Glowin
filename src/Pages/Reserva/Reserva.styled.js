@@ -32,7 +32,7 @@ export const ContenedorReserva = styled(Box)`
 `;
 
 export const SeccionIzquierda = styled(Box)`
-  flex: 3;
+  flex: 2;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -213,14 +213,19 @@ export const ValorMonto = styled(Typography)`
 
 export const ContenedorMetodosPago = styled(Box)`
   display: flex;
-  flex-wrap: wrap;
-  gap: 15px;
+  flex-direction: row;
+  gap: 10px;
   justify-content: space-between;
   margin-top: 10px;
+  flex-wrap: nowrap;
+
+  @media (max-width: 768px) {
+    flex-wrap: wrap;
+  }
 
   @media (max-width: 600px) {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
 `;
 
@@ -228,11 +233,12 @@ export const OpcionPago = styled(FormControlLabel)`
   margin: 0 !important;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  padding: 8px 16px;
+  padding: 8px;
   flex: 1;
-  min-width: 120px;
+  min-width: 80px;
   display: flex;
   align-items: center;
+  justify-content: center;
   transition: all 0.2s ease;
 
   &:hover {
@@ -242,6 +248,13 @@ export const OpcionPago = styled(FormControlLabel)`
   .MuiFormControlLabel-label {
     font-weight: 500 !important;
     color: #333 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    flex-basis: 45%;
   }
 
   @media (max-width: 600px) {
@@ -259,9 +272,11 @@ export const RadioPago = styled(Radio)`
 
 export const ContenedorBotones = styled(Box)`
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   gap: 15px;
-  margin-top: 30px;
+  margin-top: 20px;
+  width: 100%;
+max-width: 1200px;
 
   @media (max-width: 600px) {
     flex-direction: column;
@@ -308,12 +323,19 @@ export const BotonCancelar = styled(Button)`
 
 export const LogoPago = styled.img`
   height: 24px;
-  max-width: 80px;
+  width: auto;
+  max-width: 60px;
   object-fit: contain;
 `;
 
 export const IconoMetodoPago = styled(Box)`
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 4px;
+  
+  @media (max-width: 960px) {
+    flex-direction: row;
+  }
 `;

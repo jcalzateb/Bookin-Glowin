@@ -213,7 +213,7 @@ const Reserva = () => {
         <SeccionIzquierda>
           {/* SECCIÓN 1: DATOS DE RESERVA */}
           <Seccion>
-            <TituloSeccion variant="h5">Datos de Reserva</TituloSeccion>
+            <TituloSeccion variant="h5">1. Datos de Reserva</TituloSeccion>
             
             {/* Datos del usuario */}
             <DatosUsuarioForm>
@@ -254,9 +254,9 @@ const Reserva = () => {
               </ContenidoServicio>
             </TarjetaServicio>
             
-            {/* Selección de empleados */}
+            {/* Subsección: Selección de empleados */}
             <ContenedorEmpleados>
-              <TituloSeccion variant="h6">Selecciona tu Profesional</TituloSeccion>
+              <TituloSeccion variant="h6">2. Selecciona tu Profesional</TituloSeccion>
               
               <BotonAleatorio 
                 startIcon={<ShuffleIcon />}
@@ -296,7 +296,7 @@ const Reserva = () => {
         <SeccionDerecha>
           {/* SECCIÓN 2: MONTO */}
           <Seccion>
-            <TituloSeccion variant="h5">Resumen de Pago</TituloSeccion>
+            <TituloSeccion variant="h5">3. Resumen de Pago</TituloSeccion>
             
             <ContenedorMonto>
               <TextoMonto variant="body1">Total a pagar:</TextoMonto>
@@ -306,13 +306,14 @@ const Reserva = () => {
           
           {/* SECCIÓN 3: MÉTODOS DE PAGO */}
           <Seccion>
-            <TituloSeccion variant="h5">Método de Pago</TituloSeccion>
+            <TituloSeccion variant="h5">4. Método de Pago</TituloSeccion>
             
             <RadioGroup
               aria-label="metodo-pago"
               name="metodo-pago"
               value={metodoPago}
               onChange={(e) => setMetodoPago(e.target.value)}
+              style={{ width: '100%' }}
             >
               <ContenedorMetodosPago>
                 <OpcionPago 
@@ -348,26 +349,27 @@ const Reserva = () => {
                   label={
                     <IconoMetodoPago>
                       <LogoPago src={cashLogo} alt="Efectivo" />
-                      <span style={{ marginLeft: '4px' }}>Efectivo</span>
+                      <span>Efectivo</span>
                     </IconoMetodoPago>
                   } 
                 />
               </ContenedorMetodosPago>
             </RadioGroup>
+            
+            
           </Seccion>
+          <ContenedorBotones>
+              <BotonCancelar onClick={() => navigate(-1)}>
+                Cancelar
+              </BotonCancelar>
+              <BotonConfirmar
+                onClick={confirmarReserva}
+                disabled={isLoading || !empleadoSeleccionado}>
+                Confirmar Reserva
+              </BotonConfirmar>
+            </ContenedorBotones>
         </SeccionDerecha>
       </ContenedorReserva>
-      
-      <ContenedorBotones>
-        <BotonCancelar onClick={() => navigate(-1)}>
-          Cancelar
-        </BotonCancelar>
-        <BotonConfirmar
-          onClick={confirmarReserva}
-          disabled={isLoading || !empleadoSeleccionado}>
-          Confirmar Reserva
-        </BotonConfirmar>
-      </ContenedorBotones>
     </ContenedorPrincipal>
   );
 };
