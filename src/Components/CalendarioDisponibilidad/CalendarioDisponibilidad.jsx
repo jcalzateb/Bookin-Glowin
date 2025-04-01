@@ -145,7 +145,6 @@ const EncabezadoTurnos = styled(Typography)(({ theme }) => ({
 
 // Estilo para botones de turnos disponibles e indisponibles
 const TurnoBoton = styled(Button)(({ disabled }) => ({
-  margin: "4px",
   textTransform: "none",
   backgroundColor: disabled ? "#f5f5f5" : "transparent",
   color: disabled ? "#bdbdbd" : "#2d0363",
