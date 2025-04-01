@@ -234,6 +234,7 @@ export const ContenedorFiltro = styled(Box)`
   color: #333;
   gap: 16px;
   @media (max-width: 600px) {
+    flex-direction: column;
     padding: 12px;
   }
 `;
@@ -245,6 +246,9 @@ export const TextoFiltro = styled.p`
 `;
 
 export const SelectCategoria = styled.select`
+  font-size: 15px !important;
+  font-weight: 500 !important;
+  font-family: ${({ theme }) => theme.typography.body1.fontFamily}!important;
   padding: 8px 10px;
   border-radius: 6px;
   border: 1px solid #ddd;
@@ -288,7 +292,7 @@ export const CheckboxFavoritos = styled.label`
 
 export const BotonEliminarFiltro = styled(Button)`
   background: transparent !important;
-  border: 1px solid rgba(151, 71, 255, 0.36) !important;
+  border: 2px solid rgba(151, 71, 255, 0.36) !important;
   color: #9747ff !important;
   font-weight: bold !important;
   margin-left: 5px !important;

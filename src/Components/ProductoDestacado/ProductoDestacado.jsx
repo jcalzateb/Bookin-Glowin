@@ -71,12 +71,13 @@ const ProductosDestacados = () => {
 
   useEffect(() => {
     const intervalo = setInterval(() => {
-      setIndiceActual((prevIndice) =>
-        prevIndice + 1 >= productos.length - productosPorPantalla + 1
-          ? 0
-          : prevIndice + 1
-      );
-    }, 3000);
+      setIndiceActual((prevIndice) => {
+        const totalIndicadores = Math.ceil(
+          productos.length / productosPorPantalla
+        );
+        return prevIndice + 1 >= totalIndicadores ? 0 : prevIndice + 1;
+      });
+    }, 5000);
 
     return () => clearInterval(intervalo);
   }, [productosPorPantalla, productos.length]);
@@ -143,7 +144,7 @@ const ProductosDestacados = () => {
       <ControlesCarrusel>
         <Indicadores>
           {Array.from({
-            length: productos.length - productosPorPantalla + 1,
+            length: Math.ceil(productos.length / productosPorPantalla),
           }).map((_, index) => (
             <Indicador
               key={index}
