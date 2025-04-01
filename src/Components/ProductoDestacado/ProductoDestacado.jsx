@@ -82,6 +82,31 @@ const ProductosDestacados = () => {
     return () => clearInterval(intervalo);
   }, [productosPorPantalla, productos.length]);
 
+  const obtenerNombreCategoria = (nombre) => {
+    const mapeoCategorias = {
+      CABELLO: "Cabello",
+      UNIAS: "Uñas",
+      PESTANIAS: "Pestañas",
+      FACIAL_MAQUILLAJE: "Facial Maquillaje",
+      CEJAS: "Cejas",
+      CORPORAL_DEPILACION: "Corporal Depilación",
+      GLOWIN_MEN: "Glowin Men",
+    };
+
+    if (mapeoCategorias[nombre]) {
+      return mapeoCategorias[nombre];
+    }
+
+    const partes = nombre.split("_");
+    if (partes.length > 1) {
+      if (partes[0] === "GLOWIN") {
+        return partes[1];
+      }
+      return partes.join(" ");
+    }
+    return nombre;
+  };
+
   return (
     <Contenedor>
       <TituloSeccion>SERVICIOS DESTACADOS</TituloSeccion>
@@ -113,7 +138,7 @@ const ProductosDestacados = () => {
                 variant="h6"
                 style={{ fontStyle: "italic", color: "#3d3d3d" }}
               >
-                {producto.categoria}
+                {obtenerNombreCategoria(producto.categoria)}
               </Typography>
               <Typography variant="body1">{producto.descripcion}</Typography>
               <Valoracion>

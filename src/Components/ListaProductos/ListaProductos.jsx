@@ -162,6 +162,31 @@ const ListaProductos = ({
     return favoritos.some((fav) => fav.servicioId === productoId);
   };
 
+  const obtenerNombreCategoria = (nombre) => {
+    const mapeoCategorias = {
+      CABELLO: "Cabello",
+      UNIAS: "Uñas",
+      PESTANIAS: "Pestañas",
+      FACIAL_MAQUILLAJE: "Facial Maquillaje",
+      CEJAS: "Cejas",
+      CORPORAL_DEPILACION: "Corporal Depilación",
+      GLOWIN_MEN: "Glowin Men",
+    };
+
+    if (mapeoCategorias[nombre]) {
+      return mapeoCategorias[nombre];
+    }
+
+    const partes = nombre.split("_");
+    if (partes.length > 1) {
+      if (partes[0] === "GLOWIN") {
+        return partes[1];
+      }
+      return partes.join(" ");
+    }
+    return nombre;
+  };
+
   return (
     <Contenedor>
       <div id="lista-productos">
@@ -178,7 +203,7 @@ const ListaProductos = ({
               <option value="">Selecciona una categoría</option>
               {categorias.map((categoria) => (
                 <option key={categoria.id} value={categoria.nombre}>
-                  {categoria.nombre}
+                  {obtenerNombreCategoria(categoria.nombre)}
                 </option>
               ))}
             </SelectCategoria>
@@ -229,7 +254,9 @@ const ListaProductos = ({
                 />
                 <ContenidoProducto>
                   <TituloProducto>{servicio.nombre}</TituloProducto>
-                  <CategiraProducto>{servicio.categoria}</CategiraProducto>
+                  <CategiraProducto>
+                    {obtenerNombreCategoria(servicio.categoria)}
+                  </CategiraProducto>
                   <DescripcionProducto variant="body2">
                     {servicio.descripcion}
                   </DescripcionProducto>
