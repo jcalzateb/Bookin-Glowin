@@ -9,6 +9,7 @@ import {
   CategoriaItem,
   ImagenCategoria,
 } from "./Categorias.styled";
+import { obtenerNombreCategoria } from "../../Utils/utils";
 
 const Categorias = ({ setCategoriaSeleccionada }) => {
   //const navigate = useNavigate();
@@ -26,31 +27,6 @@ const Categorias = ({ setCategoriaSeleccionada }) => {
 
     cargarCategorias();
   }, []);
-
-  const obtenerNombreCategoria = (nombre) => {
-    const mapeoCategorias = {
-      CABELLO: "Cabello",
-      UNIAS: "Uñas",
-      PESTANIAS: "Pestañas",
-      FACIAL_MAQUILLAJE: "Facial Maquillaje",
-      CEJAS: "Cejas",
-      CORPORAL_DEPILACION: "Corporal Depilación",
-      GLOWIN_MEN: "Glowin Men",
-    };
-
-    if (mapeoCategorias[nombre]) {
-      return mapeoCategorias[nombre];
-    }
-
-    const partes = nombre.split("_");
-    if (partes.length > 1) {
-      if (partes[0] === "GLOWIN") {
-        return partes[1];
-      }
-      return partes.join(" ");
-    }
-    return nombre;
-  };
 
   return (
     <ContenedorCategorias>

@@ -69,7 +69,9 @@ import {
   obtenerFavoritosUsuario,
 } from "../../Services/favoritosService";
 import CompartirModal from "../../Pages/ProductoDetalle/CompartirModal/CompartirModal";
-import { Padding } from "@mui/icons-material";
+import { asignarPuntuacionAleatoria } from "../../Utils/utils";
+import { obtenerNombreCategoria } from "../../Utils/utils";
+import { comentariosPredefinidos } from "../../Utils/utils";
 
 const ProductoDetalle = ({ setMostrarHeader }) => {
   const { id } = useParams();
@@ -87,6 +89,20 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [mostrarResenas, setMostrarResenas] = useState(false);
   const [calendarioAbierto, setCalendarioAbierto] = useState(false);
 
+  const obtenerComentariosAleatorios = () => {
+    const comentariosAleatorios = [];
+    while (comentariosAleatorios.length < 2) {
+      const comentario =
+        comentariosPredefinidos[
+          Math.floor(Math.random() * comentariosPredefinidos.length)
+        ];
+      if (!comentariosAleatorios.includes(comentario)) {
+        comentariosAleatorios.push(comentario);
+      }
+    }
+    return comentariosAleatorios;
+  };
+
   useEffect(() => {
     window.scrollTo(0, 0);
     obtenerDetallesServicio();
@@ -96,7 +112,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     try {
       const data = await obtenerServicioPorId(id);
       const imagenesDelServicio = await obtenerImagenesPorServicio(id);
-      setServicio(data);
+      const puntuacionAleatoria = asignarPuntuacionAleatoria();
+      setServicio({
+        ...data,
+        puntuacionMedia: puntuacionAleatoria, // Asignamos la puntuación aquí
+      });
       setImagenes(imagenesDelServicio);
       const favoritosDelUsuario = await obtenerFavoritosUsuario();
       setFavoritos(favoritosDelUsuario);
@@ -172,7 +192,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         variant="h4"
         sx={{ textAlign: "center", marginTop: "40px" }}
       >
-        {error || "Producto no encontrado"}
+        {error || "Servicio no encontrado"}
       </MensajeError>
     );
   }
@@ -237,31 +257,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         behavior: "smooth",
       });
     }
-  };
-
-  const obtenerNombreCategoria = (nombre) => {
-    const mapeoCategorias = {
-      CABELLO: "Cabello",
-      UNIAS: "Uñas",
-      PESTANIAS: "Pestañas",
-      FACIAL_MAQUILLAJE: "Facial Maquillaje",
-      CEJAS: "Cejas",
-      CORPORAL_DEPILACION: "Corporal Depilación",
-      GLOWIN_MEN: "Glowin Men",
-    };
-
-    if (mapeoCategorias[nombre]) {
-      return mapeoCategorias[nombre];
-    }
-
-    const partes = nombre.split("_");
-    if (partes.length > 1) {
-      if (partes[0] === "GLOWIN") {
-        return partes[1];
-      }
-      return partes.join(" ");
-    }
-    return nombre;
   };
 
   return (
@@ -350,10 +345,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               </TituloValoracion>
               <Valoracion>
                 <Typography variant="body1">
-                  {servicio.puntuacionMedia || "5.0"}
+                  {(servicio.puntuacionMedia || 5.0).toFixed(1)}
                 </Typography>
                 <Rating
-                  value={servicio.puntuacionMedia || 5}
+                  value={(servicio.puntuacionMedia || 5.0).toFixed(1)}
+                  precision={0.1}
                   readOnly
                   size="large"
                 />
@@ -508,20 +504,22 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               >
                 Reseñas del Servicio:
               </Typography>
-              <ContenedorComentario>
-                <EstrellaComentario value={5} readOnly size="small" />
-                <Typography variant="body2" style={{ fontStyle: "italic" }}>
-                  Comentario: Excelente servicio!
-                </Typography>
-                <DetallesComentario>- Usuario 1, 25/03/2025</DetallesComentario>
-              </ContenedorComentario>
-              <ContenedorComentario>
-                <EstrellaComentario value={5} readOnly size="small" />
-                <Typography variant="body2" style={{ fontStyle: "italic" }}>
-                  Comentario: Muy buen servico.
-                </Typography>
-                <DetallesComentario>- Usuario 2, 26/03/2025</DetallesComentario>
-              </ContenedorComentario>
+              {obtenerComentariosAleatorios().map((comentario, index) => (
+                <ContenedorComentario key={index}>
+                  <EstrellaComentario
+                    value={(servicio.puntuacionMedia || 5.0).toFixed(1)}
+                    precision={0.1}
+                    readOnly
+                    size="small"
+                  />
+                  <Typography variant="body2" style={{ fontStyle: "italic" }}>
+                    Comentario: {comentario.comentario}
+                  </Typography>
+                  <DetallesComentario>
+                    - {comentario.usuario}, {comentario.fecha}
+                  </DetallesComentario>
+                </ContenedorComentario>
+              ))}
             </ContenedorResenas>
           )}
         </ContenedorPuntuacion>
