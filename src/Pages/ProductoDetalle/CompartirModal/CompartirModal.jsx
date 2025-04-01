@@ -55,9 +55,30 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
       Enlace: ${window.location.href}
       ${mensajePersonalizado ? `${mensajePersonalizado}` : "Brilla con estilo"}
     `;
-
-    navigator.clipboard.writeText(mensajeCompleto);
-    alert("Enlace copiado al portapapeles!");
+    try {
+      if (navigator.clipboard) {
+        navigator.clipboard
+          .writeText(mensajeCompleto)
+          .then(() => {
+            alert("Enlace copiado al portapapeles!");
+          })
+          .catch((err) => {
+            console.error("Error al copiar el enlace:", err);
+            alert("No se pudo copiar el enlace.");
+          });
+      } else {
+        const textarea = document.createElement("textarea");
+        textarea.value = mensajeCompleto;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand("copy");
+        document.body.removeChild(textarea);
+        alert("Enlace copiado al portapapeles!");
+      }
+    } catch (error) {
+      console.error("Error al copiar el enlace:", error);
+      alert("Hubo un error al intentar copiar el enlace.");
+    }
   };
 
   const compartirEnFacebook = () => {
