@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const WhatsappButtonContainer = styled.div`
   position: fixed;
@@ -19,7 +19,7 @@ export const WhatsappButtonContainer = styled.div`
 `;
 
 export const WhatsappIcon = styled.div`
-  background-color: #25D366;
+  background-color: #25d366;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -39,7 +39,7 @@ export const Notification = styled.div`
   position: fixed;
   right: 20px;
   bottom: 90px;
-  background-color: ${props => props.isError ? '#ff4444' : '#25D366'};
+  background-color: ${(props) => (props.isError ? "#ff4444" : "#25D366")};
   color: white;
   padding: 10px 20px;
   border-radius: 5px;
@@ -48,8 +48,14 @@ export const Notification = styled.div`
   animation: fadeIn 0.3s ease;
 
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 
   @media (max-width: 768px) {
