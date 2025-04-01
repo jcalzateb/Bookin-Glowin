@@ -239,6 +239,31 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     }
   };
 
+  const obtenerNombreCategoria = (nombre) => {
+    const mapeoCategorias = {
+      CABELLO: "Cabello",
+      UNIAS: "Uñas",
+      PESTANIAS: "Pestañas",
+      FACIAL_MAQUILLAJE: "Facial Maquillaje",
+      CEJAS: "Cejas",
+      CORPORAL_DEPILACION: "Corporal Depilación",
+      GLOWIN_MEN: "Glowin Men",
+    };
+
+    if (mapeoCategorias[nombre]) {
+      return mapeoCategorias[nombre];
+    }
+
+    const partes = nombre.split("_");
+    if (partes.length > 1) {
+      if (partes[0] === "GLOWIN") {
+        return partes[1];
+      }
+      return partes.join(" ");
+    }
+    return nombre;
+  };
+
   return (
     <Contenedor>
       <ContenedorDetalle>
@@ -349,7 +374,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                     <CategoryIcon />
                   </IconoCaracteristica>
                   <Typography variant="body2">
-                    Categoría: {servicio.categoria}
+                    Categoría: {obtenerNombreCategoria(servicio.categoria)}
                   </Typography>
                 </CaracteristicaItem>
                 <CaracteristicaItem>
@@ -452,7 +477,10 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           </ContenedorInfoD>
         </ContenedorInfo>
         {/* La seccion de reseña */}
-        <ContenedorPuntuacion id="reseñas-seccion" style={Padding}>
+        <ContenedorPuntuacion
+          id="reseñas-seccion"
+          style={{ Padding: "30px 130px" }}
+        >
           {/*           <ContenedorResenas>
             {servicio.valoraciones &&
               servicio.valoraciones.map((valoracion, index) => (
