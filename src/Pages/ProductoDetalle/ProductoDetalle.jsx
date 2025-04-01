@@ -69,6 +69,7 @@ import {
   obtenerFavoritosUsuario,
 } from "../../Services/favoritosService";
 import CompartirModal from "../../Pages/ProductoDetalle/CompartirModal/CompartirModal";
+import { Padding } from "@mui/icons-material";
 
 const ProductoDetalle = ({ setMostrarHeader }) => {
   const { id } = useParams();
@@ -451,7 +452,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           </ContenedorInfoD>
         </ContenedorInfo>
         {/* La seccion de reseña */}
-        <ContenedorPuntuacion id="reseñas-seccion">
+        <ContenedorPuntuacion id="reseñas-seccion" style={Padding}>
           {/*           <ContenedorResenas>
             {servicio.valoraciones &&
               servicio.valoraciones.map((valoracion, index) => (
@@ -487,9 +488,9 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 <DetallesComentario>- Usuario 1, 25/03/2025</DetallesComentario>
               </ContenedorComentario>
               <ContenedorComentario>
-                <EstrellaComentario value={4} readOnly size="small" />
+                <EstrellaComentario value={5} readOnly size="small" />
                 <Typography variant="body2" style={{ fontStyle: "italic" }}>
-                  Comentario: Muy bueno, pero me gustaría más variedad.
+                  Comentario: Muy buen servico.
                 </Typography>
                 <DetallesComentario>- Usuario 2, 26/03/2025</DetallesComentario>
               </ContenedorComentario>

@@ -33,7 +33,7 @@ export const ModalTitulo = styled("h6")`
 
 export const RedesSocialesContenedor = styled(Box)`
   display: flex;
-  justify-content: space-around;
+  justify-content: center;
   width: 100%;
   height: 100%;
   margin: 15px 0;

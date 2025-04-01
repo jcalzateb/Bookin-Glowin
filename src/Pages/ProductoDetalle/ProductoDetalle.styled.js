@@ -178,22 +178,21 @@ export const MiniaturasImagenes = styled(Box)`
 
 export const BotonVerMas = styled(Button)`
   position: absolute !important;
-  bottom: 5px;
-  right: 5px;
+  bottom: 8px;
+  right: 12px;
   z-index: 3;
   font-weight: bold;
-  color: ${({ theme }) => theme.palette.detalle.main} !important;
-  background: transparent;
+  color: white !important;
+  background-color: #2d0363 !important;
   border-radius: 8px;
   padding: 6px 12px;
   font-family: ${({ theme }) => theme.typography.button.fontFamily};
   &:hover {
-    background: transparent;
-    color: ${({ theme }) => theme.palette.botones.hovered} !important;
+    background-color: #530eae !important;
   }
   @media (max-width: 600px) {
-    bottom: 1px;
-    right: 1px;
+    bottom: 4px;
+    right: 4px;
     font-size: 14px;
   }
 `;
@@ -405,7 +404,15 @@ export const BotonReservar = styled(Button)`
 export const ContenedorPuntuacion = styled(Box)`
   width: 100%;
   background-color: #ffffff;
+`;
+
+export const ContenedorResenas = styled(Box)`
   padding: 30px 130px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
   @media (max-width: 600px) {
     padding: 30px 20px;
   }
@@ -413,16 +420,6 @@ export const ContenedorPuntuacion = styled(Box)`
   @media (min-width: 601px) and (max-width: 768px) {
     padding: 30px 20px;
   }
-`;
-
-export const ContenedorResenas = styled(Box)`
-  width: 100%;
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  text-align: left;
-  border: 2px solid #ddd;
 `;
 
 export const ContenedorComentario = styled(Box)`
@@ -475,7 +472,6 @@ export const TituloPoliticas = styled.h2`
   font-weight: 600;
   color: #2d0363;
   margin-bottom: 20px;
-  text-align: center;
 `;
 
 export const ListaPoliticas = styled(Box)`

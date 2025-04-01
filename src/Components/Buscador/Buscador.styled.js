@@ -10,7 +10,7 @@ export const ContenedorBuscador = styled.div`
   align-items: center;
   justify-content: start;
   overflow: hidden;
-  
+
   @media (max-width: 960px) {
     height: 500px;
   }
@@ -18,6 +18,7 @@ export const ContenedorBuscador = styled.div`
   @media (max-width: 600px) {
     height: auto;
     padding: 20px 0;
+    margin-top: 40px;
   }
 `;
 
@@ -41,7 +42,6 @@ export const ContenedorContenido = styled.div`
   padding: 25px 6%;
   border-radius: 0 0 10px 10px;
 
-
   @media (max-width: 960px) {
     padding: 30px;
   }
@@ -60,7 +60,7 @@ export const TituloBuscador = styled.h1`
   margin-bottom: 0.5rem;
   text-align: left;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-  
+
   @media (max-width: 600px) {
     font-size: 1.8rem;
   }
@@ -69,13 +69,13 @@ export const TituloBuscador = styled.h1`
 export const SubtituloBuscador = styled.h2`
   color: white;
   font-size: 2.5rem;
-  font-family: 'Poppins';
+  font-family: "Poppins";
   font-style: italic;
   margin-bottom: 2rem;
   text-align: left;
   font-weight: normal;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-  
+
   @media (max-width: 600px) {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
@@ -118,18 +118,18 @@ export const CampoBusqueda = styled(TextField)`
   && {
     width: 100%;
     background-color: transparent !important;
-    
+
     & .MuiOutlinedInput-root {
       border-radius: 30px;
-      
+
       & fieldset {
         border: none;
       }
-      
+
       &:hover fieldset {
         border: none;
       }
-      
+
       &.Mui-focused fieldset {
         border: none;
       }
@@ -151,12 +151,11 @@ export const DividerVertical = styled.div`
   height: 36px;
   background-color: #ccc;
   margin: 0 8px;
-  
+
   @media (max-width: 600px) {
     display: none;
   }
 `;
-
 
 export const BotonBuscarCircular = styled(Button)`
   && {
@@ -165,15 +164,18 @@ export const BotonBuscarCircular = styled(Button)`
     min-width: 50px;
     border-radius: 50%;
     margin-left: 10px;
-    background-color: ${(props) => props.disabled ? '#C9B9DF' : '#9F72D9'} !important;
-    color: ${(props) => props.disabled ? '#9F72D9' : '#2D0363'} !important;
+    background-color: ${(props) =>
+      props.disabled ? "#C9B9DF" : "#9F72D9"} !important;
+    color: ${(props) => (props.disabled ? "#9F72D9" : "#2D0363")} !important;
     transition: all 0.3s ease;
-    box-shadow: ${(props) => props.disabled ? 'none' : '0 3px 5px rgba(0, 0, 0, 0.2)'};
-    
+    box-shadow: ${(props) =>
+      props.disabled ? "none" : "0 3px 5px rgba(0, 0, 0, 0.2)"};
+
     &:hover {
-      background-color: ${(props) => props.disabled ? '#e6d0f0' : '#7b27dd'} !important;
+      background-color: ${(props) =>
+        props.disabled ? "#e6d0f0" : "#7b27dd"} !important;
     }
-    
+
     @media (max-width: 600px) {
       margin-top: 10px;
     }
@@ -184,7 +186,7 @@ export const Isologo = styled.img`
   width: 100%;
   max-width: 500px;
   margin-bottom: 36px;
-  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.20));
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.2));
   @media (max-width: 960px) {
     max-width: 400px;
   }
@@ -217,16 +219,17 @@ export const BotonLimpiar = styled(Button)`
 
 export const BotonBuscar = styled(Button)`
   && {
-    background-color:rgba(72, 25, 180, 0.87) !important;
+    background-color: rgba(72, 25, 180, 0.87) !important;
     color: #f6ebf9 !important;
     font-weight: 500;
     width: auto;
     padding: 12px 40px;
-    border: 1px solid #DDD !important;
+    border: 1px solid #ddd !important;
     border-radius: ${({ theme }) => theme.borderRadius.botones} !important;
     text-transform: none;
     font-size: 1rem;
-    font-family: ${({ theme }) => theme.typography.button.fontFamily} !important;
+    font-family: ${({ theme }) =>
+      theme.typography.button.fontFamily} !important;
 
     &:hover {
       background-color: #530eae !important;

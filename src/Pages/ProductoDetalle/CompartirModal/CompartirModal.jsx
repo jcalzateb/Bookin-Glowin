@@ -116,6 +116,7 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
               borderRadius: "50%",
               padding: "8px",
               color: "#1877F2",
+              margin: "0 10px",
               "&:hover": {
                 backgroundColor: "#1877F2",
                 color: "white",
@@ -134,6 +135,7 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
               borderRadius: "50%",
               padding: "8px",
               color: "#25D366",
+              margin: "0 10px",
               "&:hover": {
                 backgroundColor: "#25D366",
                 color: "white",
@@ -143,7 +145,9 @@ const CompartirModal = ({ abierto, cerrar, servicio, imagenesServicio }) => {
             <WhatsApp sx={{ fontSize: "inherit" }} />
           </IconButton>
         </RedesSocialesContenedor>
-        <CopiarLinkButton onClick={copiarEnlace}>Copiar</CopiarLinkButton>
+        <CopiarLinkButton onClick={copiarEnlace}>
+          Copiar enlace
+        </CopiarLinkButton>
       </ModalContenedor>
     </Modal>
   );
