@@ -19,6 +19,8 @@ import {
   PuntuacionProducto,
   Valoracion,
 } from "./ProductoDestacado.styled";
+import { asignarPuntuacionAleatoria } from "../../Utils/utils";
+import { obtenerNombreCategoria } from "../../Utils/utils";
 
 const ProductosDestacados = () => {
   const [productos, setProductos] = useState([]);
@@ -33,9 +35,11 @@ const ProductosDestacados = () => {
       const serviciosConImagenes = await Promise.all(
         data.map(async (producto) => {
           const imagenes = await obtenerImagenesPorServicio(producto.id);
+          const puntuacionAleatoria = asignarPuntuacionAleatoria();
           return {
             ...producto,
             imagenes: imagenes.length > 0 ? imagenes : [],
+            puntuacionMedia: puntuacionAleatoria,
           };
         })
       );
@@ -82,31 +86,6 @@ const ProductosDestacados = () => {
     return () => clearInterval(intervalo);
   }, [productosPorPantalla, productos.length]);
 
-  const obtenerNombreCategoria = (nombre) => {
-    const mapeoCategorias = {
-      CABELLO: "Cabello",
-      UNIAS: "Uñas",
-      PESTANIAS: "Pestañas",
-      FACIAL_MAQUILLAJE: "Facial Maquillaje",
-      CEJAS: "Cejas",
-      CORPORAL_DEPILACION: "Corporal Depilación",
-      GLOWIN_MEN: "Glowin Men",
-    };
-
-    if (mapeoCategorias[nombre]) {
-      return mapeoCategorias[nombre];
-    }
-
-    const partes = nombre.split("_");
-    if (partes.length > 1) {
-      if (partes[0] === "GLOWIN") {
-        return partes[1];
-      }
-      return partes.join(" ");
-    }
-    return nombre;
-  };
-
   return (
     <Contenedor>
       <TituloSeccion>SERVICIOS DESTACADOS</TituloSeccion>
@@ -150,10 +129,11 @@ const ProductosDestacados = () => {
                     marginRight: "10px",
                   }}
                 >
-                  {producto.puntuacionMedia || "5.0"}
+                  {(producto.puntuacionMedia || 5.0).toFixed(1)}
                 </PuntuacionProducto>
                 <Rating
-                  value={producto.puntuacionMedia || 5}
+                  value={(producto.puntuacionMedia || 5.0).toFixed(1)}
+                  precision={0.1}
                   readOnly
                   size="small"
                 />

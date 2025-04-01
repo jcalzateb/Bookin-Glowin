@@ -32,6 +32,8 @@ import {
   SelectCategoria,
   CheckboxFavoritos,
 } from "./ListaProductos.styled";
+import { asignarPuntuacionAleatoria } from "../../Utils/utils";
+import { obtenerNombreCategoria } from "../../Utils/utils";
 
 const ListaProductos = ({
   categoriaSeleccionada,
@@ -57,9 +59,11 @@ const ListaProductos = ({
         const serviciosConImagenes = await Promise.all(
           data.map(async (producto) => {
             const imagenes = await obtenerImagenesPorServicio(producto.id);
+            const puntuacionAleatoria = asignarPuntuacionAleatoria();
             return {
               ...producto,
               imagenes: imagenes.length > 0 ? imagenes : [],
+              puntuacionMedia: puntuacionAleatoria,
             };
           })
         );
@@ -162,31 +166,6 @@ const ListaProductos = ({
     return favoritos.some((fav) => fav.servicioId === productoId);
   };
 
-  const obtenerNombreCategoria = (nombre) => {
-    const mapeoCategorias = {
-      CABELLO: "Cabello",
-      UNIAS: "Uñas",
-      PESTANIAS: "Pestañas",
-      FACIAL_MAQUILLAJE: "Facial Maquillaje",
-      CEJAS: "Cejas",
-      CORPORAL_DEPILACION: "Corporal Depilación",
-      GLOWIN_MEN: "Glowin Men",
-    };
-
-    if (mapeoCategorias[nombre]) {
-      return mapeoCategorias[nombre];
-    }
-
-    const partes = nombre.split("_");
-    if (partes.length > 1) {
-      if (partes[0] === "GLOWIN") {
-        return partes[1];
-      }
-      return partes.join(" ");
-    }
-    return nombre;
-  };
-
   return (
     <Contenedor>
       <div id="lista-productos">
@@ -269,10 +248,11 @@ const ListaProductos = ({
                         marginRight: "10px",
                       }}
                     >
-                      {servicio.puntuacionMedia || "5.0 "}
+                      {(servicio.puntuacionMedia || 5.0).toFixed(1)}
                     </PuntuacionProducto>
                     <Rating
-                      value={servicio.puntuacionMedia || 5}
+                      value={(servicio.puntuacionMedia || 5.0).toFixed(1)}
+                      precision={0.1}
                       readOnly
                       size="small"
                     />
