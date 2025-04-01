@@ -1,64 +1,62 @@
-import React, { useState } from "react";
-import {
-  WhatsappIcon,
-  WhatsappButtonContainer,
-  Notification,
-} from "./ContactoWhatsapp.styled";
+import React, { useState, useEffect } from "react";
+import { linkWhatsapp } from "../../Services/usuariosService"; // Asegúrate de que la ruta sea correcta
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import {
+  WhatsappButtonContainer,
+  WhatsappIcon,
+  Notification,
+} from "./ContactoWhatsapp.styled"; // Asegúrate de tener estos estilos
+
 const ContactoWhatsapp = () => {
+  const [whatsappLink, setWhatsappLink] = useState("");
   const [showNotification, setShowNotification] = useState(false);
   const [notificationMessage, setNotificationMessage] = useState("");
   const [isError, setIsError] = useState(false);
 
-  // Número de teléfono y mensaje predeterminado
-  const phoneNumber = "+1234567890"; // Reemplaza con tu número real
-  const defaultMessage = "Hola, estoy interesado en sus productos.";
+  useEffect(() => {
+    const fetchWhatsappLink = async () => {
+      try {
+        const link = await linkWhatsapp(); // Llamada a la función para obtener el enlace
+        setWhatsappLink(link); // Guarda el enlace recibido en el estado
+      } catch (error) {
+        console.error("Error al obtener el enlace de WhatsApp:", error);
+        setIsError(true);
+        setNotificationMessage("Error al obtener el enlace de WhatsApp.");
+        setShowNotification(true);
+      }
+    };
+
+    fetchWhatsappLink(); // Llama la función cuando el componente se monta
+  }, []); // Este efecto solo se ejecuta una vez al montar el componente
 
   const handleWhatsAppClick = () => {
-    try {
-      // Validar número de teléfono
-      if (!phoneNumber || !/^\+?[\d\s-]+$/.test(phoneNumber)) {
-        throw new Error("Número de WhatsApp no válido");
-      }
-
-      // Formatear el mensaje para URL
-      const encodedMessage = encodeURIComponent(defaultMessage);
-
-      // Crear el enlace de WhatsApp
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
-
-      // Abrir en nueva pestaña
-      window.open(whatsappUrl, "_blank");
-
-      // Mostrar notificación de éxito
+    if (whatsappLink) {
+      window.open(whatsappLink, "_blank"); // Abre el enlace de WhatsApp en una nueva pestaña
       setNotificationMessage("¡Mensaje enviado correctamente!");
       setIsError(false);
       setShowNotification(true);
-    } catch (error) {
-      // Manejo de errores
-      setNotificationMessage(`Error: ${error.message}`);
+    } else {
+      setNotificationMessage("No se pudo obtener el enlace de WhatsApp.");
       setIsError(true);
       setShowNotification(true);
-    } finally {
-      // Ocultar notificación después de 3 segundos
-      setTimeout(() => {
-        setShowNotification(false);
-      }, 3000);
     }
+
+    // Ocultar notificación después de 3 segundos
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 5000);
   };
 
   return (
-    <>
+    <div>
       <WhatsappButtonContainer onClick={handleWhatsAppClick}>
         <WhatsappIcon>
           <WhatsAppIcon size={32} />
         </WhatsappIcon>
       </WhatsappButtonContainer>
 
-      {showNotification && (
-        <Notification isError={isError}>{notificationMessage}</Notification>
-      )}
-    </>
+      {showNotification && <Notification>{notificationMessage}</Notification>}
+    </div>
   );
 };
 

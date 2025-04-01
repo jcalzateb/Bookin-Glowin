@@ -84,3 +84,19 @@ export const loginUsuario = async (email, password) => {
     return null;
   }
 };
+
+export const linkWhatsapp = async () => {
+  try {
+    // Realiza la solicitud GET a la API
+    const response = await api.get("/usuarios/soporte");
+    // Verifica que la respuesta tenga la propiedad 'whatsappLink' y retorna el enlace
+    if (response && response.data && response.data.whatsappLink) {
+      return response.data.whatsappLink;
+    } else {
+      throw new Error("Enlace de WhatsApp no disponible.");
+    }
+  } catch (error) {
+    console.error("Error al obtener el enlace de WhatsApp:", error);
+    throw error; // Lanza el error para que el componente lo pueda manejar
+  }
+};
