@@ -89,6 +89,7 @@ export const EmpleadoItem = styled.div`
   align-items: center;
   text-align: center;
   position: relative;
+  justify-content: space-between;
 `;
 
 export const BotonEliminar = styled.button`
@@ -129,4 +130,13 @@ export const BotonEditar = styled.button`
 
 export const CeldaEmpleado = styled.span`
   padding: 5px;
+`;
+
+export const ImagenEmpleado = styled.img`
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; /* Esto hace que la imagen sea circular */
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid #fff; /* Añade borde blanco a la imagen */
 `;

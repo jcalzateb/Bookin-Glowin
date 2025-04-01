@@ -18,6 +18,7 @@ import {
   BotonEliminar,
   BotonEditar,
   CeldaEmpleado,
+  ImagenEmpleado,
 } from "./GestionEmpleados.styled";
 
 const GestionEmpleados = () => {
@@ -31,6 +32,8 @@ const GestionEmpleados = () => {
     salario: "",
     dni: "",
     tipoJornada: "",
+    profesion: "",
+    urlFoto: "",
   });
   const [error, setError] = useState("");
   const [mensaje, setMensaje] = useState({
@@ -86,6 +89,8 @@ const GestionEmpleados = () => {
             salario: "",
             dni: "",
             tipoJornada: "",
+            profesion: "",
+            urlFoto: "",
           });
           setEmpleadoSeleccionado(null);
           setError("");
@@ -108,6 +113,8 @@ const GestionEmpleados = () => {
       salario: empleado.salario,
       dni: empleado.dni,
       tipoJornada: empleado.tipoJornada,
+      profesion: empleado.profesion,
+      urlFoto: empleado.urlFoto,
     });
     window.scrollTo({
       top: document.getElementById("formulario-empleados").offsetTop - 120,
@@ -188,6 +195,22 @@ const GestionEmpleados = () => {
           value={nuevoEmpleado.tipoJornada}
           onChange={handleChange}
         />
+
+        <CampoInput
+          type="text"
+          name="profesion"
+          placeholder="Profesión del empleado"
+          value={nuevoEmpleado.profesion}
+          onChange={handleChange}
+        />
+        <CampoInput
+          type="text"
+          name="urlFoto"
+          placeholder="URL de la foto del empleado"
+          value={nuevoEmpleado.urlFoto}
+          onChange={handleChange}
+        />
+
         {error && <p style={{ color: "red" }}>{error}</p>}
         <ContenedorBotones>
           <BotonAccion onClick={handleGuardarEmpleado}>
@@ -211,11 +234,20 @@ const GestionEmpleados = () => {
             <EmpleadoItem key={empleado.id}>
               <CeldaEmpleado>{empleado.id}</CeldaEmpleado>
               <CeldaEmpleado>
+                <ImagenEmpleado
+                  src={empleado.urlFoto}
+                  alt={`${empleado.nombre} ${empleado.apellido}`}
+                  style={{ width: "50px", height: "50px" }}
+                />
+              </CeldaEmpleado>
+              <CeldaEmpleado>
                 Empleado:
                 <br></br>
                 {empleado.nombre} {empleado.apellido}
               </CeldaEmpleado>
               <CeldaEmpleado>Jornada: {empleado.tipoJornada}</CeldaEmpleado>
+              <CeldaEmpleado>Profesión: {empleado.profesion}</CeldaEmpleado>
+
               <span>{empleado.email}</span>
               <span>{empleado.celular}</span>
               <span>{empleado.salario}</span>
