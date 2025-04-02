@@ -56,3 +56,18 @@ export const eliminarReserva = async (idReserva) => {
     throw error;
   }
 };
+
+export const obtenerReservasPorUsuario = async (usuarioId) => {
+  try {
+    const response = await api.get(`/reservas/user/${usuarioId}`, {
+      params: {
+        page: 0,
+        size: 1073741824,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener las reservas del usuario", error);
+    throw error;
+  }
+};
