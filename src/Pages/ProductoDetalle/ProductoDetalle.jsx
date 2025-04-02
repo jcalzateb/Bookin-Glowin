@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+} from "react";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useParams, useNavigate } from "react-router-dom";
@@ -90,6 +96,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [mostrarResenas, setMostrarResenas] = useState(false);
   const [calendarioAbierto, setCalendarioAbierto] = useState(false);
   const [authModalAbierto, setAuthModalAbierto] = useState(false); // Estado para el modal de autenticación
+  const [accionModal, setAccionModal] = useState("");
 
   // Crear un objeto observable para abrir el calendario
   const calendarioToggleRef = useRef({
@@ -97,12 +104,12 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     subscribe(callback) {
       this.observers.push(callback);
       return () => {
-        this.observers = this.observers.filter(cb => cb !== callback);
+        this.observers = this.observers.filter((cb) => cb !== callback);
       };
     },
     notify() {
-      this.observers.forEach(callback => callback());
-    }
+      this.observers.forEach((callback) => callback());
+    },
   });
 
   // Función para manejar la apertura/cierre del calendario
@@ -129,7 +136,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     obtenerDetallesServicio();
   }, []);
 
-   /*   const manejarValoracion = async () => {
+  /*   const manejarValoracion = async () => {
     if (valoracion === 0) {
       setError("Por favor, selecciona una puntuación.");
       return;
@@ -165,6 +172,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   };
 
   const agregarAFavoritos = async () => {
+    if (!usuario) {
+      setAccionModal("favoritos");
+      setAuthModalAbierto(true);
+      return;
+    }
     try {
       const resultado = await agregarFavorito(servicio.id);
       setFavoritos((prevFavoritos) => [
@@ -177,6 +189,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   };
 
   const eliminarDeFavoritos = async () => {
+    if (!usuario) {
+      setAccionModal("favoritos");
+      setAuthModalAbierto(true);
+      return;
+    }
     try {
       const favorito = favoritos.find((fav) => fav.servicioId === servicio.id);
       if (favorito) {
@@ -249,7 +266,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     if (!turnoSeleccionado) {
       toggleCalendario();
     } else if (!usuario) {
-      setAuthModalAbierto(true);
+      if (!usuario) {
+        setAccionModal("reserva");
+        setAuthModalAbierto(true);
+        return;
+      }
     } else {
       navigate(`/reserva`, {
         state: {
@@ -423,7 +444,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                   style={{
                     color: "#2d0363",
                     fontSize: "30px",
-                                      }}
+                  }}
                 />
                 <Horario>
                   <Typography variant="body2">Horarios disponibles:</Typography>
@@ -459,16 +480,16 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                     </Typography>
                   </>
                 ) : (
-                  <Typography 
-                    variant="body2" 
+                  <Typography
+                    variant="body2"
                     onClick={toggleCalendario}
-                    sx={{ 
-                      textDecoration: 'underline', 
-                      cursor: 'pointer',
-                      color: '#2d0363',
-                      '&:hover': {
-                        color: '#530eae',
-                      }
+                    sx={{
+                      textDecoration: "underline",
+                      cursor: "pointer",
+                      color: "#2d0363",
+                      "&:hover": {
+                        color: "#530eae",
+                      },
                     }}
                   >
                     Ver Disponibilidad
@@ -486,7 +507,8 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         <ContenedorPuntuacion
           id="reseñas-seccion"
           style={{ Padding: "30px 130px" }}
-        >{/*           <ContenedorResenas>
+        >
+          {/*           <ContenedorResenas>
           {servicio.valoraciones &&
             servicio.valoraciones.map((valoracion, index) => (
               <div key={index}>
@@ -602,6 +624,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         <AuthRequiredModal
           open={authModalAbierto}
           onClose={() => setAuthModalAbierto(false)}
+          actionType={accionModal} // Pasamos el tipo de acción (favoritos o reserva)
         />
       </ContenedorDetalle>
     </Contenedor>

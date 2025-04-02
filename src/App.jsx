@@ -12,6 +12,7 @@ import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
 import Reserva from "./pages/Reserva/Reserva";
 import ReservaConfirmada from "./pages/Reserva/ReservaConfirmada";
 import HistorialReservas from "./Pages/HistorialReservas/HistorialReservas";
+
 const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);
 
