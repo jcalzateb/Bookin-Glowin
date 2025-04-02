@@ -237,7 +237,7 @@ const Reserva = () => {
         open={openSnackbar}
         autoHideDuration={4000}
         onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
         style={{ marginTop: '70px' }}
       >
         <Alert 
@@ -261,22 +261,32 @@ const Reserva = () => {
             {/* Datos del usuario */}
             <DatosUsuarioForm>
               <CampoFormulario>
-                <LabelCampo variant="subtitle2">Nombre</LabelCampo>
+                <LabelCampo
+                  sx={{fontSize: "17px", fontWeight: "bold", color: "#2d0363"}}
+                  variant="subtitle2">
+                Nombre
+                </LabelCampo>
                 <ValorCampo variant="body1">{usuario?.nombre} {usuario?.apellido}</ValorCampo>
               </CampoFormulario>
               
               <CampoFormulario>
-                <LabelCampo variant="subtitle2">Teléfono</LabelCampo>
+                <LabelCampo 
+                sx={{fontSize: "17px", fontWeight: "bold", color: "#2d0363"}}
+                variant="subtitle2">Teléfono</LabelCampo>
                 <ValorCampo variant="body1">{usuario?.celular || "No disponible"}</ValorCampo>
               </CampoFormulario>
               
               <CampoFormulario>
-                <LabelCampo variant="subtitle2">Email</LabelCampo>
+                <LabelCampo 
+                sx={{fontSize: "16px", fontWeight: "bold", color: "#2d0363"}}
+                variant="subtitle2">Email</LabelCampo>
                 <ValorCampo variant="body1">{usuario?.email || "No disponible"}</ValorCampo>
               </CampoFormulario>
               
               <CampoFormulario>
-                <LabelCampo variant="subtitle2">Fecha y Hora</LabelCampo>
+                <LabelCampo
+                sx={{fontSize: "16px", fontWeight: "bold", color: "#2d0363"}}
+                variant="subtitle2">Fecha y Hora</LabelCampo>
                 <ValorCampo variant="body1">
                   {new Date(fecha).toLocaleDateString("es-ES", { timeZone: "UTC",})} - {hora} horas
                 </ValorCampo>

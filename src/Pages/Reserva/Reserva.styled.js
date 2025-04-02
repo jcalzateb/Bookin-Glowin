@@ -272,11 +272,12 @@ export const RadioPago = styled(Radio)`
 
 export const ContenedorBotones = styled(Box)`
   display: flex;
-  justify-content: space-between;
-  gap: 15px;
-  margin-top: 20px;
-  width: 100%;
-max-width: 1200px;
+  flex-direction: row;
+  margin-left: auto;
+  align-items: center;
+  gap: 25px;
+  margin-top: 30px;
+  max-width: 1200px;
 
   @media (max-width: 600px) {
     flex-direction: column;
