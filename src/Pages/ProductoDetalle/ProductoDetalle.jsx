@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useParams, useNavigate } from "react-router-dom";
@@ -17,6 +17,8 @@ import CategoryIcon from "@mui/icons-material/FaceRetouchingNatural";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import CalendarioDisponibilidad from "../../Components/CalendarioDisponibilidad/CalendarioDisponibilidad";
+import { AuthContext } from "../../Context/AuthContext";
+import AuthRequiredModal from "../../Components/AuthRequiredModal/AuthRequiredModal";
 //import { realizarValoracion } from "../../Services/valoracionesService";
 import {
   Contenedor,
@@ -76,6 +78,7 @@ import { comentariosPredefinidos } from "../../Utils/utils";
 const ProductoDetalle = ({ setMostrarHeader }) => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { usuario } = useContext(AuthContext); // Añado contexto de autenticación
   const [modalAbierto, setModalAbierto] = useState(false);
   const [servicio, setServicio] = useState(null);
   const [imagenes, setImagenes] = useState([]);
@@ -84,10 +87,28 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [favoritos, setFavoritos] = useState([]);
   const [compartirModalAbierto, setCompartirModalAbierto] = useState(false);
   const [turnoSeleccionado, setTurnoSeleccionado] = useState(null);
-  /*   const [valoracion, setValoracion] = useState(0);
-  const [comentario, setComentario] = useState(""); */
   const [mostrarResenas, setMostrarResenas] = useState(false);
   const [calendarioAbierto, setCalendarioAbierto] = useState(false);
+  const [authModalAbierto, setAuthModalAbierto] = useState(false); // Estado para el modal de autenticación
+
+  // Crear un objeto observable para abrir el calendario
+  const calendarioToggleRef = useRef({
+    observers: [],
+    subscribe(callback) {
+      this.observers.push(callback);
+      return () => {
+        this.observers = this.observers.filter(cb => cb !== callback);
+      };
+    },
+    notify() {
+      this.observers.forEach(callback => callback());
+    }
+  });
+
+  // Función para manejar la apertura/cierre del calendario
+  const toggleCalendario = useCallback(() => {
+    calendarioToggleRef.current.notify();
+  }, []);
 
   const obtenerComentariosAleatorios = () => {
     const comentariosAleatorios = [];
@@ -108,6 +129,22 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     obtenerDetallesServicio();
   }, []);
 
+   /*   const manejarValoracion = async () => {
+    if (valoracion === 0) {
+      setError("Por favor, selecciona una puntuación.");
+      return;
+    }
+
+    try {
+      await realizarValoracion(id, valoracion, comentario);
+      alert("Valoración enviada con éxito");
+      setValoracion(0);
+      setComentario("");
+    } catch (err) {
+      setError("Hubo un error al enviar la valoración.");
+    }
+  }; */
+
   const obtenerDetallesServicio = async () => {
     try {
       const data = await obtenerServicioPorId(id);
@@ -126,22 +163,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       setCargando(false);
     }
   };
-
-  /*   const manejarValoracion = async () => {
-    if (valoracion === 0) {
-      setError("Por favor, selecciona una puntuación.");
-      return;
-    }
-
-    try {
-      await realizarValoracion(id, valoracion, comentario);
-      alert("Valoración enviada con éxito");
-      setValoracion(0);
-      setComentario("");
-    } catch (err) {
-      setError("Hubo un error al enviar la valoración.");
-    }
-  }; */
 
   const agregarAFavoritos = async () => {
     try {
@@ -215,38 +236,31 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     setCompartirModalAbierto(false);
   };
 
-  // Función para manejar la apertura/cierre del calendario
-  const toggleCalendario = () => {
-    setCalendarioAbierto(!calendarioAbierto);
-  };
-
-  // Función modificada para manejar correctamente objetos dayjs
   const manejarSeleccionTurno = (fecha, turno) => {
     setTurnoSeleccionado({
-      fecha: fecha, // Guardamos el objeto dayjs completo
+      fecha: fecha,
       hora: turno.hora,
       id: turno.id,
     });
-    setCalendarioAbierto(false); // Cerrar el calendario después de seleccionar
+    setCalendarioAbierto(false);
   };
 
-  /*   // Función para manejar el clic en el botón de reserva
   const manejarBotonReserva = () => {
     if (!turnoSeleccionado) {
-      // Si no hay turno seleccionado, mostrar el calendario
       toggleCalendario();
+    } else if (!usuario) {
+      setAuthModalAbierto(true);
     } else {
-      // Si ya hay turno seleccionado, navegar a la página de reserva
       navigate(`/reserva`, {
         state: {
           servicioId: id,
           turnoId: turnoSeleccionado.id,
           hora: turnoSeleccionado.hora,
-          fecha: turnoSeleccionado.fecha.format("YYYY-MM-DD"), // Usamos format en lugar de split
+          fecha: turnoSeleccionado.fecha.format("YYYY-MM-DD"),
         },
       });
     }
-  }; */
+  };
 
   const manejarBotonVerResenas = () => {
     setMostrarResenas(!mostrarResenas);
@@ -409,7 +423,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                   style={{
                     color: "#2d0363",
                     fontSize: "30px",
-                  }}
+                                      }}
                 />
                 <Horario>
                   <Typography variant="body2">Horarios disponibles:</Typography>
@@ -422,6 +436,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 <CalendarioDisponibilidad
                   servicioId={servicio.id}
                   onSeleccionTurno={manejarSeleccionTurno}
+                  toggleAbierto={calendarioToggleRef.current}
                 />
 
                 {turnoSeleccionado ? (
@@ -430,7 +445,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                       variant="body2"
                       sx={{ textAlign: "left", paddingLeft: "2rem" }}
                     >
-                      {/* Usamos formato de dayjs en lugar de toLocaleDateString */}
                       Fecha seleccionada:{" "}
                       <strong>
                         {turnoSeleccionado.fecha.format("DD/MM/YYYY")}
@@ -445,52 +459,47 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                     </Typography>
                   </>
                 ) : (
-                  <Typography variant="body2">Ver Disponibilidad</Typography>
+                  <Typography 
+                    variant="body2" 
+                    onClick={toggleCalendario}
+                    sx={{ 
+                      textDecoration: 'underline', 
+                      cursor: 'pointer',
+                      color: '#2d0363',
+                      '&:hover': {
+                        color: '#530eae',
+                      }
+                    }}
+                  >
+                    Ver Disponibilidad
+                  </Typography>
                 )}
               </Disponibilidad>
             </ContenedorReserva>
 
-            <BotonReservar
-              onClick={() => {
-                if (turnoSeleccionado) {
-                  navigate(`/reserva`, {
-                    state: {
-                      servicioId: id,
-                      turnoId: turnoSeleccionado.id,
-                      hora: turnoSeleccionado.hora,
-                      fecha: turnoSeleccionado.fecha.format("YYYY-MM-DD"), // Usamos format en lugar de split
-                    },
-                  });
-                } else {
-                  alert(
-                    "Por favor seleccione un turno disponible haciendo clic en el icono de calendario"
-                  );
-                }
-              }}
-            >
+            <BotonReservar onClick={manejarBotonReserva}>
               {turnoSeleccionado ? "Reservar Turno" : "Selecciona un Turno"}
             </BotonReservar>
           </ContenedorInfoD>
         </ContenedorInfo>
-        {/* La seccion de reseña */}
+
         <ContenedorPuntuacion
           id="reseñas-seccion"
           style={{ Padding: "30px 130px" }}
-        >
-          {/*           <ContenedorResenas>
-            {servicio.valoraciones &&
-              servicio.valoraciones.map((valoracion, index) => (
-                <div key={index}>
-                  <Rating value={valoracion.puntuacion} readOnly size="small" />
-                  <Typography variant="body2">
-                    {valoracion.comentario}
-                  </Typography>
-                  <Typography variant="body2" color="textSecondary">
-                    - {valoracion.usuarioNombre}, {valoracion.fecha}
-                  </Typography>
-                </div>
-              ))}
-          </ContenedorResenas> */}
+        >{/*           <ContenedorResenas>
+          {servicio.valoraciones &&
+            servicio.valoraciones.map((valoracion, index) => (
+              <div key={index}>
+                <Rating value={valoracion.puntuacion} readOnly size="small" />
+                <Typography variant="body2">
+                  {valoracion.comentario}
+                </Typography>
+                <Typography variant="body2" color="textSecondary">
+                  - {valoracion.usuarioNombre}, {valoracion.fecha}
+                </Typography>
+              </div>
+            ))}
+        </ContenedorResenas> */}
           {mostrarResenas && (
             <ContenedorResenas>
               <Typography
@@ -555,7 +564,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
               </Typography>
             </PoliticaItem>
             <PoliticaItem>
-              <strong>SSalud y Cuidados de la Piel y el Cabello:</strong>
+              <strong>Salud y Cuidados de la Piel y el Cabello:</strong>
               <Typography variant="body2">
                 Si presentas alguna condición dermatológica, informar con
                 anticipación.
@@ -588,6 +597,11 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
           cerrar={cerrarModalCompartir}
           servicio={servicio}
           imagenesServicio={imagenes}
+        />
+
+        <AuthRequiredModal
+          open={authModalAbierto}
+          onClose={() => setAuthModalAbierto(false)}
         />
       </ContenedorDetalle>
     </Contenedor>

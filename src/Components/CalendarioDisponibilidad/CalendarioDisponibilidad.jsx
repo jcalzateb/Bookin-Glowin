@@ -145,7 +145,6 @@ const EncabezadoTurnos = styled(Typography)(({ theme }) => ({
 
 // Estilo para botones de turnos disponibles e indisponibles
 const TurnoBoton = styled(Button)(({ disabled }) => ({
-  margin: "4px",
   textTransform: "none",
   backgroundColor: disabled ? "#f5f5f5" : "transparent",
   color: disabled ? "#bdbdbd" : "#2d0363",
@@ -159,7 +158,7 @@ const TurnoBoton = styled(Button)(({ disabled }) => ({
   },
 }));
 
-const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
+const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno, toggleAbierto }) => {
   const [modalAbierto, setModalAbierto] = useState(false);
   const [fechaSeleccionada, setFechaSeleccionada] = useState(dayjs());
   const [turnosDisponibles, setTurnosDisponibles] = useState([]);
@@ -233,6 +232,18 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
       setTodosLosTurnos(turnosCompletos);
     }
   }, [turnosDisponibles, fechaSeleccionada]);
+
+  useEffect(() => {
+    if (toggleAbierto) {
+      const unsubscribe = toggleAbierto.subscribe(() => {
+        abrirModal();
+      });
+
+      return () => {
+        unsubscribe();
+      };
+    }
+  }, [toggleAbierto]);
 
   const cargarDisponibilidadMensual = async (anio, mes) => {
     setCargando(true);
@@ -389,7 +400,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
             <IconButton onClick={cerrarModal} size="small">
               <CloseIcon />
             </IconButton>
-            <Typography variant="h5">Disponibilidad</Typography>
+            <Typography variant="h5">Disponibilidad para la reserva</Typography>
           </Box>
 
           {error && (
@@ -461,12 +472,8 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno }) => {
                     },
                     "& .MuiPickersArrowSwitcher-root": {
                       display: "flex",
-                      justifyContent: "space-between",
-                      width: "100%",
-                    },
-                    "& .MuiPickersArrowSwitcher-spacer": {
-                      width: "10px",
-                    },
+                      justifyContent: "space-between"
+                    }
                   }}
                 />
               </LocalizationProvider>
