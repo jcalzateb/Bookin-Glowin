@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback, useRef } from "react";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { useParams, useNavigate } from "react-router-dom";
@@ -91,6 +91,25 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const [calendarioAbierto, setCalendarioAbierto] = useState(false);
   const [authModalAbierto, setAuthModalAbierto] = useState(false); // Estado para el modal de autenticación
 
+  // Crear un objeto observable para abrir el calendario
+  const calendarioToggleRef = useRef({
+    observers: [],
+    subscribe(callback) {
+      this.observers.push(callback);
+      return () => {
+        this.observers = this.observers.filter(cb => cb !== callback);
+      };
+    },
+    notify() {
+      this.observers.forEach(callback => callback());
+    }
+  });
+
+  // Función para manejar la apertura/cierre del calendario
+  const toggleCalendario = useCallback(() => {
+    calendarioToggleRef.current.notify();
+  }, []);
+
   const obtenerComentariosAleatorios = () => {
     const comentariosAleatorios = [];
     while (comentariosAleatorios.length < 2) {
@@ -110,6 +129,22 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     obtenerDetallesServicio();
   }, []);
 
+   /*   const manejarValoracion = async () => {
+    if (valoracion === 0) {
+      setError("Por favor, selecciona una puntuación.");
+      return;
+    }
+
+    try {
+      await realizarValoracion(id, valoracion, comentario);
+      alert("Valoración enviada con éxito");
+      setValoracion(0);
+      setComentario("");
+    } catch (err) {
+      setError("Hubo un error al enviar la valoración.");
+    }
+  }; */
+
   const obtenerDetallesServicio = async () => {
     try {
       const data = await obtenerServicioPorId(id);
@@ -128,21 +163,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
       setCargando(false);
     }
   };
-   /*   const manejarValoracion = async () => {
-    if (valoracion === 0) {
-      setError("Por favor, selecciona una puntuación.");
-      return;
-    }
-
-    try {
-      await realizarValoracion(id, valoracion, comentario);
-      alert("Valoración enviada con éxito");
-      setValoracion(0);
-      setComentario("");
-    } catch (err) {
-      setError("Hubo un error al enviar la valoración.");
-    }
-  }; */
 
   const agregarAFavoritos = async () => {
     try {
@@ -215,10 +235,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
   const cerrarModalCompartir = () => {
     setCompartirModalAbierto(false);
   };
-// Función para manejar la apertura/cierre del calendario
-  const toggleCalendario = () => {
-    setCalendarioAbierto(!calendarioAbierto);
-  };
 
   const manejarSeleccionTurno = (fecha, turno) => {
     setTurnoSeleccionado({
@@ -228,24 +244,6 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
     });
     setCalendarioAbierto(false);
   };
-
-   /*   // Función para manejar el clic en el botón de reserva
-  const manejarBotonReserva = () => {
-    if (!turnoSeleccionado) {
-      // Si no hay turno seleccionado, mostrar el calendario
-      toggleCalendario();
-    } else {
-      // Si ya hay turno seleccionado, navegar a la página de reserva
-      navigate(`/reserva`, {
-        state: {
-          servicioId: id,
-          turnoId: turnoSeleccionado.id,
-          hora: turnoSeleccionado.hora,
-          fecha: turnoSeleccionado.fecha.format("YYYY-MM-DD"), // Usamos format en lugar de split
-        },
-      });
-    }
-  }; */
 
   const manejarBotonReserva = () => {
     if (!turnoSeleccionado) {
@@ -425,7 +423,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                   style={{
                     color: "#2d0363",
                     fontSize: "30px",
-                  }}
+                                      }}
                 />
                 <Horario>
                   <Typography variant="body2">Horarios disponibles:</Typography>
@@ -438,6 +436,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                 <CalendarioDisponibilidad
                   servicioId={servicio.id}
                   onSeleccionTurno={manejarSeleccionTurno}
+                  toggleAbierto={calendarioToggleRef.current}
                 />
 
                 {turnoSeleccionado ? (
@@ -460,7 +459,20 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
                     </Typography>
                   </>
                 ) : (
-                  <Typography variant="body2">Ver Disponibilidad</Typography>
+                  <Typography 
+                    variant="body2" 
+                    onClick={toggleCalendario}
+                    sx={{ 
+                      textDecoration: 'underline', 
+                      cursor: 'pointer',
+                      color: '#2d0363',
+                      '&:hover': {
+                        color: '#530eae',
+                      }
+                    }}
+                  >
+                    Ver Disponibilidad
+                  </Typography>
                 )}
               </Disponibilidad>
             </ContenedorReserva>
@@ -474,7 +486,7 @@ const ProductoDetalle = ({ setMostrarHeader }) => {
         <ContenedorPuntuacion
           id="reseñas-seccion"
           style={{ Padding: "30px 130px" }}
-        > {/*           <ContenedorResenas>
+        >{/*           <ContenedorResenas>
           {servicio.valoraciones &&
             servicio.valoraciones.map((valoracion, index) => (
               <div key={index}>
