@@ -1,4 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useCallback,
+  useRef,
+} from "react";
 import { obtenerServicios } from "../../Services/serviciosService";
 import { obtenerImagenesPorServicio } from "../../Services/imagenesService";
 import { obtenerCategorias } from "../../Services/categoriasService";
@@ -34,6 +40,8 @@ import {
 } from "./ListaProductos.styled";
 import { asignarPuntuacionAleatoria } from "../../Utils/utils";
 import { obtenerNombreCategoria } from "../../Utils/utils";
+import { AuthContext } from "../../Context/AuthContext";
+import AuthRequiredModal from "../../Components/AuthRequiredModal/AuthRequiredModal";
 
 const ListaProductos = ({
   categoriaSeleccionada,
@@ -41,6 +49,8 @@ const ListaProductos = ({
   mostrarFavoritos,
   setMostrarFavoritos,
 }) => {
+  const { usuario } = useContext(AuthContext);
+  const [authModalAbierto, setAuthModalAbierto] = useState(false);
   const [servicios, setServicios] = useState([]);
   const [paginaActual, setPaginaActual] = useState(1);
   const [favoritos, setFavoritos] = useState([]);
@@ -131,6 +141,10 @@ const ListaProductos = ({
 
   const agregarAFavoritos = async (productoId) => {
     try {
+      if (!usuario) {
+        setAuthModalAbierto(true); // Abre el modal si no está autenticado
+        return;
+      }
       const resultado = await agregarFavorito(productoId);
       if (resultado) {
         console.log("Favorito agregado correctamente:", resultado);
@@ -145,6 +159,10 @@ const ListaProductos = ({
   };
 
   const eliminarDeFavoritos = async (productoId) => {
+    if (!usuario) {
+      setAuthModalAbierto(true); // Abre el modal si no está autenticado
+      return;
+    }
     try {
       const favorito = favoritos.find((fav) => fav.servicioId === productoId);
 
@@ -301,6 +319,11 @@ const ListaProductos = ({
           </ContenedorPaginacion>
         )}
       </div>
+      <AuthRequiredModal
+        open={authModalAbierto}
+        onClose={() => setAuthModalAbierto(false)}
+        actionType="favoritos" // Pasar el tipo de acción
+      />
     </Contenedor>
   );
 };

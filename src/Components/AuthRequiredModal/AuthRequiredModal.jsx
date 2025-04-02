@@ -76,7 +76,7 @@ const EnlaceRegistro = styled(Typography)`
   }
 `;
 
-const AuthRequiredModal = ({ open, onClose }) => {
+const AuthRequiredModal = ({ open, onClose, actionType }) => {
   const navigate = useNavigate();
 
   const handleIniciarSesion = () => {
@@ -87,6 +87,31 @@ const AuthRequiredModal = ({ open, onClose }) => {
   const handleRegistrarse = () => {
     navigate("/registrar");
     onClose();
+  };
+
+  const getModalText = () => {
+    if (actionType === "favoritos") {
+      return (
+        <ModalText>
+          Para agregar este servicio a tus favoritos, es necesario que inicies
+          sesión. Si no tienes una cuenta, puedes registrarte ahora.
+        </ModalText>
+      );
+    } else if (actionType === "reserva") {
+      return (
+        <ModalText>
+          Para continuar con tu reserva, es necesario que inicies sesión. Si no
+          tienes una cuenta, puedes registrarte ahora.
+        </ModalText>
+      );
+    } else {
+      return (
+        <ModalText>
+          Para realizar esta acción, es necesario que inicies sesión. Si no
+          tienes una cuenta, puedes registrarte ahora.
+        </ModalText>
+      );
+    }
   };
 
   return (
@@ -116,15 +141,12 @@ const AuthRequiredModal = ({ open, onClose }) => {
           </IconButton>
           <ModalTitle>Inicio de sesión requerido</ModalTitle>
         </Contenedor1>
-        <Contenedor2>
-          <ModalText>
-            Para continuar con tu reserva, es necesario que inicies sesión.
-            Si no tienes una cuenta, puedes registrarte ahora.
-          </ModalText>
-        </Contenedor2>
+        <Contenedor2>{getModalText()}</Contenedor2>
 
         <DialogActions>
-          <ModalButton onClick={handleIniciarSesion}>Iniciar Sesión</ModalButton>
+          <ModalButton onClick={handleIniciarSesion}>
+            Iniciar Sesión
+          </ModalButton>
         </DialogActions>
         <EnlaceRegistro onClick={handleRegistrarse}>
           ¿No tienes cuenta? Regístrate aquí
