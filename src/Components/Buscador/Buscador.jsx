@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { InputAdornment, Button } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import CleaningServicesIcon from "@mui/icons-material/CleaningServices";
+import ClearIcon from "@mui/icons-material/Clear"; // Cambiado de CleaningServicesIcon a ClearIcon
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -257,6 +257,9 @@ const Buscador = () => {
                 onKeyDown={handleKeyDown}
                 aria-expanded={showSuggestions}
                 aria-owns="suggestions-list"
+                InputLabelProps={{
+                  shrink: true, // Mantiene el label arriba siempre
+                }}
                 InputProps={{
                   endAdornment: (
                     <InputAdornment position="end">
@@ -266,7 +269,7 @@ const Buscador = () => {
                           onClick={handleClearSelection}
                           aria-label="Limpiar búsqueda"
                         >
-                          <CleaningServicesIcon />
+                          <ClearIcon /> {/* Cambiado el ícono */}
                         </BotonLimpiar>
                       )}
                     </InputAdornment>
