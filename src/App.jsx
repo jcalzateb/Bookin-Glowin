@@ -9,9 +9,9 @@ import Registro from "./Pages/Registro/Registro";
 import Login from "./Pages/Login/Login";
 import { AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
-import Reserva from "./Pages/Reserva/Reserva";
-import ReservaConfirmada from "./Pages/Reserva/ReservaConfirmada";
-
+import Reserva from "./pages/Reserva/Reserva";
+import ReservaConfirmada from "./pages/Reserva/ReservaConfirmada";
+import HistorialReservas from "./Pages/HistorialReservas/HistorialReservas";
 const App = () => {
   const [mostrarHeader, setMostrarHeader] = useState(true);
 
@@ -27,6 +27,7 @@ const App = () => {
           />
           <Route path="/reserva" element={<Reserva />} />
           <Route path="/reserva-confirmada" element={<ReservaConfirmada />} />
+          <Route path="/historial" element={<HistorialReservas />} />
           <Route
             path="/admin"
             element={<PrivateRoute element={<AdminPanel />} />}
