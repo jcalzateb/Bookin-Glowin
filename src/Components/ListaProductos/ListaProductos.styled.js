@@ -166,14 +166,13 @@ export const ContenedorPaginacion = styled(Box)`
   align-items: center;
   margin: 12px 0 20px 0;
   gap: 20px;
-  flex-wrap: wrap;
 
   @media (max-width: 820px) {
-    gap: 4px;
+    gap: 15px;
   }
 
   @media (max-width: 600px) {
-    gap: 4px;
+    gap: 10px;
   }
 `;
 
@@ -199,15 +198,14 @@ export const BotonPagina = styled(Button)`
   }
 
   @media (max-width: 820px) {
-    width: 28px;
+    min-width: 50px !important;
     height: 28px;
-    font-size: 12px;
   }
 
   @media (max-width: 600px) {
-    width: 28px;
+    min-width: 40px !important;
     height: 28px;
-    font-size: 12px;
+    font-size: 12px !important;
   }
 `;
 
