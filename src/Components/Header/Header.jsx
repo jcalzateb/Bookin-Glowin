@@ -6,6 +6,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import HistoryIcon from "@mui/icons-material/History";
 import {
   ContenedorHeader,
   BarraNavegacion,
@@ -63,6 +64,11 @@ const Header = ({ setMostrarFavoritos }) => {
     cerrarMenuUsuario();
   };
 
+  const verHistorial = () => {
+    navigate("/historial"); // Redirige al historial de reservas
+    cerrarMenuUsuario();
+  };
+
   const obtenerIconoMenu = () => {
     if (location.pathname === "/admin") {
       return <HomeOutlinedIcon style={{ marginRight: "5px" }} />;
@@ -115,6 +121,10 @@ const Header = ({ setMostrarFavoritos }) => {
                       : "Panel administrador"}
                   </OpcionMenu>
                 ) : null}
+                <OpcionMenu onClick={verHistorial}>
+                  <HistoryIcon style={{ marginRight: "5px" }} />
+                  Historial de Reservas
+                </OpcionMenu>
                 <hr />
                 <OpcionMenu
                   onClick={() => {
@@ -179,6 +189,9 @@ const Header = ({ setMostrarFavoritos }) => {
                       : "Panel administrador"}
                   </a>
                 ) : null}
+                <a href="#" onClick={verHistorial}>
+                  Historial de Reservas
+                </a>
                 <hr />
                 <Link to="#" onClick={cerrarSesion}>
                   Cerrar Sesión
