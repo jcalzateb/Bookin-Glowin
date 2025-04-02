@@ -9,8 +9,8 @@ import Registro from "./Pages/Registro/Registro";
 import Login from "./Pages/Login/Login";
 import { AuthProvider } from "./Context/AuthContext";
 import PrivateRoute from "./Components/PrivateRoute/PrivateRoute";
-import Reserva from "./pages/Reserva/Reserva";
-import ReservaConfirmada from "./pages/Reserva/ReservaConfirmada";
+import Reserva from "./Pages/Reserva/Reserva";
+import ReservaConfirmada from "./Pages/Reserva/ReservaConfirmada";
 import HistorialReservas from "./Pages/HistorialReservas/HistorialReservas";
 
 const App = () => {
