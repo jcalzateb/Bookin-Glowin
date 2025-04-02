@@ -107,7 +107,7 @@ export const BarraBusqueda = styled.div`
   align-items: center;
   position: relative;
   padding: 5px;
-  height: 62px; /* Establecer una altura fija que coincida con el DatePicker */
+  
 
   @media (max-width: 600px) {
     width: 100%;
@@ -119,11 +119,10 @@ export const CampoBusqueda = styled(TextField)`
   && {
     width: 100%;
     background-color: transparent !important;
-    margin-top: 0;
+    margin-top: 10px;
 
     & .MuiOutlinedInput-root {
       border-radius: 30px;
-      height: 40px; /* Altura fija para el input */
 
       & fieldset {
         border: none;
@@ -140,8 +139,10 @@ export const CampoBusqueda = styled(TextField)`
 
     & .MuiInputLabel-root {
       color: #635E63 !important;
-      transform: translate(14px, -14px) scale(0.75) !important; /* Ajuste para alinear con la etiqueta del DatePicker */
+      transform: translate(0px, 0px) scale(0.75) !important; /* Ajuste para alinear con la etiqueta del DatePicker */
       background-color: transparent;
+      padding-top: 0px;
+      padding-left: 20px;
       
       &.Mui-focused {
         color: #635E63 !important;
@@ -154,7 +155,7 @@ export const CampoBusqueda = styled(TextField)`
 
     & .MuiOutlinedInput-input {
       color: #2d0363 !important;
-      padding: 12px 16px;
+      padding-top: 20px;
       
       &::placeholder {
         color: rgba(45, 3, 99, 0.6);
@@ -166,6 +167,7 @@ export const CampoBusqueda = styled(TextField)`
       margin-right: 0;
     }
   }
+  
 `;
 
 export const DividerVertical = styled.div`
@@ -278,21 +280,20 @@ export const BotonBuscar = styled(Button)`
 export const ContenedorFecha = styled.div`
   width: 100%;
   max-width: 200px;
-  height: 62px; /* Misma altura que BarraBusqueda */
   display: flex;
   align-items: center;
   background-color: #f6ebf9;
   border-radius: 20px;
-  padding: 8px 12px 0px 12px; /* Ajuste del padding para alinear correctamente */
   
   /* Estilos para el DatePicker */
   & .MuiFormControl-root {
     width: 100%;
+    padding-top: 2px;
   }
   
   /* Estilos para la etiqueta del DatePicker */
   & .MuiFormLabel-root {
-    transform: translate(0, -14px) scale(0.75) !important;
+    transform: translate(0, 0px) scale(0.75) !important;
     color: #635E63 !important;
   }
   
