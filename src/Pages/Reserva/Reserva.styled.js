@@ -297,6 +297,12 @@ export const BotonConfirmar = styled(Button)`
     background-color: #530eae !important;
   }
 
+  &:disabled {
+    background-color: #cccccc !important; /* Color gris suave para estado desactivado */
+    color: #888888 !important; /* Texto más oscuro para mejor contraste */
+    cursor: not-allowed !important; /* Cambia el cursor para indicar que está deshabilitado */
+  }
+
   @media (max-width: 600px) {
     width: 100%;
   }

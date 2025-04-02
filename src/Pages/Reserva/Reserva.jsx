@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { CircularProgress, RadioGroup } from "@mui/material";
+import { CircularProgress, RadioGroup, Snackbar, Alert } from "@mui/material";
 import ShuffleIcon from "@mui/icons-material/Shuffle";
 import { realizarReserva } from "../../Services/reservasService";
 import { obtenerServicioPorId } from "../../Services/serviciosService";
@@ -51,7 +51,6 @@ import mastercardLogo from "../../assets/logo_mastercard.svg";
 import mercadopagoLogo from "../../assets/logo_mercadopago.svg";
 import cashLogo from "../../assets/logo_cash.svg";
 
-
 const Reserva = () => {
   const location = useLocation();
   const navigate = useNavigate();
@@ -65,7 +64,9 @@ const Reserva = () => {
   const [empleados, setEmpleados] = useState([]);
   const [empleadoSeleccionado, setEmpleadoSeleccionado] = useState(null);
   const [metodoPago, setMetodoPago] = useState("efectivo");
-  //const [turno, setTurno] = useState({});
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [snackbarSeverity, setSnackbarSeverity] = useState("warning");
 
   // Obtener datos del state de navegación
   const servicioId = location.state?.servicioId;
@@ -74,14 +75,11 @@ const Reserva = () => {
   const fecha = location.state?.fecha;
   
   // Definimos el turno directamente con los valores de location.state
-  // en lugar de usar useState para evitar problemas de sincronización
-  ///*
   const turno = {
     id: turnoId,
     hora: hora,
     fecha: fecha
   };
-  //*/
   console.log("Fecha:", fecha);
 
   useEffect(() => {
@@ -95,7 +93,6 @@ const Reserva = () => {
       try {
         // Obtener información del servicio
         if (servicioId && turnoId && hora && fecha) {
-          //setTurno({ id: turnoId, hora: hora, fecha: fecha });
           console.log("Turno:", { id: turnoId, hora: hora, fecha: fecha });
           const servicioData = await obtenerServicioPorId(servicioId);
           setServicio(servicioData);
@@ -148,13 +145,19 @@ const Reserva = () => {
     if (empleados.length > 0) {
       const indiceAleatorio = Math.floor(Math.random() * empleados.length);
       setEmpleadoSeleccionado(empleados[indiceAleatorio]);
+      // Confirmar visualmente la selección con un Snackbar
+      setSnackbarMessage("Profesional seleccionado aleatoriamente");
+      setSnackbarSeverity("success");
+      setOpenSnackbar(true);
     }
   };
 
-  // Confirmar la reserva
+  // Confirmar la reserva - modificado para usar Snackbar
   const confirmarReserva = async () => {
     if (!empleadoSeleccionado) {
-      alert("Por favor seleccione un profesional para la atención.");
+      setSnackbarMessage("Por favor seleccione un profesional para la atención");
+      setSnackbarSeverity("warning");
+      setOpenSnackbar(true);
       return;
     }
     console.log("usuarioId desde localStorage:", usuario);
@@ -168,7 +171,6 @@ const Reserva = () => {
     console.log("turno", turno);
 
     try {
-      // Aquí iría la lógica para guardar la reserva en el backend
       const reservaData = {
         idCliente: usuario.id,
         idServicio: servicio.id,
@@ -179,13 +181,34 @@ const Reserva = () => {
       };
       console.log("reservaData", reservaData);
       await realizarReserva(reservaData);
-      // Redireccionar a página de confirmación
       navigate("/reserva-confirmada");
     } catch (err) {
       console.error("Error al confirmar la reserva:", err);
-      alert("Ocurrió un error al procesar la reserva. Intente nuevamente.");
+      setSnackbarMessage("Ocurrió un error al procesar la reserva. Intente nuevamente.");
+      setSnackbarSeverity("error");
+      setOpenSnackbar(true);
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  // Manejar cierre del Snackbar
+  const handleCloseSnackbar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+
+  // Modificamos la implementación para incluir un div contenedor que pueda capturar el clic
+  // aún cuando el botón esté desactivado
+  const handleBotonReservaClick = (e) => {
+    if (!empleadoSeleccionado) {
+      setSnackbarMessage("Debe seleccionar un profesional para la atención");
+      setSnackbarSeverity("warning");
+      setOpenSnackbar(true);
+      e.preventDefault();
+      e.stopPropagation();
     }
   };
 
@@ -209,6 +232,24 @@ const Reserva = () => {
 
   return (
     <ContenedorPrincipal>
+      {/* Snackbar para notificaciones */}
+      <Snackbar 
+        open={openSnackbar}
+        autoHideDuration={4000}
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+        style={{ marginTop: '70px' }}
+      >
+        <Alert 
+          onClose={handleCloseSnackbar} 
+          severity={snackbarSeverity}
+          variant="filled"
+          sx={{ width: '100%' }}
+        >
+          {snackbarMessage}
+        </Alert>
+      </Snackbar>
+
       <TituloReserva variant="h2">Confirma tu Reserva</TituloReserva>
       
       <ContenedorReserva>
@@ -364,11 +405,16 @@ const Reserva = () => {
               <BotonCancelar onClick={() => navigate(-1)}>
                 Cancelar
               </BotonCancelar>
-              <BotonConfirmar
-                onClick={confirmarReserva}
-                disabled={isLoading || !empleadoSeleccionado}>
-                Confirmar Reserva
-              </BotonConfirmar>
+              <div onClick={handleBotonReservaClick} style={{width: '100%'}}>
+                <BotonConfirmar sx={{cursor:"pointer"}}
+                  variant="contained"
+                  color="primary"
+                  onClick={confirmarReserva}
+                  disabled={isLoading || !empleadoSeleccionado}>
+                  
+                  Confirmar Reserva
+                </BotonConfirmar>
+              </div>
             </ContenedorBotones>
         </SeccionDerecha>
       </ContenedorReserva>
