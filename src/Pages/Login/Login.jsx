@@ -31,20 +31,16 @@ const Login = () => {
       [name]: value,
     }));
     setErrores({ ...errores, [name]: "" });
-    setBotonDeshabilitado(!validarFormulario());
   };
 
   const validarFormulario = () => {
     let erroresTemp = {};
-    if (
-      !formulario.email ||
-      !/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.(com)$/i.test(formulario.email)
-    ) {
+    const correoRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
+
+    if (!correoRegex.test(formulario.email)) {
       erroresTemp.email = "Correo electrónico inválido";
     }
-    if (!formulario.password || formulario.password.trim() === "") {
-      erroresTemp.password = "La contraseña es obligatoria";
-    }
+
     setErrores(erroresTemp);
     return Object.keys(erroresTemp).length === 0;
   };
@@ -83,19 +79,17 @@ const Login = () => {
             value={formulario.email}
             onChange={handleChange}
             $error={errores.email}
+            required
           />
-          {errores.email && <MensajeError>{errores.email}</MensajeError>}
-
           <CampoInput
             type="password"
             name="password"
             placeholder="Contraseña"
             value={formulario.password}
             onChange={handleChange}
-            $error={errores.password}
             required
           />
-          {errores.password && <MensajeError>{errores.password}</MensajeError>}
+          {errores.email && <MensajeError>{errores.email}</MensajeError>}
           {errores.general && <MensajeError>{errores.general}</MensajeError>}
           <BotonAccion type="submit">Iniciar Sesión</BotonAccion>
 

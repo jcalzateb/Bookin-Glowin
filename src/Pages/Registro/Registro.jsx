@@ -35,10 +35,20 @@ const Registro = () => {
   const [mensajeError, setMensajeError] = useState("");
   const [emailConfirmacion, setEmailConfirmacion] = useState("");
 
+  const [touched, setTouched] = useState({
+    nombre: false,
+    apellido: false,
+    email: false,
+    celular: false,
+    password: false,
+    confirmarPassword: false,
+  });
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     const nuevosDatos = { ...formulario, [name]: value };
     setFormulario(nuevosDatos);
+    setTouched({ ...touched, [name]: true });
     validarFormulario(nuevosDatos);
   };
 
@@ -46,6 +56,7 @@ const Registro = () => {
     let erroresTemp = {};
     const soloLetras = /^[A-Za-zÁáÉéÍíÓóÚúÑñ\s]+$/;
     const soloNumeros = /^[0-9]+$/;
+    const correoRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
 
     if (!datos.nombre.trim()) {
       erroresTemp.nombre = "El nombre es obligatorio";
@@ -59,7 +70,9 @@ const Registro = () => {
       erroresTemp.apellido = "Solo se permiten letras";
     }
 
-    if (!/\S+@\S+\.\S+/.test(datos.email)) {
+    if (!datos.email.trim()) {
+      erroresTemp.email = "El correo electrónico es obligatorio";
+    } else if (!correoRegex.test(datos.email)) {
       erroresTemp.email = "Correo electrónico inválido";
     }
 
@@ -67,6 +80,12 @@ const Registro = () => {
       erroresTemp.celular = "El número de celular es obligatorio";
     } else if (!soloNumeros.test(datos.celular)) {
       erroresTemp.celular = "Solo se permiten números";
+    } else if (datos.celular.length > 12) {
+      erroresTemp.celular =
+        "El número de celular no puede tener más de 12 dígitos";
+    } else if (datos.celular.length < 7) {
+      erroresTemp.celular =
+        "El número de celular no puede tener menos de 7 dígitos";
     }
 
     if (datos.password.length < 8 || !/\d/.test(datos.password)) {
@@ -168,9 +187,11 @@ const Registro = () => {
             value={formulario.nombre}
             onChange={handleChange}
             $error={errores.nombre}
-            $touched={formulario.nombre.trim().length > 0}
+            $touched={touched.nombre}
           />
-          {errores.nombre && <MensajeError>{errores.nombre}</MensajeError>}
+          {touched.nombre && errores.nombre && (
+            <MensajeError>{errores.nombre}</MensajeError>
+          )}
 
           <CampoInput
             type="text"
@@ -179,9 +200,11 @@ const Registro = () => {
             value={formulario.apellido}
             onChange={handleChange}
             $error={errores.apellido}
-            $touched={formulario.apellido.trim().length > 0}
+            $touched={touched.apellido}
           />
-          {errores.apellido && <MensajeError>{errores.apellido}</MensajeError>}
+          {touched.apellido && errores.apellido && (
+            <MensajeError>{errores.apellido}</MensajeError>
+          )}
 
           <CampoInput
             type="email"
@@ -190,9 +213,11 @@ const Registro = () => {
             value={formulario.email}
             onChange={handleChange}
             $error={errores.email}
-            $touched={formulario.email.trim().length > 0}
+            $touched={touched.email}
           />
-          {errores.email && <MensajeError>{errores.email}</MensajeError>}
+          {touched.email && errores.email && (
+            <MensajeError>{errores.email}</MensajeError>
+          )}
 
           <CampoInput
             type="text"
@@ -201,9 +226,11 @@ const Registro = () => {
             value={formulario.celular}
             onChange={handleChange}
             $error={errores.celular}
-            $touched={formulario.celular.trim().length > 0}
+            $touched={touched.celular}
           />
-          {errores.celular && <MensajeError>{errores.celular}</MensajeError>}
+          {touched.celular && errores.celular && (
+            <MensajeError>{errores.celular}</MensajeError>
+          )}
 
           <CampoInput
             type="password"
@@ -212,9 +239,11 @@ const Registro = () => {
             value={formulario.password}
             onChange={handleChange}
             $error={errores.password}
-            $touched={formulario.password.trim().length > 0}
+            $touched={touched.password}
           />
-          {errores.password && <MensajeError>{errores.password}</MensajeError>}
+          {touched.password && errores.password && (
+            <MensajeError>{errores.password}</MensajeError>
+          )}
 
           <CampoInput
             type="password"
@@ -223,9 +252,9 @@ const Registro = () => {
             value={formulario.confirmarPassword}
             onChange={handleChange}
             $error={errores.confirmarPassword}
-            $touched={formulario.confirmarPassword.trim().length > 0}
+            $touched={touched.confirmarPassword}
           />
-          {errores.confirmarPassword && (
+          {touched.confirmarPassword && errores.confirmarPassword && (
             <MensajeError>{errores.confirmarPassword}</MensajeError>
           )}
 

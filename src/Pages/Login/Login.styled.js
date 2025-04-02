@@ -82,7 +82,12 @@ export const CampoInput = styled.input`
   margin-bottom: 8px;
   border-radius: 10px;
   border: 1px solid
-    ${(props) => (props.$error ? "red" : props.$touched ? "green" : "#ccc")};
+    ${(props) =>
+      props.$error && props.$touched
+        ? "red"
+        : props.$touched
+        ? "green"
+        : "#ccc"};
   background: transparent;
   outline: none;
   color: #333;
@@ -92,7 +97,8 @@ export const CampoInput = styled.input`
   }
 
   &:focus {
-    border-color: #7b4eff;
+    border-color: ${({ $error, $touched }) =>
+      $touched && $error ? "red" : "#9747ff"};
   }
   &:disabled {
     background-color: #f0f0f0;
