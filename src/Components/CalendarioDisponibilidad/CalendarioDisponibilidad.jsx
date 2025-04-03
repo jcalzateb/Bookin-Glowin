@@ -45,12 +45,12 @@ const ModalContenido = styled(Box)({
   backgroundColor: "white",
   boxShadow: "0px 4px 20px rgba(0, 0, 0, 0.15) !important",
   borderRadius: "8px !important",
-  padding: "20px !important",
+  padding: "15px !important",
   alignItems: "center !important",
   textAlign: "center !important",
   "@media (max-width: 786px)": {
-    width: "90% !important",
-    padding: "35px 20px !important",
+    width: "95% !important",
+    padding: "5px 5px !important",
   },
 });
 
@@ -59,12 +59,14 @@ const ContenedorFecha = styled(Box)({
   maxWidth: "400px",
   margin: "1rem auto",
   borderRadius: "20px",
-  padding: "15px",
+  marginBottom: "0px",
+  padding: "10px",
 
   // Cambio del fondo del calendario a blanco
   "& .MuiDateCalendar-root": {
     backgroundColor: "#ffffff",
     transition: "opacity 0.2s ease-in-out",
+    maxHeight: "275px",
   },
 
   // Estilo del encabezado del mes/año
@@ -79,7 +81,7 @@ const ContenedorFecha = styled(Box)({
   // Estilo para el nombre del mes y año
   "& .MuiPickersCalendarHeader-labelContainer": {
     fontWeight: "normal",
-    fontSize: "16px",
+    fontSize: "14px",
     width: "100%",
     textTransform: "capitalize",
     color: "#f6ebf9", // Rosa claro
@@ -108,9 +110,9 @@ const ContenedorFecha = styled(Box)({
     backgroundColor: "#f6ebf9", // Rosa pastel claro
     color: "#2d0363", // Morado oscuro
     fontWeight: "normal",
-    width: "100%", //100%
-    height: "36px",
-    margin: "2px",
+    width: "100%",
+    margin: "0px",
+    marginTop: "-3.5px",
   },
 
   // Ajustar el espaciado entre elementos del encabezado
@@ -123,10 +125,20 @@ const ContenedorFecha = styled(Box)({
     backgroundColor: "#f6ebf9", // Rosa pastel claro
     margin: "0px",
     padding: "0px",
+    width: "100%",
   },
 
   "@media (max-width: 768px)": {
     maxWidth: "100%",
+  },
+  // Estilo para el contenedor de la semana
+  "& .MuiDayCalendar-weekContainer": {
+    margin: "0px",
+    paddingTop: "1px",
+    paddingRight: "0px",
+    paddingLeft: "0px",
+    display: "flex",
+    justifyContent: "space-between",
   },
 });
 
@@ -139,7 +151,7 @@ const EncabezadoTurnos = styled(Typography)(({ theme }) => ({
   width: "100%",
   fontFamily: "Poppins, sans-serif",
   textAlign: "left",
-  marginBottom: "15px",
+  marginBottom: "10px",
   fontWeight: "normal",
 }));
 
@@ -174,7 +186,6 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno, toggleAbierto 
 
   // Definir horarios posibles de 9:00 a 18:00
   const TODOS_HORARIOS = [
-    "09:00",
     "10:00",
     "11:00",
     "12:00",
@@ -360,7 +371,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno, toggleAbierto 
             No hay información de horarios para esta fecha.
           </Typography>
         ) : (
-          <Grid container spacing={1}>
+          <Grid container spacing={1.5} mt={0} px={2}>
             {todosLosTurnos.map((turno) => (
               <Grid item xs={6} sm={4} key={turno.id}>
                 <TurnoBoton
@@ -400,7 +411,9 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno, toggleAbierto 
             <IconButton onClick={cerrarModal} size="small">
               <CloseIcon />
             </IconButton>
-            <Typography variant="h5">Disponibilidad para la reserva</Typography>
+            <Typography
+              sx={{ flexGrow: 1, fontWeight: "bold", fontSize: "1.45rem" }}
+            variant="h5">Disponibilidad</Typography>
           </Box>
 
           {error && (
@@ -432,11 +445,12 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno, toggleAbierto 
                     opacity: cambiandoMes ? 0.7 : 1,
                     transition: "opacity 0.3s ease-in-out",
                     backgroundColor: "#fff",
+                    marginTop: "-25px",
                     "& .MuiPickersDay-root": {
                       borderRadius: "50%",
                     },
                     "& .MuiPickersDay-today": {
-                      border: "1px solid #9c27b0",
+                      border: "1px solid #c595ce",
                       color: "#9c27b0",
                     },
                     "& .MuiPickersDay-daySelected": {
@@ -465,7 +479,7 @@ const CalendarioDisponibilidad = ({ servicioId, onSeleccionTurno, toggleAbierto 
                     "& .MuiDayCalendar-weekDayLabel": {
                       backgroundColor: "#f6ebf9",
                       color: "#2d0363",
-                      fontWeight: "bold",
+                      fontWeight: "normal",
                     },
                     "& .MuiDayCalendar-weekDayContainer": {
                       backgroundColor: "#f6ebf9",
