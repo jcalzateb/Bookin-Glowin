@@ -285,7 +285,7 @@ const ListaProductos = ({
               </TarjetaProducto>
             ))
           ) : (
-            <p style={{ textAlign: "center", marginTop: "20px" }}>
+            <p style={{ textAlign: "center", marginTop: "5px" }}>
               No hay servicios disponibles.
             </p>
           )}

@@ -28,6 +28,7 @@ import {
   BotonEliminar,
   BotonEditar,
 } from "./GestionCategorias.styled";
+import { obtenerNombreCategoria } from "../../Utils/utils";
 
 const GestionCategorias = () => {
   const [categorias, setCategorias] = useState([]);
@@ -231,7 +232,7 @@ const GestionCategorias = () => {
                 src={categoria.urlImagen}
                 alt={categoria.nombre}
               />
-              <span>{categoria.nombre}</span>
+              <span>{obtenerNombreCategoria(categoria.nombre)}</span>
               <BotonEditar
                 onClick={() => handleSeleccionarCategoria(categoria)}
               >

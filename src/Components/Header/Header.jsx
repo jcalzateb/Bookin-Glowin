@@ -7,6 +7,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import ManageAccountsOutlinedIcon from "@mui/icons-material/ManageAccountsOutlined";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import HistoryIcon from "@mui/icons-material/History";
+import CerrarSesionModal from "../MensajeModal/CerrarSesionModal";
 import {
   ContenedorHeader,
   BarraNavegacion,
@@ -31,6 +32,7 @@ const Header = ({ setMostrarFavoritos }) => {
   const { usuario, cerrarSesion } = useContext(AuthContext);
   const [menuUsuario, setMenuUsuario] = useState(null);
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const [modalAbierto, setModalAbierto] = useState(false);
 
   useEffect(() => {
     console.log("Estado de usuario en Header:", usuario);
@@ -57,16 +59,29 @@ const Header = ({ setMostrarFavoritos }) => {
       navigate("/admin");
     }
     cerrarMenuUsuario();
+    setMenuAbierto(false);
   };
 
   const mostrarFavoritos = () => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      cerrarMenuUsuario();
+    }
     setMostrarFavoritos(true);
     cerrarMenuUsuario();
+    setMenuAbierto(false);
+  };
+
+  const verInicio = () => {
+    navigate("/");
+    cerrarMenuUsuario();
+    setMenuAbierto(false);
   };
 
   const verHistorial = () => {
-    navigate("/historial"); // Redirige al historial de reservas
+    navigate("/historial");
     cerrarMenuUsuario();
+    setMenuAbierto(false);
   };
 
   const obtenerIconoMenu = () => {
@@ -75,6 +90,14 @@ const Header = ({ setMostrarFavoritos }) => {
     } else {
       return <ManageAccountsOutlinedIcon style={{ marginRight: "5px" }} />;
     }
+  };
+
+  const confirmarCerrarSesion = () => {
+    cerrarMenuUsuario();
+    cerrarSesion();
+    setModalAbierto(false);
+    navigate("/");
+    setMenuAbierto(false);
   };
 
   return (
@@ -102,6 +125,18 @@ const Header = ({ setMostrarFavoritos }) => {
                   </strong>
                 </OpcionMenu>
                 {location.pathname !== "/admin" &&
+                  location.pathname !== "/" && (
+                    <OpcionMenu onClick={verInicio}>
+                      <HomeOutlinedIcon
+                        style={{
+                          marginRight: "5px",
+                        }}
+                      />
+                      Inicio
+                    </OpcionMenu>
+                  )}
+                {location.pathname !== "/admin" &&
+                  location.pathname !== "/historial" &&
                   !location.pathname.startsWith("/producto/") && (
                     <OpcionMenu onClick={mostrarFavoritos}>
                       <FavoriteBorderIcon
@@ -126,12 +161,7 @@ const Header = ({ setMostrarFavoritos }) => {
                   Historial de Reservas
                 </OpcionMenu>
                 <hr />
-                <OpcionMenu
-                  onClick={() => {
-                    cerrarSesion();
-                    cerrarMenuUsuario();
-                  }}
-                >
+                <OpcionMenu onClick={() => setModalAbierto(true)}>
                   <LogoutIcon
                     style={{
                       marginRight: "5px",
@@ -176,6 +206,13 @@ const Header = ({ setMostrarFavoritos }) => {
                   </strong>
                 </p>
                 {location.pathname !== "/admin" &&
+                  location.pathname !== "/" && (
+                    <a href="#" onClick={verInicio}>
+                      Inicio
+                    </a>
+                  )}
+                {location.pathname !== "/admin" &&
+                  location.pathname !== "/historial" &&
                   !location.pathname.startsWith("/producto/") && (
                     <a href="#" onClick={mostrarFavoritos}>
                       Mis favoritos
@@ -193,7 +230,7 @@ const Header = ({ setMostrarFavoritos }) => {
                   Historial de Reservas
                 </a>
                 <hr />
-                <Link to="#" onClick={cerrarSesion}>
+                <Link to="#" onClick={() => setModalAbierto(true)}>
                   Cerrar Sesión
                 </Link>
               </>
@@ -201,6 +238,11 @@ const Header = ({ setMostrarFavoritos }) => {
           </ListaMenu>
         </DrawerMenu>
       </BarraNavegacion>
+      <CerrarSesionModal
+        abierto={modalAbierto}
+        cerrar={() => setModalAbierto(false)}
+        confirmarCerrarSesion={confirmarCerrarSesion}
+      />
     </ContenedorHeader>
   );
 };

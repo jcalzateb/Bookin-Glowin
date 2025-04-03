@@ -23,6 +23,7 @@ import {
   ContenedorPaginacion,
   BotonPagina,
 } from "./Historial.styled";
+import { Margin } from "@mui/icons-material";
 
 const HistorialReservas = () => {
   const [reservas, setReservas] = useState([]);
@@ -83,11 +84,33 @@ const HistorialReservas = () => {
   }, [paginaActual]);
 
   if (cargando) {
-    return <div>Cargando...</div>;
+    return (
+      <div
+        style={{
+          margin: "auto",
+          fontSize: "28px",
+          fontFamily: "'Poppins', sans-serif",
+          color: "#2d0363",
+        }}
+      >
+        Cargando...
+      </div>
+    );
   }
 
   if (error) {
-    return <div>{error}</div>;
+    return (
+      <div
+        style={{
+          margin: "auto",
+          fontSize: "28px",
+          fontFamily: "'Poppins', sans-serif",
+          color: "#2d0363",
+        }}
+      >
+        {error}
+      </div>
+    );
   }
 
   const cambiarPagina = (nuevaPagina) => {
@@ -96,6 +119,26 @@ const HistorialReservas = () => {
       top: document.getElementById("encabezado").offsetTop - 20,
       behavior: "smooth",
     });
+  };
+
+  const formatearHora = (hora) => {
+    // Crear una fecha válida combinando la hora con la fecha actual
+    const ahora = new Date();
+    const horaCompleta = `${ahora.getFullYear()}-${(ahora.getMonth() + 1)
+      .toString()
+      .padStart(2, "0")}-${ahora
+      .getDate()
+      .toString()
+      .padStart(2, "0")}T${hora}`;
+
+    const fecha = new Date(horaCompleta);
+
+    // Verificar si la fecha es válida
+    if (isNaN(fecha)) {
+      return "Hora no válida";
+    }
+
+    return fecha.toTimeString().split(" ")[0];
   };
 
   return (
@@ -141,11 +184,12 @@ const HistorialReservas = () => {
                 </Cell>
                 <Cell>{reserva.servicio.costo} USD</Cell>
                 <Cell>
-                  {reserva.fecha} / {reserva.hora}
+                  {reserva.fecha} / {formatearHora(reserva.hora)}
                 </Cell>
                 <Cell>{`${reserva.empleado.nombre} ${reserva.empleado.apellido}`}</Cell>
                 <Cell>
-                  {reserva.fechaCreacion} / {reserva.horaCreacion}
+                  {reserva.fechaCreacion} /{" "}
+                  {formatearHora(reserva.horaCreacion)}
                 </Cell>
                 <Cell
                   style={{
