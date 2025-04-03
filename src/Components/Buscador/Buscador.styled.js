@@ -90,13 +90,13 @@ export const ContenedorParametros = styled.div`
   max-width: 700px;
   background-color: #f6ebf9;
   border-radius: 50px;
-  padding: 5px;
+  padding: 3px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
   @media (max-width: 600px) {
     flex-direction: column;
-    padding: 10px;
+    padding: 8px;
     border-radius: 20px;
   }
 `;
@@ -107,6 +107,7 @@ export const BarraBusqueda = styled.div`
   align-items: center;
   position: relative;
   padding: 5px;
+  
 
   @media (max-width: 600px) {
     width: 100%;
@@ -118,6 +119,7 @@ export const CampoBusqueda = styled(TextField)`
   && {
     width: 100%;
     background-color: transparent !important;
+    margin-top: 10px;
 
     & .MuiOutlinedInput-root {
       border-radius: 30px;
@@ -136,14 +138,36 @@ export const CampoBusqueda = styled(TextField)`
     }
 
     & .MuiInputLabel-root {
-      color: #2d0363 !important;
+      color: #635E63 !important;
+      transform: translate(0px, 0px) scale(0.75) !important; /* Ajuste para alinear con la etiqueta del DatePicker */
+      background-color: transparent;
+      padding-top: 0px;
+      padding-left: 20px;
+      
+      &.Mui-focused {
+        color: #635E63 !important;
+      }
+      
+      &.MuiFormLabel-filled {
+        transform: translate(14px, -14px) scale(0.75) !important;
+      }
     }
 
     & .MuiOutlinedInput-input {
       color: #2d0363 !important;
-      padding: 12px 16px;
+      padding-top: 20px;
+      
+      &::placeholder {
+        color: rgba(45, 3, 99, 0.6);
+        opacity: 1;
+      }
+    }
+    
+    & .MuiInputAdornment-root {
+      margin-right: 0;
     }
   }
+  
 `;
 
 export const DividerVertical = styled.div`
@@ -198,21 +222,22 @@ export const Isologo = styled.img`
 
 export const BotonLimpiar = styled(Button)`
   && {
-    background-color: #2d0363 !important;
-    color: #f6ebf9 !important;
+    background-color: transparent !important;
+    color: #2d0363 !important;
     border-radius: 50%;
-    height: 56px;
-    min-width: 56px;
+    height: 40px;
+    min-width: 40px;
+    padding: 0;
+    margin-right: -20px; /* Mover el botón más hacia la derecha */
     display: flex;
     align-items: center;
     justify-content: center;
 
     &:hover {
-      background-color: #f6ebf9 !important;
-      color: #2d0363 !important;
+      background-color: rgba(45, 3, 99, 0.1) !important;
     }
     &:active {
-      background-color: #9747ff !important;
+      background-color: rgba(151, 71, 255, 0.2) !important;
     }
   }
 `;
@@ -255,11 +280,23 @@ export const BotonBuscar = styled(Button)`
 export const ContenedorFecha = styled.div`
   width: 100%;
   max-width: 200px;
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
-  padding: 12px;
+  display: flex;
+  align-items: center;
   background-color: #f6ebf9;
   border-radius: 20px;
+  
+  /* Estilos para el DatePicker */
+  & .MuiFormControl-root {
+    width: 100%;
+    padding-top: 2px;
+  }
+  
+  /* Estilos para la etiqueta del DatePicker */
+  & .MuiFormLabel-root {
+    transform: translate(0, 0px) scale(0.75) !important;
+    color: #635E63 !important;
+  }
+  
   @media (max-width: 768px) {
     max-width: 100%;
   }
