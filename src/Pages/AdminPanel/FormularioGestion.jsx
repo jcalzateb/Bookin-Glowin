@@ -148,6 +148,14 @@ const FormularioGestion = ({
 
     if (!validarFormulario()) return;
 
+    // Filtrar las imágenes vacías
+    const imagenesValidas = formulario.imagenes.filter(
+      (imagen) => imagen.trim() !== ""
+    );
+
+    // Si no hay imágenes válidas, pasar un array vacío o manejar de otra forma
+    const imagenesAEnviar = imagenesValidas.length > 0 ? imagenesValidas : [];
+
     console.log("📋 Categorías disponibles:", categorias);
     console.log(
       "🟢 Nombre de la categoría seleccionada:",
@@ -176,6 +184,7 @@ const FormularioGestion = ({
         nombre: categoriaSeleccionada.nombre,
         urlImagen: categoriaSeleccionada.urlImagen,
       },
+      imagenes: imagenesAEnviar,
     };
     console.log("🚀 Servicio a enviar:", servicioAEnviar);
 
@@ -188,66 +197,74 @@ const FormularioGestion = ({
       callback: async () => {
         let resultado = null;
 
-        if (servicioSeleccionado) {
-          console.log("✏️ Actualizando servicio:", servicioAEnviar);
-          resultado = await editarServicio(
-            servicioSeleccionado.id,
-            servicioAEnviar
-          );
-        } else {
-          console.log("📡 Creando nuevo servicio:", servicioAEnviar);
-          resultado = await crearServicio(servicioAEnviar);
-        }
+        try {
+          if (servicioSeleccionado) {
+            console.log("✏️ Actualizando servicio:", servicioAEnviar);
+            resultado = await editarServicio(
+              servicioSeleccionado.id,
+              servicioAEnviar
+            );
+          } else {
+            console.log("📡 Creando nuevo servicio:", servicioAEnviar);
+            resultado = await crearServicio(servicioAEnviar);
+          }
 
-        if (resultado) {
-          const idServicio = servicioSeleccionado
-            ? servicioSeleccionado.id
-            : resultado.id;
+          if (resultado) {
+            const idServicio = servicioSeleccionado
+              ? servicioSeleccionado.id
+              : resultado.id;
 
-          for (let i = 0; i < formulario.imagenes.length; i++) {
-            const imagenData = {
-              titulo: `Imagen ${i + 1}`,
-              descripcion: `Descripción de la imagen ${i + 1}`,
-              urlImagen: formulario.imagenes[i],
-              fechaCreacion: new Date().toISOString(),
-              idServicio: idServicio,
-              servicio: {
-                nombre: formulario.nombre,
-                descripcion: formulario.descripcion,
-                duracionMinutos: formulario.duracionMinutos,
-                costo: formulario.costo,
-                cantidadSesiones: formulario.cantidadSesiones,
-                categoriaId: categoriaSeleccionada.id,
-                nombreCategoria: categoriaSeleccionada.nombre,
-              },
-            };
+            for (let i = 0; i < imagenesAEnviar.length; i++) {
+              const imagenData = {
+                titulo: `Imagen ${i + 1}`,
+                descripcion: `Descripción de la imagen ${i + 1}`,
+                urlImagen: imagenesAEnviar[i],
+                fechaCreacion: new Date().toISOString(),
+                idServicio: idServicio,
+                servicio: {
+                  nombre: formulario.nombre,
+                  descripcion: formulario.descripcion,
+                  duracionMinutos: formulario.duracionMinutos,
+                  costo: formulario.costo,
+                  cantidadSesiones: formulario.cantidadSesiones,
+                  categoriaId: categoriaSeleccionada.id,
+                  nombreCategoria: categoriaSeleccionada.nombre,
+                },
+              };
 
-            if (servicioSeleccionado) {
-              const imagenOriginal = servicioSeleccionado.imagenes[i];
-              if (imagenOriginal && imagenOriginal.id) {
-                await actualizarImagen(
-                  idServicio,
-                  imagenData,
-                  imagenOriginal.id
-                );
-                console.log(
-                  `🖼️ Actualizando imagen con ID ${imagenOriginal.id}`
-                );
+              if (servicioSeleccionado) {
+                const imagenOriginal = servicioSeleccionado.imagenes[i];
+                if (imagenOriginal && imagenOriginal.id) {
+                  await actualizarImagen(
+                    idServicio,
+                    imagenData,
+                    imagenOriginal.id
+                  );
+                  console.log(
+                    `🖼️ Actualizando imagen con ID ${imagenOriginal.id}`
+                  );
+                } else {
+                  await crearImagenParaServicio(idServicio, imagenData);
+                }
               } else {
                 await crearImagenParaServicio(idServicio, imagenData);
               }
-            } else {
-              await crearImagenParaServicio(idServicio, imagenData);
             }
-          }
 
+            actualizarLista();
+            limpiarFormulario();
+          } else {
+            console.error("Error al procesar la solicitud.");
+          }
+        } catch (error) {
+          console.error("Error inesperado:", error);
+        } finally {
+          // Cerrar el modal y desmarcar el estado de procesamiento
+          setMensaje({ ...mensaje, abierto: false });
           actualizarLista();
           limpiarFormulario();
-        } else {
-          console.error("Error al procesar la solicitud.");
+          // Desmarcar como procesando cuando termine
         }
-
-        setMensaje({ ...mensaje, abierto: false });
       },
     });
   };
