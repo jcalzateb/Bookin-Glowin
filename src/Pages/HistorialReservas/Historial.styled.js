@@ -63,6 +63,10 @@ export const TableContainer = styled.div`
   }
 `;
 
+export const TableFondo = styled.table`
+  border-collapse: collapse !important;
+`;
+
 export const TableHead = styled.thead`
   width: 100%;
   background-color: #2d0363;

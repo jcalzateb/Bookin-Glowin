@@ -22,8 +22,8 @@ import {
   Acciones,
   ContenedorPaginacion,
   BotonPagina,
+  TableFondo,
 } from "./Historial.styled";
-import { Margin } from "@mui/icons-material";
 
 const HistorialReservas = () => {
   const [reservas, setReservas] = useState([]);
@@ -156,69 +156,70 @@ const HistorialReservas = () => {
       </EncabezadoDetalle>
       <Bloque>
         <TableContainer>
-          <TableHead>
-            <TableRow id="encabezado">
-              <TableCell>Imagen</TableCell>
-              <TableCell>Nombre del Servicio</TableCell>
-              <TableCell>Categoría</TableCell>
-              <TableCell>Precio</TableCell>
-              <TableCell>Fecha de Reserva</TableCell>
-              <TableCell>Empleado</TableCell>
-              <TableCell>Fecha de Creación</TableCell>
-              <TableCell>Estado</TableCell>
-              <TableCell>Acciones</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {reservas.map((reserva) => (
-              <TableRow key={reserva.id}>
-                <Cell>
-                  <ImagenServicio
-                    src={reserva.imagen}
-                    alt={reserva.servicio.nombre}
-                  />
-                </Cell>
-                <Cell>{reserva.servicio.nombre}</Cell>
-                <Cell>
-                  {obtenerNombreCategoria(reserva.servicio.categoria)}
-                </Cell>
-                <Cell>{reserva.servicio.costo} USD</Cell>
-                <Cell>
-                  {reserva.fecha} / {formatearHora(reserva.hora)}
-                </Cell>
-                <Cell>{`${reserva.empleado.nombre} ${reserva.empleado.apellido}`}</Cell>
-                <Cell>
-                  {reserva.fechaCreacion} /{" "}
-                  {formatearHora(reserva.horaCreacion)}
-                </Cell>
-                <Cell
-                  style={{
-                    color:
-                      reserva.estado === "CONFIRMADA"
-                        ? "gray"
-                        : reserva.estado === "CONCLUIDA"
-                        ? "green"
-                        : "red",
-                    textAlign: "center",
-                  }}
-                >
-                  {reserva.estado}
-                </Cell>
-                <Cell>
-                  <Acciones>
-                    <ButtonPuntuar
-                      variant="contained"
-                      color="primary"
-                      disabled={true}
-                    >
-                      Puntuar
-                    </ButtonPuntuar>
-                  </Acciones>
-                </Cell>
+          <TableFondo>
+            <TableHead>
+              <TableRow id="encabezado">
+                <TableCell>Imagen</TableCell>
+                <TableCell>Nombre del Servicio</TableCell>
+                <TableCell>Categoría</TableCell>
+                <TableCell>Precio</TableCell>
+                <TableCell>Fecha de Reserva</TableCell>
+                <TableCell>Empleado</TableCell>
+                <TableCell>Fecha de Creación</TableCell>
+                <TableCell>Estado</TableCell>
+                <TableCell>Acciones</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-
+            </TableHead>
+            <TableBody>
+              {reservas.map((reserva) => (
+                <TableRow key={reserva.id}>
+                  <Cell>
+                    <ImagenServicio
+                      src={reserva.imagen}
+                      alt={reserva.servicio.nombre}
+                    />
+                  </Cell>
+                  <Cell>{reserva.servicio.nombre}</Cell>
+                  <Cell>
+                    {obtenerNombreCategoria(reserva.servicio.categoria)}
+                  </Cell>
+                  <Cell>{reserva.servicio.costo} USD</Cell>
+                  <Cell>
+                    {reserva.fecha} / {formatearHora(reserva.hora)}
+                  </Cell>
+                  <Cell>{`${reserva.empleado.nombre} ${reserva.empleado.apellido}`}</Cell>
+                  <Cell>
+                    {reserva.fechaCreacion} /{" "}
+                    {formatearHora(reserva.horaCreacion)}
+                  </Cell>
+                  <Cell
+                    style={{
+                      color:
+                        reserva.estado === "CONFIRMADA"
+                          ? "gray"
+                          : reserva.estado === "CONCLUIDA"
+                          ? "green"
+                          : "red",
+                      textAlign: "center",
+                    }}
+                  >
+                    {reserva.estado}
+                  </Cell>
+                  <Cell>
+                    <Acciones>
+                      <ButtonPuntuar
+                        variant="contained"
+                        color="primary"
+                        disabled={true}
+                      >
+                        Puntuar
+                      </ButtonPuntuar>
+                    </Acciones>
+                  </Cell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </TableFondo>
           <ContenedorPaginacion>
             <BotonPagina
               onClick={() => cambiarPagina(paginaActual - 1)}
