@@ -47,8 +47,8 @@ export const ContenedorContenido = styled.div`
   }
 
   @media (max-width: 600px) {
-    padding: 20px;
-    width: 85%;
+    padding: 10px 15px;
+    width: 100%;
   }
 `;
 
@@ -94,10 +94,11 @@ export const ContenedorParametros = styled.div`
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
     flex-direction: column;
     padding: 8px;
     border-radius: 20px;
+    
   }
 `;
 
@@ -109,7 +110,11 @@ export const BarraBusqueda = styled.div`
   padding: 5px;
   
 
-  @media (max-width: 600px) {
+  @media (max-width: 768px) {
+    width: 80%;
+    margin-bottom: 10px;
+  }
+    @media (max-width: 600px) {
     width: 100%;
     margin-bottom: 10px;
   }
@@ -139,17 +144,18 @@ export const CampoBusqueda = styled(TextField)`
 
     & .MuiInputLabel-root {
       color: #635E63 !important;
-      transform: translate(0px, 0px) scale(0.75) !important; /* Ajuste para alinear con la etiqueta del DatePicker */
+      transform: translate(14px, -9px) scale(0.75) !important; /* Posición fija para el label */
       background-color: transparent;
       padding-top: 0px;
       padding-left: 20px;
       
       &.Mui-focused {
         color: #635E63 !important;
+        transform: translate(14px, -9px) scale(0.75) !important; /* Mantener la misma posición cuando está enfocado */
       }
       
       &.MuiFormLabel-filled {
-        transform: translate(14px, -14px) scale(0.75) !important;
+        transform: translate(14px, -9px) scale(0.75) !important; /* Mantener la misma posición cuando contiene texto */
       }
     }
 
@@ -167,7 +173,6 @@ export const CampoBusqueda = styled(TextField)`
       margin-right: 0;
     }
   }
-  
 `;
 
 export const DividerVertical = styled.div`
@@ -176,8 +181,10 @@ export const DividerVertical = styled.div`
   background-color: #ccc;
   margin: 0 8px;
 
-  @media (max-width: 600px) {
-    display: none;
+  @media (max-width: 768px) {
+    width: 95%;
+    height: 1px;
+    margin: 0px auto;
   }
 `;
 
@@ -200,8 +207,11 @@ export const BotonBuscarCircular = styled(Button)`
         props.disabled ? "#e6d0f0" : "#7b27dd"} !important;
     }
 
-    @media (max-width: 600px) {
-      margin-top: 10px;
+    @media (max-width: 760px) {
+      width: 20%;
+      margin-top: 20px;
+      padding: 1rem 3rem;
+      border-radius: 30px;
     }
   }
 `;
@@ -251,6 +261,7 @@ export const BotonBuscar = styled(Button)`
     padding: 12px 40px;
     border: 1px solid #ddd !important;
     border-radius: ${({ theme }) => theme.borderRadius.botones} !important;
+    
     text-transform: none;
     font-size: 1rem;
     font-family: ${({ theme }) =>
@@ -296,9 +307,31 @@ export const ContenedorFecha = styled.div`
     transform: translate(0, 0px) scale(0.75) !important;
     color: #635E63 !important;
   }
+  /* Estilos para el campo de entrada del DatePicker */
+  /* Asegurar que el ícono del calendario sea visible en todas las resoluciones */
+  & .MuiInputAdornment-root {
+    display: flex !important;
+    visibility: visible !important;
+    margin-right: 2rem;
+
+    & .MuiButtonBase-root {
+      padding: 5px;
+    }
+    
+    & .MuiSvgIcon-root {
+      color: #635E63;
+      font-size: 25px;
+    }
+  }
   
   @media (max-width: 768px) {
-    max-width: 100%;
+    width: 100%;
+    margin-top: 15px;
+    
+    /* Ajustar espacio en móvil para mostrar bien el ícono */
+    & .MuiInputAdornment-root {
+      margin-right: 3rem;
+    }
   }
 `;
 
@@ -327,14 +360,16 @@ export const TablaResultados = styled.table`
 export const CabeceraTabla = styled.th`
   text-align: left;
   padding: 12px 16px;
-  background-color: #f5f5f5;
+  background-color: #9F72D9;
   border-bottom: 2px solid #e0e0e0;
+  color: white;
   font-weight: 600;
 `;
 
 export const FilaTabla = styled.tr`
+  background-color: #F6EBF9;
   &:hover {
-    background-color: #f9f9f9;
+    background-color: #F9F9F9;
   }
 `;
 
