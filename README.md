@@ -40,7 +40,7 @@ npm run dev
 
 Este proyecto no hubiera sido posible sin el trabajo de:
 
-- **Andrés Pincay** (Product Manager - Backend - BBDD)
+- **Andrés Pincay** (Scrum master - Backend - BBDD)
 - **Juan Alzate** (Frontend - Tester Frontend)
 - **Arnie Espinoza** (Backend - Infraestructura - BBDD)
 - **Erick Olivares** (Frontend - Tester Backend)
