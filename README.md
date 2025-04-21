@@ -13,9 +13,10 @@ Booking Glowin es un sistema de reservas en línea diseñado para la gestión de
 ### 🎨 ***Características Principales***
 - Buscador de Servicios
 - Sistema de Categorías
-- servicios destacados
-- Lista de Servicios con paginación
-- Detalle de Servicio con imágenes, descripción y opción de reserva
+- Servicios destacados
+- Lista de Servicios con filtros y paginación
+- Detalle de Servicio con imágenes, descripción, reseñas, politicas y opción de reserva
+- Gestion de reservas
 - Panel de Administración
 - Diseño Responsivo para computadoras, tablets y móviles
 
@@ -33,4 +34,15 @@ npm install
 npm run dev
 
 ### 🛠️ Estado del Proyecto
-### 🚧 En Desarrollo 🚧
+### 🚧 Concluido 🚧
+
+## Agradecimientos
+
+Este proyecto no hubiera sido posible sin el trabajo de:
+🔹 Andrés Pincay (Product Manager - Backend - BBDD)
+🔹 Juan Alzate (Frontend - Tester Frontend)
+🔹 Arnie Espinoza (Backend - Infraestructura - BBDD)
+🔹 Erick Olivares (Frontend - Tester Backend)
+🔹 Maria de los Angeles Roldan (Backend - BBDD)
+🔹 Valentina Peláez (Infraestructura)
+🔹 Daniel Alvarado (Tester producto)
