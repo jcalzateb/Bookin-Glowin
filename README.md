@@ -36,9 +36,10 @@ npm run dev
 ### 🛠️ Estado del Proyecto
 ### 🚧 Concluido 🚧
 
-## Agradecimientos
+## 👥 ***Agradecimientos***
 
 Este proyecto no hubiera sido posible sin el trabajo de:
+
 🔹 Andrés Pincay (Product Manager - Backend - BBDD)
 🔹 Juan Alzate (Frontend - Tester Frontend)
 🔹 Arnie Espinoza (Backend - Infraestructura - BBDD)
