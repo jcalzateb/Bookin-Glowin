@@ -40,10 +40,10 @@ npm run dev
 
 Este proyecto no hubiera sido posible sin el trabajo de:
 
-🔹 Andrés Pincay (Product Manager - Backend - BBDD)
-🔹 Juan Alzate (Frontend - Tester Frontend)
-🔹 Arnie Espinoza (Backend - Infraestructura - BBDD)
-🔹 Erick Olivares (Frontend - Tester Backend)
-🔹 Maria de los Angeles Roldan (Backend - BBDD)
-🔹 Valentina Peláez (Infraestructura)
-🔹 Daniel Alvarado (Tester producto)
+- **Andrés Pincay** (Product Manager - Backend - BBDD)
+- **Juan Alzate** (Frontend - Tester Frontend)
+- **Arnie Espinoza** (Backend - Infraestructura - BBDD)
+- **Erick Olivares** (Frontend - Tester Backend)
+- **Maria de los Angeles Roldan** (Backend - BBDD)
+- **Valentina Peláez** (Infraestructura)
+- **Daniel Alvarado** (Tester producto)
