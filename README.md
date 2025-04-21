@@ -36,7 +36,7 @@ npm run dev
 ### 🛠️ Estado del Proyecto
 ### 🚧 Concluido 🚧
 
-## 👥 ***Agradecimientos***
+### 👥 ***Agradecimientos***
 
 Este proyecto no hubiera sido posible sin el trabajo de:
 
