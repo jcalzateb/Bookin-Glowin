@@ -1,49 +1,61 @@
-# **Booking Glowin** - Sistema de Reservas para Salón de Belleza 💅💇‍♀️
+# 💅 Booking Glowin — Sistema de Reservas para Salón de Belleza
 
-## 📌 ***Descripción***
-Booking Glowin es un sistema de reservas en línea diseñado para la gestión de servicios para un salón de belleza. Permite visualizar los servicios, realizar reservas y gestionar los servicios a través de un panel de administración.
+![alt text](image.png)
 
-### 🚀 ***Tecnologías Utilizadas***
-- Frontend: React, React Router, Material UI, Styled Components
-- Gestión de Datos: JSON provisional
-- Manejo de Peticiones: Axios o Fetch (pendiente conexión a backend)
-- Pruebas: Jest + React Testing Library
-- Control de Versiones: Git & GitHub
+**Booking Glowin** es una aplicación web de reservas en línea orientada a la gestión integral de servicios en un salón de belleza. Los usuarios pueden explorar servicios, reservar citas, dejar reseñas, y los administradores pueden gestionar todo desde un panel intuitivo.
 
-### 🎨 ***Características Principales***
-- Buscador de Servicios
-- Sistema de Categorías
-- Servicios destacados
-- Lista de Servicios con filtros y paginación
-- Detalle de Servicio con imágenes, descripción, reseñas, politicas y opción de reserva
-- Gestion de reservas
-- Panel de Administración
-- Diseño Responsivo para computadoras, tablets y móviles
+---
 
-### 🔧 ***Instalación y Configuración***
-*Clonar el repositorio:*
+## 📌 Descripción
+
+Plataforma moderna, responsive y fácil de usar que incluye:
+
+- Visualización detallada de servicios.
+- Búsqueda, filtrado y categorización.
+- Reservas desde frontend con conexión pendiente al backend.
+- Panel administrativo para control interno del salón.
+
+---
+
+## 🚀 Tecnologías Utilizadas
+
+### 🔷 Frontend
+- **React**
+- **React Router**
+- **Material UI**
+- **Styled Components**
+
+### 📊 Gestión de Datos
+- JSON provisional
+
+### 🔁 Manejo de Peticiones
+- Axios o Fetch *(pendiente integración con backend)*
+
+### 🧪 Pruebas
+- Jest
+- React Testing Library
+
+### 🗃️ Control de Versiones
+- Git & GitHub
+
+---
+
+## 🎨 Características Principales
+
+- 🔎 **Buscador de Servicios**
+- 🧾 **Sistema de Categorías y Servicios Destacados**
+- 🧼 **Lista con Filtros y Paginación**
+- 📷 **Detalle de Servicio con Imágenes, Reseñas y Políticas**
+- 📆 **Gestión de Reservas por parte del cliente y admin**
+- 🛠 **Panel de Administración**
+- 📱 **Diseño Responsivo (Desktop, Tablet, Mobile)**
+
+---
+
+## 🔧 Instalación y Configuración
+
+```bash
 git clone https://github.com/tu-usuario/booking-glowin.git
-
-*Moverse al directorio del proyecto:*
 cd booking-glowin
-
-*Instalar las dependencias:*
 npm install
-
-*Iniciar el servidor de desarrollo:*
 npm run dev
-
-### 🛠️ Estado del Proyecto
-### 🚧 Concluido 🚧
-
-### 👥 ***Agradecimientos***
-
-Este proyecto no hubiera sido posible sin el trabajo de:
-
-- **Andrés Pincay** (Scrum master - Backend - BBDD)
-- **Juan Alzate** (Frontend - Tester Frontend)
-- **Arnie Espinoza** (Backend - Infraestructura - BBDD)
-- **Erick Olivares** (Frontend - Tester Backend)
-- **Maria de los Angeles Roldan** (Backend - BBDD)
-- **Valentina Peláez** (Infraestructura)
-- **Daniel Alvarado** (Tester producto)
