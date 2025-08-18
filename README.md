@@ -1,7 +1,5 @@
 # 💅 Booking Glowin — Sistema de Reservas para Salón de Belleza
 
-![alt text](image.png)
-
 **Booking Glowin** es una aplicación web de reservas en línea orientada a la gestión integral de servicios en un salón de belleza. Los usuarios pueden explorar servicios, reservar citas, dejar reseñas, y los administradores pueden gestionar todo desde un panel intuitivo.
 
 ---
