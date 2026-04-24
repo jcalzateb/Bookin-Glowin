@@ -10,7 +10,7 @@ Plataforma moderna, responsive y fácil de usar que incluye:
 
 - Visualización detallada de servicios.
 - Búsqueda, filtrado y categorización.
-- Reservas desde frontend con conexión pendiente al backend.
+- Reservas desde frontend con conexión.
 - Panel administrativo para control interno del salón.
 
 ---
